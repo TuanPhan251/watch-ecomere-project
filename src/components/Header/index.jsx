@@ -1,11 +1,20 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { Space, Badge, Row, Col } from "antd";
+
+import CartDrawer from "./Cart";
 
 import logo from "../../assets/logo/logo.png";
 import * as S from "./style";
 
 const Header = () => {
+  const { cartList } = useSelector((state) => state.cart);
+
+  const itemsAmount = cartList.reduce((prev, item) => {
+    return prev + item.totalAmount;
+  }, 0);
+
   return (
     <S.HeaderContainer>
       <S.HeaderLogo>
@@ -31,7 +40,7 @@ const Header = () => {
       <S.HeaderSearchContainer>
         <input type="text" placeholder="Tìm sản phẩm" />
         <button>
-          <i class="fa-solid fa-magnifying-glass"></i>
+          <i className="fa-solid fa-magnifying-glass"></i>
         </button>
       </S.HeaderSearchContainer>
 
@@ -41,9 +50,15 @@ const Header = () => {
             <span>ĐĂNG NHẬP</span>
           </Link>
 
-          <Badge count={3}>
-            <i class="fa-solid fa-cart-shopping"></i>
-          </Badge>
+          <S.HeaderCart>
+            <Badge count={itemsAmount}>
+              <i className="fa-solid fa-cart-shopping"></i>
+            </Badge>
+
+            <S.CartItemsWrapper>
+              <CartDrawer cartList={cartList} />
+            </S.CartItemsWrapper>
+          </S.HeaderCart>
         </Space>
       </S.HeaderRight>
     </S.HeaderContainer>

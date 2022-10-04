@@ -19,10 +19,10 @@ export const ScrollTopButton = styled.button`
 
   &:hover {
     background-color: #fff;
-    box-shadow: 0 0 10px #8c8c8c;
+    box-shadow: var(--box-shadow);
   }
 
   & i {
-    font-size: 18px;
+    font-size: 20px;
   }
 `;

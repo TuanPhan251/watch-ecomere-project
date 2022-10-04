@@ -1,4 +1,15 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const Growth = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+`;
 
 export const HeaderContainer = styled.header`
   display: flex;
@@ -8,7 +19,7 @@ export const HeaderContainer = styled.header`
   top: 0;
   right: 0;
   left: 0;
-  height: 80px;
+  height: var(--header-height);
   width: 100%;
   padding: 0 80px;
   background-color: #fff;
@@ -42,7 +53,8 @@ export const HeaderNav = styled.ul`
       min-width: 100px;
       padding: 8px;
       text-align: center;
-      color: #000;
+      font-weight: 500;
+      color: var(--dark-text-color);
       text-decoration: none;
 
       &:hover {
@@ -75,7 +87,7 @@ export const HeaderSearchContainer = styled.div`
       background-color: #fff;
 
       outline: 2px solid #d9d9d9;
-      box-shadow: 0 0 8px #d9d9d9;
+      box-shadow: var(--box-shadow);
     }
   }
 
@@ -97,7 +109,8 @@ export const HeaderRight = styled.div`
     min-width: 60px;
     padding: 8px;
     text-align: center;
-    color: #000;
+    font-weight: 500;
+    color: var(--dark-text-color);
     text-decoration: none;
 
     &:hover {
@@ -105,9 +118,26 @@ export const HeaderRight = styled.div`
       text-decoration: underline;
     }
   }
+`;
+
+export const CartItemsWrapper = styled.div`
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 500px;
+`;
+
+export const HeaderCart = styled.div`
+  position: relative;
+  padding: 4px;
+  cursor: pointer;
 
   & i {
     font-size: 20px;
-    cursor: pointer;
+  }
+
+  &:hover ${CartItemsWrapper} {
+    display: block;
   }
 `;
