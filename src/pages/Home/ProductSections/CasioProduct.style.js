@@ -25,6 +25,7 @@ export const Product = styled.div`
   flex: 1;
   height: 100%;
   padding: 8px;
+  color: var(--dark-text-color);
   text-align: center;
   border: 1px solid #f5f5f5;
   border-radius: 2px;

@@ -26,7 +26,7 @@ const ScrollTopButton = () => {
 
   return (
     <S.ScrollTopButton onClick={scrollToTop} visible={visible}>
-      <i class="fa-solid fa-chevron-up"></i>
+      <i className="fa-solid fa-chevron-up"></i>
     </S.ScrollTopButton>
   );
 };
