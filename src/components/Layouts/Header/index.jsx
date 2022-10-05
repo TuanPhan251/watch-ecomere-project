@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { Space, Badge, Row, Col } from "antd";
+import { Space, Badge } from "antd";
 
 import CartDrawer from "./Cart";
 
-import logo from "../../assets/logo/logo.png";
+import logo from "../../../assets/logo/logo.png";
 import * as S from "./style";
+import { ROUTES } from "../../../constants/routes";
 
 const Header = () => {
   const { cartList } = useSelector((state) => state.cart);
@@ -33,7 +34,7 @@ const Header = () => {
           <Link>ĐỒNG HỒ NỮ</Link>
         </li>
         <li>
-          <Link>LIÊN HỆ</Link>
+          <Link to={ROUTES.CONTACT}>LIÊN HỆ</Link>
         </li>
       </S.HeaderNav>
 

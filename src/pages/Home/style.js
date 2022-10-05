@@ -13,3 +13,7 @@ export const BackTopButton = styled(BackTop)`
     color: #000;
   }
 `;
+
+export const HomePageWrapper = styled.main`
+  margin-bottom: 30px;
+`;
