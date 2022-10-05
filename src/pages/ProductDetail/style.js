@@ -92,12 +92,13 @@ export const ProductSpecCol = styled.ul`
   margin: -4px 0;
 
   & li:nth-child(2n + 1) {
-    background-color: #ccc;
+    background-color: #f5f5f5;
   }
 `;
 
 export const ProductSpecItem = styled.li`
   display: flex;
+  justify-content: space-around;
   padding: 4px 8px;
   margin: 4px 0;
   font-size: 16px;
