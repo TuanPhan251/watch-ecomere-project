@@ -79,27 +79,28 @@ const ProductDetailPage = () => {
             <S.ProductSpecHeading>
               Chi tiết thông số sản phẩm
             </S.ProductSpecHeading>
+
             <Col span={12}>
               <S.ProductSpecCol>
                 <S.ProductSpecItem>
                   <span>Giới tính:</span>
-                  <span>Nam</span>
+                  <span>{product.gender === "male" ? "Nam" : "Nữ"}</span>
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Kiểu máy:</span>
-                  <span>Pin</span>
+                  <span>{product.movement}</span>
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Chất liệu kính:</span>
-                  <span>Kính khoáng (mineral)</span>
+                  <span>{product.glassMaterial}</span>
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Chất liệu vỏ:</span>
-                  <span>Thép không gỉ</span>
+                  <span>{product.caseMaterial}</span>
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Chất liệu dây:</span>
-                  <span>Da tổng hợp</span>
+                  <span>{product.strapMaterial}</span>
                 </S.ProductSpecItem>
               </S.ProductSpecCol>
             </Col>
@@ -107,23 +108,23 @@ const ProductDetailPage = () => {
               <S.ProductSpecCol>
                 <S.ProductSpecItem>
                   <span>Đường kính mặt</span>
-                  <span>40mm</span>
+                  <span>{product.caseSize}</span>
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Độ dày:</span>
-                  <span>12mm</span>
+                  <span>{product.caseWidth}</span>
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Độ chống nước:</span>
-                  <span>3ATM</span>
+                  <span>{product.waterResist}</span>
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Cỡ dây:</span>
-                  <span>12mm</span>
+                  <span>{product.strapSize}</span>
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Bảo hành:</span>
-                  <span>5 năm</span>
+                  <span>{product.warranty}</span>
                 </S.ProductSpecItem>
               </S.ProductSpecCol>
             </Col>
