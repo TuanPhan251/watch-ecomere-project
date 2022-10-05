@@ -1,8 +1,7 @@
 import * as S from "./style";
-import emptyCartLogo from "../../../assets/cart/empty_cart_retina.png";
+import emptyCartLogo from "../../../../assets/cart/empty_cart_retina.png";
 
 const CartDrawer = ({ cartList }) => {
-  console.log(cartList);
   const renderCartItems = () => {
     return cartList.map((item) => {
       return (

@@ -4,7 +4,6 @@ import { Row, Col, Button, Space } from "antd";
 
 import { addProductAction } from "../../redux/actions";
 
-import Header from "../../components/Header";
 import ScrollTopButton from "../../components/ScrollTopButton";
 
 import menProducts from "../../assets/fakedata/products/men";
@@ -22,7 +21,6 @@ const ProductDetailPage = () => {
 
   return (
     <>
-      <Header />
       <main>
         <Row gutter={4}>
           <S.ProductDetailContainer>
