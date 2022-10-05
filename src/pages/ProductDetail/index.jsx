@@ -4,6 +4,8 @@ import { Row, Col, Button, Space } from "antd";
 
 import { addProductAction } from "../../redux/actions";
 
+import Header from "../../components/Layouts/Header";
+import Footer from "../../components/Layouts/Footer";
 import ScrollTopButton from "../../components/ScrollTopButton";
 
 import menProducts from "../../assets/fakedata/products/men";
@@ -21,38 +23,115 @@ const ProductDetailPage = () => {
 
   return (
     <>
-      <main>
+      <Header />
+      <main style={{ minHeight: "100vh" }}>
         <Row gutter={4}>
           <S.ProductDetailContainer>
-            <Col span={8}>
+            <Col span={10}>
               <S.ProductImageWrapper>
                 <img src={product.image} alt="product" />
               </S.ProductImageWrapper>
             </Col>
-            <Col span={10}>
-              <div>
-                <p>{product.category}</p>
+            <Col span={14}>
+              <S.ProductSummary>
                 <h2>{product.name}</h2>
-              </div>
-            </Col>
-            <Col span={6}>
-              <S.ProductPriceWrapper>
-                <p>Giá: {product.price.toLocaleString()}đ</p>
+                <S.ProductSummaryItem>
+                  Thương hiệu: {product.category}
+                </S.ProductSummaryItem>
+                <S.ProductSummaryItem>
+                  Loại sản phẩm:{" "}
+                  {product.gender === "male" ? "Đồng Hồ Nam" : "Đồng Hồ Nữ"}
+                </S.ProductSummaryItem>
+                <S.ProductPrice>
+                  GIÁ: {product.price.toLocaleString()} VNĐ
+                </S.ProductPrice>
+              </S.ProductSummary>
 
-                <S.ProductPriceAction>
-                  <Space>
-                    <Button type="primary">MUA NGAY</Button>
-                    <Button type="danger" onClick={handleAddProductToCart}>
-                      THÊM VÀO GIỎ
-                    </Button>
-                  </Space>
-                </S.ProductPriceAction>
-              </S.ProductPriceWrapper>
+              <S.PolicyActionWrapper>
+                <S.ProductPolicy>
+                  <S.ProductPolicyItem>
+                    <i className="fa-solid fa-truck"></i>
+                    <span>Miễn phí vận chuyển trên toàn quốc.</span>
+                  </S.ProductPolicyItem>
+                  <S.ProductPolicyItem>
+                    <i className="fa-solid fa-heart-crack"></i>
+                    <span>Bảo hành chính hãng tại trung tâm ủy quyền.</span>
+                  </S.ProductPolicyItem>
+                  <S.ProductPolicyItem>
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                    <span>
+                      Đổi trả miễn phí trong 30 ngày khi có lỗi nhà sản xuất.
+                    </span>
+                  </S.ProductPolicyItem>
+                </S.ProductPolicy>
+
+                <S.ProductAction>
+                  <Button type="primary">MUA NGAY</Button>
+                  <Button onClick={handleAddProductToCart}>THÊM VÀO GIỎ</Button>
+                </S.ProductAction>
+              </S.PolicyActionWrapper>
             </Col>
           </S.ProductDetailContainer>
         </Row>
+
+        <Row>
+          <S.ProductSpecContainer>
+            <S.ProductSpecHeading>
+              Chi tiết thông số sản phẩm
+            </S.ProductSpecHeading>
+            <Col span={12}>
+              <S.ProductSpecCol>
+                <S.ProductSpecItem>
+                  <span>Giới tính:</span>
+                  <span>Nam</span>
+                </S.ProductSpecItem>
+                <S.ProductSpecItem>
+                  <span>Kiểu máy:</span>
+                  <span>Pin</span>
+                </S.ProductSpecItem>
+                <S.ProductSpecItem>
+                  <span>Chất liệu kính:</span>
+                  <span>Kính khoáng (mineral)</span>
+                </S.ProductSpecItem>
+                <S.ProductSpecItem>
+                  <span>Chất liệu vỏ:</span>
+                  <span>Thép không gỉ</span>
+                </S.ProductSpecItem>
+                <S.ProductSpecItem>
+                  <span>Chất liệu dây:</span>
+                  <span>Da tổng hợp</span>
+                </S.ProductSpecItem>
+              </S.ProductSpecCol>
+            </Col>
+            <Col span={12}>
+              <S.ProductSpecCol>
+                <S.ProductSpecItem>
+                  <span>Đường kính mặt</span>
+                  <span>40mm</span>
+                </S.ProductSpecItem>
+                <S.ProductSpecItem>
+                  <span>Độ dày:</span>
+                  <span>12mm</span>
+                </S.ProductSpecItem>
+                <S.ProductSpecItem>
+                  <span>Độ chống nước:</span>
+                  <span>3ATM</span>
+                </S.ProductSpecItem>
+                <S.ProductSpecItem>
+                  <span>Cỡ dây:</span>
+                  <span>12mm</span>
+                </S.ProductSpecItem>
+                <S.ProductSpecItem>
+                  <span>Bảo hành:</span>
+                  <span>5 năm</span>
+                </S.ProductSpecItem>
+              </S.ProductSpecCol>
+            </Col>
+          </S.ProductSpecContainer>
+        </Row>
         <ScrollTopButton />
       </main>
+      <Footer />
     </>
   );
 };
