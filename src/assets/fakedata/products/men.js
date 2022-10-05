@@ -9,6 +9,15 @@ const menProducts = [
     image:
       "https://cdn.tgdd.vn/Products/Images/7264/286439/casio-mtp-vd02l-7eudf-nam-2-1.jpg",
     gender: "male",
+    caseSize: "",
+    caseMaterial: "",
+    glassMaterial: "",
+    strapMaterial: "",
+    strapSize: "",
+    movement: "",
+    waterResist: "",
+    caseWidth: "",
+    warranty: "",
   },
   {
     id: uuidv4(),
@@ -18,6 +27,15 @@ const menProducts = [
     image:
       "https://cdn.tgdd.vn/Products/Images/7264/286440/casio-mtp-vt01gl-1b2udf-nam-2-1.jpg",
     gender: "male",
+    caseSize: "",
+    caseMaterial: "",
+    glassMaterial: "",
+    strapMaterial: "",
+    strapSize: "",
+    movement: "",
+    waterResist: "",
+    caseWidth: "",
+    warranty: "",
   },
   {
     id: uuidv4(),
@@ -27,6 +45,15 @@ const menProducts = [
     image:
       "https://cdn.tgdd.vn/Products/Images/7264/286437/casio-mtp-v005l-7b5udf-nam-2-1.jpg",
     gender: "male",
+    caseSize: "",
+    caseMaterial: "",
+    glassMaterial: "",
+    strapMaterial: "",
+    strapSize: "",
+    movement: "",
+    waterResist: "",
+    caseWidth: "",
+    warranty: "",
   },
   {
     id: uuidv4(),
@@ -36,6 +63,15 @@ const menProducts = [
     image:
       "https://cdn.tgdd.vn/Products/Images/7264/286432/casio-mtp-e350l-1bvdf-nam-2-1.jpg",
     gender: "male",
+    caseSize: "",
+    caseMaterial: "",
+    glassMaterial: "",
+    strapMaterial: "",
+    strapSize: "",
+    movement: "",
+    waterResist: "",
+    caseWidth: "",
+    warranty: "",
   },
   {
     id: uuidv4(),
@@ -45,6 +81,15 @@ const menProducts = [
     image:
       "https://cdn.tgdd.vn/Products/Images/7264/286433/casio-mtp-e700d-1evdf-nam-2-1.jpg",
     gender: "male",
+    caseSize: "",
+    caseMaterial: "",
+    glassMaterial: "",
+    strapMaterial: "",
+    strapSize: "",
+    movement: "",
+    waterResist: "",
+    caseWidth: "",
+    warranty: "",
   },
 ];
 
