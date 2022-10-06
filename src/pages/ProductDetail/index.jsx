@@ -58,7 +58,7 @@ const ProductDetailPage = () => {
                     <span>Bảo hành chính hãng tại trung tâm ủy quyền.</span>
                   </S.ProductPolicyItem>
                   <S.ProductPolicyItem>
-                    <i class="fa-solid fa-arrows-rotate"></i>
+                    <i className="fa-solid fa-arrows-rotate"></i>
                     <span>
                       Đổi trả miễn phí trong 30 ngày khi có lỗi nhà sản xuất.
                     </span>
@@ -108,11 +108,11 @@ const ProductDetailPage = () => {
               <S.ProductSpecCol>
                 <S.ProductSpecItem>
                   <span>Đường kính mặt</span>
-                  <span>{product.caseSize}</span>
+                  <span>{product.caseSize} mm</span>
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Độ dày:</span>
-                  <span>{product.caseWidth}</span>
+                  <span>{product.caseWidth} mm</span>
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Độ chống nước:</span>
@@ -120,7 +120,7 @@ const ProductDetailPage = () => {
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Cỡ dây:</span>
-                  <span>{product.strapSize}</span>
+                  <span>{product.strapSize} mm</span>
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Bảo hành:</span>
