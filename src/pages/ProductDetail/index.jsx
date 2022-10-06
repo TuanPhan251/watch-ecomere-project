@@ -124,7 +124,7 @@ const ProductDetailPage = () => {
                 </S.ProductSpecItem>
                 <S.ProductSpecItem>
                   <span>Bảo hành:</span>
-                  <span>{product.warranty}</span>
+                  <span>{product.warranty} Năm</span>
                 </S.ProductSpecItem>
               </S.ProductSpecCol>
             </Col>
