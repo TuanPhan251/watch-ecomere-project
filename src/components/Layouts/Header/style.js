@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 const Growth = keyframes`
@@ -142,26 +143,51 @@ export const HeaderCart = styled.div`
   }
 `;
 
-export const DropDownMenuWrapperTH = styled.div`
-  position: relative;
-  display: inline-block;
-`;
-
 export const DropDownMenuContainerTH = styled.div`
+  display: none;
   position: absolute;
   top: 59px;
-  display: inline-block;
-  width: 500px;
+  min-width: 500%;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   background-color: #fff;
   z-index: 1;
 `;
 
+export const TitlePageLink = styled(Link)`
+  &:hover ${DropDownMenuContainerTH} {
+    display: inline-block;
+  }
+`;
+
+export const DropDownMenuWrapperTH = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
 export const DropDownMenuContentTH = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-evenly;
+  padding: 10px;
+
   & div {
     display: flex;
     flex-direction: column;
   }
+`;
+export const ListDropDownMenu = styled.ul`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const ItemDropDownMenu = styled.li`
+  display: flex !important;
+  justify-content: flex-start !important;
+  margin-bottom: 8px !important;
+`;
+
+export const ItemLink = styled(Link)`
+  padding: 0 !important;
+  text-align: start !important;
+  font-size: 14px !important;
 `;
