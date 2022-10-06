@@ -25,7 +25,28 @@ const Header = () => {
       </S.HeaderLogo>
       <S.HeaderNav>
         <li>
-          <Link>THƯƠNG HIỆU</Link>
+          <S.DropDownMenuWrapperTH>
+            <Link>THƯƠNG HIỆU</Link>
+            <S.DropDownMenuContainerTH>
+              <S.DropDownMenuContentTH>
+                <div>
+                  <Link to="/">1</Link>
+                  <Link to="/">2</Link>
+                  <Link to="/">3</Link>
+                </div>
+                <div>
+                  <Link to="/">1</Link>
+                  <Link to="/">2</Link>
+                  <Link to="/">3</Link>
+                </div>
+                <div>
+                  <Link to="/">1</Link>
+                  <Link to="/">2</Link>
+                  <Link to="/">3</Link>
+                </div>
+              </S.DropDownMenuContentTH>
+            </S.DropDownMenuContainerTH>
+          </S.DropDownMenuWrapperTH>
         </li>
         <li>
           <Link>ĐỒNG HỒ NAM</Link>
