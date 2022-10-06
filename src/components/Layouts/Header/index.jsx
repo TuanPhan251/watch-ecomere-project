@@ -171,7 +171,9 @@ const Header = () => {
         </li>
         <li>
           <S.DropDownMenuWrapperTH>
-            <S.TitlePageLink to="/">ĐỒNG HỒ NAM</S.TitlePageLink>
+            <S.TitlePageLink to={ROUTES.MEN_DETAIL}>
+              ĐỒNG HỒ NAM
+            </S.TitlePageLink>
             <S.DropDownMenuContainerTH>
               <S.DropDownMenuContentTH>
                 <div>
@@ -315,7 +317,151 @@ const Header = () => {
           </S.DropDownMenuWrapperTH>
         </li>
         <li>
-          <Link>ĐỒNG HỒ NỮ</Link>
+          <S.DropDownMenuWrapperTH>
+            <S.TitlePageLink to={ROUTES.WOMEN_DETAIL}>
+              ĐỒNG HỒ NỮ
+            </S.TitlePageLink>
+            <S.DropDownMenuContainerTH>
+              <S.DropDownMenuContentTH>
+                <div>
+                  <p
+                    style={{ marginBottom: 10, fontSize: 16, fontWeight: 600 }}
+                  >
+                    CÁC HÃNG BÁN CHẠY
+                  </p>
+                  <S.ListDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Daniel Wellington
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Casio
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink style={{ padding: 0 }} to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Seiko
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink style={{ padding: 0 }} to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Saga
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                  </S.ListDropDownMenu>
+                </div>
+                <div>
+                  <p
+                    style={{ marginBottom: 10, fontSize: 16, fontWeight: 600 }}
+                  >
+                    KHUYÊN DÙNG
+                  </p>
+                  <S.ListDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Daniel Wellington
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Casio
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink style={{ padding: 0 }} to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Seiko
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink style={{ padding: 0 }} to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Saga
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                  </S.ListDropDownMenu>
+                </div>
+
+                <div>
+                  <p
+                    style={{ marginBottom: 10, fontSize: 16, fontWeight: 600 }}
+                  >
+                    CÁC DÒNG ĐẶC BIỆT
+                  </p>
+                  <S.ListDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Daniel Wellington
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Casio
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink style={{ padding: 0 }} to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Seiko
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                    <S.ItemDropDownMenu>
+                      <S.ItemLink style={{ padding: 0 }} to="/">
+                        <i
+                          className="fa-solid fa-chevron-right"
+                          style={{ marginRight: 3 }}
+                        />
+                        Saga
+                      </S.ItemLink>
+                    </S.ItemDropDownMenu>
+                  </S.ListDropDownMenu>
+                </div>
+              </S.DropDownMenuContentTH>
+            </S.DropDownMenuContainerTH>
+          </S.DropDownMenuWrapperTH>
         </li>
         <li>
           <Link to={ROUTES.CONTACT}>LIÊN HỆ</Link>
