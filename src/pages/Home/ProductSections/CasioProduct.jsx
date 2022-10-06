@@ -9,25 +9,13 @@ const CasioProducts = () => {
   menProducts.splice(4);
   const navigate = useNavigate();
 
-  const handleNavigateProductPage = (gender, id) => {
-    if (gender === "male") {
-      navigate(`/men/${id}`);
-    } else {
-      navigate(`/women/${id}`);
-    }
-  };
-
   const renderMenProducts = () => {
     return (
       <Row gutter={6}>
         {menProducts.map((product) => {
           return (
             <Col xl={6} md={6} sm={8} xm={8} key={product.id}>
-              <S.Product
-                onClick={() =>
-                  handleNavigateProductPage(product.gender, product.id)
-                }
-              >
+              <S.Product onClick={() => navigate(`/san-pham/${product.id}`)}>
                 <img src={product.image} alt="product" />
                 <h2>{product.name}</h2>
                 <p>{product.price.toLocaleString()}đ</p>

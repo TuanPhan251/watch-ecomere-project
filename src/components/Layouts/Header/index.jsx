@@ -49,10 +49,10 @@ const Header = () => {
           </S.DropDownMenuWrapperTH>
         </li>
         <li>
-          <Link>ĐỒNG HỒ NAM</Link>
+          <Link to={ROUTES.MEN_DETAIL}>ĐỒNG HỒ NAM</Link>
         </li>
         <li>
-          <Link>ĐỒNG HỒ NỮ</Link>
+          <Link to={ROUTES.WOMEN_DETAIL}>ĐỒNG HỒ NỮ</Link>
         </li>
         <li>
           <Link to={ROUTES.CONTACT}>LIÊN HỆ</Link>
