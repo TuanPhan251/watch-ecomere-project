@@ -4,4 +4,5 @@ export const ROUTES = {
   MEN_DETAIL: "/men/:id",
   WOMEN_DETAIL: "/women/:id",
   CONTACT: "/lien-he",
+  PRODUCT_DETAIL: "/san-pham/:id",
 };
