@@ -3,48 +3,130 @@ import styled from "styled-components";
 export const CheckoutCartContainer = styled.div`
   width: 1200px;
   margin: calc(var(--header-height) + 24px) auto 0;
-  padding: 12px;
+  padding: 24px 12px;
   background-color: #fff;
-`;
 
-export const CheckoutHeading = styled.h2`
-  color: var(--dark-text-color);
-  font-size: 26px;
-  text-transform: uppercase;
-  text-align: center;
-`;
-
-export const CartItemsContainer = styled.div`
-  display: flex;
-`;
-
-export const CartItemsWrapper = styled.div`
-  width: 70%;
-`;
-
-export const CartItemsTHead = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-
-  & span {
+  .checkout-heading {
+    color: var(--dark-text-color);
+    font-size: 26px;
+    text-transform: uppercase;
     text-align: center;
-    font-size: 16px;
+    margin-bottom: 60px;
+  }
 
-    &:first-child {
-      width: 50%;
+  .cart-item-container {
+    position: relative;
+    display: flex;
+  }
+
+  .cart-item-wrapper {
+    width: 70%;
+    border-right: 1px dotted #ddd;
+  }
+
+  .cart-item-thead {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+
+    & span {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 500;
+
+      &:first-child {
+        width: 50%;
+      }
+
+      &:nth-child(2) {
+        width: 25%;
+      }
+
+      &:last-child {
+        width: 25%;
+      }
     }
+  }
 
-    &:nth-child(2) {
-      width: 25%;
-    }
+  .cart-actions {
+    justify-self: center;
+    position: sticky;
+    top: var(--header-height);
+    right: 0;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
 
-    &:last-child {
-      width: 25%;
+    .cart-total-price {
+      font-size: 20px;
+      color: var(--dark-text-color);
+
+      span {
+        font-size: 20px;
+        color: #fa541c;
+      }
     }
   }
 `;
 
-export const CartItemsActions = styled.div`
-  width: 30%;
+export const CartItem = styled.div`
+  display: flex;
+  margin: 8px 0;
+
+  .item-img {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+      width: 30%;
+      padding: 4px;
+      border: 1px solid #eee;
+      border-radius: 2px;
+    }
+  }
+
+  .item-action {
+    margin: 0 24px;
+  }
+
+  .item-quantity {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+
+    span {
+      margin: 0 8px;
+    }
+
+    button {
+      width: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 2px;
+      cursor: pointer;
+
+      :hover {
+        border: 2px solid #bbb;
+      }
+    }
+  }
+
+  .item-subtotal {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      font-size: 16px;
+    }
+  }
 `;
