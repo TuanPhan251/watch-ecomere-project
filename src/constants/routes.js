@@ -1,8 +1,9 @@
 export const ROUTES = {
   HOME: "/",
-  BRAND: "/thuong-hieu",
-  MEN_DETAIL: "/men/:id",
-  WOMEN_DETAIL: "/women/:id",
+  MEN_DETAIL: "/nam",
+  WOMEN_DETAIL: "/nu",
+  PRODUCT_DETAIL: "/san-pham/:id",
+  CHECKOUT: "/gio-hang",
   CONTACT: "/lien-he",
   PRODUCT_DETAIL: "/san-pham/:id",
 };

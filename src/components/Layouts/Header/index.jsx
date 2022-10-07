@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Space, Badge } from "antd";
 
@@ -10,6 +10,7 @@ import * as S from "./style";
 import { ROUTES } from "../../../constants/routes";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { cartList } = useSelector((state) => state.cart);
 
   const itemsAmount = cartList.reduce((prev, item) => {
@@ -483,7 +484,10 @@ const Header = () => {
 
           <S.HeaderCart>
             <Badge count={itemsAmount}>
-              <i className="fa-solid fa-cart-shopping"></i>
+              <i
+                className="fa-solid fa-cart-shopping"
+                onClick={() => navigate(`/gio-hang`)}
+              ></i>
             </Badge>
 
             <S.CartItemsWrapper>

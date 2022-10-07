@@ -6,6 +6,7 @@ import { ROUTES } from "./constants/routes";
 import HomePage from "./pages/Home/";
 import ProductPage from "./pages/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetail";
+import CheckoutPage from "./pages/CheckoutPage";
 import ContactPage from "./pages/ContactPage";
 import BrandPage from "./pages/BrandPage";
 
@@ -25,6 +26,7 @@ function App() {
             element={<ProductPage gender="female" />}
           />
           <Route path={ROUTES.PRODUCT_DETAIL} element={<ProductDetailPage />} />
+          <Route path={ROUTES.CHECKOUT} element={<CheckoutPage />} />
           <Route path={ROUTES.CONTACT} element={<ContactPage />} />
           <Route path={ROUTES.BRAND} element={<BrandPage />} />
         </Routes>
