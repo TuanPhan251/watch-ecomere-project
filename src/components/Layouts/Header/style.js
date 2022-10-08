@@ -49,6 +49,12 @@ export const HeaderNav = styled.ul`
     width: 120px;
     margin: 0 8px;
 
+    &:hover {
+      background-color: #ccc;
+    }
+    &:hover .dropdown-container {
+      display: inline-block !important;
+    }
     & a {
       display: block;
       min-width: 100px;
@@ -60,7 +66,7 @@ export const HeaderNav = styled.ul`
 
       &:hover {
         color: red;
-        text-decoration: underline;
+        text-decoration: none;
       }
     }
   }
@@ -142,48 +148,50 @@ export const HeaderCart = styled.div`
     display: block;
   }
 `;
-
-export const DropDownMenuContainerTH = styled.div`
-  display: none;
-  position: absolute;
-  top: 59px;
-  min-width: 500%;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  background-color: #fff;
-  z-index: 1;
-`;
-
-export const TitlePageLink = styled(Link)`
-  &:hover ${DropDownMenuContainerTH} {
-    display: inline-block;
-  }
-`;
-
 export const DropDownMenuWrapperTH = styled.div`
   position: relative;
   display: inline-block;
-`;
 
-export const DropDownMenuContentTH = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  padding: 10px;
-
-  & div {
-    display: flex;
-    flex-direction: column;
+  .title-link:hover .dropdown-container {
+    display: inline-block !important;
   }
-`;
-export const ListDropDownMenu = styled.ul`
-  display: flex;
-  flex-direction: column;
-`;
 
-export const ItemDropDownMenu = styled.li`
-  display: flex !important;
-  justify-content: flex-start !important;
-  margin-bottom: 8px !important;
+  .dropdown-container {
+    z-index: 1;
+    display: none;
+    position: absolute;
+    top: 59px;
+    left: -6px;
+    min-width: 500%;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+
+    .dropdown-content {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      padding: 10px;
+
+      & div {
+        display: flex;
+        flex-direction: column;
+
+        .dropdown-list {
+          display: flex;
+          flex-direction: column;
+
+          .dropdown-item {
+            display: flex !important;
+            justify-content: flex-start !important;
+            margin-bottom: 8px !important;
+          }
+          .dropdown-item:hover {
+            background-color: #fff !important;
+          }
+        }
+      }
+    }
+  }
 `;
 
 export const ItemLink = styled(Link)`
