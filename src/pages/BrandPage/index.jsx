@@ -85,131 +85,126 @@ const BrandPage = () => {
     });
   };
   return (
-    <>
-      <Header />
-      <main>
-        <S.BrandPageWrapper>
-          <div className="brand-container">
-            <div className="brand-item">
-              <img
-                alt="Casio logo"
-                src="https://cdn.tgdd.vn/Brand/1/Casio7264-b_39.jpg"
-              />
-            </div>
-            <div className="brand-item">
-              <img
-                alt="Orient logo"
-                src="https://cdn.tgdd.vn/Brand/1/ORIENTl-220x48.jpg"
-              />
-            </div>
-            <div className="brand-item">
-              <img
-                alt="Citizen logo"
-                src="https://cdn.tgdd.vn/Brand/1/Citizen7264-b_41.jpg"
-              />
-            </div>
-            <div className="brand-item">
-              <img
-                alt="Anne logo"
-                src="https://cdn.tgdd.vn/Brand/1/ANNEKLEINl-220x48.jpg"
-              />
-            </div>
-            <div className="brand-item">
-              <img
-                alt="Tissot logo"
-                src="https://cdn.tgdd.vn/Brand/1/MATHEYTISSOTl-220x48.jpg"
-              />
-            </div>
+    <main>
+      <S.BrandPageWrapper>
+        <div className="brand-container">
+          <div className="brand-item">
+            <img
+              alt="Casio logo"
+              src="https://cdn.tgdd.vn/Brand/1/Casio7264-b_39.jpg"
+            />
           </div>
+          <div className="brand-item">
+            <img
+              alt="Orient logo"
+              src="https://cdn.tgdd.vn/Brand/1/ORIENTl-220x48.jpg"
+            />
+          </div>
+          <div className="brand-item">
+            <img
+              alt="Citizen logo"
+              src="https://cdn.tgdd.vn/Brand/1/Citizen7264-b_41.jpg"
+            />
+          </div>
+          <div className="brand-item">
+            <img
+              alt="Anne logo"
+              src="https://cdn.tgdd.vn/Brand/1/ANNEKLEINl-220x48.jpg"
+            />
+          </div>
+          <div className="brand-item">
+            <img
+              alt="Tissot logo"
+              src="https://cdn.tgdd.vn/Brand/1/MATHEYTISSOTl-220x48.jpg"
+            />
+          </div>
+        </div>
 
-          <S.TextBrandWrapper>
-            <p className="text-content">
-              "Một sản phẩm có thể lỗi thời nhanh chóng, nhưng một thương hiệu
-              thành công sống mãi với thời gian"
-            </p>
-          </S.TextBrandWrapper>
+        <S.TextBrandWrapper>
+          <p className="text-content">
+            "Một sản phẩm có thể lỗi thời nhanh chóng, nhưng một thương hiệu
+            thành công sống mãi với thời gian"
+          </p>
+        </S.TextBrandWrapper>
 
-          <S.SearchBrandWrapper>
-            <input type="text" placeholder="Tìm tên thương hiệu" />
-            <button>
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </S.SearchBrandWrapper>
+        <S.SearchBrandWrapper>
+          <input type="text" placeholder="Tìm tên thương hiệu" />
+          <button>
+            <i className="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </S.SearchBrandWrapper>
 
-          <S.BrandFilterWrapper>
-            <span>Bộ lọc: </span>
-            <TreeSelect {...tProps} style={{ width: 200, marginLeft: "8px" }} />
-            <Select
-              allowClear
-              placeholder="Giá"
-              style={{
-                width: 120,
-                marginLeft: "8px",
-              }}
-            >
-              <Option value="low-high">Thấp - Cao</Option>
-              <Option value="high-low">Cao - Thấp</Option>
-            </Select>
-            <Select
-              allowClear
-              placeholder="Loại máy"
-              style={{
-                width: 160,
-                marginLeft: "8px",
-              }}
-            >
-              <Option value="automatic">Cơ tự động(automatic)</Option>
-              <Option value="pin">Dùng pin</Option>
-            </Select>
-            <Select
-              allowClear
-              placeholder="Đường kính mặt"
-              style={{
-                width: 160,
-                marginLeft: "8px",
-              }}
-            >
-              <Option value="36">Dưới 36mm</Option>
-              <Option value="36-40">Từ 36mm - 40mm</Option>
-              <Option value="40-44">Từ 40mm - 44mm</Option>
-              <Option value="44">Trên 44mm</Option>
-            </Select>
-            <Select
-              allowClear
-              placeholder="Chất liệu kính"
-              style={{
-                width: 160,
-                marginLeft: "8px",
-              }}
-            >
-              <Option value="mineral">Kính khoáng</Option>
-              <Option value="sapphire">Sapphire</Option>
-            </Select>
-          </S.BrandFilterWrapper>
-
-          <S.ProductsWrapper>
-            <Row gutter={[4, 4]}>
-              {renderProducts()}
-              {renderProducts()}
-              {renderProducts()}
-              {renderProducts()}
-            </Row>
-          </S.ProductsWrapper>
-
-          <Pagination
-            defaultCurrent={1}
-            total={50}
+        <S.BrandFilterWrapper>
+          <span>Bộ lọc: </span>
+          <TreeSelect {...tProps} style={{ width: 200, marginLeft: "8px" }} />
+          <Select
+            allowClear
+            placeholder="Giá"
             style={{
-              padding: "24px 0",
-              display: "flex",
-              justifyContent: "center",
+              width: 120,
+              marginLeft: "8px",
             }}
-          />
-        </S.BrandPageWrapper>
-      </main>
-      <ScrollTopButton />
-      <Footer />
-    </>
+          >
+            <Option value="low-high">Thấp - Cao</Option>
+            <Option value="high-low">Cao - Thấp</Option>
+          </Select>
+          <Select
+            allowClear
+            placeholder="Loại máy"
+            style={{
+              width: 160,
+              marginLeft: "8px",
+            }}
+          >
+            <Option value="automatic">Cơ tự động(automatic)</Option>
+            <Option value="pin">Dùng pin</Option>
+          </Select>
+          <Select
+            allowClear
+            placeholder="Đường kính mặt"
+            style={{
+              width: 160,
+              marginLeft: "8px",
+            }}
+          >
+            <Option value="36">Dưới 36mm</Option>
+            <Option value="36-40">Từ 36mm - 40mm</Option>
+            <Option value="40-44">Từ 40mm - 44mm</Option>
+            <Option value="44">Trên 44mm</Option>
+          </Select>
+          <Select
+            allowClear
+            placeholder="Chất liệu kính"
+            style={{
+              width: 160,
+              marginLeft: "8px",
+            }}
+          >
+            <Option value="mineral">Kính khoáng</Option>
+            <Option value="sapphire">Sapphire</Option>
+          </Select>
+        </S.BrandFilterWrapper>
+
+        <S.ProductsWrapper>
+          <Row gutter={[4, 4]}>
+            {renderProducts()}
+            {renderProducts()}
+            {renderProducts()}
+            {renderProducts()}
+          </Row>
+        </S.ProductsWrapper>
+
+        <Pagination
+          defaultCurrent={1}
+          total={50}
+          style={{
+            padding: "24px 0",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        />
+      </S.BrandPageWrapper>
+    </main>
   );
 };
 
