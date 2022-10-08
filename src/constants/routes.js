@@ -7,4 +7,11 @@ export const ROUTES = {
   CONTACT: "/lien-he",
   PRODUCT_DETAIL: "/san-pham/:id",
   BRAND: "/thuong-hieu",
+
+  ADMIN: {
+    HOME_PAGE: "/admin/home",
+    DASH_BOARD: "/admin/dashboard",
+    USER_LIST_PAGE: "/admin/users",
+    PRODUCT_LIST_PAGE: "/admin/products",
+  },
 };

@@ -44,35 +44,29 @@ const CheckoutPage = () => {
   };
 
   return (
-    <>
-      <Header />
-      <main>
-        <S.CheckoutCartContainer>
-          <h2 className="checkout-heading">giỏ hàng</h2>
+    <main>
+      <S.CheckoutCartContainer>
+        <h2 className="checkout-heading">giỏ hàng</h2>
 
-          <div className="cart-item-container">
-            <div className="cart-item-wrapper">
-              <div className="cart-item-thead">
-                <span>Sản phẩm</span>
-                <span>Số lượng</span>
-                <span>Thành tiền</span>
-              </div>
-              <div className="cart-item-tbody">{renderCartItems()}</div>
+        <div className="cart-item-container">
+          <div className="cart-item-wrapper">
+            <div className="cart-item-thead">
+              <span>Sản phẩm</span>
+              <span>Số lượng</span>
+              <span>Thành tiền</span>
             </div>
-
-            <div className="cart-actions">
-              <p className="cart-total-price">
-                Tổng: <span>{totalPrice.toLocaleString()} VNĐ</span>
-              </p>
-              <Button>ĐẶT HÀNG NGAY</Button>
-            </div>
+            <div className="cart-item-tbody">{renderCartItems()}</div>
           </div>
-        </S.CheckoutCartContainer>
 
-        <ScrollTopButton />
-      </main>
-      <Footer />
-    </>
+          <div className="cart-actions">
+            <p className="cart-total-price">
+              Tổng: <span>{totalPrice.toLocaleString()} VNĐ</span>
+            </p>
+            <Button>ĐẶT HÀNG NGAY</Button>
+          </div>
+        </div>
+      </S.CheckoutCartContainer>
+    </main>
   );
 };
 

@@ -9,18 +9,13 @@ import * as S from "./style";
 
 const HomePage = () => {
   return (
-    <>
-      <Header />
-      <S.HomePageWrapper>
-        <Banner />
-        <CasioProducts />
-        <CasioProducts />
-        <CasioProducts />
-        <CasioProducts />
-        <ScrollTopButton />
-      </S.HomePageWrapper>
-      <Footer />
-    </>
+    <S.HomePageWrapper>
+      <Banner />
+      <CasioProducts />
+      <CasioProducts />
+      <CasioProducts />
+      <CasioProducts />
+    </S.HomePageWrapper>
   );
 };
 
