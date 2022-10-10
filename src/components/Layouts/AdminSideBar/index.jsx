@@ -13,7 +13,7 @@ const AdminSidebar = ({ showSidebar }) => {
         <S.SidebarLink
           key={index}
           to={item.path}
-          active={pathname === item.path}
+          $active={pathname === item.path}
         >
           {item.icon}
           <span>{item.title}</span>

@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 
 import { Select, Pagination, Row, Col } from "antd";
 
+import {} from "../../redux/actions";
+
 import menProducts from "../../assets/fakedata/products/men";
 
 import ScrollTopButton from "../../components/ScrollTopButton";

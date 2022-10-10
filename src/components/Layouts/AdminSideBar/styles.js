@@ -57,7 +57,7 @@ export const SidebarLink = styled(Link)`
   }
 
   ${(props) =>
-    props.active &&
+    props.$active &&
     css`
       border-right: 2px solid #531dab;
       background-color: #092b00;
