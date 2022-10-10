@@ -26,6 +26,10 @@ function* getProductListSaga(action) {
       more: more,
     });
   } catch (e) {
+    console.log(
+      "🚀 ~ file: products.saga.js ~ line 29 ~ function*getProductListSaga ~ e",
+      e
+    );
     yield put({
       type: FAIL(PRODUCT_ACTION.GET_PRODUCT_LIST),
       payload: {
@@ -46,6 +50,10 @@ function* createProductSaga(action) {
       },
     });
   } catch (e) {
+    console.log(
+      "🚀 ~ file: products.saga.js ~ line 49 ~ function*createProductSaga ~ e",
+      e
+    );
     yield put({
       type: FAIL(PRODUCT_ACTION.CREATE_PRODUCT),
       payload: {

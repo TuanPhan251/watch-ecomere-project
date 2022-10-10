@@ -14,7 +14,10 @@ const AdminLayout = () => {
       <AdminHeader setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
       <S.AdminMainContainer>
         <AdminSidebar showSidebar={showSidebar} />
-        <Outlet />
+
+        <S.MainContent showSidebar={showSidebar}>
+          <Outlet />
+        </S.MainContent>
       </S.AdminMainContainer>
     </>
   );
