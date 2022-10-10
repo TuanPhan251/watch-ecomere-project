@@ -1,0 +1,111 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Đồng hồ CASIO 41 mm Nam MTP-VD02L-7EUDF ",
+      "price": 868000,
+      "categoryId": 1,
+      "image": "https://cdn.tgdd.vn/Products/Images/7264/286439/casio-mtp-vd02l-7eudf-nam-2-1.jpg",
+      "gender": "male",
+      "caseSize": 41,
+      "caseMaterial": "Thép không gỉ mạ Ion",
+      "glassMaterial": "Kính khoáng",
+      "strapMaterial": "Da tổng hợp",
+      "strapSize": 22,
+      "movement": "Pin",
+      "waterResist": "1 ATM",
+      "caseWidth": 9.6,
+      "warranty": 1
+    },
+    {
+      "id": 1,
+      "name": "Đồng hồ CASIO 40 mm Nam MTP-VT01GL-1B2UDF ",
+      "price": 947000,
+      "categoryId": 1,
+      "image": "https://cdn.tgdd.vn/Products/Images/7264/286440/casio-mtp-vt01gl-1b2udf-nam-2-1.jpg",
+      "gender": "male",
+      "caseSize": 40,
+      "caseMaterial": "Thép không gỉ",
+      "glassMaterial": "Kính khoáng",
+      "strapMaterial": "Da tổng hợp",
+      "strapSize": 22,
+      "movement": "Pin",
+      "waterResist": "3 ATM",
+      "caseWidth": 9,
+      "warranty": 1
+    },
+    {
+      "id": 1,
+      "name": "Đồng hồ CASIO 40 mm Nam MTP-V005L-7B5UDF",
+      "price": 572000,
+      "categoryId": 1,
+      "image": "https://cdn.tgdd.vn/Products/Images/7264/286437/casio-mtp-v005l-7b5udf-nam-2-1.jpg",
+      "gender": "male",
+      "caseSize": 40,
+      "caseMaterial": "Thép không gỉ",
+      "glassMaterial": "Kính khoáng",
+      "strapMaterial": "Da tổng hợp",
+      "strapSize": 22,
+      "movement": "Pin",
+      "waterResist": "1 ATM",
+      "caseWidth": 9.4,
+      "warranty": 1
+    },
+    {
+      "id": 1,
+      "name": "Đồng hồ CASIO 40.6 mm Nam MTP-E350L-1BVDF",
+      "price": 2329000,
+      "categoryId": 1,
+      "image": "https://cdn.tgdd.vn/Products/Images/7264/286432/casio-mtp-e350l-1bvdf-nam-2-1.jpg",
+      "gender": "male",
+      "caseSize": 40.6,
+      "caseMaterial": "Thép không gỉ",
+      "glassMaterial": "Kính khoáng",
+      "strapMaterial": "Da tổng hợp",
+      "strapSize": 22,
+      "movement": "Pin",
+      "waterResist": "5 ATM",
+      "caseWidth": 9.6,
+      "warranty": 1
+    },
+    {
+      "id": 1,
+      "name": "Đồng hồ CASIO 39.7 mm Nam MTP-E700D-1EVDF",
+      "price": 1974000,
+      "categoryId": 1,
+      "image": "https://cdn.tgdd.vn/Products/Images/7264/286433/casio-mtp-e700d-1evdf-nam-2-1.jpg",
+      "gender": "male",
+      "caseSize": 39.7,
+      "caseMaterial": "Thép không gỉ",
+      "glassMaterial": "Kính khoáng",
+      "strapMaterial": "Thép không gỉ",
+      "strapSize": 22,
+      "movement": "Pin",
+      "waterResist": "5 ATM",
+      "caseWidth": 10.2,
+      "warranty": 1
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Casio"
+    },
+    {
+      "id": 2,
+      "name": "Orient"
+    },
+    {
+      "id": 3,
+      "name": "Citizen"
+    },
+    {
+      "id": 4,
+      "name": "Anne Klein"
+    },
+    {
+      "id": 5,
+      "name": "Tissot"
+    }
+  ]
+}
