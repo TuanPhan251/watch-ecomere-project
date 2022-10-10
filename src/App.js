@@ -8,6 +8,7 @@ import AdminLayout from "./components/Layouts/AdminLayout";
 import AdminHomePage from "./pages/admin/AdminHomePage";
 import AdminDashboardPage from "./pages/admin/AdminHomePage";
 import AdminProductPage from "./pages/admin/AdminProductPage";
+import CreateProductPage from "./pages/admin/AdminProductPage/CreateProductPage";
 import AdminUsersPage from "./pages/admin/AdminUserPage";
 
 import UserLayout from "./components/Layouts/UserLayout";
@@ -52,6 +53,10 @@ function App() {
             <Route
               path={ROUTES.ADMIN.PRODUCT_LIST_PAGE}
               element={<AdminProductPage />}
+            />
+            <Route
+              path={ROUTES.ADMIN.CREATE_PRODUCT_PAGE}
+              element={<CreateProductPage />}
             />
             <Route
               path={ROUTES.ADMIN.USER_LIST_PAGE}
