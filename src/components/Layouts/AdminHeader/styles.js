@@ -5,7 +5,7 @@ export const AdminHeaderContainer = styled.header`
   align-items: center;
   width: 100%;
   height: var(--header-height);
-  background-image: linear-gradient(to right, #254000, #00474f);
+  background-color: #434343;
   color: #fff;
 
   .admin_header-sidebar-btn {

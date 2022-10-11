@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { generatePath, useNavigate } from "react-router-dom";
 
-import { Avatar, Button, Space, Table, Pagination } from "antd";
+import { Avatar, Button, Space, Table, Pagination, Modal } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
 import {
   getCategoriesListAction,
@@ -18,7 +19,11 @@ import * as S from "./style";
 const AdminProductPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { productList } = useSelector((state) => state.product);
+  const { productList, deleteProductData } = useSelector(
+    (state) => state.product
+  );
+
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(
@@ -31,6 +36,30 @@ const AdminProductPage = () => {
     );
     dispatch(getCategoriesListAction());
   }, []);
+
+  const handleDeleteProduct = (id) => {
+    dispatch(
+      deleteProductAction({
+        id,
+        params: {
+          page: productList.meta.page,
+          limit: 10,
+        },
+      })
+    );
+    setShowModal(false);
+  };
+
+  const handleChangePage = (page) => {
+    dispatch(
+      getProductListAction({
+        params: {
+          page: page,
+          limit: 10,
+        },
+      })
+    );
+  };
 
   const tableColumn = [
     {
@@ -62,12 +91,40 @@ const AdminProductPage = () => {
       title: "Tùy chọn",
       dataIndex: "action",
       key: "action",
-      render: () => {
+      render: (_, record) => {
         return (
-          <Space>
-            <Button type="danger">Xóa</Button>
-            <Button>Sửa</Button>
-          </Space>
+          <>
+            <Space>
+              <Button type="danger" onClick={() => setShowModal(true)}>
+                Xóa
+              </Button>
+
+              <Button
+                onClick={() =>
+                  navigate(
+                    generatePath(ROUTES.ADMIN.UPDATE_PRODUCT_PAGE, {
+                      id: record.id,
+                    })
+                  )
+                }
+              >
+                Sửa
+              </Button>
+            </Space>
+
+            <Modal
+              title="Xóa sản phẩm"
+              open={showModal}
+              centered
+              onOk={() => handleDeleteProduct(record.id)}
+              onCancel={() => setShowModal(false)}
+              okText="Xác nhận"
+              cancelText="Hủy"
+              confirmLoading={deleteProductData.loading}
+            >
+              <p>Không thể hoàn tác sau khi xác nhận, đồng ý xóa ?</p>
+            </Modal>
+          </>
         );
       },
     },
@@ -76,27 +133,42 @@ const AdminProductPage = () => {
   const tableData = productList.data.map((item) => ({ ...item, key: item.id }));
 
   return (
-    <S.ProductListContainer>
+    <S.ProductListContainer loading={productList.loading}>
       <S.ProductListHeading>
-        <h3>Product List</h3>
-        <Button onClick={() => navigate(`${ROUTES.ADMIN.CREATE_PRODUCT_PAGE}`)}>
+        <h3>Danh sách sản phẩm ({productList.meta.total}) :</h3>
+        <Button
+          onClick={() => navigate(`${ROUTES.ADMIN.CREATE_PRODUCT_PAGE}`)}
+          type="primary"
+          size="large"
+        >
           Thêm sản phẩm
         </Button>
       </S.ProductListHeading>
 
-      <S.ProductListTable>
-        <Table
-          columns={tableColumn}
-          dataSource={tableData}
-          pagination={false}
+      {productList.loading ? (
+        <LoadingOutlined
+          style={{
+            fontSize: "60px",
+            marginTop: "200px",
+          }}
         />
-        <Pagination
-          current={productList.meta.page}
-          pageSize={10}
-          total={productList.meta.total}
-          onChange={() => null}
-        />
-      </S.ProductListTable>
+      ) : (
+        <>
+          <Table
+            columns={tableColumn}
+            dataSource={tableData}
+            pagination={false}
+            style={{ flex: "1" }}
+          />
+          <Pagination
+            style={{ margin: "20px auto 0" }}
+            current={productList.meta.page}
+            pageSize={10}
+            total={productList.meta.total}
+            onChange={(page) => handleChangePage(page)}
+          />
+        </>
+      )}
     </S.ProductListContainer>
   );
 };

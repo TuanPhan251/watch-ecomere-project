@@ -7,6 +7,7 @@ export const AdminMainContainer = styled.div`
 
 export const MainContent = styled.div`
   transition: all 0.3s ease;
+  min-height: 100vh;
 
   ${(props) =>
     props.showSidebar &&

@@ -1,28 +1,32 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-import { Button, Select, Form, Input, InputNumber, Modal } from "antd";
+import { Button, Select, Form, Input, InputNumber, Modal, Space } from "antd";
 
 import { ROUTES } from "../../../../constants/routes";
-import { createProductAction } from "../../../../redux/actions";
+import { updateProductAction } from "../../../../redux/actions";
 
 import * as S from "./styles";
 
 const { Option } = Select;
 
-const CreateProductPage = () => {
+const UpdateProductPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { createProductData, productList } = useSelector(
+  const { updateProductData, productList } = useSelector(
     (state) => state.product
   );
 
-  const [createForm] = Form.useForm();
+  const { id } = useParams();
+  const [updateForm] = Form.useForm();
   const { categoryList } = useSelector((state) => state.category);
 
   const [showModal, setShowModal] = useState(false);
 
+  const product = productList.data.find((item) => {
+    return item.id === parseInt(id);
+  });
   const renderCategoryOptions = () => {
     return categoryList.data.map((item) => {
       return (
@@ -33,29 +37,31 @@ const CreateProductPage = () => {
     });
   };
 
-  const handleCreateProduct = (data) => {
+  const handleUpdateProduct = (data) => {
     dispatch(
-      createProductAction({
-        data: {
-          ...data,
-          categoryId: parseInt(data.categoryId),
-        },
+      updateProductAction({
+        data: { ...data, categoryId: parseInt(data.categoryId) },
+        id: id,
       })
     );
 
-    if (productList.loading === false) setShowModal(true);
+    if (updateProductData.loading === false) setShowModal(true);
   };
 
   return (
     <S.CreateProductFormWrapper>
       <Form
-        form={createForm}
+        form={updateForm}
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 8 }}
         autoComplete="off"
+        initialValues={{
+          ...product,
+          categoryId: product.categoryId.toString(),
+        }}
         onFinish={(values) => {
-          handleCreateProduct(values);
+          handleUpdateProduct(values);
         }}
       >
         <Form.Item
@@ -204,30 +210,40 @@ const CreateProductPage = () => {
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={createProductData.loading}
-          >
-            Tạo sản phẩm mới
-          </Button>
+          <Space>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={updateProductData.loading}
+            >
+              Cập nhật
+            </Button>
+
+            <Button
+              type="danger"
+              onClick={() => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE)}
+            >
+              Hủy
+            </Button>
+          </Space>
 
           <Modal
-            title="Tạo sản phẩm mới"
+            title="Cập nhật thông tin sản phẩm"
+            centered
             open={showModal}
             onCancel={() => {
               setShowModal(false);
-              createForm.resetFields();
+              updateForm.resetFields();
             }}
             footer={[
               <Button
                 key="back"
                 onClick={() => {
                   setShowModal(false);
-                  createForm.resetFields();
+                  updateForm.resetFields();
                 }}
               >
-                Tiếp tục thêm sản phẩm
+                Tiếp tục sửa
               </Button>,
               <Button
                 key="submit"
@@ -239,9 +255,9 @@ const CreateProductPage = () => {
             ]}
           >
             <p>
-              {createProductData.error === ""
-                ? "Đã tạo sản phẩm mới"
-                : createProductData.error}
+              {updateProductData.error === ""
+                ? "Cập nhật sản phẩm thành công"
+                : updateProductData.error}
             </p>
           </Modal>
         </Form.Item>
@@ -250,4 +266,4 @@ const CreateProductPage = () => {
   );
 };
 
-export default CreateProductPage;
+export default UpdateProductPage;

@@ -40,6 +40,7 @@ const productReducer = createReducer(initialValue, {
       ...state,
       productList: {
         ...state.productList,
+        meta: meta,
         data: data,
         loading: false,
         error: "",
