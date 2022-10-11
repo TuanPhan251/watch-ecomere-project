@@ -1,5 +1,7 @@
 import * as S from "./style";
 
-const AdminHomePage = () => {};
+const AdminDashboardPage = () => {
+  return <div>admin dashboard</div>;
+};
 
-export default AdminHomePage;
+export default AdminDashboardPage;

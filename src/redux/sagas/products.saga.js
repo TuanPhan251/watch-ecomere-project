@@ -67,7 +67,7 @@ function* updateProductSaga(action) {
   try {
     const { data, id } = action.payload;
     const result = yield axios.patch(
-      `http://localhost:4000/products${id}`,
+      `http://localhost:4000/products/${id}`,
       data
     );
     yield put({
@@ -77,6 +77,10 @@ function* updateProductSaga(action) {
       },
     });
   } catch (e) {
+    console.log(
+      "🚀 ~ file: products.saga.js ~ line 84 ~ function*updateProductSaga ~ e",
+      e
+    );
     yield put({
       type: FAIL(PRODUCT_ACTION.UPDATE_PRODUCT),
       payload: {
@@ -88,15 +92,26 @@ function* updateProductSaga(action) {
 
 function* deleteProductSaga(action) {
   try {
-    const { id } = action.payload;
-    const result = yield axios.delete(`http://localhost:4000/products${id}`);
+    const { id, params } = action.payload;
+    const result = yield axios.delete(`http://localhost:4000/products/${id}`);
     yield put({
       type: SUCCESS(PRODUCT_ACTION.DELETE_PRODUCT),
       payload: {
         data: result.data,
       },
     });
+
+    yield put({
+      type: REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST),
+      payload: {
+        params: params,
+      },
+    });
   } catch (e) {
+    console.log(
+      "🚀 ~ file: products.saga.js ~ line 107 ~ function*deleteProductSaga ~ e",
+      e
+    );
     yield put({
       type: FAIL(PRODUCT_ACTION.DELETE_PRODUCT),
       payload: {

@@ -5,14 +5,14 @@ export const AdminSidebarContainer = styled.aside`
   position: absolute;
   top: 0;
   left: ${(props) => (props.showSidebar ? "0px" : "-200px")};
+  bottom: 0;
   display: flex;
   flex-direction: column;
   width: 200px;
   min-height: 100vh;
-  background-color: #135200;
+  background-color: #262626;
   color: #fff;
   transition: all 0.3s;
-  overflow: hidden;
 
   .admin_header-logout-btn {
     margin-top: auto;
@@ -48,7 +48,7 @@ export const SidebarLink = styled(Link)`
   padding: 12px 16px;
 
   :hover {
-    background-color: #092b00;
+    background-color: #434343;
   }
 
   i {
@@ -60,6 +60,6 @@ export const SidebarLink = styled(Link)`
     props.$active &&
     css`
       border-right: 2px solid #531dab;
-      background-color: #092b00;
+      background-color: #434343;
     `}
 `;

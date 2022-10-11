@@ -14,5 +14,6 @@ export const ROUTES = {
     USER_LIST_PAGE: "/admin/users",
     PRODUCT_LIST_PAGE: "/admin/products",
     CREATE_PRODUCT_PAGE: "/admin/products/create",
+    UPDATE_PRODUCT_PAGE: "/admin/products/update/:id",
   },
 };
