@@ -5,7 +5,6 @@ export const ROUTES = {
   PRODUCT_DETAIL: "/san-pham/:id",
   CHECKOUT: "/gio-hang",
   CONTACT: "/lien-he",
-  PRODUCT_DETAIL: "/san-pham/:id",
   BRAND: "/thuong-hieu",
 
   ADMIN: {

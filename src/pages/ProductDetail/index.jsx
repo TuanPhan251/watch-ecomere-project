@@ -1,22 +1,20 @@
-import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Button, Space } from "antd";
 
 import { addProductAction } from "../../redux/actions";
-
-import Header from "../../components/Layouts/Header";
-import Footer from "../../components/Layouts/Footer";
-import ScrollTopButton from "../../components/ScrollTopButton";
+import { ROUTES } from "../../constants/routes";
 
 import menProducts from "../../assets/fakedata/products/men";
 import * as S from "./style";
 
 const ProductDetailPage = () => {
-  const { id } = useParams();
-  const product = menProducts.find((item) => item.id === id);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { productList } = useSelector((state) => state.product);
+  const { id } = useParams();
 
+  const product = productList.data.find((item) => item.id === parseInt(id));
   const handleAddProductToCart = () => {
     dispatch(addProductAction({ data: product }));
   };
@@ -34,7 +32,7 @@ const ProductDetailPage = () => {
             <S.ProductSummary>
               <h2>{product.name}</h2>
               <S.ProductSummaryItem>
-                Thương hiệu: {product.category}
+                Thương hiệu: {product.category.name}
               </S.ProductSummaryItem>
               <S.ProductSummaryItem>
                 Loại sản phẩm:{" "}
@@ -64,7 +62,15 @@ const ProductDetailPage = () => {
               </S.ProductPolicy>
 
               <S.ProductAction>
-                <Button type="primary">MUA NGAY</Button>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    handleAddProductToCart();
+                    navigate(ROUTES.CHECKOUT);
+                  }}
+                >
+                  MUA NGAY
+                </Button>
                 <Button onClick={handleAddProductToCart}>THÊM VÀO GIỎ</Button>
               </S.ProductAction>
             </S.PolicyActionWrapper>

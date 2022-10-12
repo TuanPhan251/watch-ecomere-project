@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const CheckoutCartContainer = styled.div`
-  width: 1200px;
+  width: 90%;
+  min-height: 800px;
   margin: calc(var(--header-height) + 24px) auto 0;
   padding: 24px 12px;
   background-color: #fff;
@@ -72,6 +73,15 @@ export const CheckoutCartContainer = styled.div`
       }
     }
   }
+
+  .cart-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h3 {
+      text-align: center;
+    }
+  }
 `;
 
 export const CartItem = styled.div`
@@ -85,7 +95,7 @@ export const CartItem = styled.div`
     align-items: center;
 
     img {
-      width: 30%;
+      width: 20%;
       padding: 4px;
       border: 1px solid #eee;
       border-radius: 2px;
@@ -93,7 +103,16 @@ export const CartItem = styled.div`
   }
 
   .item-action {
-    margin: 0 24px;
+    margin: 0 24px 0 12px;
+    cursor: pointer;
+
+    i {
+      font-size: 18px;
+    }
+
+    :hover {
+      opacity: 0.8;
+    }
   }
 
   .item-quantity {

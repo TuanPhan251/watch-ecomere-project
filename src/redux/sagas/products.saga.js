@@ -41,7 +41,7 @@ function* getProductListSaga(action) {
 
 function* createProductSaga(action) {
   try {
-    const { data } = action.payload;
+    const { data, params } = action.payload;
     const result = yield axios.post("http://localhost:4000/products", data);
     yield put({
       type: SUCCESS(PRODUCT_ACTION.CREATE_PRODUCT),

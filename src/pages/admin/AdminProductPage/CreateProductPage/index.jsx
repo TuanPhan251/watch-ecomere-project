@@ -5,7 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { Button, Select, Form, Input, InputNumber, Modal } from "antd";
 
 import { ROUTES } from "../../../../constants/routes";
-import { createProductAction } from "../../../../redux/actions";
+import {
+  createProductAction,
+  getProductListAction,
+} from "../../../../redux/actions";
 
 import * as S from "./styles";
 
@@ -43,7 +46,7 @@ const CreateProductPage = () => {
       })
     );
 
-    if (productList.loading === false) setShowModal(true);
+    if (createProductData.loading === false) setShowModal(true);
   };
 
   return (
