@@ -12,7 +12,7 @@ const cartReducer = createReducer(initialValue, {
     let index = state.cartList.findIndex((product) => product.id === data.id);
 
     if (index === -1) {
-      const newProduct = {
+      const newItem = {
         ...data,
         totalAmount: 1,
         totalPrice: data.price,
@@ -20,7 +20,7 @@ const cartReducer = createReducer(initialValue, {
 
       return {
         ...state,
-        cartList: [newProduct, ...state.cartList],
+        cartList: [newItem, ...state.cartList],
       };
     } else {
       const totalAmount = state.cartList[index].totalAmount + 1;
@@ -30,12 +30,48 @@ const cartReducer = createReducer(initialValue, {
         totalPrice: parseFloat(totalAmount * data.price),
       };
 
-      const newcartList = [...state.cartList];
-      newcartList.splice(index, 1, existProduct);
+      const newCartList = [...state.cartList];
+      newCartList.splice(index, 1, existProduct);
 
       return {
         ...state,
-        cartList: newcartList,
+        cartList: newCartList,
+      };
+    }
+  },
+  REMOVE_PRODUCT_ACTION: (state, action) => {
+    const { data, type } = action.payload;
+    const newCartList = [...state.cartList];
+
+    let index = state.cartList.find((item) => item.id === data.id);
+
+    if (type === "decrease") {
+      if (data.totalAmount === 1) {
+        newCartList.splice(index, 1);
+
+        return {
+          ...state,
+          cartList: newCartList,
+        };
+      } else {
+        const newItem = {
+          ...data,
+          totalAmount: data.totalAmount - 1,
+          totalPrice: data.totalAmount * data.price,
+        };
+
+        newCartList.splice(index, 1, newItem);
+        return {
+          ...state,
+          cartList: newCartList,
+        };
+      }
+    } else {
+      newCartList.splice(index, 1);
+
+      return {
+        ...state,
+        cartList: newCartList,
       };
     }
   },

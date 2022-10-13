@@ -1,19 +1,31 @@
-import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Button } from "antd";
 
+import { ROUTES } from "../../constants/routes";
+import {
+  addProductAction,
+  removeProductAction,
+} from "../../redux/actions/cart.actions";
+
 import * as S from "./style";
 
-import ScrollTopButton from "../../components/ScrollTopButton";
-import Header from "../../components/Layouts/Header";
-import Footer from "../../components/Layouts/Footer";
-
 const CheckoutPage = () => {
+  const dispatch = useDispatch();
   const { cartList } = useSelector((state) => state.cart);
 
   const totalPrice = cartList.reduce((prev, item) => {
     return prev + item.totalPrice;
   }, 0);
+
+  const handleAddProduct = (data) => {
+    dispatch(addProductAction({ data }));
+  };
+
+  const handleRemoveProduct = (data, type) => {
+    dispatch(removeProductAction({ data, type }));
+  };
 
   const renderCartItems = () => {
     if (cartList.length !== 0) {
@@ -22,16 +34,21 @@ const CheckoutPage = () => {
           <S.CartItem key={item.id}>
             <div className="item-img">
               <img src={item.image} alt="" />
-              <div className="item-action">
+              <div
+                className="item-action"
+                onClick={() => handleRemoveProduct(item, "remove")}
+              >
                 <i className="fa-solid fa-xmark"></i>
               </div>
               <h3>{item.name}</h3>
             </div>
 
             <div className="item-quantity">
-              <button>-</button>
+              <button onClick={() => handleRemoveProduct(item, "decrease")}>
+                -
+              </button>
               <span>{item.totalAmount}</span>
-              <button>+</button>
+              <button onClick={() => handleAddProduct(item)}>+</button>
             </div>
 
             <div className="item-subtotal">
@@ -42,6 +59,22 @@ const CheckoutPage = () => {
       });
     }
   };
+
+  if (cartList.length === 0) {
+    return (
+      <main>
+        <S.CheckoutCartContainer>
+          <div className="cart-empty">
+            <h2 className="checkout-heading">giỏ hàng</h2>
+
+            <h3>Giỏ hàng của bàn chưa có sản phẩm nào.</h3>
+
+            <Link to={ROUTES.MEN_DETAIL}>Về trang sản phẩm.</Link>
+          </div>
+        </S.CheckoutCartContainer>
+      </main>
+    );
+  }
 
   return (
     <main>

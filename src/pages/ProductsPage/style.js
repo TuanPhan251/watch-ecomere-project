@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ProductPageWrapper = styled.div`
-  width: 1200px;
+  width: 90%;
   margin: calc(var(--header-height) + 20px) auto 20px;
   background-color: #fff;
 `;

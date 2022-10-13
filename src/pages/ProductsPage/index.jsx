@@ -1,24 +1,41 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-import { Select, Pagination, Row, Col } from "antd";
+import { Select, Row, Col, Collapse, Checkbox } from "antd";
 
-import {} from "../../redux/actions";
-
-import menProducts from "../../assets/fakedata/products/men";
-
-import ScrollTopButton from "../../components/ScrollTopButton";
-import Header from "../../components/Layouts/Header";
-import Footer from "../../components/Layouts/Footer";
+import {
+  getProductListAction,
+  getCategoriesListAction,
+} from "../../redux/actions";
+import { PRODUCT_LIST_LIMIT } from "../../constants/paginations";
 
 import * as S from "./style";
 
 const { Option } = Select;
+const { Panel } = Collapse;
 
 const ProductPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { productList } = useSelector((state) => state.product);
+  const { categoryList } = useSelector((state) => state.category);
+
+  useEffect(() => {
+    dispatch(
+      getProductListAction({
+        params: {
+          page: 1,
+          limit: 10,
+        },
+      })
+    );
+
+    dispatch(getCategoriesListAction());
+  }, []);
 
   const renderProducts = () => {
-    return menProducts.map((item) => {
+    return productList.data.map((item) => {
       return (
         <Col
           key={item.id}
@@ -32,7 +49,7 @@ const ProductPage = () => {
             <img src={item.image} alt="item" />
             <h2>{item.name}</h2>
             <p>{item.price.toLocaleString()}đ</p>
-            <p>{item.category}</p>
+            <p>{item.category.name}</p>
           </S.ProductItem>
         </Col>
       );
@@ -42,7 +59,8 @@ const ProductPage = () => {
   return (
     <main>
       <S.ProductPageWrapper>
-        <S.ProductBrands>
+        <Row>
+          {/* <S.ProductBrands>
           <S.ProductBrandItem>
             <img
               alt="Casio logo"
@@ -73,76 +91,35 @@ const ProductPage = () => {
               src="https://cdn.tgdd.vn/Brand/1/MATHEYTISSOTl-220x48.jpg"
             />
           </S.ProductBrandItem>
-        </S.ProductBrands>
+        </S.ProductBrands> */}
 
-        <S.ProductFilterWrapper>
-          <span>Bộ lọc: </span>
-          <Select
-            allowClear
-            placeholder="Giá"
-            style={{
-              width: 120,
-              marginLeft: "8px",
-            }}
-          >
-            <Option value="low-high">Thấp - Cao</Option>
-            <Option value="high-low">Cao - Thấp</Option>
-          </Select>
-          <Select
-            allowClear
-            placeholder="Loại máy"
-            style={{
-              width: 160,
-              marginLeft: "8px",
-            }}
-          >
-            <Option value="automatic">Cơ tự động(automatic)</Option>
-            <Option value="pin">Dùng pin</Option>
-          </Select>
-          <Select
-            allowClear
-            placeholder="Đường kính mặt"
-            style={{
-              width: 160,
-              marginLeft: "8px",
-            }}
-          >
-            <Option value="36">Dưới 36mm</Option>
-            <Option value="36-40">Từ 36mm - 40mm</Option>
-            <Option value="40-44">Từ 40mm - 44mm</Option>
-            <Option value="44">Trên 44mm</Option>
-          </Select>
-          <Select
-            allowClear
-            placeholder="Chất liệu kính"
-            style={{
-              width: 160,
-              marginLeft: "8px",
-            }}
-          >
-            <Option value="mineral">Kính khoáng</Option>
-            <Option value="sapphire">Sapphire</Option>
-          </Select>
-        </S.ProductFilterWrapper>
+          <Col span={4}>
+            <div className="product_filter-wrapper">
+              <p className="product_filter-title">Bộ lọc</p>
 
-        <S.ProductsWrapper>
-          <Row gutter={[4, 4]}>
-            {renderProducts()}
-            {renderProducts()}
-            {renderProducts()}
-            {renderProducts()}
-          </Row>
-        </S.ProductsWrapper>
+              <Collapse>
+                <Panel header="Thương hiệu" key="1">
+                  <Checkbox>Casio</Checkbox>
+                  <Checkbox>Orient</Checkbox>
+                  <Checkbox>Citizen</Checkbox>
+                  <Checkbox>Anne-Klein</Checkbox>
+                  <Checkbox>Tissot</Checkbox>
+                </Panel>
 
-        <Pagination
-          defaultCurrent={1}
-          total={50}
-          style={{
-            padding: "24px 0",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        />
+                <Panel header="Giới tính" key="2">
+                  <Checkbox>Nam</Checkbox>
+                  <Checkbox>Nữ</Checkbox>
+                </Panel>
+              </Collapse>
+            </div>
+          </Col>
+
+          <Col span={20}>
+            <S.ProductsWrapper>
+              <Row gutter={[8, 8]}>{renderProducts()}</Row>
+            </S.ProductsWrapper>
+          </Col>
+        </Row>
       </S.ProductPageWrapper>
     </main>
   );

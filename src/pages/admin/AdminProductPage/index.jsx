@@ -8,8 +8,6 @@ import { LoadingOutlined } from "@ant-design/icons";
 import {
   getCategoriesListAction,
   getProductListAction,
-  createProductAction,
-  updateProductAction,
   deleteProductAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
@@ -82,6 +80,12 @@ const AdminProductPage = () => {
       render: (category) => category.name,
     },
     {
+      title: "Giới tính",
+      dataIndex: "gender",
+      key: "gender",
+      render: (_, record) => <p>{record.gender === "male" ? "Nam" : "Nữ"}</p>,
+    },
+    {
       title: "Giá",
       dataIndex: "price",
       key: "price",
@@ -120,7 +124,7 @@ const AdminProductPage = () => {
               onCancel={() => setShowModal(false)}
               okText="Xác nhận"
               cancelText="Hủy"
-              confirmLoading={deleteProductData.loading}
+              confirmLoading={productList.loading}
             >
               <p>Không thể hoàn tác sau khi xác nhận, đồng ý xóa ?</p>
             </Modal>
