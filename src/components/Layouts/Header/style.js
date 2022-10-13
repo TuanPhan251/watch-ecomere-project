@@ -23,15 +23,19 @@ export const HeaderContainer = styled.header`
   height: var(--header-height);
   width: 100%;
   padding: 0 80px;
-  background-color: #fff;
+  border-bottom: ${(props) =>
+    props.backgroundColor ? "1px solid #8c8c8c" : "none"};
+  transition: all 0.3s ease;
+  background-color: ${(props) =>
+    props.backgroundColor ? "#fff" : "transparent"};
   z-index: 99;
 `;
 
 export const HeaderLogo = styled.div`
   width: 80px;
 
-  & img {
-    width: 100%;
+  h2 {
+    font-family: "Charmonman", cursive;
   }
 `;
 

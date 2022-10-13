@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -13,18 +14,36 @@ const Header = () => {
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.user);
   const { cartList } = useSelector((state) => state.cart);
+  const [headerBgrColor, setHeaderBgrColor] = useState(false);
+  console.log(
+    "🚀 ~ file: index.jsx ~ line 17 ~ Header ~ headerBgrColor",
+    headerBgrColor
+  );
+
+  const handleChangeHeaderBgrColor = () => {
+    window.scrollY > 80 ? setHeaderBgrColor(true) : setHeaderBgrColor(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleChangeHeaderBgrColor);
+
+    return () => {
+      window.removeEventListener("scroll", handleChangeHeaderBgrColor);
+    };
+  }, []);
 
   const itemsAmount = cartList.reduce((prev, item) => {
     return prev + item.totalAmount;
   }, 0);
 
   return (
-    <S.HeaderContainer>
+    <S.HeaderContainer backgroundColor={headerBgrColor}>
       <S.HeaderLogo>
         <Link to="/">
-          <img src={logo} alt="logo" />
+          <h2>GAIDA</h2>
         </Link>
       </S.HeaderLogo>
+
       <S.HeaderNav>
         <li>
           <S.DropDownMenuWrapperTH>
