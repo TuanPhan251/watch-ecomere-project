@@ -1,12 +1,18 @@
 import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import jwtDecode from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { getUserInfoAction } from "../src/redux/actions";
 
 import GlobalStyle from "./utils/GlobalStyle";
 
 import { ROUTES } from "./constants/routes";
+import LoginPage from "./pages/LoginPage";
+import LoginLayout from "./components/Layouts/LoginLayout";
+import RegisterPage from "./pages/RegisterPage";
 
 import AdminLayout from "./components/Layouts/AdminLayout";
-import AdminHomePage from "./pages/admin/AdminHomePage";
-import AdminDashboardPage from "./pages/admin/AdminHomePage";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import AdminProductPage from "./pages/admin/AdminProductPage";
 import CreateProductPage from "./pages/admin/AdminProductPage/CreateProductPage";
 import UpdateProductPage from "./pages/admin/AdminProductPage/UpdateProductPage";
@@ -21,6 +27,15 @@ import ContactPage from "./pages/ContactPage";
 import BrandPage from "./pages/BrandPage";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      const decodeInfo = jwtDecode(accessToken);
+      dispatch(getUserInfoAction({ id: decodeInfo.sub }));
+    }
+  }, []);
   return (
     <>
       <GlobalStyle />
@@ -46,7 +61,6 @@ function App() {
           </Route>
 
           <Route element={<AdminLayout />}>
-            <Route path={ROUTES.ADMIN.HOME_PAGE} element={<AdminHomePage />} />
             <Route
               path={ROUTES.ADMIN.DASH_BOARD}
               element={<AdminDashboardPage />}
@@ -67,6 +81,10 @@ function App() {
               path={ROUTES.ADMIN.USER_LIST_PAGE}
               element={<AdminUsersPage />}
             />
+          </Route>
+          <Route element={<LoginLayout />}>
+            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+            <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
           </Route>
         </Routes>
       </div>
