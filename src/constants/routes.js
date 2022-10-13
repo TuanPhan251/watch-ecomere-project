@@ -1,4 +1,6 @@
 export const ROUTES = {
+  LOGIN: "/login",
+  REGISTER: "/register",
   HOME: "/",
   MEN_DETAIL: "/nam",
   WOMEN_DETAIL: "/nu",
@@ -7,8 +9,11 @@ export const ROUTES = {
   CONTACT: "/lien-he",
   BRAND: "/thuong-hieu",
 
+  USER: {
+    HOME: "/",
+  },
+
   ADMIN: {
-    HOME_PAGE: "/admin/home",
     DASH_BOARD: "/admin/dashboard",
     USER_LIST_PAGE: "/admin/users",
     PRODUCT_LIST_PAGE: "/admin/products",

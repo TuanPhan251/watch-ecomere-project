@@ -11,6 +11,7 @@ import { ROUTES } from "../../../constants/routes";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { userInfo } = useSelector((state) => state.user);
   const { cartList } = useSelector((state) => state.cart);
 
   const itemsAmount = cartList.reduce((prev, item) => {
@@ -516,7 +517,8 @@ const Header = () => {
 
       <S.HeaderRight>
         <Space>
-          <Link>
+          <p className="userName">Welcome {userInfo.data.userName}</p>
+          <Link to={ROUTES.LOGIN}>
             <span>ĐĂNG NHẬP</span>
           </Link>
 

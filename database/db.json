@@ -222,5 +222,25 @@
       "id": 5,
       "name": "Tissot"
     }
+  ],
+  "users": [
+    {
+      "email": "phuong@gmail.com",
+      "password": "$2a$10$6qJRS7gJq8zwVqi9TCjHGuXrcoxDoASoowaUM2qtaj4lHe4ugFO9m",
+      "userName": "phuong",
+      "role": "user",
+      "createdAt": 1665627439609,
+      "updatedAt": 1665627439610,
+      "id": 1
+    },
+    {
+      "email": "phuong1@gmail.com",
+      "password": "$2a$10$HciiO6fDhAni1t9A2APzHeum7RdSAnzxAhzbaO2F.9.oV4O7lkDZe",
+      "userName": "phuong1",
+      "role": "admin",
+      "createdAt": 1665629640467,
+      "updatedAt": 1665629640467,
+      "id": 2
+    }
   ]
 }

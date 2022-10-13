@@ -4,6 +4,7 @@ import createSagaMiddleware from "@redux-saga/core";
 import cartReducer from "../reducers/cart.reducer";
 import productReducer from "../reducers/products.reducer";
 import categoryReducer from "../reducers/category.reducer";
+import userReducer from "../reducers/user.reducer";
 import rootSaga from "../sagas";
 
 const sagaMiddleware = createSagaMiddleware();
@@ -13,6 +14,7 @@ const store = configureStore({
     cart: cartReducer,
     product: productReducer,
     category: categoryReducer,
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({

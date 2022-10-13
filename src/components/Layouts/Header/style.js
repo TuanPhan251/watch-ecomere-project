@@ -111,6 +111,9 @@ export const HeaderSearchContainer = styled.div`
 `;
 
 export const HeaderRight = styled.div`
+  .userName {
+    font-size: 17px;
+  }
   & a {
     display: block;
     min-width: 60px;
