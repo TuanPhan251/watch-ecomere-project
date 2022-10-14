@@ -39,7 +39,7 @@ const AdminProductPage = () => {
     categoryId: [],
     keyword: "",
     gender: [],
-    price: [],
+    priceRange: [0, 15000000],
   });
 
   const handleChangeFilterParams = (value, type) => {
@@ -236,12 +236,26 @@ const AdminProductPage = () => {
 
           <p>Giá</p>
           <Slider
+            value={filterParams.priceRange}
             range
             min={0}
             max={15000000}
             step={100000}
-            onChange={(value) => handleChangeFilterParams(value, "price")}
+            onChange={(value) => handleChangeFilterParams(value, "priceRange")}
           ></Slider>
+
+          <Button
+            onClick={() =>
+              setFilterParams({
+                categoryId: [],
+                keyword: "",
+                gender: [],
+                priceRange: [0, 15000000],
+              })
+            }
+          >
+            Xóa bộ lọc
+          </Button>
         </Col>
         <Col span={20}>
           <Table

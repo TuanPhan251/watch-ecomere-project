@@ -23,9 +23,9 @@ function* getProductListSaga(action) {
         ...(params.gender && {
           gender: params.gender,
         }),
-        ...(params.price && {
-          price_gte: params.price[0],
-          price_lte: params.price[1],
+        ...(params.priceRange && {
+          price_gte: params.priceRange[0],
+          price_lte: params.priceRange[1],
         }),
       },
     });
