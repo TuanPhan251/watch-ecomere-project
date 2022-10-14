@@ -11,6 +11,22 @@ function* getProductListSaga(action) {
         _expand: "category",
         _page: params.page,
         _limit: params.limit,
+        ...(params.categoryId && {
+          categoryId: params.categoryId,
+        }),
+        ...(params.keyword && {
+          q: params.keyword,
+        }),
+        ...(params.priceOder && {
+          price: params.priceOder,
+        }),
+        ...(params.gender && {
+          gender: params.gender,
+        }),
+        ...(params.price && {
+          price_gte: params.price[0],
+          price_lte: params.price[1],
+        }),
       },
     });
     yield put({

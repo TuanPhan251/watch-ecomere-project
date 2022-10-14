@@ -2,7 +2,19 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { generatePath, useNavigate } from "react-router-dom";
 
-import { Avatar, Button, Space, Table, Pagination, Modal } from "antd";
+import {
+  Avatar,
+  Button,
+  Space,
+  Table,
+  Pagination,
+  Modal,
+  Input,
+  Row,
+  Col,
+  Checkbox,
+  Slider,
+} from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
 import {
@@ -20,8 +32,34 @@ const AdminProductPage = () => {
   const { productList, deleteProductData } = useSelector(
     (state) => state.product
   );
+  const { categoryList } = useSelector((state) => state.category);
 
   const [showModal, setShowModal] = useState(false);
+  const [filterParams, setFilterParams] = useState({
+    categoryId: [],
+    keyword: "",
+    gender: [],
+    price: [],
+  });
+
+  const handleChangeFilterParams = (value, type) => {
+    setFilterParams({
+      ...filterParams,
+      [type]: value,
+    });
+  };
+
+  const handleFilter = () => {
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          page: 1,
+          limit: 10,
+        },
+      })
+    );
+  };
 
   useEffect(() => {
     dispatch(
@@ -34,6 +72,14 @@ const AdminProductPage = () => {
     );
     dispatch(getCategoriesListAction());
   }, []);
+
+  useEffect(() => {
+    const filter = setTimeout(handleFilter, 300);
+
+    return () => {
+      clearTimeout(filter);
+    };
+  }, [filterParams]);
 
   const handleDeleteProduct = (id) => {
     dispatch(
@@ -57,6 +103,16 @@ const AdminProductPage = () => {
         },
       })
     );
+  };
+
+  const renderCategoryOptions = () => {
+    return categoryList.data.map((item) => {
+      return (
+        <Col span={24} key={item.id}>
+          <Checkbox value={item.id}>{item.name}</Checkbox>
+        </Col>
+      );
+    });
   };
 
   const tableColumn = [
@@ -149,30 +205,61 @@ const AdminProductPage = () => {
         </Button>
       </S.ProductListHeading>
 
-      {productList.loading ? (
-        <LoadingOutlined
-          style={{
-            fontSize: "60px",
-            marginTop: "200px",
-          }}
-        />
-      ) : (
-        <>
+      <Row gutter={4} style={{ flex: "1" }}>
+        <Col span={4}>
+          <p>Bộ lọc</p>
+
+          <Input
+            placeholder="Nhập để tìm sản phẩm"
+            style={{ width: "100%" }}
+            onChange={(e) =>
+              handleChangeFilterParams(e.target.value, "keyword")
+            }
+          />
+
+          <p>Hãng</p>
+          <Checkbox.Group
+            value={filterParams.categoryId}
+            onChange={(value) => handleChangeFilterParams(value, "categoryId")}
+          >
+            {renderCategoryOptions()}
+          </Checkbox.Group>
+
+          <p>Giới tính</p>
+          <Checkbox.Group
+            value={filterParams.gender}
+            onChange={(value) => handleChangeFilterParams(value, "gender")}
+          >
+            <Checkbox value="male">Nam</Checkbox>
+            <Checkbox value="female">Nữ</Checkbox>
+          </Checkbox.Group>
+
+          <p>Giá</p>
+          <Slider
+            range
+            min={0}
+            max={15000000}
+            step={100000}
+            onChange={(value) => handleChangeFilterParams(value, "price")}
+          ></Slider>
+        </Col>
+        <Col span={20}>
           <Table
+            loading={productList.loading}
             columns={tableColumn}
             dataSource={tableData}
             pagination={false}
-            style={{ flex: "1" }}
+            style={{ marginBottom: "auto" }}
           />
-          <Pagination
-            style={{ margin: "20px auto 0" }}
-            current={productList.meta.page}
-            pageSize={10}
-            total={productList.meta.total}
-            onChange={(page) => handleChangePage(page)}
-          />
-        </>
-      )}
+        </Col>
+      </Row>
+      <Pagination
+        style={{ margin: "20px auto 0" }}
+        current={productList.meta.page}
+        pageSize={10}
+        total={productList.meta.total}
+        onChange={(page) => handleChangePage(page)}
+      />
     </S.ProductListContainer>
   );
 };
