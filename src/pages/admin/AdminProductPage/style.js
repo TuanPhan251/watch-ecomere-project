@@ -12,6 +12,7 @@ export const ProductListContainer = styled.div`
 export const ProductListHeading = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 24px;
 
   h3 {
     font-size: 24px;
