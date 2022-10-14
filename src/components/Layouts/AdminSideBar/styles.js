@@ -15,7 +15,6 @@ export const AdminSidebarContainer = styled.aside`
   transition: all 0.3s;
 
   .admin_header-logout-btn {
-    margin-top: auto;
     width: 100%;
     padding: 8px;
     background-color: transparent;
@@ -43,7 +42,6 @@ export const AdminSidebarContainer = styled.aside`
 
 export const SidebarLink = styled(Link)`
   color: #fff;
-
   font-size: 16px;
   padding: 12px 16px;
 
@@ -56,10 +54,23 @@ export const SidebarLink = styled(Link)`
     font-size: 18px;
   }
 
+  :nth-child(4) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    margin-top: auto;
+
+    :hover {
+      background-color: #fff;
+      color: #000;
+    }
+  }
+
   ${(props) =>
     props.$active &&
     css`
-      border-right: 2px solid #531dab;
+      border-left: 4px solid #fff;
       background-color: #434343;
     `}
 `;

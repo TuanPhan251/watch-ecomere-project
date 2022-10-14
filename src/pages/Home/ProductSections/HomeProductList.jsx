@@ -17,10 +17,6 @@ const HomeProductList = ({ gender }) => {
     (product) => product.gender === gender
   );
   displayProducts.splice(4);
-  console.log(
-    "🚀 ~ file: HomeProductList.jsx ~ line 17 ~ HomeProductList ~ displayProducts",
-    displayProducts
-  );
 
   useEffect(() => {
     dispatch(

@@ -16,4 +16,9 @@ export const SidebarContent = [
     path: ROUTES.ADMIN.PRODUCT_LIST_PAGE,
     icon: <i className="fa-solid fa-boxes-stacked"></i>,
   },
+  {
+    title: "Main Page",
+    path: "/",
+    icon: <i class="fa-solid fa-house"></i>,
+  },
 ];

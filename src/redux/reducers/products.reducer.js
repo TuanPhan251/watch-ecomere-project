@@ -9,6 +9,11 @@ const initialValue = {
     loading: false,
     error: "",
   },
+  productDetail: {
+    data: [],
+    loading: false,
+    error: "",
+  },
   createProductData: {
     loading: false,
     error: "",
@@ -53,6 +58,40 @@ const productReducer = createReducer(initialValue, {
       ...state,
       productList: {
         ...state.productList,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
+  [REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL)]: (state, action) => {
+    return {
+      ...state,
+      productDetail: {
+        ...state.productDetail,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      productDetail: {
+        ...state.productDetail,
+        data: data,
+        loading: false,
+        error: "",
+      },
+    };
+  },
+  [FAIL(PRODUCT_ACTION.GET_PRODUCT_DETAIL)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      productDetail: {
+        ...state.productDetail,
         loading: false,
         error: error,
       },
