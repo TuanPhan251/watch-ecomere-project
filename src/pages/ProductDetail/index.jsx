@@ -1,23 +1,32 @@
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Button, Space } from "antd";
 
-import { addProductAction } from "../../redux/actions";
+import {
+  addProductAction,
+  getProductDetailAction,
+  getCategoriesListAction,
+} from "../../redux/actions";
 import { ROUTES } from "../../constants/routes";
 
-import menProducts from "../../assets/fakedata/products/men";
 import * as S from "./style";
 
 const ProductDetailPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { productList } = useSelector((state) => state.product);
+  const { productDetail } = useSelector((state) => state.product);
   const { id } = useParams();
 
-  const product = productList.data.find((item) => item.id === parseInt(id));
   const handleAddProductToCart = () => {
-    dispatch(addProductAction({ data: product }));
+    dispatch(addProductAction({ data: productDetail }));
   };
+
+  useEffect(() => {
+    dispatch(getProductDetailAction({ id: id }));
+
+    dispatch(getCategoriesListAction());
+  }, []);
 
   return (
     <main style={{ minHeight: "100vh" }}>
@@ -25,21 +34,23 @@ const ProductDetailPage = () => {
         <S.ProductDetailContainer>
           <Col span={10}>
             <S.ProductImageWrapper>
-              <img src={product.image} alt="product" />
+              <img src={productDetail.data.image} alt="product" />
             </S.ProductImageWrapper>
           </Col>
           <Col span={14}>
             <S.ProductSummary>
-              <h2>{product.name}</h2>
+              <h2>{productDetail.data.name}</h2>
               <S.ProductSummaryItem>
-                Thương hiệu: {product.category.name}
+                Thương hiệu: {productDetail.data.category?.name}
               </S.ProductSummaryItem>
               <S.ProductSummaryItem>
                 Loại sản phẩm:{" "}
-                {product.gender === "male" ? "Đồng Hồ Nam" : "Đồng Hồ Nữ"}
+                {productDetail.data.gender === "male"
+                  ? "Đồng Hồ Nam"
+                  : "Đồng Hồ Nữ"}
               </S.ProductSummaryItem>
               <S.ProductPrice>
-                GIÁ: {product.price.toLocaleString()} VNĐ
+                GIÁ: {productDetail.data.price?.toLocaleString()} VNĐ
               </S.ProductPrice>
             </S.ProductSummary>
 
@@ -88,23 +99,25 @@ const ProductDetailPage = () => {
             <S.ProductSpecCol>
               <S.ProductSpecItem>
                 <span>Giới tính:</span>
-                <span>{product.gender === "male" ? "Nam" : "Nữ"}</span>
+                <span>
+                  {productDetail.data.gender === "male" ? "Nam" : "Nữ"}
+                </span>
               </S.ProductSpecItem>
               <S.ProductSpecItem>
                 <span>Kiểu máy:</span>
-                <span>{product.movement}</span>
+                <span>{productDetail.data.movement}</span>
               </S.ProductSpecItem>
               <S.ProductSpecItem>
                 <span>Chất liệu kính:</span>
-                <span>{product.glassMaterial}</span>
+                <span>{productDetail.data.glassMaterial}</span>
               </S.ProductSpecItem>
               <S.ProductSpecItem>
                 <span>Chất liệu vỏ:</span>
-                <span>{product.caseMaterial}</span>
+                <span>{productDetail.data.caseMaterial}</span>
               </S.ProductSpecItem>
               <S.ProductSpecItem>
                 <span>Chất liệu dây:</span>
-                <span>{product.strapMaterial}</span>
+                <span>{productDetail.data.strapMaterial}</span>
               </S.ProductSpecItem>
             </S.ProductSpecCol>
           </Col>
@@ -112,23 +125,23 @@ const ProductDetailPage = () => {
             <S.ProductSpecCol>
               <S.ProductSpecItem>
                 <span>Đường kính mặt</span>
-                <span>{product.caseSize} mm</span>
+                <span>{productDetail.data.caseSize} mm</span>
               </S.ProductSpecItem>
               <S.ProductSpecItem>
                 <span>Độ dày:</span>
-                <span>{product.caseWidth} mm</span>
+                <span>{productDetail.data.caseWidth} mm</span>
               </S.ProductSpecItem>
               <S.ProductSpecItem>
                 <span>Độ chống nước:</span>
-                <span>{product.waterResist}</span>
+                <span>{productDetail.data.waterResist}</span>
               </S.ProductSpecItem>
               <S.ProductSpecItem>
                 <span>Cỡ dây:</span>
-                <span>{product.strapSize} mm</span>
+                <span>{productDetail.data.strapSize} mm</span>
               </S.ProductSpecItem>
               <S.ProductSpecItem>
                 <span>Bảo hành:</span>
-                <span>{product.warranty} Năm</span>
+                <span>{productDetail.data.warranty} Năm</span>
               </S.ProductSpecItem>
             </S.ProductSpecCol>
           </Col>

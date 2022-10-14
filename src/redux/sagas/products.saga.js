@@ -39,6 +39,32 @@ function* getProductListSaga(action) {
   }
 }
 
+function* getProductDetailSaga(action) {
+  try {
+    const { id } = action.payload;
+    const result = yield axios.get(
+      `http://localhost:4000/products/${id}/?_expand=category`
+    );
+    yield put({
+      type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    console.log(
+      "🚀 ~ file: products.saga.js ~ line 29 ~ function*getProductListSaga ~ e",
+      e
+    );
+    yield put({
+      type: FAIL(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
+      payload: {
+        error: "đã có lỗi xảy ra",
+      },
+    });
+  }
+}
+
 function* createProductSaga(action) {
   try {
     const { data, params } = action.payload;
@@ -123,6 +149,10 @@ function* deleteProductSaga(action) {
 
 export default function* productSaga() {
   yield takeEvery(REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST), getProductListSaga);
+  yield takeEvery(
+    REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
+    getProductDetailSaga
+  );
   yield takeEvery(REQUEST(PRODUCT_ACTION.CREATE_PRODUCT), createProductSaga);
   yield takeEvery(REQUEST(PRODUCT_ACTION.UPDATE_PRODUCT), updateProductSaga);
   yield takeEvery(REQUEST(PRODUCT_ACTION.DELETE_PRODUCT), deleteProductSaga);

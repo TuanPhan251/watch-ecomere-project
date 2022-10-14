@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, generatePath } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Select, Row, Col, Collapse, Checkbox } from "antd";
@@ -9,6 +9,7 @@ import {
   getCategoriesListAction,
 } from "../../redux/actions";
 import { PRODUCT_LIST_LIMIT } from "../../constants/paginations";
+import { ROUTES } from "../../constants/routes";
 
 import * as S from "./style";
 
@@ -16,7 +17,6 @@ const { Option } = Select;
 const { Panel } = Collapse;
 
 const ProductPage = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
@@ -26,7 +26,7 @@ const ProductPage = () => {
       getProductListAction({
         params: {
           page: 1,
-          limit: 10,
+          limit: PRODUCT_LIST_LIMIT,
         },
       })
     );
@@ -37,20 +37,15 @@ const ProductPage = () => {
   const renderProducts = () => {
     return productList.data.map((item) => {
       return (
-        <Col
-          key={item.id}
-          xl={4}
-          md={6}
-          sm={8}
-          xm={12}
-          onClick={() => navigate(`/san-pham/${item.id}`)}
-        >
-          <S.ProductItem>
-            <img src={item.image} alt="item" />
-            <h2>{item.name}</h2>
-            <p>{item.price.toLocaleString()}đ</p>
-            <p>{item.category.name}</p>
-          </S.ProductItem>
+        <Col key={item.id} xl={4} md={6} sm={8} xm={12}>
+          <Link to={generatePath(ROUTES.PRODUCT_DETAIL, { id: item.id })}>
+            <S.ProductItem>
+              <img src={item.image} alt="item" />
+              <h2>{item.name}</h2>
+              <p>{item.price.toLocaleString()}đ</p>
+              <p>{item.category.name}</p>
+            </S.ProductItem>
+          </Link>
         </Col>
       );
     });
