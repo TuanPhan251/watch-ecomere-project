@@ -25,7 +25,7 @@ const HomePage = () => {
           <h3 className="product_banner-title">ĐỒNG HỒ NAM</h3>
           <button
             className="product_banner-btn"
-            onClick={() => navigate(ROUTES.MEN_DETAIL)}
+            onClick={() => navigate(ROUTES.USER.MEN_DETAIL)}
           >
             KHÁM PHÁ THÊM
           </button>
@@ -42,7 +42,7 @@ const HomePage = () => {
           <h3 className="product_banner-title">ĐỒNG HỒ NỮ</h3>
           <button
             className="product_banner-btn"
-            onClick={() => navigate(ROUTES.WOMEN_DETAIL)}
+            onClick={() => navigate(ROUTES.USER.WOMEN_DETAIL)}
           >
             KHÁM PHÁ THÊM
           </button>

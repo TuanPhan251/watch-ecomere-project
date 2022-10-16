@@ -5,6 +5,8 @@ export const FooterWrapper = styled.footer`
   width: 100%;
   height: 200px;
   border-top: 2px solid #000;
+  background-color: #090909;
+  color: #fff;
 `;
 
 export const FooterContainer = styled.div`
@@ -45,11 +47,11 @@ export const IconCopyRight = styled.div`
 export const LinkFooter = styled(Link)`
   font-family: "Times New Roman", Times, serif;
   font-size: 14px;
-  color: #000;
+  color: #fff;
 `;
 
 export const LinkFooterInfo = styled.a`
   font-family: "Times New Roman", Times, serif;
   font-size: 14px;
-  color: #000;
+  color: #fff;
 `;

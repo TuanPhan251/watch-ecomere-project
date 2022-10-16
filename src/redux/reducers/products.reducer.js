@@ -5,7 +5,7 @@ import { PRODUCT_ACTION, REQUEST, SUCCESS, FAIL } from "../CONSTANTS";
 const initialValue = {
   productList: {
     data: [],
-    meta: [],
+    meta: {},
     loading: false,
     error: "",
   },
@@ -45,8 +45,8 @@ const productReducer = createReducer(initialValue, {
       ...state,
       productList: {
         ...state.productList,
+        data: more ? [...state.productList.data, ...data] : data,
         meta: meta,
-        data: data,
         loading: false,
         error: "",
       },

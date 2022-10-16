@@ -29,11 +29,11 @@ export const BrandPageWrapper = styled.div`
 
 export const TextBrandWrapper = styled.div`
   width: 70%;
-  margin: 10px auto 0;
+  margin: 10px auto 30px;
 
   .text-content {
     text-align: center;
-    font-size: 20px;
+    font-size: 27px;
     font-family: "Times New Roman", Times, serif;
   }
 `;
@@ -41,7 +41,7 @@ export const TextBrandWrapper = styled.div`
 export const SearchBrandWrapper = styled.div`
   flex: 1;
   display: flex;
-  margin-left: 12px;
+  margin: 0 0 10px 12px;
   align-items: center;
 
   & input {
@@ -78,7 +78,8 @@ export const SearchBrandWrapper = styled.div`
 `;
 
 export const BrandFilterWrapper = styled.div`
-  margin-left: 2px;
+  margin: 0 0 10px 2px;
+
   padding: 12px;
   border-bottom: 1px solid #f5f5f5;
 `;

@@ -5,22 +5,21 @@ import { useDispatch } from "react-redux";
 import { getUserInfoAction } from "../src/redux/actions";
 
 import GlobalStyle from "./utils/GlobalStyle";
-
 import { ROUTES } from "./constants/routes";
-import LoginPage from "./pages/LoginPage";
-import LoginLayout from "./components/Layouts/LoginLayout";
-import RegisterPage from "./pages/RegisterPage";
 
+import LoginLayout from "./components/Layouts/LoginLayout";
 import AdminLayout from "./components/Layouts/AdminLayout";
+import UserLayout from "./components/Layouts/UserLayout";
+
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import AdminProductPage from "./pages/admin/AdminProductPage";
 import CreateProductPage from "./pages/admin/AdminProductPage/CreateProductPage";
 import UpdateProductPage from "./pages/admin/AdminProductPage/UpdateProductPage";
 import AdminUsersPage from "./pages/admin/AdminUserPage";
-
-import UserLayout from "./components/Layouts/UserLayout";
 import HomePage from "./pages/Home/";
-import ProductPage from "./pages/ProductsPage";
+import ProductPage from "./pages/user/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetail";
 import CheckoutPage from "./pages/CheckoutPage";
 import ContactPage from "./pages/ContactPage";
@@ -42,22 +41,22 @@ function App() {
       <div className="App">
         <Routes>
           <Route element={<UserLayout />}>
-            <Route path={ROUTES.HOME} element={<HomePage />} />
+            <Route path={ROUTES.USER.HOME} element={<HomePage />} />
             <Route
-              path={ROUTES.MEN_DETAIL}
+              path={ROUTES.USER.MEN_DETAIL}
               element={<ProductPage gender="male" />}
             />
             <Route
-              path={ROUTES.WOMEN_DETAIL}
+              path={ROUTES.USER.WOMEN_DETAIL}
               element={<ProductPage gender="female" />}
             />
             <Route
-              path={ROUTES.PRODUCT_DETAIL}
+              path={ROUTES.USER.PRODUCT_DETAIL}
               element={<ProductDetailPage />}
             />
-            <Route path={ROUTES.CHECKOUT} element={<CheckoutPage />} />
-            <Route path={ROUTES.CONTACT} element={<ContactPage />} />
-            <Route path={ROUTES.BRAND} element={<BrandPage />} />
+            <Route path={ROUTES.USER.CHECKOUT} element={<CheckoutPage />} />
+            <Route path={ROUTES.USER.CONTACT} element={<ContactPage />} />
+            <Route path={ROUTES.USER.BRAND} element={<BrandPage />} />
           </Route>
 
           <Route element={<AdminLayout />}>

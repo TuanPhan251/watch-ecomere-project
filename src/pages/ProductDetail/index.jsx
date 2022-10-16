@@ -77,7 +77,7 @@ const ProductDetailPage = () => {
                   type="primary"
                   onClick={() => {
                     handleAddProductToCart();
-                    navigate(ROUTES.CHECKOUT);
+                    navigate(ROUTES.USER.CHECKOUT);
                   }}
                 >
                   MUA NGAY

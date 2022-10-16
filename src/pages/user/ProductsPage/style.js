@@ -71,3 +71,41 @@ export const ProductItem = styled.div`
     }
   }
 `;
+export const SearchBrandWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  margin: 0 0 10px 0;
+  align-items: center;
+
+  & input {
+    height: 36px;
+    width: 100%;
+    padding: 8px;
+    margin-right: 4px;
+    outline: none;
+    border: none;
+    border-radius: 20px;
+    background-color: #f0f0f0;
+    transition: all 0.2s ease;
+
+    &:focus,
+    &:active {
+      border: none;
+      background-color: #fff;
+
+      outline: 2px solid #d9d9d9;
+      box-shadow: var(--box-shadow);
+    }
+  }
+
+  & button {
+    padding: 4px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+    & i {
+      font-size: 18px;
+    }
+  }
+`;
