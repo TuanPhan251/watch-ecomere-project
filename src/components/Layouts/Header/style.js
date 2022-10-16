@@ -28,6 +28,7 @@ export const HeaderContainer = styled.header`
   transition: all 0.3s ease;
   background-color: ${(props) =>
     props.backgroundColor ? "#fff" : "transparent"};
+  /* color: ${(props) => (props.backgroundColor ? "#fff" : "#000")}; */
   z-index: 99;
 `;
 

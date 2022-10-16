@@ -38,14 +38,10 @@ function* getProductListSaga(action) {
           page: params.page,
           limit: params.limit,
         },
+        more: more,
       },
-      more: more,
     });
   } catch (e) {
-    console.log(
-      "🚀 ~ file: products.saga.js ~ line 29 ~ function*getProductListSaga ~ e",
-      e
-    );
     yield put({
       type: FAIL(PRODUCT_ACTION.GET_PRODUCT_LIST),
       payload: {

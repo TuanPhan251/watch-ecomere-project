@@ -19,7 +19,9 @@ const Footer = () => {
         <S.FooterContent>
           <p>HƯỚNG DẪN</p>
           <S.LinkFooter to="/gioi-thieu">Giới thiệu</S.LinkFooter>
-          <S.LinkFooter to={ROUTES.CONTACT}>Thông tin liên hệ</S.LinkFooter>
+          <S.LinkFooter to={ROUTES.USER.CONTACT}>
+            Thông tin liên hệ
+          </S.LinkFooter>
           <S.LinkFooter to="/thanh-toan-va-tra-gop">
             Thanh toán và trả góp
           </S.LinkFooter>
@@ -45,7 +47,7 @@ const Footer = () => {
           <S.LinkFooterInfo href="/YouTube">YouTube</S.LinkFooterInfo>
         </S.FooterContent>
         <S.FooterContent>
-          <Link to={ROUTES.HOME} style={{ width: "100%", height: "100%" }}>
+          <Link to={ROUTES.USER.HOME} style={{ width: "100%", height: "100%" }}>
             <img
               src={logo}
               alt="logo"

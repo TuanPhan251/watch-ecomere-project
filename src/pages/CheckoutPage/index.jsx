@@ -69,7 +69,7 @@ const CheckoutPage = () => {
 
             <h3>Giỏ hàng của bàn chưa có sản phẩm nào.</h3>
 
-            <Link to={ROUTES.MEN_DETAIL}>Về trang sản phẩm.</Link>
+            <Link to={ROUTES.USER.MEN_DETAIL}>Về trang sản phẩm.</Link>
           </div>
         </S.CheckoutCartContainer>
       </main>

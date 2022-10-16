@@ -15,10 +15,6 @@ const Header = () => {
   const { userInfo } = useSelector((state) => state.user);
   const { cartList } = useSelector((state) => state.cart);
   const [headerBgrColor, setHeaderBgrColor] = useState(false);
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 17 ~ Header ~ headerBgrColor",
-    headerBgrColor
-  );
 
   const handleChangeHeaderBgrColor = () => {
     window.scrollY > 80 ? setHeaderBgrColor(true) : setHeaderBgrColor(false);
@@ -47,7 +43,7 @@ const Header = () => {
       <S.HeaderNav>
         <li>
           <S.DropDownMenuWrapperTH>
-            <Link to={ROUTES.BRAND} className="title-link">
+            <Link to={ROUTES.USER.BRAND} className="title-link">
               THƯƠNG HIỆU
               <div className="dropdown-container">
                 <div className="dropdown-content">
@@ -206,7 +202,7 @@ const Header = () => {
         </li>
         <li>
           <S.DropDownMenuWrapperTH>
-            <Link to={ROUTES.MEN_DETAIL} className="title-link">
+            <Link to={ROUTES.USER.MEN_DETAIL} className="title-link">
               ĐỒNG HỒ NAM
               <div className="dropdown-container">
                 <div className="dropdown-content">
@@ -365,7 +361,7 @@ const Header = () => {
         </li>
         <li>
           <S.DropDownMenuWrapperTH>
-            <Link to={ROUTES.WOMEN_DETAIL} className="title-link">
+            <Link to={ROUTES.USER.WOMEN_DETAIL} className="title-link">
               ĐỒNG HỒ NỮ
               <div className="dropdown-container">
                 <div className="dropdown-content">
@@ -523,7 +519,7 @@ const Header = () => {
           </S.DropDownMenuWrapperTH>
         </li>
         <li>
-          <Link to={ROUTES.CONTACT}>LIÊN HỆ</Link>
+          <Link to={ROUTES.USER.CONTACT}>LIÊN HỆ</Link>
         </li>
       </S.HeaderNav>
 

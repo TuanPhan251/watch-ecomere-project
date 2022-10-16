@@ -1,55 +1,45 @@
 import { useNavigate } from "react-router-dom";
 
-import { Select, Pagination, Row, Col } from "antd";
+import { Select, Pagination, Row, Col, Button, Collapse, Checkbox } from "antd";
 import { TreeSelect } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import menProducts from "../../assets/fakedata/products/men";
-
-import ScrollTopButton from "../../components/ScrollTopButton";
-
-import Footer from "../../components/Layouts/Footer";
-import Header from "../../components/Layouts/Header";
 import * as S from "./styles";
+import "../BrandPage/main.scss";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getCategoriesListAction,
+  getProductListAction,
+} from "../../redux/actions";
+import { PRODUCT_LIST_LIMIT } from "../../constants/paginations";
+
+const { Panel } = Collapse;
 const { Option } = Select;
 const { SHOW_PARENT } = TreeSelect;
 
-const treeData = [
-  {
-    title: "Casio",
-    value: "0-0",
-    key: "0-0",
-  },
-  {
-    title: "Orient",
-    value: "0-1",
-    key: "0-1",
-  },
-  {
-    title: "Citizen",
-    value: "0-2",
-    key: "0-2",
-  },
-  {
-    title: "Anne Klein",
-    value: "0-3",
-    key: "0-3",
-  },
-  {
-    title: "Mathey-Tissot",
-    value: "0-4",
-    key: "0-4",
-  },
-];
-
 const BrandPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { productList } = useSelector((state) => state.product);
+  const { categoryList } = useSelector((state) => state.category);
   const [value, setValue] = useState([]);
+  const [filterParams, setFilterParams] = useState({
+    filterCategoryId: "",
+    filterKeyWord: "",
+  });
 
   const onChange = (newValue) => {
+    handleFilter("categoryId", newValue);
     setValue(newValue);
   };
+  const treeData = categoryList.data.map((item) => {
+    return {
+      title: item.name,
+      value: item.id,
+      key: item.id,
+    };
+  });
 
   const tProps = {
     treeData,
@@ -63,8 +53,50 @@ const BrandPage = () => {
     },
   };
 
+  useEffect(() => {
+    dispatch(
+      getProductListAction({
+        params: {
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+    dispatch(getCategoriesListAction());
+  }, []);
+
+  const handleShowMore = () => {
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          page: productList.meta.page + 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+        more: true,
+      })
+    );
+  };
+
+  const handleFilter = (key, values) => {
+    setFilterParams({
+      ...filterParams,
+      [key]: values,
+    });
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          [key]: values,
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
   const renderProducts = () => {
-    return menProducts.map((item) => {
+    return productList.data.map((item) => {
       return (
         <Col
           key={item.id}
@@ -77,8 +109,8 @@ const BrandPage = () => {
           <S.ProductItem>
             <img src={item.image} alt="item" />
             <h2>{item.name}</h2>
-            <p>{item.price.toLocaleString()}đ</p>
-            <p>{item.category}</p>
+            <p>{item.price?.toLocaleString()}đ</p>
+            <p>{item.category.name}</p>
           </S.ProductItem>
         </Col>
       );
@@ -128,7 +160,11 @@ const BrandPage = () => {
         </S.TextBrandWrapper>
 
         <S.SearchBrandWrapper>
-          <input type="text" placeholder="Tìm tên thương hiệu" />
+          <input
+            type="text"
+            placeholder="Tìm tên thương hiệu"
+            onChange={(e) => handleFilter("keyword", e.target.value)}
+          />
           <button>
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
@@ -136,7 +172,11 @@ const BrandPage = () => {
 
         <S.BrandFilterWrapper>
           <span>Bộ lọc: </span>
-          <TreeSelect {...tProps} style={{ width: 200, marginLeft: "8px" }} />
+          <TreeSelect
+            // onChange={(e) => handleFilterCategory(e.target.value)}
+            {...tProps}
+            style={{ width: 200, marginLeft: "8px" }}
+          />
           <Select
             allowClear
             placeholder="Giá"
@@ -186,23 +226,20 @@ const BrandPage = () => {
         </S.BrandFilterWrapper>
 
         <S.ProductsWrapper>
-          <Row gutter={[4, 4]}>
-            {renderProducts()}
-            {renderProducts()}
-            {renderProducts()}
-            {renderProducts()}
-          </Row>
-        </S.ProductsWrapper>
+          <Row gutter={[8, 8]}>{renderProducts()}</Row>
 
-        <Pagination
-          defaultCurrent={1}
-          total={50}
-          style={{
-            padding: "24px 0",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        />
+          <div className="button-container-1">
+            <span className="mas">Show more!</span>
+            <button
+              id="work"
+              type="button"
+              name="Hover"
+              onClick={() => handleShowMore()}
+            >
+              Show more!
+            </button>
+          </div>
+        </S.ProductsWrapper>
       </S.BrandPageWrapper>
     </main>
   );
