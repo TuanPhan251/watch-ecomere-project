@@ -13,6 +13,18 @@ export const HomePageWrapper = styled.main`
     }
   }
 
+  @media (max-width: 868px) {
+    .header_img-wrapper {
+      max-width: 100%;
+
+      img {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+      }
+    }
+  }
+
   .men_products-section {
     display: flex;
     height: 100%;

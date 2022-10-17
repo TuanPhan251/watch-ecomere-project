@@ -7,15 +7,15 @@ const initialValue = {
 
 const cartReducer = createReducer(initialValue, {
   ADD_PRODUCT_ACTION: (state, actions) => {
-    const { data } = actions.payload;
+    const { product } = actions.payload;
 
-    let index = state.cartList.findIndex((product) => product.id === data.id);
+    let index = state.cartList.findIndex((item) => item.id === product.data.id);
 
     if (index === -1) {
       const newItem = {
-        ...data,
+        ...product.data,
         totalAmount: 1,
-        totalPrice: data.price,
+        totalPrice: product.data.price,
       };
 
       return {
@@ -25,9 +25,9 @@ const cartReducer = createReducer(initialValue, {
     } else {
       const totalAmount = state.cartList[index].totalAmount + 1;
       const existProduct = {
-        ...data,
+        ...product.data,
         totalAmount: parseInt(totalAmount),
-        totalPrice: parseFloat(totalAmount * data.price),
+        totalPrice: parseFloat(totalAmount * product.data.price),
       };
 
       const newCartList = [...state.cartList];

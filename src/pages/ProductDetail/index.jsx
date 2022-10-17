@@ -19,7 +19,7 @@ const ProductDetailPage = () => {
   const { id } = useParams();
 
   const handleAddProductToCart = () => {
-    dispatch(addProductAction({ data: productDetail }));
+    dispatch(addProductAction({ product: productDetail }));
   };
 
   useEffect(() => {
