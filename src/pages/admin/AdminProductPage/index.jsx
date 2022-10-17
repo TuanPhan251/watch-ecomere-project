@@ -15,7 +15,6 @@ import {
   Checkbox,
   Slider,
 } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
 
 import {
   getCategoriesListAction,
@@ -27,6 +26,8 @@ import { ROUTES } from "../../../constants/routes";
 import * as S from "./style";
 
 const AdminProductPage = () => {
+  const MAXPRICE = 15000000;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { productList, deleteProductData } = useSelector(
@@ -39,7 +40,7 @@ const AdminProductPage = () => {
     categoryId: [],
     keyword: "",
     gender: [],
-    price: [],
+    priceRange: [0, MAXPRICE],
   });
 
   const handleChangeFilterParams = (value, type) => {
@@ -240,8 +241,23 @@ const AdminProductPage = () => {
             min={0}
             max={15000000}
             step={100000}
-            onChange={(value) => handleChangeFilterParams(value, "price")}
+            onAfterChange={(value) =>
+              handleChangeFilterParams(value, "priceRange")
+            }
           ></Slider>
+
+          <Button
+            onClick={() =>
+              setFilterParams({
+                categoryId: [],
+                keyword: "",
+                gender: [],
+                priceRange: [0, MAXPRICE],
+              })
+            }
+          >
+            Xóa bộ lọc
+          </Button>
         </Col>
         <Col span={20}>
           <Table

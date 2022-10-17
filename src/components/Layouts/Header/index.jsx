@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { Space, Badge } from "antd";
+import { Space, Badge, Drawer } from "antd";
 
 import CartDrawer from "./Cart";
 
@@ -15,6 +15,7 @@ const Header = () => {
   const { userInfo } = useSelector((state) => state.user);
   const { cartList } = useSelector((state) => state.cart);
   const [headerBgrColor, setHeaderBgrColor] = useState(false);
+  const [showDrawer, setShowDrawer] = useState(false);
 
   const handleChangeHeaderBgrColor = () => {
     window.scrollY > 80 ? setHeaderBgrColor(true) : setHeaderBgrColor(false);
@@ -34,6 +35,41 @@ const Header = () => {
 
   return (
     <S.HeaderContainer backgroundColor={headerBgrColor}>
+      <S.HeaderNavMobile>
+        <div className="mobile-header_icon" onClick={() => setShowDrawer(true)}>
+          <i className="fa-solid fa-bars"></i>
+        </div>
+
+        <Drawer
+          closable={true}
+          placement="left"
+          onClose={() => setShowDrawer(false)}
+          open={showDrawer}
+          contentWrapperStyle={{ width: "100%" }}
+          headerStyle={{
+            position: "absolute",
+            right: "-20px",
+            top: 0,
+            border: "none",
+          }}
+        >
+          <S.HeaderNavMobileList>
+            <li onClick={() => setShowDrawer(false)}>
+              <Link to={ROUTES.BRAND}>THƯƠNG HIỆU</Link>
+            </li>
+            <li onClick={() => setShowDrawer(false)}>
+              <Link to={ROUTES.MEN_DETAIL}>NAM</Link>
+            </li>
+            <li onClick={() => setShowDrawer(false)}>
+              <Link to={ROUTES.WOMEN_DETAIL}>NỮ</Link>
+            </li>
+            <li onClick={() => setShowDrawer(false)}>
+              <Link to={ROUTES.CONTACT}>LIÊN HỆ</Link>
+            </li>
+          </S.HeaderNavMobileList>
+        </Drawer>
+      </S.HeaderNavMobile>
+
       <S.HeaderLogo>
         <Link to="/">
           <h2>GAIDA</h2>
@@ -522,13 +558,6 @@ const Header = () => {
           <Link to={ROUTES.USER.CONTACT}>LIÊN HỆ</Link>
         </li>
       </S.HeaderNav>
-
-      <S.HeaderSearchContainer>
-        <input type="text" placeholder="Tìm sản phẩm" />
-        <button>
-          <i className="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </S.HeaderSearchContainer>
 
       <S.HeaderRight>
         <Space>

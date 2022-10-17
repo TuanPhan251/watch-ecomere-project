@@ -32,7 +32,7 @@ const HomeProductList = ({ gender }) => {
   const renderMenProducts = () => {
     return displayProducts.map((product) => {
       return (
-        <Col xl={12} md={12} sm={12} xm={12} key={product.id}>
+        <Col span={12} key={product.id}>
           <S.Product onClick={() => navigate(`/san-pham/${product.id}`)}>
             <img src={product.image} alt="product" />
             <h2>{product.name}</h2>
