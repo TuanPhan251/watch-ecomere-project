@@ -1,16 +1,5 @@
 import styled, { keyframes } from "styled-components";
 
-const Growth = keyframes`
-  from {
-    opacity: 0;
-    transform: scale(0);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-`;
-
 export const CartItems = styled.div`
   position: relative;
   width: 100%;
@@ -19,28 +8,15 @@ export const CartItems = styled.div`
   background-color: #f5f5f5;
   box-shadow: 0 0 5px #595959;
   color: var(--dark-text-color);
-  animation: ${Growth} 0.2s ease-in;
   transform-origin: 95% top;
   z-index: 999;
-
-  &::after {
-    display: block;
-    content: "";
-    position: absolute;
-    top: -8px;
-    right: 4px;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-
-    border-bottom: 10px solid #f5f5f5;
-  }
 
   &::before {
     display: block;
     content: "";
     position: absolute;
-    top: -10px;
-    height: 10px;
+    top: -40px;
+    height: 40px;
     width: 100%;
   }
 `;

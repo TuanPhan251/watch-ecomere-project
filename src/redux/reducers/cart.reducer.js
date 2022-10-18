@@ -9,7 +9,7 @@ const cartReducer = createReducer(initialValue, {
   ADD_PRODUCT_ACTION: (state, actions) => {
     const { product } = actions.payload;
 
-    let index = state.cartList.findIndex((item) => item.id === product.data.id);
+    let index = state.cartList.findIndex((item) => item.id === product.id);
 
     if (index === -1) {
       const newItem = {
@@ -25,9 +25,9 @@ const cartReducer = createReducer(initialValue, {
     } else {
       const totalAmount = state.cartList[index].totalAmount + 1;
       const existProduct = {
-        ...product.data,
+        ...product,
         totalAmount: parseInt(totalAmount),
-        totalPrice: parseFloat(totalAmount * product.data.price),
+        totalPrice: parseFloat(totalAmount * product.price),
       };
 
       const newCartList = [...state.cartList];

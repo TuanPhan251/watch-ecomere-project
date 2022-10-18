@@ -13,6 +13,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const { loginData } = useSelector((state) => state.user);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (loginData.error) {
       loginForm.setFields([
@@ -27,6 +28,7 @@ const LoginPage = () => {
       ]);
     }
   }, [loginData.error]);
+
   const handleLogin = (values) => {
     dispatch(
       loginAction({
@@ -41,6 +43,7 @@ const LoginPage = () => {
       })
     );
   };
+
   return (
     <S.LoginWrapper>
       <div className="login-container">
