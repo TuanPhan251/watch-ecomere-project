@@ -19,8 +19,8 @@ const CheckoutPage = () => {
     return prev + item.totalPrice;
   }, 0);
 
-  const handleAddProduct = (data) => {
-    dispatch(addProductAction({ data }));
+  const handleAddProduct = (product) => {
+    dispatch(addProductAction({ product }));
   };
 
   const handleRemoveProduct = (data, type) => {

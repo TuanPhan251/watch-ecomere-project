@@ -13,6 +13,7 @@ const RegisterPage = () => {
   const dispatch = useDispatch();
   const { registerData } = useSelector((state) => state.user);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (registerData.error) {
       registerForm.setFields([
@@ -23,6 +24,7 @@ const RegisterPage = () => {
       ]);
     }
   }, [registerData.error]);
+
   const handleRegister = (values) => {
     dispatch(
       registerAction({
@@ -38,6 +40,7 @@ const RegisterPage = () => {
       })
     );
   };
+
   return (
     <S.RegisterWrapper>
       <div className="register-container">

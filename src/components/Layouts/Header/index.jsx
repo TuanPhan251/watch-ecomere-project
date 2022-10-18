@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { Space, Badge, Drawer } from "antd";
+import { Space, Badge, Drawer, Avatar } from "antd";
+import { UserOutlined } from "@ant-design/icons";
 
 import CartDrawer from "./Cart";
 
-import logo from "../../../assets/logo/logo.png";
 import * as S from "./style";
 import { ROUTES } from "../../../constants/routes";
 
@@ -16,6 +16,8 @@ const Header = () => {
   const { cartList } = useSelector((state) => state.cart);
   const [headerBgrColor, setHeaderBgrColor] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
+
+  const accessToken = localStorage.getItem("accessToken");
 
   const handleChangeHeaderBgrColor = () => {
     window.scrollY > 80 ? setHeaderBgrColor(true) : setHeaderBgrColor(false);
@@ -561,10 +563,52 @@ const Header = () => {
 
       <S.HeaderRight>
         <Space>
-          <p className="userName">Welcome {userInfo.data.userName}</p>
-          <Link to={ROUTES.LOGIN}>
-            <span>ĐĂNG NHẬP</span>
-          </Link>
+          <S.UserWrapper>
+            <p className="userName">{userInfo.data.userName}</p>
+
+            <div className="user_icon">
+              <i className="fa-solid fa-circle-user"></i>
+
+              <div className="user_info-wrapper">
+                <div className="user_info-img">
+                  <Avatar size={100}>
+                    <UserOutlined />
+                  </Avatar>
+
+                  <p>{userInfo.data.email}</p>
+                </div>
+
+                <div className="user_actions">
+                  {userInfo.data.role === "admin" ? (
+                    <Link
+                      to={ROUTES.ADMIN.DASH_BOARD}
+                      className="user_actions-btn"
+                    >
+                      Tới trang quản trị
+                    </Link>
+                  ) : (
+                    <>
+                      <Link to="" className="user_actions-btn">
+                        Đơn hàng của bạn
+                      </Link>
+                      <Link to="" className="user_actions-btn">
+                        Sản phẩm đã thích
+                      </Link>
+                    </>
+                  )}
+                  <Link to="" className="user_actions-btn">
+                    Đăng xuất
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </S.UserWrapper>
+
+          {!accessToken && (
+            <Link to={ROUTES.LOGIN}>
+              <span>ĐĂNG NHẬP</span>
+            </Link>
+          )}
 
           <S.HeaderCart>
             <Badge count={itemsAmount}>
