@@ -1,6 +1,17 @@
 import { useNavigate } from "react-router-dom";
 
-import { Select, Pagination, Row, Col, Button, Collapse, Checkbox } from "antd";
+import {
+  Select,
+  Pagination,
+  Row,
+  Col,
+  Button,
+  Collapse,
+  Checkbox,
+  Space,
+  Tag,
+  Slider,
+} from "antd";
 import { TreeSelect } from "antd";
 import { useEffect, useState } from "react";
 
@@ -22,11 +33,17 @@ const BrandPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { productList } = useSelector((state) => state.product);
+
   const { categoryList } = useSelector((state) => state.category);
   const [value, setValue] = useState([]);
   const [filterParams, setFilterParams] = useState({
-    filterCategoryId: "",
-    filterKeyWord: "",
+    categoryId: "",
+    keyword: "",
+    priceSort: "",
+    type: "",
+    caseSize: "",
+    glassMaterial: "",
+    price: [],
   });
 
   const onChange = (newValue) => {
@@ -95,6 +112,63 @@ const BrandPage = () => {
     );
   };
 
+  const handleFilterCaseSize = (key, values) => {
+    console.log(key);
+    if (values) {
+      var newValue = values.split(",").map(Number);
+    }
+
+    setFilterParams({
+      ...filterParams,
+      [key]: newValue,
+    });
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          [key]: newValue,
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
+  const handleChangeFilterParams = (key, value) => {
+    console.log(value);
+    setFilterParams({
+      ...filterParams,
+      [key]: value,
+    });
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          [key]: value,
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
+  const handleRemoveFilterKeyword = () => {
+    setFilterParams({
+      ...filterParams,
+      keyword: "",
+    });
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          keyword: "",
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
   const renderProducts = () => {
     return productList.data.map((item) => {
       return (
@@ -116,6 +190,7 @@ const BrandPage = () => {
       );
     });
   };
+
   return (
     <main>
       <S.BrandPageWrapper>
@@ -169,14 +244,21 @@ const BrandPage = () => {
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
         </S.SearchBrandWrapper>
+        <Space style={{ marginBottom: 16, marginLeft: 12 }}>
+          {filterParams.keyword && (
+            <Tag
+              color="geekblue"
+              closable
+              onChange={() => handleRemoveFilterKeyword()}
+            >
+              KeyWord: {filterParams.keyword}
+            </Tag>
+          )}
+        </Space>
 
         <S.BrandFilterWrapper>
           <span>Bộ lọc: </span>
-          <TreeSelect
-            // onChange={(e) => handleFilterCategory(e.target.value)}
-            {...tProps}
-            style={{ width: 200, marginLeft: "8px" }}
-          />
+          <TreeSelect {...tProps} style={{ width: 200, marginLeft: "8px" }} />
           <Select
             allowClear
             placeholder="Giá"
@@ -184,9 +266,10 @@ const BrandPage = () => {
               width: 120,
               marginLeft: "8px",
             }}
+            onChange={(value) => handleFilter("priceSort", value)}
           >
-            <Option value="low-high">Thấp - Cao</Option>
-            <Option value="high-low">Cao - Thấp</Option>
+            <Option value="asc">Thấp - Cao</Option>
+            <Option value="desc">Cao - Thấp</Option>
           </Select>
           <Select
             allowClear
@@ -195,9 +278,10 @@ const BrandPage = () => {
               width: 160,
               marginLeft: "8px",
             }}
+            onChange={(value) => handleFilter("type", value)}
           >
-            <Option value="automatic">Cơ tự động(automatic)</Option>
-            <Option value="pin">Dùng pin</Option>
+            <Option value="Pin">Pin</Option>
+            <Option value="Automatic">Tự động</Option>
           </Select>
           <Select
             allowClear
@@ -206,11 +290,12 @@ const BrandPage = () => {
               width: 160,
               marginLeft: "8px",
             }}
+            onChange={(value) => handleFilterCaseSize("caseSize", value)}
           >
-            <Option value="36">Dưới 36mm</Option>
-            <Option value="36-40">Từ 36mm - 40mm</Option>
-            <Option value="40-44">Từ 40mm - 44mm</Option>
-            <Option value="44">Trên 44mm</Option>
+            <Option value="0,35.99">Dưới 36mm</Option>
+            <Option value="36,40.99">Từ 36mm - 40mm</Option>
+            <Option value="41,44.99">Từ 41mm - 44mm</Option>
+            <Option value="45,100">Trên 44mm</Option>
           </Select>
           <Select
             allowClear
@@ -219,12 +304,20 @@ const BrandPage = () => {
               width: 160,
               marginLeft: "8px",
             }}
+            onChange={(value) => handleFilter("glassMaterial", value)}
           >
-            <Option value="mineral">Kính khoáng</Option>
+            <Option value="Mineral Glass">Kính khoáng</Option>
             <Option value="sapphire">Sapphire</Option>
           </Select>
         </S.BrandFilterWrapper>
-
+        <Slider
+          range
+          min={0}
+          max={15000000}
+          step={100000}
+          onChange={(value) => handleChangeFilterParams("price", value)}
+          style={{ width: "40%" }}
+        ></Slider>
         <S.ProductsWrapper>
           <Row gutter={[8, 8]}>{renderProducts()}</Row>
 
