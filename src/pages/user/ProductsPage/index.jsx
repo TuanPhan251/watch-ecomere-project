@@ -12,6 +12,7 @@ import {
   Input,
   Space,
   Tag,
+  Radio,
 } from "antd";
 
 import {
@@ -30,7 +31,12 @@ const ProductPage = () => {
   const dispatch = useDispatch();
   const [filterParams, setFilterParams] = useState({
     categoryId: [],
-    keyWord: "",
+    keyword: "",
+    priceSort: "",
+    type: [],
+    caseSize: "",
+    nameCaseSize: "",
+    glassMaterial: [],
   });
   const { productList } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
@@ -60,6 +66,7 @@ const ProductPage = () => {
       })
     );
   };
+
   const handleFilter = (key, values) => {
     setFilterParams({
       ...filterParams,
@@ -76,6 +83,30 @@ const ProductPage = () => {
       })
     );
   };
+
+  const handleFilterCaseSize = (key, values, nameCaseSize) => {
+    if (values) {
+      var newValue = values.split(",").map(Number);
+    }
+    setFilterParams({
+      ...filterParams,
+      [key]: newValue,
+      nameCaseSize: nameCaseSize,
+    });
+    console.log(filterParams.caseSize);
+
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          [key]: newValue,
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
   const handleRemoveFilterCategory = (id) => {
     const newCategoryId = filterParams.categoryId.filter((item) => item !== id);
     setFilterParams({
@@ -94,16 +125,56 @@ const ProductPage = () => {
     );
   };
 
-  const handleRemoveFilterKeyWord = () => {
+  const handleRemoveFilterGlass = (filterGlass) => {
+    const newGlass = filterParams.glassMaterial.filter(
+      (item) => item !== filterGlass
+    );
+
     setFilterParams({
       ...filterParams,
-      keyWord: "",
+      glassMaterial: newGlass,
     });
     dispatch(
       getProductListAction({
         params: {
           ...filterParams,
-          keyWord: "",
+          glassMaterial: newGlass,
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
+  const handleRemoveFilterType = (filterType) => {
+    const newType = filterParams.type.filter((item) => item !== filterType);
+
+    setFilterParams({
+      ...filterParams,
+      type: newType,
+    });
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          type: newType,
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
+  const handleRemoveFilterKeyWord = (key) => {
+    setFilterParams({
+      ...filterParams,
+      [key]: "",
+    });
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          [key]: "",
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
         },
@@ -114,12 +185,13 @@ const ProductPage = () => {
   const renderCategory = () => {
     return categoryList.data.map((item) => {
       return (
-        <Checkbox value={item.id} key={item.id}>
-          {item.name}
-        </Checkbox>
+        <Col span={24} key={item.id}>
+          <Checkbox value={item.id}>{item.name}</Checkbox>
+        </Col>
       );
     });
   };
+
   const renderFilterCategory = () => {
     return filterParams.categoryId.map((filterCategoryId) => {
       const filterCategoryName = categoryList.data.find(
@@ -132,6 +204,34 @@ const ProductPage = () => {
           onClose={() => handleRemoveFilterCategory(filterCategoryId)}
         >
           {filterCategoryName.name}
+        </Tag>
+      );
+    });
+  };
+
+  const renderFilterType = () => {
+    return filterParams.type.map((filterType) => {
+      return (
+        <Tag
+          key={filterType}
+          closable
+          onClose={() => handleRemoveFilterType(filterType)}
+        >
+          {filterType}
+        </Tag>
+      );
+    });
+  };
+
+  const renderFilterGlass = () => {
+    return filterParams.glassMaterial.map((filterGlass) => {
+      return (
+        <Tag
+          key={filterGlass}
+          closable
+          onClose={() => handleRemoveFilterGlass(filterGlass)}
+        >
+          {filterGlass}
         </Tag>
       );
     });
@@ -206,7 +306,63 @@ const ProductPage = () => {
                     onChange={(value) => handleFilter("categoryId", value)}
                     value={filterParams.categoryId}
                   >
-                    {renderCategory()}
+                    <Row>{renderCategory()}</Row>
+                  </Checkbox.Group>
+                </Panel>
+                <Panel header="Loại máy" key="2">
+                  <Checkbox.Group
+                    onChange={(value) => handleFilter("type", value)}
+                    value={filterParams.type}
+                  >
+                    <Col span={24}>
+                      <Row>
+                        <Checkbox value="Pin">Pin</Checkbox>
+                      </Row>
+                      <Row>
+                        <Checkbox value="Automatic">Tự động</Checkbox>
+                      </Row>
+                    </Col>
+                  </Checkbox.Group>
+                </Panel>
+                <Panel header="Đường kính mặt" key="3">
+                  <Radio.Group
+                    onChange={(e) =>
+                      handleFilterCaseSize(
+                        "caseSize",
+                        e.target.value,
+                        e.target.name
+                      )
+                    }
+                    // value={filterParams.caseSize}
+                  >
+                    <Radio value={undefined}>Tất cả các kích thước</Radio>
+                    <Radio value="0,35.99" name="Dưới 36mm">
+                      Dưới 36mm
+                    </Radio>
+                    <Radio value="36,40.99" name="Từ 36mm - 40mm">
+                      Từ 36mm - 40mm
+                    </Radio>
+                    <Radio value="41,44.99" name="Từ 41mm - 44mm">
+                      Từ 41mm - 44mm
+                    </Radio>
+                    <Radio value="45,100" name="Trên 44mm">
+                      Trên 44mm
+                    </Radio>
+                  </Radio.Group>
+                </Panel>
+                <Panel header="Chất liệu kính" key="4">
+                  <Checkbox.Group
+                    onChange={(value) => handleFilter("glassMaterial", value)}
+                    value={filterParams.glassMaterial}
+                  >
+                    <Col span={24}>
+                      <Row>
+                        <Checkbox value="Mineral Glass">Kính khoáng</Checkbox>
+                      </Row>
+                      <Row>
+                        <Checkbox value="sapphire">Sapphire</Checkbox>
+                      </Row>
+                    </Col>
                   </Checkbox.Group>
                 </Panel>
               </Collapse>
@@ -221,8 +377,8 @@ const ProductPage = () => {
                     <input
                       type="text"
                       placeholder="Tìm tên thương hiệu"
-                      onChange={(e) => handleFilter("keyWord", e.target.value)}
-                      value={filterParams.keyWord}
+                      onChange={(e) => handleFilter("keyword", e.target.value)}
+                      value={filterParams.keyword}
                     />
                     <button>
                       <i className="fa-solid fa-magnifying-glass"></i>
@@ -231,16 +387,39 @@ const ProductPage = () => {
                 </Col>
                 <Space style={{ marginBottom: 16 }}></Space>
                 <Col span={8}>
-                  <Select style={{ width: "100%" }}></Select>
+                  <Select
+                    allowClear
+                    placeholder="Giá"
+                    style={{
+                      width: "100%",
+                    }}
+                    onChange={(value) => handleFilter("priceSort", value)}
+                  >
+                    <Option value="asc">Thấp - Cao</Option>
+                    <Option value="desc">Cao - Thấp</Option>
+                  </Select>
                 </Col>
               </Row>
               <Space style={{ marginBottom: 16 }}>
                 {renderFilterCategory()}
-                {filterParams.keyWord && (
-                  <Tag closable onClose={() => handleRemoveFilterKeyWord()}>
-                    KeyWord: {filterParams.keyWord}
+                {filterParams.keyword && (
+                  <Tag
+                    closable
+                    onClose={() => handleRemoveFilterKeyWord("keyword")}
+                  >
+                    KeyWord: {filterParams.keyword}
                   </Tag>
                 )}
+                {renderFilterType()}
+                {filterParams.caseSize && (
+                  <Tag
+                    closable
+                    // onClose={() => handleRemoveFilterKeyWord("caseSize")}
+                  >
+                    CaseSize: {filterParams.keyword}
+                  </Tag>
+                )}
+                {renderFilterGlass()}
               </Space>
               <Row gutter={[8, 8]}>{renderProducts()}</Row>
               <Row style={{ justifyContent: "center" }}>

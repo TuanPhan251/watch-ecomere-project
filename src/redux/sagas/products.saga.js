@@ -27,6 +27,20 @@ function* getProductListSaga(action) {
           price_gte: params.priceRange[0],
           price_lte: params.priceRange[1],
         }),
+        ...(params.priceSort && {
+          _sort: "price",
+          _order: params.priceSort,
+        }),
+        ...(params.type && {
+          movement: params.type,
+        }),
+        ...(params.caseSize && {
+          caseSize_gte: params.caseSize[0],
+          caseSize_lte: params.caseSize[1],
+        }),
+        ...(params.glassMaterial && {
+          glassMaterial: params.glassMaterial,
+        }),
       },
     });
     yield put({
