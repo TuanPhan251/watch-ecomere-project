@@ -54,7 +54,7 @@ export const SidebarLink = styled(Link)`
     font-size: 18px;
   }
 
-  :nth-child(4) {
+  :nth-child(6) {
     display: flex;
     justify-content: center;
     align-items: center;

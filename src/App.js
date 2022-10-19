@@ -15,6 +15,8 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import AdminProductPage from "./pages/admin/AdminProductPage";
+import AdminAccountsPage from "./pages/admin/AdminAcountsPage";
+import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
 import CreateProductPage from "./pages/admin/AdminProductPage/CreateProductPage";
 import UpdateProductPage from "./pages/admin/AdminProductPage/UpdateProductPage";
 import AdminUsersPage from "./pages/admin/AdminUserPage";
@@ -67,6 +69,14 @@ function App() {
             <Route
               path={ROUTES.ADMIN.PRODUCT_LIST_PAGE}
               element={<AdminProductPage />}
+            />
+            <Route
+              path={ROUTES.ADMIN.ACCOUNT_LIST_PAGE}
+              element={<AdminAccountsPage />}
+            />
+            <Route
+              path={ROUTES.ADMIN.CATEGORY_LIST_PAGE}
+              element={<AdminCategoriesPage />}
             />
             <Route
               path={ROUTES.ADMIN.CREATE_PRODUCT_PAGE}
