@@ -7,19 +7,21 @@ import { getUserInfoAction } from "../src/redux/actions";
 import GlobalStyle from "./utils/GlobalStyle";
 import { ROUTES } from "./constants/routes";
 
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+
 import LoginLayout from "./components/Layouts/LoginLayout";
 import AdminLayout from "./components/Layouts/AdminLayout";
 import UserLayout from "./components/Layouts/UserLayout";
 
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import AdminProductPage from "./pages/admin/AdminProductPage";
 import AdminAccountsPage from "./pages/admin/AdminAcountsPage";
 import AdminCategoriesPage from "./pages/admin/AdminCategoriesPage";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+import AdminUsersPage from "./pages/admin/AdminUserPage";
 import CreateProductPage from "./pages/admin/AdminProductPage/CreateProductPage";
 import UpdateProductPage from "./pages/admin/AdminProductPage/UpdateProductPage";
-import AdminUsersPage from "./pages/admin/AdminUserPage";
+
 import HomePage from "./pages/Home/";
 import ProductPage from "./pages/user/ProductsPage";
 import ProductDetailPage from "./pages/ProductDetail";
