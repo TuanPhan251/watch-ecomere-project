@@ -51,6 +51,8 @@ const CreateProductPage = () => {
 
   return (
     <S.CreateProductFormWrapper>
+      <h3>Tạo sản phẩm mới</h3>
+
       <Form
         form={createForm}
         name="basic"
