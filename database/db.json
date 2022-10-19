@@ -16,6 +16,7 @@
       "waterResist": "1 ATM",
       "caseWidth": 9.6,
       "warranty": 1,
+      "content": "",
       "updatedAt": 1665479512228
     },
     {
@@ -33,7 +34,9 @@
       "movement": "Pin",
       "waterResist": "3 ATM",
       "caseWidth": 9,
-      "warranty": 1
+      "warranty": 1,
+
+      "content": ""
     },
     {
       "id": 3,
@@ -50,7 +53,9 @@
       "movement": "Pin",
       "waterResist": "1 ATM",
       "caseWidth": 9.4,
-      "warranty": 1
+      "warranty": 1,
+
+      "content": ""
     },
     {
       "id": 4,
@@ -67,7 +72,9 @@
       "movement": "Pin",
       "waterResist": "5 ATM",
       "caseWidth": 9.6,
-      "warranty": 1
+      "warranty": 1,
+
+      "content": ""
     },
     {
       "id": 5,
@@ -84,7 +91,9 @@
       "movement": "Pin",
       "waterResist": "5 ATM",
       "caseWidth": 10.2,
-      "warranty": 1
+      "warranty": 1,
+
+      "content": ""
     },
     {
       "name": "Đồng hồ CITIZEN 39.2 mm Nam BM7523-12X ",
@@ -101,6 +110,7 @@
       "movement": "Automatic",
       "waterResist": "5 ATM",
       "warranty": 1,
+      "content": "",
       "createdAt": 1665404805230,
       "updatedAt": 1665479423670,
       "id": 6
@@ -120,6 +130,7 @@
       "movement": "Automatic",
       "waterResist": "5 ATM",
       "warranty": 1,
+      "content": "",
       "createdAt": 1665406268612,
       "updatedAt": 1665406268612,
       "id": 7
@@ -139,6 +150,7 @@
       "movement": "Automatic",
       "waterResist": "10 ATM",
       "warranty": 1,
+      "content": "",
       "createdAt": 1665407106641,
       "updatedAt": 1665539275869,
       "id": 8
@@ -158,6 +170,7 @@
       "movement": "Pin",
       "waterResist": "3 ATM",
       "warranty": 1,
+      "content": "",
       "createdAt": 1665479678392,
       "updatedAt": 1665538876481,
       "id": 9

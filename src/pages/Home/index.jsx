@@ -4,6 +4,8 @@ import { ROUTES } from "../../constants/routes";
 
 import HomeProductList from "./ProductSections/HomeProductList";
 
+import headerVideo from "../../assets/banner/Cinematic Watch Broll.webm";
+
 import headerImg from "../../assets/banner/header.jpg";
 import menImg from "../../assets/banner/men-1.webp";
 import womenImg from "../../assets/banner/women-1.webp";
@@ -16,7 +18,8 @@ const HomePage = () => {
   return (
     <S.HomePageWrapper>
       <div className="header_img-wrapper">
-        <img alt="" src={headerImg} />
+        {/* <img alt="" src={headerImg} /> */}
+        <video src={headerVideo} muted loop autoPlay />
       </div>
 
       <section className="men_products-section">
