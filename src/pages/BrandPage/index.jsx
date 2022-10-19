@@ -28,6 +28,12 @@ import { PRODUCT_LIST_LIMIT } from "../../constants/paginations";
 const { Panel } = Collapse;
 const { Option } = Select;
 const { SHOW_PARENT } = TreeSelect;
+const PHUONG = [
+  {
+    RANGE: [38, 40],
+    NAME: "TU 38 DEN 40 MM",
+  },
+];
 
 const BrandPage = () => {
   const navigate = useNavigate();

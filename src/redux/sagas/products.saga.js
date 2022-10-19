@@ -1,4 +1,4 @@
-import { takeEvery, put } from "redux-saga/effects";
+import { takeEvery, debounce, put } from "redux-saga/effects";
 import axios from "axios";
 
 import { PRODUCT_ACTION, REQUEST, SUCCESS, FAIL } from "../CONSTANTS";
@@ -170,7 +170,11 @@ function* deleteProductSaga(action) {
 }
 
 export default function* productSaga() {
-  yield takeEvery(REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST), getProductListSaga);
+  yield debounce(
+    500,
+    REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST),
+    getProductListSaga
+  );
   yield takeEvery(
     REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
     getProductDetailSaga

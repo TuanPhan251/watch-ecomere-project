@@ -327,11 +327,7 @@ const ProductPage = () => {
                 <Panel header="Đường kính mặt" key="3">
                   <Radio.Group
                     onChange={(e) =>
-                      handleFilterCaseSize(
-                        "caseSize",
-                        e.target.value,
-                        e.target.name
-                      )
+                      handleFilterCaseSize("caseSize", e.target.value, e.target)
                     }
                     // value={filterParams.caseSize}
                   >
