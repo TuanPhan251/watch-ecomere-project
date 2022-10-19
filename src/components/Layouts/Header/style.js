@@ -1,17 +1,6 @@
 import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
-const Growth = keyframes`
-  from {
-    opacity: 0;
-    transform: scale(0);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-`;
-
 export const HeaderContainer = styled.header`
   display: flex;
   align-items: center;
@@ -23,12 +12,8 @@ export const HeaderContainer = styled.header`
   height: var(--header-height);
   width: 100%;
   padding: 0 20px;
-  border-bottom: ${(props) =>
-    props.backgroundColor ? "1px solid #8c8c8c" : "none"};
-  box-shadow: 0 0 10px #595959;
   transition: all 0.2s ease;
-  background-color: ${(props) =>
-    props.backgroundColor ? "#fff" : "transparent"};
+  background-color: #000;
   /* color: ${(props) => (props.backgroundColor ? "#fff" : "#000")}; */
   z-index: 99;
 
@@ -42,6 +27,7 @@ export const HeaderLogo = styled.div`
 
   h2 {
     font-family: "Charmonman", cursive;
+    color: #fff;
   }
 
   @media (max-width: 876px) {
@@ -75,7 +61,7 @@ export const HeaderNav = styled.ul`
       padding: 8px;
       text-align: center;
       font-weight: 500;
-      color: var(--dark-text-color);
+      color: #fff;
       text-decoration: none;
 
       &:hover {
@@ -120,7 +106,7 @@ export const HeaderNavMobileList = styled.ul`
       padding: 16px 20px;
       font-weight: 500;
       text-align: center;
-      color: var(--dark-text-color);
+      color: #fff;
       transition: all 0.3s ease;
 
       :hover {
@@ -132,6 +118,7 @@ export const HeaderNavMobileList = styled.ul`
 
 export const HeaderRight = styled.div`
   .userName {
+    color: #fff;
     font-size: 17px;
   }
 
@@ -141,7 +128,7 @@ export const HeaderRight = styled.div`
     padding: 8px;
     text-align: center;
     font-weight: 500;
-    color: var(--dark-text-color);
+    color: #fff;
     text-decoration: none;
 
     &:hover {
@@ -163,6 +150,7 @@ export const UserWrapper = styled.div`
     i {
       margin-left: 4px;
       padding: 4px;
+      color: #fff;
       font-size: 20px;
       cursor: pointer;
     }
@@ -175,7 +163,7 @@ export const UserWrapper = styled.div`
       padding: 12px;
       background-color: #fff;
       border-radius: 4px;
-      box-shadow: var(--box-shadow);
+      box-shadow: 0 0 5px #262626;
       transition: all 0.3s ease;
       transition-delay: 0.2s;
       opacity: 0;
@@ -213,6 +201,7 @@ export const UserWrapper = styled.div`
           cursor: pointer;
           border: none;
           font-size: 16px;
+          color: var(--dark-text-color);
           background-color: #fff;
           transition: all 0.3s ease;
 
@@ -245,10 +234,11 @@ export const CartItemsWrapper = styled.div`
   opacity: 0;
   visibility: hidden;
   position: absolute;
-  top: 200px;
+  top: 100px;
   right: 0;
   width: 500px;
   transition: all 0.3s ease;
+  transition-delay: 0.2s;
 `;
 
 export const HeaderCart = styled.div`
@@ -257,6 +247,7 @@ export const HeaderCart = styled.div`
   cursor: pointer;
 
   & i {
+    color: #fff;
     font-size: 20px;
   }
 

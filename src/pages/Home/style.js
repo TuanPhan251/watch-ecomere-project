@@ -11,6 +11,12 @@ export const HomePageWrapper = styled.main`
       max-height: 100vh;
       object-fit: cover;
     }
+
+    video {
+      width: 100%;
+      height: 100vh;
+      object-fit: cover;
+    }
   }
 
   @media (max-width: 868px) {
@@ -18,6 +24,12 @@ export const HomePageWrapper = styled.main`
       max-width: 100%;
 
       img {
+        width: 100%;
+        height: 100vh;
+        object-fit: cover;
+      }
+
+      video {
         width: 100%;
         height: 100vh;
         object-fit: cover;
