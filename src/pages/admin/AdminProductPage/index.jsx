@@ -52,6 +52,7 @@ const AdminProductPage = () => {
       getProductListAction({
         params: {
           ...filterParams,
+          [type]: value,
           page: 1,
           limit: 10,
         },

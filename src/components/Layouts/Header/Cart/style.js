@@ -5,7 +5,7 @@ export const CartItems = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 2px;
-  background-color: #f5f5f5;
+  background-color: #fff;
   box-shadow: 0 0 5px #595959;
   color: var(--dark-text-color);
   transform-origin: 95% top;
@@ -107,6 +107,11 @@ export const CartItemsAction = styled.div`
 
     &:hover {
       background-color: #a8071a;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+      }
     }
   }
 `;

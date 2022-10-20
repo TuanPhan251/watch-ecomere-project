@@ -55,7 +55,7 @@ export const CheckoutCartContainer = styled.div`
     position: sticky;
     top: var(--header-height);
     right: 0;
-    width: 200px;
+    width: 300px;
     height: 200px;
     display: flex;
     flex-direction: column;
