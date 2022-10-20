@@ -43,14 +43,11 @@ const AdminProductPage = () => {
     priceRange: [0, MAXPRICE],
   });
 
-  const handleChangeFilterParams = (value, type) => {
+  const handleFilter = (value, type) => {
     setFilterParams({
       ...filterParams,
       [type]: value,
     });
-  };
-
-  const handleFilter = () => {
     dispatch(
       getProductListAction({
         params: {
@@ -73,14 +70,6 @@ const AdminProductPage = () => {
     );
     dispatch(getCategoriesListAction());
   }, []);
-
-  useEffect(() => {
-    const filter = setTimeout(handleFilter, 300);
-
-    return () => {
-      clearTimeout(filter);
-    };
-  }, [filterParams]);
 
   const handleDeleteProduct = (id) => {
     dispatch(
@@ -213,15 +202,13 @@ const AdminProductPage = () => {
           <Input
             placeholder="Nhập để tìm sản phẩm"
             style={{ width: "100%" }}
-            onChange={(e) =>
-              handleChangeFilterParams(e.target.value, "keyword")
-            }
+            onChange={(e) => handleFilter(e.target.value, "keyword")}
           />
 
           <p>Hãng</p>
           <Checkbox.Group
             value={filterParams.categoryId}
-            onChange={(value) => handleChangeFilterParams(value, "categoryId")}
+            onChange={(value) => handleFilter(value, "categoryId")}
           >
             {renderCategoryOptions()}
           </Checkbox.Group>
@@ -229,7 +216,7 @@ const AdminProductPage = () => {
           <p>Giới tính</p>
           <Checkbox.Group
             value={filterParams.gender}
-            onChange={(value) => handleChangeFilterParams(value, "gender")}
+            onChange={(value) => handleFilter(value, "gender")}
           >
             <Checkbox value="male">Nam</Checkbox>
             <Checkbox value="female">Nữ</Checkbox>
@@ -241,9 +228,7 @@ const AdminProductPage = () => {
             min={0}
             max={15000000}
             step={100000}
-            onAfterChange={(value) =>
-              handleChangeFilterParams(value, "priceRange")
-            }
+            onAfterChange={(value) => handleFilter(value, "priceRange")}
           ></Slider>
 
           <Button

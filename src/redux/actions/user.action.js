@@ -6,3 +6,12 @@ export const registerAction = createAction(REQUEST(USER_ACTION.REGISTER));
 export const getUserInfoAction = createAction(
   REQUEST(USER_ACTION.GET_USER_INFO)
 );
+export const getUserListAction = createAction(
+  REQUEST(USER_ACTION.GET_USER_LIST)
+);
+export const getUserDetailAction = createAction(
+  REQUEST(USER_ACTION.GET_USER_DETAIL)
+);
+export const updateUserInfoAction = createAction(
+  REQUEST(USER_ACTION.UPDATE_USER_INFO)
+);

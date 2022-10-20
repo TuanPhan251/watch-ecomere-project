@@ -16,6 +16,7 @@ export const ROUTES = {
     DASH_BOARD: "/admin/dashboard",
     USER_LIST_PAGE: "/admin/users",
     ACCOUNT_LIST_PAGE: "/admin/accounts",
+    ACCOUNT_DETAIL_PAGE: "/admin/accounts/:id",
     PRODUCT_LIST_PAGE: "/admin/products",
     CATEGORY_LIST_PAGE: "/admin/categories",
     CREATE_PRODUCT_PAGE: "/admin/products/create",

@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ReactQuill from "react-quill";
 
 import { Button, Select, Form, Input, InputNumber, Modal } from "antd";
 
@@ -206,6 +207,13 @@ const CreateProductPage = () => {
           ]}
         >
           <InputNumber />
+        </Form.Item>
+
+        <Form.Item label="Nội dung mô tả" name="content">
+          <ReactQuill
+            theme="snow"
+            onChange={(value) => createForm.setFieldsValue({ content: value })}
+          />
         </Form.Item>
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
