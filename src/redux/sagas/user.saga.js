@@ -74,8 +74,80 @@ function* getUserInfoSaga(action) {
   }
 }
 
+function* getUserList(action) {
+  try {
+    const { params } = action.payload;
+    const result = yield axios.get(`http://localhost:4000/users`, {
+      params: {
+        _page: params.page,
+        _limit: params.limit,
+      },
+    });
+    yield put({
+      type: SUCCESS(USER_ACTION.GET_USER_LIST),
+      payload: {
+        data: result.data,
+        meta: {
+          total: parseInt(result.headers["x-total-count"]),
+          page: params.page,
+          limit: params.limit,
+        },
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(USER_ACTION.GET_USER_LIST),
+      payload: {
+        error: "Đã có lỗi xảy ra",
+      },
+    });
+  }
+}
+
+function* getUserDetailSaga(action) {
+  try {
+    const { id } = action.payload;
+    const result = yield axios.get(`http://localhost:4000/users/${id}`);
+    yield put({
+      type: SUCCESS(USER_ACTION.GET_USER_DETAIL),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(USER_ACTION.GET_USER_DETAIL),
+      payload: "Đã có lỗi xảy ra",
+    });
+  }
+}
+
+function* updateUserInfoSaga(action) {
+  try {
+    const { id, values } = action.payload;
+    const result = yield axios.patch(
+      `http://localhost:4000/users/${id}`,
+      values
+    );
+    yield put({
+      type: SUCCESS(USER_ACTION.UPDATE_USER_INFO),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(USER_ACTION.UPDATE_USER_INFO),
+      payload: "Đã có lỗi xảy ra",
+    });
+  }
+}
+
 export default function* userSaga() {
   yield takeEvery(REQUEST(USER_ACTION.LOGIN), loginSaga);
   yield takeEvery(REQUEST(USER_ACTION.REGISTER), registerSaga);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_INFO), getUserInfoSaga);
+  yield takeEvery(REQUEST(USER_ACTION.GET_USER_LIST), getUserList);
+  yield takeEvery(REQUEST(USER_ACTION.GET_USER_DETAIL), getUserDetailSaga);
+  yield takeEvery(REQUEST(USER_ACTION.UPDATE_USER_INFO), updateUserInfoSaga);
 }
