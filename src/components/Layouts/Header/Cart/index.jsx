@@ -4,6 +4,8 @@ import { removeProductAction } from "../../../../redux/actions/cart.actions";
 
 import * as S from "./style";
 import emptyCartLogo from "../../../../assets/cart/empty_cart_retina.png";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../../../constants/routes";
 
 const CartDrawer = ({ cartList }) => {
   const dispatch = useDispatch();
@@ -50,6 +52,7 @@ const CartDrawer = ({ cartList }) => {
             style={{
               textAlign: "center",
               margin: "24px 0 12px",
+              fontSize: 16,
             }}
           >
             Chưa có sản phẩm trong giỏ hàng
@@ -63,7 +66,9 @@ const CartDrawer = ({ cartList }) => {
           </S.CartItemsContent>
 
           <S.CartItemsAction>
-            <button>Chi tiết giỏ hàng</button>
+            <button>
+              <Link to={ROUTES.USER.CHECKOUT}>Chi tiết giỏ hàng</Link>
+            </button>
           </S.CartItemsAction>
         </>
       )}

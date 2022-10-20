@@ -19,12 +19,15 @@ const CheckoutPage = () => {
     return prev + item.totalPrice;
   }, 0);
 
-  const handleAddProduct = (product) => {
+  const handleAddProduct = (item) => {
+    const product = {
+      data: { ...item },
+    };
     dispatch(addProductAction({ product }));
   };
 
-  const handleRemoveProduct = (data, type) => {
-    dispatch(removeProductAction({ data, type }));
+  const handleRemoveProduct = (item, type) => {
+    dispatch(removeProductAction({ item, type }));
   };
 
   const renderCartItems = () => {

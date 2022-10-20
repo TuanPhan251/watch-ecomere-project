@@ -353,10 +353,10 @@ const ProductPage = () => {
                   >
                     <Col span={24}>
                       <Row>
-                        <Checkbox value="Mineral Glass">Kính khoáng</Checkbox>
+                        <Checkbox value="Mineral glass">Kính khoáng</Checkbox>
                       </Row>
                       <Row>
-                        <Checkbox value="sapphire">Sapphire</Checkbox>
+                        <Checkbox value="Sapphire">Sapphire</Checkbox>
                       </Row>
                     </Col>
                   </Checkbox.Group>
