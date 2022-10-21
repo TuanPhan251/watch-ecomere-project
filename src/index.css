@@ -1,6 +1,6 @@
 @import "antd/dist/antd.css";
-@import url("https://fonts.googleapis.com/css2?family=Charmonman:wght@700&display=swap");
 @import "react-quill/dist/quill.snow.css";
+@import url("https://fonts.googleapis.com/css2?family=Charmonman:wght@400;700&display=swap");
 
 * {
   margin: 0;

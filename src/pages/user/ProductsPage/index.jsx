@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -9,10 +9,10 @@ import {
   Collapse,
   Checkbox,
   Button,
-  Input,
   Space,
   Tag,
   Radio,
+  Spin,
 } from "antd";
 
 import {
@@ -21,12 +21,20 @@ import {
 } from "../../../redux/actions";
 import { PRODUCT_LIST_LIMIT } from "../../../constants/paginations";
 
+import menBanner from "../../../assets/banner/men-banner.jpg";
+import womenBanner from "../../../assets/banner/women-banner.jpg";
+
 import * as S from "./style";
 
 const { Option } = Select;
 const { Panel } = Collapse;
 
 const ProductPage = () => {
+  const location = useLocation();
+  const { pathname } = location;
+  const bannerImg = pathname === "/nam" ? menBanner : womenBanner;
+  const initialGender = pathname === "/nam" ? "male" : "female";
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [filterParams, setFilterParams] = useState({
@@ -47,12 +55,13 @@ const ProductPage = () => {
         params: {
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
+          gender: initialGender,
         },
       })
     );
 
     dispatch(getCategoriesListAction());
-  }, []);
+  }, [pathname]);
 
   const handleShowMore = () => {
     dispatch(
@@ -61,6 +70,7 @@ const ProductPage = () => {
           ...filterParams,
           page: productList.meta.page + 1,
           limit: PRODUCT_LIST_LIMIT,
+          gender: initialGender,
         },
         more: true,
       })
@@ -79,6 +89,7 @@ const ProductPage = () => {
           [key]: values,
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
+          gender: initialGender,
         },
       })
     );
@@ -101,6 +112,7 @@ const ProductPage = () => {
           ...filterParams,
           [key]: newValue,
           page: 1,
+          gender: initialGender,
           limit: PRODUCT_LIST_LIMIT,
         },
       })
@@ -182,7 +194,7 @@ const ProductPage = () => {
     );
   };
 
-  const renderCategory = () => {
+  const renderCategory = useMemo(() => {
     return categoryList.data.map((item) => {
       return (
         <Col span={24} key={item.id}>
@@ -190,7 +202,7 @@ const ProductPage = () => {
         </Col>
       );
     });
-  };
+  }, [categoryList.data]);
 
   const renderFilterCategory = () => {
     return filterParams.categoryId.map((filterCategoryId) => {
@@ -237,7 +249,7 @@ const ProductPage = () => {
     });
   };
 
-  const renderProducts = () => {
+  const renderProducts = useMemo(() => {
     return productList.data.map((item) => {
       return (
         <Col
@@ -257,45 +269,26 @@ const ProductPage = () => {
         </Col>
       );
     });
-  };
+  }, [productList.data]);
+
+  const renderPageBanner = useMemo(() => {
+    return (
+      <>
+        <img alt="" src={bannerImg} />
+
+        {pathname === "/nam" ? <h2>Đồng hồ nam</h2> : <h2>Đồng hồ nữ</h2>}
+
+        <div className="overlay"></div>
+      </>
+    );
+  }, [pathname]);
 
   return (
     <main>
+      <S.PageBannerWrapper>{renderPageBanner}</S.PageBannerWrapper>
+
       <S.ProductPageWrapper>
         <Row>
-          <S.ProductBrands>
-            <S.ProductBrandItem>
-              <img
-                alt="Casio logo"
-                src="https://cdn.tgdd.vn/Brand/1/Casio7264-b_39.jpg"
-              />
-            </S.ProductBrandItem>
-            <S.ProductBrandItem>
-              <img
-                alt="Orient logo"
-                src="https://cdn.tgdd.vn/Brand/1/ORIENTl-220x48.jpg"
-              />
-            </S.ProductBrandItem>
-            <S.ProductBrandItem>
-              <img
-                alt="Citizen logo"
-                src="https://cdn.tgdd.vn/Brand/1/Citizen7264-b_41.jpg"
-              />
-            </S.ProductBrandItem>
-            <S.ProductBrandItem>
-              <img
-                alt="Anne logo"
-                src="https://cdn.tgdd.vn/Brand/1/ANNEKLEINl-220x48.jpg"
-              />
-            </S.ProductBrandItem>
-            <S.ProductBrandItem>
-              <img
-                alt="Tissot logo"
-                src="https://cdn.tgdd.vn/Brand/1/MATHEYTISSOTl-220x48.jpg"
-              />
-            </S.ProductBrandItem>
-          </S.ProductBrands>
-
           <Col span={4}>
             <div className="product_filter-wrapper">
               <p className="product_filter-title">Bộ lọc</p>
@@ -306,7 +299,7 @@ const ProductPage = () => {
                     onChange={(value) => handleFilter("categoryId", value)}
                     value={filterParams.categoryId}
                   >
-                    <Row>{renderCategory()}</Row>
+                    <Row>{renderCategory}</Row>
                   </Checkbox.Group>
                 </Panel>
                 <Panel header="Loại máy" key="2">
@@ -366,68 +359,76 @@ const ProductPage = () => {
           </Col>
 
           <Col span={20}>
-            <S.ProductsWrapper>
-              <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-                <Col span={16}>
-                  <S.SearchBrandWrapper>
-                    <input
-                      type="text"
-                      placeholder="Tìm tên thương hiệu"
-                      onChange={(e) => handleFilter("keyword", e.target.value)}
-                      value={filterParams.keyword}
-                    />
-                    <button>
-                      <i className="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                  </S.SearchBrandWrapper>
-                </Col>
-                <Space style={{ marginBottom: 16 }}></Space>
-                <Col span={8}>
-                  <Select
-                    allowClear
-                    placeholder="Giá"
-                    style={{
-                      width: "100%",
-                    }}
-                    onChange={(value) => handleFilter("priceSort", value)}
-                  >
-                    <Option value="asc">Thấp - Cao</Option>
-                    <Option value="desc">Cao - Thấp</Option>
-                  </Select>
-                </Col>
-              </Row>
-              <Space style={{ marginBottom: 16 }}>
-                {renderFilterCategory()}
-                {filterParams.keyword && (
-                  <Tag
-                    closable
-                    onClose={() => handleRemoveFilterKeyWord("keyword")}
-                  >
-                    KeyWord: {filterParams.keyword}
-                  </Tag>
+            <Spin spinning={productList.loading}>
+              <S.ProductsWrapper>
+                <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+                  <Col span={16}>
+                    <S.SearchBrandWrapper>
+                      <input
+                        type="text"
+                        placeholder="Tìm tên thương hiệu"
+                        onChange={(e) =>
+                          handleFilter("keyword", e.target.value)
+                        }
+                        value={filterParams.keyword}
+                      />
+                      <button>
+                        <i className="fa-solid fa-magnifying-glass"></i>
+                      </button>
+                    </S.SearchBrandWrapper>
+                  </Col>
+                  <Space style={{ marginBottom: 16 }}></Space>
+                  <Col span={8}>
+                    <Select
+                      allowClear
+                      placeholder="Giá"
+                      style={{
+                        width: "100%",
+                      }}
+                      onChange={(value) => handleFilter("priceSort", value)}
+                    >
+                      <Option value="asc">Thấp - Cao</Option>
+                      <Option value="desc">Cao - Thấp</Option>
+                    </Select>
+                  </Col>
+                </Row>
+                <Space style={{ marginBottom: 16 }}>
+                  {renderFilterCategory()}
+                  {filterParams.keyword && (
+                    <Tag
+                      closable
+                      onClose={() => handleRemoveFilterKeyWord("keyword")}
+                    >
+                      KeyWord: {filterParams.keyword}
+                    </Tag>
+                  )}
+                  {renderFilterType()}
+                  {filterParams.caseSize && (
+                    <Tag
+                      closable
+                      // onClose={() => handleRemoveFilterKeyWord("caseSize")}
+                    >
+                      CaseSize: {filterParams.keyword}
+                    </Tag>
+                  )}
+                  {renderFilterGlass()}
+                </Space>
+
+                <Row gutter={[8, 8]}>{renderProducts}</Row>
+
+                {productList.data.length !== productList.meta.total && (
+                  <Row style={{ justifyContent: "center" }}>
+                    <Button
+                      style={{ marginTop: 16 }}
+                      size="large"
+                      onClick={() => handleShowMore()}
+                    >
+                      Xem thêm
+                    </Button>
+                  </Row>
                 )}
-                {renderFilterType()}
-                {filterParams.caseSize && (
-                  <Tag
-                    closable
-                    // onClose={() => handleRemoveFilterKeyWord("caseSize")}
-                  >
-                    CaseSize: {filterParams.keyword}
-                  </Tag>
-                )}
-                {renderFilterGlass()}
-              </Space>
-              <Row gutter={[8, 8]}>{renderProducts()}</Row>
-              <Row style={{ justifyContent: "center" }}>
-                <Button
-                  style={{ marginTop: 16 }}
-                  size="large"
-                  onClick={() => handleShowMore()}
-                >
-                  Show More!
-                </Button>
-              </Row>
-            </S.ProductsWrapper>
+              </S.ProductsWrapper>
+            </Spin>
           </Col>
         </Row>
       </S.ProductPageWrapper>
