@@ -14,7 +14,6 @@ import { ROUTES } from "../../../constants/routes";
 const AdminAccountsPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [showModal, setShowModal] = useState(false);
 
   const { userList } = useSelector((state) => state.user);
 

@@ -1,4 +1,26 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const hydrate = keyframes`
+  from {
+    bottom: -100px;
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    bottom: 0;
+    opacity: 1;
+    visibility: visible;
+  }
+`;
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
 
 export const ProductPageWrapper = styled.div`
   width: 90%;
@@ -12,19 +34,51 @@ export const ProductBrands = styled.div`
   padding: 12px;
 `;
 
-export const ProductBrandItem = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 20%;
-  border: 1px solid #ddd;
-  border-collapse: collapse;
-  transition: all 0.2s ease;
-  cursor: pointer;
+export const PageBannerWrapper = styled.div`
+  position: relative;
+  margin-top: var(--header-height);
+  width: 100%;
+  padding-top: 30%;
 
-  &:hover {
-    border: 1px solid #ffd591;
-    box-shadow: var(--box-shadow);
-    z-index: 99;
+  img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  h2 {
+    position: absolute;
+    right: 50%;
+    bottom: 0;
+    margin-bottom: 20px;
+    transform: translateX(50%);
+    text-transform: uppercase;
+    font-size: 40px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0px 0px 10px #262626;
+    animation: ${hydrate} 1s ease;
+    z-index: 2;
+  }
+
+  .overlay {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 50%;
+    background-image: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0),
+      rgba(0, 0, 0, 0.8)
+    );
+    animation: ${fadeIn} 1s ease;
+    z-index: 1;
   }
 `;
 

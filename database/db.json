@@ -263,9 +263,9 @@
       "email": "phuong@gmail.com",
       "password": "$2a$10$6qJRS7gJq8zwVqi9TCjHGuXrcoxDoASoowaUM2qtaj4lHe4ugFO9m",
       "userName": "phuong",
-      "role": "user",
+      "role": "admin",
       "createdAt": "2022-10-13T02:17:19.609Z",
-      "updatedAt": 1666237443399,
+      "updatedAt": 1666266328544,
       "id": 1
     },
     {
