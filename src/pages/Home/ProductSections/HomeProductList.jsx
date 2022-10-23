@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { generatePath, Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -7,6 +7,7 @@ import { getProductListAction } from "../../../redux/actions";
 import { Col, Row } from "antd";
 
 import * as S from "./style";
+import { ROUTES } from "../../../constants/routes";
 
 const HomeProductList = ({ gender }) => {
   const navigate = useNavigate();
@@ -33,10 +34,14 @@ const HomeProductList = ({ gender }) => {
     return displayProducts.map((product) => {
       return (
         <Col span={12} key={product.id}>
-          <S.Product onClick={() => navigate(`/san-pham/${product.id}`)}>
-            <img src={product.image} alt="product" />
-            <h2>{product.name}</h2>
-          </S.Product>
+          <Link
+            to={generatePath(ROUTES.USER.PRODUCT_DETAIL, { id: product.id })}
+          >
+            <S.Product>
+              <img src={product.image} alt="product" />
+              <h2>{product.name}</h2>
+            </S.Product>
+          </Link>
         </Col>
       );
     });

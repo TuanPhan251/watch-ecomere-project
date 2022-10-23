@@ -55,12 +55,16 @@ export const PageBannerWrapper = styled.div`
     position: absolute;
     right: 50%;
     bottom: 0;
+    width: 100%;
     margin-bottom: 20px;
     transform: translateX(50%);
     text-transform: uppercase;
-    font-size: 40px;
-    font-weight: bold;
+    text-align: center;
+    font-size: 60px;
+    font-weight: 400;
+    letter-spacing: 10px;
     color: #fff;
+    opacity: 0.5;
     text-shadow: 0px 0px 10px #262626;
     animation: ${hydrate} 1s ease;
     z-index: 2;

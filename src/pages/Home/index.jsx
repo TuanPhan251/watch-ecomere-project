@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { ROUTES } from "../../constants/routes";
@@ -6,7 +7,6 @@ import HomeProductList from "./ProductSections/HomeProductList";
 
 import headerVideo from "../../assets/banner/Cinematic Watch Broll.webm";
 
-import headerImg from "../../assets/banner/header.jpg";
 import menImg from "../../assets/banner/men-1.webp";
 import womenImg from "../../assets/banner/women-1.webp";
 
@@ -15,20 +15,47 @@ import * as S from "./style";
 const HomePage = () => {
   const navigate = useNavigate();
 
+  const productRef = useRef();
+
+  const scrollToProduct = () => {
+    window.scrollTo({
+      top: productRef.current.offsetTop - 80,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <S.HomePageWrapper>
       <div className="header_img-wrapper">
-        {/* <img alt="" src={headerImg} /> */}
         <video src={headerVideo} muted loop autoPlay />
+
+        <h2 className="header_img-header">
+          Bạn có thể trì hoãn, nhưng thời gian thì không.
+        </h2>
+        <h3 className="header_img-slogan">
+          Hãy kiểm soát thời gian trên đôi tay của bạn.
+        </h3>
+        <button className="header-img-action" onClick={scrollToProduct}>
+          Khám phá
+        </button>
+
+        <div className="overlay"></div>
       </div>
 
-      <section className="men_products-section">
+      <section className="men_products-section" ref={productRef}>
         <div className="men_products-banner-img">
           <img alt="" src={menImg} />
           <h3 className="product_banner-title">ĐỒNG HỒ NAM</h3>
           <button
             className="product_banner-btn"
-            onClick={() => navigate(ROUTES.USER.MEN_DETAIL)}
+            onClick={() =>
+              navigate(ROUTES.USER.MEN_DETAIL, {
+                state: {
+                  title: "Nam",
+                  gender: "male",
+                },
+              })
+            }
           >
             KHÁM PHÁ THÊM
           </button>
@@ -45,7 +72,14 @@ const HomePage = () => {
           <h3 className="product_banner-title">ĐỒNG HỒ NỮ</h3>
           <button
             className="product_banner-btn"
-            onClick={() => navigate(ROUTES.USER.WOMEN_DETAIL)}
+            onClick={() =>
+              navigate(ROUTES.USER.WOMEN_DETAIL, {
+                state: {
+                  title: "Nữ",
+                  gender: "female",
+                },
+              })
+            }
           >
             KHÁM PHÁ THÊM
           </button>

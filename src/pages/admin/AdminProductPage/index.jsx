@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { generatePath, useNavigate } from "react-router-dom";
+import moment from "moment";
 
 import {
   Avatar,
@@ -131,6 +132,7 @@ const AdminProductPage = () => {
       dataIndex: "gender",
       key: "gender",
       render: (_, record) => <p>{record.gender === "male" ? "Nam" : "Nữ"}</p>,
+      // render: (_, record) => <p>{moment(record.createdAt).fromNow()}</p>,
     },
     {
       title: "Giá",

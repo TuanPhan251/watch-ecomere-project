@@ -19,52 +19,83 @@ export const ProductImageWrapper = styled.div`
   }
 `;
 
-export const ProductSummary = styled.div``;
+export const ProductSummary = styled.div`
+  .product_summary-brand {
+    margin: 8px 0;
+    font-size: 16px;
+    color: var(--dark-text-color);
 
-export const ProductSummaryItem = styled.p`
-  margin: 8px 0;
-  font-size: 16px;
-  color: var(--dark-text-color);
-`;
+    span {
+      font-size: 18px;
+      font-weight: 500;
+      color: #ad2102;
+    }
+  }
 
-export const ProductPrice = styled.p`
-  margin: 8px 0 16px;
-  color: var(--dark-text-color);
-  text-align: center;
-  font-size: 24px;
-  font-weight: 500;
+  .product_summary-gender {
+    margin: 8px 0;
+    font-size: 16px;
+    color: var(--dark-text-color);
+
+    a {
+      font-size: 18px;
+      font-weight: 500;
+      color: #ad2102;
+
+      :hover {
+        color: #a8071a;
+      }
+    }
+  }
+
+  .product_summary-price {
+    margin: 8px 0 16px;
+    color: var(--dark-text-color);
+    text-align: left;
+    font-size: 24px;
+    font-weight: 500;
+
+    span {
+      color: #ad2102;
+      font-size: 28px;
+    }
+  }
 `;
 
 export const PolicyActionWrapper = styled.div`
   display: flex;
-`;
 
-export const ProductPolicy = styled.ul`
-  width: 70%;
-  list-style: none;
-  margin: -8px 0;
-`;
+  .product_policy-list {
+    width: 70%;
+    list-style: none;
+    padding: 0 12px;
+    margin: -8px 16px -8px 0;
+    background-color: #f5f5f5;
+    border-radius: 4px;
 
-export const ProductPolicyItem = styled.li`
-  margin: 8px 0;
+    .product_policy-item {
+      margin: 8px 0;
 
-  & i {
-    min-width: 26px;
-    font-size: 16px;
+      & i {
+        min-width: 30px;
+        font-size: 20px;
+      }
+
+      & span {
+        color: var(--dark-text-color);
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
   }
 
-  & span {
-    color: var(--dark-text-color);
-    font-size: 16px;
+  .product_actions {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-around;
+    border-radius: 4px;
   }
-`;
-
-export const ProductAction = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  justify-content: space-around;
-  border-radius: 4px;
 `;
 
 //product spec section

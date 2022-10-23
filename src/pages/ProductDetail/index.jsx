@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Button, Space } from "antd";
 
@@ -40,39 +40,45 @@ const ProductDetailPage = () => {
           <Col span={14}>
             <S.ProductSummary>
               <h2>{productDetail.data.name}</h2>
-              <S.ProductSummaryItem>
-                Thương hiệu: {productDetail.data.category?.name}
-              </S.ProductSummaryItem>
-              <S.ProductSummaryItem>
+
+              <p className="product_summary-brand">
+                Thương hiệu: <span>{productDetail.data.category?.name}</span>
+              </p>
+
+              <p className="product_summary-gender">
                 Loại sản phẩm:{" "}
-                {productDetail.data.gender === "male"
-                  ? "Đồng Hồ Nam"
-                  : "Đồng Hồ Nữ"}
-              </S.ProductSummaryItem>
-              <S.ProductPrice>
-                GIÁ: {productDetail.data.price?.toLocaleString()} VNĐ
-              </S.ProductPrice>
+                {productDetail.data.gender === "male" ? (
+                  <Link to={ROUTES.USER.MEN_DETAIL}>Đồng hồ nam</Link>
+                ) : (
+                  <Link to={ROUTES.USER.WOMEN_DETAIL}>Đồng hồ nữ</Link>
+                )}
+              </p>
+
+              <p className="product_summary-price">
+                GIÁ: <span>{productDetail.data.price?.toLocaleString()}</span>{" "}
+                VNĐ
+              </p>
             </S.ProductSummary>
 
             <S.PolicyActionWrapper>
-              <S.ProductPolicy>
-                <S.ProductPolicyItem>
+              <ul className="product_policy-list">
+                <li className="product_policy-item">
                   <i className="fa-solid fa-truck"></i>
                   <span>Miễn phí vận chuyển trên toàn quốc.</span>
-                </S.ProductPolicyItem>
-                <S.ProductPolicyItem>
+                </li>
+                <li className="product_policy-item">
                   <i className="fa-solid fa-heart-crack"></i>
                   <span>Bảo hành chính hãng tại trung tâm ủy quyền.</span>
-                </S.ProductPolicyItem>
-                <S.ProductPolicyItem>
+                </li>
+                <li className="product_policy-item">
                   <i className="fa-solid fa-arrows-rotate"></i>
                   <span>
                     Đổi trả miễn phí trong 30 ngày khi có lỗi nhà sản xuất.
                   </span>
-                </S.ProductPolicyItem>
-              </S.ProductPolicy>
+                </li>
+              </ul>
 
-              <S.ProductAction>
+              <div className="product_actions">
                 <Button
                   type="primary"
                   onClick={() => {
@@ -83,7 +89,7 @@ const ProductDetailPage = () => {
                   MUA NGAY
                 </Button>
                 <Button onClick={handleAddProductToCart}>THÊM VÀO GIỎ</Button>
-              </S.ProductAction>
+              </div>
             </S.PolicyActionWrapper>
           </Col>
         </S.ProductDetailContainer>
