@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -20,6 +20,7 @@ import {
   getCategoriesListAction,
 } from "../../../redux/actions";
 import { PRODUCT_LIST_LIMIT } from "../../../constants/paginations";
+import { ROUTES } from "../../../constants/routes";
 
 import menBanner from "../../../assets/banner/men-banner.jpg";
 import womenBanner from "../../../assets/banner/women-banner.jpg";
@@ -31,9 +32,9 @@ const { Panel } = Collapse;
 
 const ProductPage = () => {
   const location = useLocation();
-  const { pathname } = location;
-  const bannerImg = pathname === "/nam" ? menBanner : womenBanner;
-  const initialGender = pathname === "/nam" ? "male" : "female";
+  const { pathname, search } = location;
+  const { title, gender } = location.state;
+  const bannerImg = gender === "male" ? menBanner : womenBanner;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ const ProductPage = () => {
     caseSize: "",
     nameCaseSize: "",
     glassMaterial: [],
+    gender: gender,
   });
   const { productList } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
@@ -55,13 +57,42 @@ const ProductPage = () => {
         params: {
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
-          gender: initialGender,
+          gender: gender,
         },
       })
     );
 
     dispatch(getCategoriesListAction());
-  }, [pathname]);
+
+    setFilterParams({
+      categoryId: [],
+      keyword: "",
+      priceSort: "",
+      type: [],
+      caseSize: "",
+      nameCaseSize: "",
+      glassMaterial: [],
+      gender: gender,
+    });
+  }, [gender]);
+
+  const handleNavigate = (value) => {
+    if (value === "female") {
+      navigate(ROUTES.USER.WOMEN_DETAIL, {
+        state: {
+          title: "Nữ",
+          gender: "female",
+        },
+      });
+    } else {
+      navigate(ROUTES.USER.MEN_DETAIL, {
+        state: {
+          title: "Nam",
+          gender: "male",
+        },
+      });
+    }
+  };
 
   const handleShowMore = () => {
     dispatch(
@@ -70,7 +101,7 @@ const ProductPage = () => {
           ...filterParams,
           page: productList.meta.page + 1,
           limit: PRODUCT_LIST_LIMIT,
-          gender: initialGender,
+          gender: gender,
         },
         more: true,
       })
@@ -89,7 +120,7 @@ const ProductPage = () => {
           [key]: values,
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
-          gender: initialGender,
+          gender: gender,
         },
       })
     );
@@ -112,7 +143,7 @@ const ProductPage = () => {
           ...filterParams,
           [key]: newValue,
           page: 1,
-          gender: initialGender,
+          gender: gender,
           limit: PRODUCT_LIST_LIMIT,
         },
       })
@@ -254,10 +285,10 @@ const ProductPage = () => {
       return (
         <Col
           key={item.id}
-          xl={4}
-          md={6}
-          sm={8}
-          xm={12}
+          xl={6}
+          md={8}
+          sm={12}
+          xs={12}
           onClick={() => navigate(`/san-pham/${item.id}`)}
         >
           <S.ProductItem>
@@ -276,12 +307,12 @@ const ProductPage = () => {
       <>
         <img alt="" src={bannerImg} />
 
-        {pathname === "/nam" ? <h2>Đồng hồ nam</h2> : <h2>Đồng hồ nữ</h2>}
+        <h2>Đồng hồ {title}</h2>
 
         <div className="overlay"></div>
       </>
     );
-  }, [pathname]);
+  }, [title]);
 
   return (
     <main>
@@ -302,7 +333,24 @@ const ProductPage = () => {
                     <Row>{renderCategory}</Row>
                   </Checkbox.Group>
                 </Panel>
-                <Panel header="Loại máy" key="2">
+
+                <Panel header="Giới tính" key="2">
+                  <Radio.Group
+                    value={filterParams.gender}
+                    onChange={(e) => handleNavigate(e.target.value)}
+                  >
+                    <Col span={24}>
+                      <Row>
+                        <Radio value="male">Nam</Radio>
+                      </Row>
+                      <Row>
+                        <Radio value="female">Nữ</Radio>
+                      </Row>
+                    </Col>
+                  </Radio.Group>
+                </Panel>
+
+                <Panel header="Loại máy" key="3">
                   <Checkbox.Group
                     onChange={(value) => handleFilter("type", value)}
                     value={filterParams.type}
@@ -317,7 +365,8 @@ const ProductPage = () => {
                     </Col>
                   </Checkbox.Group>
                 </Panel>
-                <Panel header="Đường kính mặt" key="3">
+
+                <Panel header="Đường kính mặt" key="4">
                   <Radio.Group
                     onChange={(e) =>
                       handleFilterCaseSize("caseSize", e.target.value, e.target)
@@ -339,7 +388,7 @@ const ProductPage = () => {
                     </Radio>
                   </Radio.Group>
                 </Panel>
-                <Panel header="Chất liệu kính" key="4">
+                <Panel header="Chất liệu kính" key="5">
                   <Checkbox.Group
                     onChange={(value) => handleFilter("glassMaterial", value)}
                     value={filterParams.glassMaterial}
@@ -359,76 +408,74 @@ const ProductPage = () => {
           </Col>
 
           <Col span={20}>
-            <Spin spinning={productList.loading}>
-              <S.ProductsWrapper>
-                <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-                  <Col span={16}>
-                    <S.SearchBrandWrapper>
-                      <input
-                        type="text"
-                        placeholder="Tìm tên thương hiệu"
-                        onChange={(e) =>
-                          handleFilter("keyword", e.target.value)
-                        }
-                        value={filterParams.keyword}
-                      />
-                      <button>
-                        <i className="fa-solid fa-magnifying-glass"></i>
-                      </button>
-                    </S.SearchBrandWrapper>
-                  </Col>
-                  <Space style={{ marginBottom: 16 }}></Space>
-                  <Col span={8}>
-                    <Select
-                      allowClear
-                      placeholder="Giá"
-                      style={{
-                        width: "100%",
-                      }}
-                      onChange={(value) => handleFilter("priceSort", value)}
-                    >
-                      <Option value="asc">Thấp - Cao</Option>
-                      <Option value="desc">Cao - Thấp</Option>
-                    </Select>
-                  </Col>
-                </Row>
-                <Space style={{ marginBottom: 16 }}>
-                  {renderFilterCategory()}
-                  {filterParams.keyword && (
-                    <Tag
-                      closable
-                      onClose={() => handleRemoveFilterKeyWord("keyword")}
-                    >
-                      KeyWord: {filterParams.keyword}
-                    </Tag>
-                  )}
-                  {renderFilterType()}
-                  {filterParams.caseSize && (
-                    <Tag
-                      closable
-                      // onClose={() => handleRemoveFilterKeyWord("caseSize")}
-                    >
-                      CaseSize: {filterParams.keyword}
-                    </Tag>
-                  )}
-                  {renderFilterGlass()}
-                </Space>
-
-                <Row gutter={[8, 8]}>{renderProducts}</Row>
-
-                {productList.data.length !== productList.meta.total && (
-                  <Row style={{ justifyContent: "center" }}>
-                    <Button
-                      style={{ marginTop: 16 }}
-                      size="large"
-                      onClick={() => handleShowMore()}
-                    >
-                      Xem thêm
-                    </Button>
-                  </Row>
+            <S.ProductsWrapper>
+              <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+                <Col span={16}>
+                  <S.SearchBrandWrapper>
+                    <input
+                      type="text"
+                      placeholder="Tìm tên thương hiệu"
+                      onChange={(e) => handleFilter("keyword", e.target.value)}
+                      value={filterParams.keyword}
+                    />
+                    <button>
+                      <i className="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                  </S.SearchBrandWrapper>
+                </Col>
+                <Space style={{ marginBottom: 16 }}></Space>
+                <Col span={8}>
+                  <Select
+                    allowClear
+                    placeholder="Giá"
+                    style={{
+                      width: "100%",
+                    }}
+                    onChange={(value) => handleFilter("priceSort", value)}
+                  >
+                    <Option value="asc">Thấp - Cao</Option>
+                    <Option value="desc">Cao - Thấp</Option>
+                  </Select>
+                </Col>
+              </Row>
+              <Space style={{ marginBottom: 16 }}>
+                {renderFilterCategory()}
+                {filterParams.keyword && (
+                  <Tag
+                    closable
+                    onClose={() => handleRemoveFilterKeyWord("keyword")}
+                  >
+                    KeyWord: {filterParams.keyword}
+                  </Tag>
                 )}
-              </S.ProductsWrapper>
-            </Spin>
+                {renderFilterType()}
+                {filterParams.caseSize && (
+                  <Tag
+                    closable
+                    // onClose={() => handleRemoveFilterKeyWord("caseSize")}
+                  >
+                    CaseSize: {filterParams.keyword}
+                  </Tag>
+                )}
+                {renderFilterGlass()}
+              </Space>
+
+              <Spin spinning={productList.loading}>
+                <Row gutter={[8, 8]}>{renderProducts}</Row>
+              </Spin>
+
+              {productList.data.length !== productList.meta.total && (
+                <Row style={{ justifyContent: "center" }}>
+                  <Button
+                    style={{ marginTop: 16 }}
+                    size="large"
+                    onClick={() => handleShowMore()}
+                  >
+                    Xem thêm
+                  </Button>
+                </Row>
+              )}
+            </S.ProductsWrapper>
           </Col>
         </Row>
       </S.ProductPageWrapper>

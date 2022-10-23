@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { generatePath, Link, useNavigate } from "react-router-dom";
 
 import { Space, Badge, Drawer, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
@@ -14,29 +14,16 @@ const Header = () => {
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.user);
   const { cartList } = useSelector((state) => state.cart);
-  const [headerBgrColor, setHeaderBgrColor] = useState(false);
   const [showDrawer, setShowDrawer] = useState(false);
 
   const accessToken = localStorage.getItem("accessToken");
-
-  const handleChangeHeaderBgrColor = () => {
-    window.scrollY > 80 ? setHeaderBgrColor(true) : setHeaderBgrColor(false);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleChangeHeaderBgrColor);
-
-    return () => {
-      window.removeEventListener("scroll", handleChangeHeaderBgrColor);
-    };
-  }, []);
 
   const itemsAmount = cartList.reduce((prev, item) => {
     return prev + item.totalAmount;
   }, 0);
 
   return (
-    <S.HeaderContainer backgroundColor={headerBgrColor}>
+    <S.HeaderContainer>
       <S.HeaderNavMobile>
         <div className="mobile-header_icon" onClick={() => setShowDrawer(true)}>
           <i className="fa-solid fa-bars"></i>
@@ -60,10 +47,10 @@ const Header = () => {
               <Link to={ROUTES.BRAND}>THƯƠNG HIỆU</Link>
             </li>
             <li onClick={() => setShowDrawer(false)}>
-              <Link to={ROUTES.MEN_DETAIL}>NAM</Link>
+              <Link to={ROUTES.USER.GENDER_DETAIL}>NAM</Link>
             </li>
             <li onClick={() => setShowDrawer(false)}>
-              <Link to={ROUTES.WOMEN_DETAIL}>NỮ</Link>
+              <Link to={ROUTES.USER.GENDER_DETAIL}>NỮ</Link>
             </li>
             <li onClick={() => setShowDrawer(false)}>
               <Link to={ROUTES.CONTACT}>LIÊN HỆ</Link>
@@ -240,7 +227,19 @@ const Header = () => {
         </li>
         <li>
           <S.DropDownMenuWrapperTH>
-            <Link to={ROUTES.USER.MEN_DETAIL} className="title-link">
+            <Link
+              // to={generatePath(ROUTES.USER.MEN_DETAIL, { type: "male" })}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(ROUTES.USER.MEN_DETAIL, {
+                  state: {
+                    title: "Nam",
+                    gender: "male",
+                  },
+                });
+              }}
+              className="title-link"
+            >
               ĐỒNG HỒ NAM
               <div className="dropdown-container">
                 <div className="dropdown-content">
@@ -399,7 +398,19 @@ const Header = () => {
         </li>
         <li>
           <S.DropDownMenuWrapperTH>
-            <Link to={ROUTES.USER.WOMEN_DETAIL} className="title-link">
+            <Link
+              // to={generatePath(ROUTES.USER.WOMEN_DETAIL, { type: "female" })}
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(ROUTES.USER.MEN_DETAIL, {
+                  state: {
+                    title: "Nữ",
+                    gender: "female",
+                  },
+                });
+              }}
+              className="title-link"
+            >
               ĐỒNG HỒ NỮ
               <div className="dropdown-container">
                 <div className="dropdown-content">

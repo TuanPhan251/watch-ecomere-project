@@ -14,7 +14,6 @@ export const HeaderContainer = styled.header`
   padding: 0 20px;
   transition: all 0.2s ease;
   background-color: #000;
-  /* color: ${(props) => (props.backgroundColor ? "#fff" : "#000")}; */
   z-index: 99;
 
   @media (max-width: 876px) {

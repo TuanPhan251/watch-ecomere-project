@@ -1,21 +1,96 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px);
+
+  }
+`;
 
 export const HomePageWrapper = styled.main`
   margin-bottom: 30px;
 
   .header_img-wrapper {
+    position: relative;
     max-width: 100%;
-
-    img {
-      width: 100%;
-      max-height: 100vh;
-      object-fit: cover;
-    }
+    height: 100vh;
 
     video {
       width: 100%;
-      height: 100vh;
+      height: 100%;
       object-fit: cover;
+    }
+
+    .header_img-header {
+      position: absolute;
+      bottom: 20%;
+      right: 50%;
+      width: 100%;
+      transform: translateX(50%);
+      color: #fff;
+      font-size: 40px;
+      font-family: "Charmonman", cursive;
+      text-align: center;
+      text-shadow: 0 0 10px #262626;
+      animation: ${fadeIn} 8s ease;
+      z-index: 2;
+    }
+
+    .header_img-slogan {
+      position: absolute;
+      bottom: 10%;
+      right: 50%;
+      width: 100%;
+      transform: translateX(50%);
+      color: #fff;
+      font-size: 40px;
+      font-family: "Charmonman", cursive;
+      text-align: center;
+      text-shadow: 0 0 10px #262626;
+      animation: ${fadeIn} 4s ease;
+      animation-fill-mode: forwards;
+      animation-delay: 2s;
+      opacity: 0;
+
+      z-index: 2;
+    }
+
+    .header-img-action {
+      position: absolute;
+      bottom: 20px;
+      right: 50%;
+      transform: translateX(50%);
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #cf1322;
+      color: #fff;
+      text-transform: uppercase;
+      border-radius: 10px;
+      animation: ${fadeIn} 1s ease;
+      animation-fill-mode: forwards;
+      animation-delay: 4s;
+      opacity: 0;
+
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .overlay {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 50%;
+      background-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 0.8)
+      );
+      z-index: 1;
     }
   }
 
