@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input } from "antd";
+import { Button, Carousel, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -7,6 +7,11 @@ import { useEffect } from "react";
 import { registerAction } from "../../redux/actions";
 import * as S from "./styles";
 import { ROUTES } from "../../constants/routes";
+
+import img1 from "../../../src/assets/banner/carousel 1.jpg";
+import img2 from "../../../src/assets/banner/carousel 2.jpg";
+import img3 from "../../../src/assets/banner/men-1.webp";
+import img4 from "../../../src/assets/banner/women-1.webp";
 
 const RegisterPage = () => {
   const [registerForm] = Form.useForm();
@@ -44,21 +49,39 @@ const RegisterPage = () => {
   return (
     <S.RegisterWrapper>
       <div className="register-container">
-        <div className="register-text">
-          <Card
-            title="WELCOME TO MY SHOP"
-            bordered={false}
-            style={{
-              width: 500,
-              fontSize: 17,
-            }}
-          >
-            <p>Creating an account would make it easy to:</p>
-            <p>Card content</p>
-            <p>Card content</p>
-          </Card>
+        <div className="register-left">
+          <Carousel autoplay>
+            <div>
+              <img
+                alt="watch"
+                src={img1}
+                style={{ width: "100%", height: "700px" }}
+              />
+            </div>
+            <div>
+              <img
+                alt="watch"
+                src={img2}
+                style={{ width: "100%", height: "700px" }}
+              />
+            </div>
+            <div>
+              <img
+                alt="watch"
+                src={img3}
+                style={{ width: "100%", height: "700px" }}
+              />
+            </div>
+            <div>
+              <img
+                alt="watch"
+                src={img4}
+                style={{ width: "100%", height: "700px" }}
+              />
+            </div>
+          </Carousel>
         </div>
-        <div>
+        <div className="register-right">
           <Form
             form={registerForm}
             name="registerForm"

@@ -1,19 +1,8 @@
 import { useNavigate } from "react-router-dom";
 
-import {
-  Select,
-  Pagination,
-  Row,
-  Col,
-  Button,
-  Collapse,
-  Checkbox,
-  Space,
-  Tag,
-  Slider,
-} from "antd";
+import { Select, Row, Col, Collapse, Space, Tag, Slider, Spin } from "antd";
 import { TreeSelect } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import * as S from "./styles";
 import "../BrandPage/main.scss";
@@ -28,12 +17,6 @@ import { PRODUCT_LIST_LIMIT } from "../../constants/paginations";
 const { Panel } = Collapse;
 const { Option } = Select;
 const { SHOW_PARENT } = TreeSelect;
-const PHUONG = [
-  {
-    RANGE: [38, 40],
-    NAME: "TU 38 DEN 40 MM",
-  },
-];
 
 const BrandPage = () => {
   const navigate = useNavigate();
@@ -141,7 +124,6 @@ const BrandPage = () => {
   };
 
   const handleChangeFilterParams = (key, value) => {
-    console.log(value);
     setFilterParams({
       ...filterParams,
       [key]: value,
@@ -175,7 +157,7 @@ const BrandPage = () => {
     );
   };
 
-  const renderProducts = () => {
+  const renderProducts = useMemo(() => {
     return productList.data.map((item) => {
       return (
         <Col
@@ -189,16 +171,18 @@ const BrandPage = () => {
           <S.ProductItem>
             <img src={item.image} alt="item" />
             <h2>{item.name}</h2>
-            <p>{item.price?.toLocaleString()}đ</p>
+            <p style={{ color: "var(--price-color)" }}>
+              {item.price?.toLocaleString()}đ
+            </p>
             <p>{item.category.name}</p>
           </S.ProductItem>
         </Col>
       );
     });
-  };
+  }, [productList.data]);
 
   return (
-    <main>
+    <main style={{ backgroundColor: "#f0f0f0" }}>
       <S.BrandPageWrapper>
         <div className="brand-container">
           <div className="brand-item">
@@ -239,93 +223,100 @@ const BrandPage = () => {
             thành công sống mãi với thời gian"
           </p>
         </S.TextBrandWrapper>
+        <Space style={{ width: "100%", justifyContent: "space-between" }}>
+          <S.SearchBrandWrapper>
+            <input
+              type="text"
+              placeholder="Tìm tên thương hiệu"
+              onChange={(e) => handleFilter("keyword", e.target.value)}
+              value={filterParams.keyword}
+            />
+            <button>
+              <i className="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </S.SearchBrandWrapper>
+          <S.BrandFilterWrapper>
+            <span>Bộ lọc: </span>
+            <TreeSelect {...tProps} style={{ width: 200, marginLeft: "8px" }} />
+            <Select
+              allowClear
+              placeholder="Giá"
+              style={{
+                width: 120,
+                marginLeft: "8px",
+              }}
+              onChange={(value) => handleFilter("priceSort", value)}
+            >
+              <Option value="asc">Thấp - Cao</Option>
+              <Option value="desc">Cao - Thấp</Option>
+            </Select>
+            <Select
+              allowClear
+              placeholder="Loại máy"
+              style={{
+                width: 160,
+                marginLeft: "8px",
+              }}
+              onChange={(value) => handleFilter("type", value)}
+            >
+              <Option value="Pin">Pin</Option>
+              <Option value="Automatic">Tự động</Option>
+            </Select>
+            <Select
+              allowClear
+              placeholder="Đường kính mặt"
+              style={{
+                width: 160,
+                marginLeft: "8px",
+              }}
+              onChange={(value) => handleFilterCaseSize("caseSize", value)}
+            >
+              <Option value="0,35.99">Dưới 36mm</Option>
+              <Option value="36,40.99">Từ 36mm - 40mm</Option>
+              <Option value="41,44.99">Từ 41mm - 44mm</Option>
+              <Option value="45,100">Trên 44mm</Option>
+            </Select>
+            <Select
+              allowClear
+              placeholder="Chất liệu kính"
+              style={{
+                width: 160,
+                marginLeft: "8px",
+              }}
+              onChange={(value) => handleFilter("glassMaterial", value)}
+            >
+              <Option value="Mineral Glass">Kính khoáng</Option>
+              <Option value="sapphire">Sapphire</Option>
+            </Select>
+          </S.BrandFilterWrapper>
+        </Space>
 
-        <S.SearchBrandWrapper>
-          <input
-            type="text"
-            placeholder="Tìm tên thương hiệu"
-            onChange={(e) => handleFilter("keyword", e.target.value)}
-          />
-          <button>
-            <i className="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </S.SearchBrandWrapper>
         <Space style={{ marginBottom: 16, marginLeft: 12 }}>
           {filterParams.keyword && (
             <Tag
               color="geekblue"
               closable
-              onChange={() => handleRemoveFilterKeyword()}
+              onClose={() => handleRemoveFilterKeyword()}
             >
               KeyWord: {filterParams.keyword}
             </Tag>
           )}
         </Space>
 
-        <S.BrandFilterWrapper>
-          <span>Bộ lọc: </span>
-          <TreeSelect {...tProps} style={{ width: 200, marginLeft: "8px" }} />
-          <Select
-            allowClear
-            placeholder="Giá"
-            style={{
-              width: 120,
-              marginLeft: "8px",
-            }}
-            onChange={(value) => handleFilter("priceSort", value)}
-          >
-            <Option value="asc">Thấp - Cao</Option>
-            <Option value="desc">Cao - Thấp</Option>
-          </Select>
-          <Select
-            allowClear
-            placeholder="Loại máy"
-            style={{
-              width: 160,
-              marginLeft: "8px",
-            }}
-            onChange={(value) => handleFilter("type", value)}
-          >
-            <Option value="Pin">Pin</Option>
-            <Option value="Automatic">Tự động</Option>
-          </Select>
-          <Select
-            allowClear
-            placeholder="Đường kính mặt"
-            style={{
-              width: 160,
-              marginLeft: "8px",
-            }}
-            onChange={(value) => handleFilterCaseSize("caseSize", value)}
-          >
-            <Option value="0,35.99">Dưới 36mm</Option>
-            <Option value="36,40.99">Từ 36mm - 40mm</Option>
-            <Option value="41,44.99">Từ 41mm - 44mm</Option>
-            <Option value="45,100">Trên 44mm</Option>
-          </Select>
-          <Select
-            allowClear
-            placeholder="Chất liệu kính"
-            style={{
-              width: 160,
-              marginLeft: "8px",
-            }}
-            onChange={(value) => handleFilter("glassMaterial", value)}
-          >
-            <Option value="Mineral Glass">Kính khoáng</Option>
-            <Option value="sapphire">Sapphire</Option>
-          </Select>
-        </S.BrandFilterWrapper>
         <Slider
           range
           min={0}
           max={15000000}
           step={100000}
           onChange={(value) => handleChangeFilterParams("price", value)}
-          style={{ width: "40%" }}
-        ></Slider>
+          style={{ width: "40%", marginLeft: "50px" }}
+        >
+          Tìm sản phẩm theo giá
+        </Slider>
         <S.ProductsWrapper>
-          <Row gutter={[8, 8]}>{renderProducts()}</Row>
+          <Spin spinning={productList.loading}>
+            <Row gutter={[8, 8]}>{renderProducts}</Row>
+          </Spin>
 
           <div className="button-container-1">
             <span className="mas">Show more!</span>

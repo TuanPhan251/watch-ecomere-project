@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const BrandPageWrapper = styled.div`
-  width: 1200px;
-  margin: calc(var(--header-height) + 20px) auto 20px;
+  width: 80%;
+  margin: calc(var(--header-height)) auto 20px;
+  box-shadow: 0 0 30px #000;
   background-color: #fff;
 
   .brand-container {
@@ -79,7 +80,6 @@ export const SearchBrandWrapper = styled.div`
 
 export const BrandFilterWrapper = styled.div`
   margin: 0 0 10px 2px;
-
   padding: 12px;
   border-bottom: 1px solid #f5f5f5;
 `;

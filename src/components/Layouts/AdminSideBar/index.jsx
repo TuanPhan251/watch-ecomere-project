@@ -1,13 +1,15 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import * as S from "./styles";
 
 import { SidebarContent } from "./constants";
+import { useMemo } from "react";
 
 const AdminSidebar = ({ showSidebar }) => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
-  const renderSidebarContent = () => {
+  const renderSidebarContent = useMemo(() => {
     return SidebarContent.map((item, index) => {
       return (
         <S.SidebarLink
@@ -20,15 +22,24 @@ const AdminSidebar = ({ showSidebar }) => {
         </S.SidebarLink>
       );
     });
+  }, [SidebarContent]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/");
   };
 
   return (
     <S.AdminSidebarContainer showSidebar={showSidebar}>
-      {renderSidebarContent()}
+      {renderSidebarContent}
 
-      <button className="admin_header-logout-btn">
+      <button
+        className="admin_header-logout-btn"
+        onClick={() => handleLogout()}
+      >
         <i className="fa-solid fa-right-from-bracket"></i>
-        <span>Log out</span>
+        Log out
+        {/* <Link to="/">Log out</Link> */}
       </button>
     </S.AdminSidebarContainer>
   );

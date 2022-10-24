@@ -23,6 +23,7 @@ export const HeaderContainer = styled.header`
 
 export const HeaderLogo = styled.div`
   width: 80px;
+  margin-left: 20px;
 
   h2 {
     font-family: "Charmonman", cursive;
@@ -36,8 +37,9 @@ export const HeaderLogo = styled.div`
 
 export const HeaderNav = styled.ul`
   display: flex;
+  width: 50%;
   height: 100%;
-  margin: 0 auto 0 0;
+  margin: 0 auto 0 20px;
   list-style: none;
 
   & li {
@@ -45,11 +47,13 @@ export const HeaderNav = styled.ul`
     align-items: center;
     justify-content: center;
     height: 100%;
-    width: 120px;
+    width: 25%;
     margin: 0 8px;
+    padding: 0 20px;
 
     &:hover {
-      background-color: #ccc;
+      background-color: rgba(255, 255, 255, 0.2);
+      cursor: pointer;
     }
     &:hover .dropdown-container {
       display: inline-block !important;
@@ -266,24 +270,24 @@ export const DropDownMenuWrapperTH = styled.div`
   position: relative;
   display: inline-block;
 
-  .title-link:hover .dropdown-container {
+  /* .title-link:hover .dropdown-container {
     display: inline-block !important;
-  }
+  } */
 
   .dropdown-container {
     z-index: 1;
     display: none;
     position: absolute;
     top: 59px;
-    left: -6px;
-    min-width: 500%;
+    left: -53px;
+    min-width: 600%;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     background-color: #fff;
 
     .dropdown-content {
       display: flex;
       flex-direction: row;
-      justify-content: space-evenly;
+      justify-content: space-around;
       padding: 10px;
 
       & div {
@@ -312,4 +316,5 @@ export const ItemLink = styled(Link)`
   padding: 0 !important;
   text-align: start !important;
   font-size: 14px !important;
+  color: #000 !important;
 `;
