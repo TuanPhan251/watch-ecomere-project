@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Button, Space } from "antd";
+import { Row, Col, Button, Rate, Tooltip } from "antd";
 
 import {
   addProductAction,
@@ -17,6 +17,9 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const { productDetail } = useSelector((state) => state.product);
   const { id } = useParams();
+  const gender = productDetail.data.gender === "male" ? "nam" : "nữ";
+
+  const [itemQuantity, setItemQuantity] = useState(1);
 
   const handleAddProductToCart = () => {
     dispatch(addProductAction({ product: productDetail }));
@@ -38,59 +41,125 @@ const ProductDetailPage = () => {
             </S.ProductImageWrapper>
           </Col>
           <Col span={14}>
-            <S.ProductSummary>
-              <h2>{productDetail.data.name}</h2>
+            <S.ProductInfoWrapper>
+              <S.ProductSummary>
+                <h2>{productDetail.data.name}</h2>
 
-              <p className="product_summary-brand">
-                Thương hiệu: <span>{productDetail.data.category?.name}</span>
-              </p>
+                <div className="product_rating">
+                  <Rate disabled allowHalf defaultValue={4.5} />
+                  <span className="product_rating-quantity">(12 đánh giá)</span>
+                </div>
 
-              <p className="product_summary-gender">
-                Loại sản phẩm:{" "}
-                {productDetail.data.gender === "male" ? (
-                  <Link to={ROUTES.USER.MEN_DETAIL}>Đồng hồ nam</Link>
-                ) : (
-                  <Link to={ROUTES.USER.WOMEN_DETAIL}>Đồng hồ nữ</Link>
-                )}
-              </p>
+                <p className="product_summary-brand">
+                  Thương hiệu: <span>{productDetail.data.category?.name}</span>
+                </p>
 
-              <p className="product_summary-price">
-                GIÁ: <span>{productDetail.data.price?.toLocaleString()}</span>{" "}
-                VNĐ
-              </p>
-            </S.ProductSummary>
+                <p className="product_summary-gender">
+                  Loại sản phẩm:{" "}
+                  <Tooltip title={`Tới trang đồng hồ ${gender}`}>
+                    {productDetail.data.gender === "male" ? (
+                      <Link
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigate(ROUTES.USER.MEN_DETAIL, {
+                            state: {
+                              title: "Nam",
+                              gender: "male",
+                            },
+                          });
+                        }}
+                      >
+                        Đồng hồ nam
+                      </Link>
+                    ) : (
+                      <Link
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigate(ROUTES.USER.WOMEN_DETAIL, {
+                            state: {
+                              title: "Nữ",
+                              gender: "female",
+                            },
+                          });
+                        }}
+                      >
+                        Đồng hồ nữ
+                      </Link>
+                    )}
+                  </Tooltip>
+                </p>
 
-            <S.PolicyActionWrapper>
-              <ul className="product_policy-list">
-                <li className="product_policy-item">
-                  <i className="fa-solid fa-truck"></i>
-                  <span>Miễn phí vận chuyển trên toàn quốc.</span>
-                </li>
-                <li className="product_policy-item">
-                  <i className="fa-solid fa-heart-crack"></i>
-                  <span>Bảo hành chính hãng tại trung tâm ủy quyền.</span>
-                </li>
-                <li className="product_policy-item">
-                  <i className="fa-solid fa-arrows-rotate"></i>
-                  <span>
-                    Đổi trả miễn phí trong 30 ngày khi có lỗi nhà sản xuất.
+                <p className="product_summary-price">
+                  GIÁ:
+                  <span className="product_summary-price-final">
+                    {productDetail.data.price?.toLocaleString()}
+                    <sup>₫</sup>
                   </span>
-                </li>
-              </ul>
+                  <span className="product_summary-price-original">
+                    {productDetail.data.price?.toLocaleString()}
+                    <sup>₫</sup>
+                  </span>
+                </p>
+              </S.ProductSummary>
 
-              <div className="product_actions">
-                <Button
-                  type="primary"
+              <S.PolicyWrapper>
+                <ul className="product_policy-list">
+                  <li className="product_policy-item">
+                    <i className="fa-solid fa-truck"></i>
+                    <span>Miễn phí vận chuyển trên toàn quốc.</span>
+                  </li>
+                  <li className="product_policy-item">
+                    <i className="fa-solid fa-heart-crack"></i>
+                    <span>Bảo hành chính hãng tại trung tâm ủy quyền.</span>
+                  </li>
+                  <li className="product_policy-item">
+                    <i className="fa-solid fa-arrows-rotate"></i>
+                    <span>
+                      Đổi trả miễn phí trong 30 ngày khi có lỗi nhà sản xuất.
+                    </span>
+                  </li>
+                </ul>
+              </S.PolicyWrapper>
+
+              <S.ProductActions>
+                <button
                   onClick={() => {
                     handleAddProductToCart();
                     navigate(ROUTES.USER.CHECKOUT);
                   }}
                 >
                   MUA NGAY
-                </Button>
-                <Button onClick={handleAddProductToCart}>THÊM VÀO GIỎ</Button>
-              </div>
-            </S.PolicyActionWrapper>
+                </button>
+
+                <div className="product_action-addcart">
+                  <div className="product_action-addcart-quantity">
+                    <span>Số lượng: </span>
+                    <button
+                      className="quantity_control-btn"
+                      onClick={() => {
+                        itemQuantity !== 1 && setItemQuantity(itemQuantity - 1);
+                      }}
+                    >
+                      -
+                    </button>
+                    <input type="text" value={itemQuantity} readOnly min={1} />
+                    <button
+                      className="quantity_control-btn"
+                      onClick={() => setItemQuantity(itemQuantity + 1)}
+                    >
+                      +
+                    </button>
+                  </div>
+
+                  <button
+                    className="product_action-addcart-btn"
+                    onClick={handleAddProductToCart}
+                  >
+                    THÊM VÀO GIỎ
+                  </button>
+                </div>
+              </S.ProductActions>
+            </S.ProductInfoWrapper>
           </Col>
         </S.ProductDetailContainer>
       </Row>

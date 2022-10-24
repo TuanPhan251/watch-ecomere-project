@@ -13,6 +13,8 @@ import {
   Tag,
   Radio,
   Spin,
+  Rate,
+  Tooltip,
 } from "antd";
 
 import {
@@ -324,27 +326,86 @@ const ProductPage = () => {
           onClick={() => navigate(`/san-pham/${item.id}`)}
         >
           <S.ProductItem>
-            <img src={item.image} alt="item" />
-            <h2>{item.name}</h2>
-            <p>{item.price.toLocaleString()}đ</p>
-            <p>{item.category.name}</p>
+            <img className="product_info-image" src={item.image} alt="item" />
+            <h2 className="product_info-name">{item.name}</h2>
+
+            <div className="product_info-rating">
+              <Rate
+                allowHalf
+                disabled
+                defaultValue={4.5}
+                style={{ fontSize: 14 }}
+              />
+              <span>(12 đánh giá)</span>
+            </div>
+            <p className="product_info-price-original">
+              {item.price.toLocaleString()}
+              <sup>₫</sup>
+            </p>
+            <p className="product_info-price-final">
+              {item.price.toLocaleString()}
+              <sup>₫</sup>
+            </p>
+
+            <div className="product_item-actions">
+              <Tooltip title="Thêm vào giỏ hàng">
+                <button
+                  className="product_item-actions-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <i className="fa-solid fa-cart-plus"></i>
+                </button>
+              </Tooltip>
+              <Tooltip title="Thêm vào danh sách yêu thích" placement="bottom">
+                <button
+                  className="product_item-actions-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                >
+                  <i className="fa-regular fa-heart"></i>
+                </button>
+              </Tooltip>
+            </div>
           </S.ProductItem>
         </Col>
       );
     });
   }, [productList.data]);
 
+  const renderPageBanner = useMemo(() => {
+    return (
+      <>
+        <img alt="" src={bannerImg} />
+
+        <h2>Đồng hồ {title}</h2>
+
+        <div className="overlay"></div>
+      </>
+    );
+  }, [bannerImg, title]);
+
   return (
     <main>
-      {/* <S.PageBannerWrapper>{renderPageBanner}</S.PageBannerWrapper> */}
+      <S.PageBannerWrapper>{renderPageBanner}</S.PageBannerWrapper>
 
       <S.ProductPageWrapper>
         <Row>
           <Col span={4}>
             <div className="product_filter-wrapper">
-              <p className="product_filter-title">Bộ lọc</p>
+              <p className="product_filter-title">
+                <i className="fa-solid fa-filter"></i>Bộ lọc
+              </p>
 
-              <Collapse>
+              <Collapse
+                ghost
+                bordered={false}
+                style={{
+                  fontSize: 16,
+                }}
+              >
                 <Panel header="Thương hiệu" key="1">
                   <Checkbox.Group
                     onChange={(value) => handleFilter("categoryId", value)}
@@ -370,7 +431,13 @@ const ProductPage = () => {
                   </Radio.Group>
                 </Panel>
 
-                <Panel header="Loại máy" key="3">
+                <Panel
+                  header="Loại máy"
+                  key="3"
+                  style={{
+                    fontSize: 16,
+                  }}
+                >
                   <Checkbox.Group
                     onChange={(value) => handleFilter("type", value)}
                     value={filterParams.type}
@@ -422,26 +489,30 @@ const ProductPage = () => {
                   <S.SearchBrandWrapper>
                     <input
                       type="text"
-                      placeholder="Tìm tên thương hiệu"
+                      placeholder="Nhập để tìm sản phẩm"
                       onChange={(e) => handleFilter("keyword", e.target.value)}
                       value={filterParams.keyword}
                     />
-                    <button>
-                      <i className="fa-solid fa-magnifying-glass"></i>
-                    </button>
                   </S.SearchBrandWrapper>
                 </Col>
                 <Col span={8}>
+                  <span
+                    style={{
+                      fontSize: 16,
+                    }}
+                  >
+                    Sắp xếp theo:{" "}
+                  </span>
                   <Select
                     allowClear
                     placeholder="Giá"
                     style={{
-                      width: "100%",
+                      width: "50%",
                     }}
                     onChange={(value) => handleFilter("priceSort", value)}
                   >
-                    <Option value="asc">Thấp - Cao</Option>
-                    <Option value="desc">Cao - Thấp</Option>
+                    <Option value="asc">Giá: Thấp - Cao</Option>
+                    <Option value="desc">Giá: Cao - Thấp</Option>
                   </Select>
                 </Col>
               </Row>
