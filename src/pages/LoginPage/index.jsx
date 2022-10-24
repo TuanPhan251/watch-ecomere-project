@@ -1,4 +1,4 @@
-import { Button, Card, Checkbox, Form, Input } from "antd";
+import { Button, Carousel, Checkbox, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,11 +7,15 @@ import { useEffect } from "react";
 import { loginAction } from "../../redux/actions";
 import { ROUTES } from "../../constants/routes";
 import * as S from "./styles";
+import img1 from "../../../src/assets/banner/carousel 1.jpg";
+import img2 from "../../../src/assets/banner/carousel 2.jpg";
+import img3 from "../../../src/assets/banner/men-1.webp";
+import img4 from "../../../src/assets/banner/women-1.webp";
 
 const LoginPage = () => {
   const [loginForm] = Form.useForm();
-  const dispatch = useDispatch();
   const { loginData } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,21 +51,39 @@ const LoginPage = () => {
   return (
     <S.LoginWrapper>
       <div className="login-container">
-        <div className="login-text">
-          <Card
-            title="WELCOME TO MY SHOP"
-            bordered={false}
-            style={{
-              width: 500,
-              fontSize: 17,
-            }}
-          >
-            <p>Creating an account would make it easy to:</p>
-            <p>Card content</p>
-            <p>Card content</p>
-          </Card>
+        <div className="login-left">
+          <Carousel autoplay>
+            <div>
+              <img
+                alt="watch"
+                src={img1}
+                style={{ width: "100%", height: "700px" }}
+              />
+            </div>
+            <div>
+              <img
+                alt="watch"
+                src={img2}
+                style={{ width: "100%", height: "700px" }}
+              />
+            </div>
+            <div>
+              <img
+                alt="watch"
+                src={img3}
+                style={{ width: "100%", height: "700px" }}
+              />
+            </div>
+            <div>
+              <img
+                alt="watch"
+                src={img4}
+                style={{ width: "100%", height: "700px" }}
+              />
+            </div>
+          </Carousel>
         </div>
-        <div>
+        <div className="login-right">
           <Form
             form={loginForm}
             name="login"

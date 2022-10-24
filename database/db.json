@@ -276,6 +276,15 @@
       "createdAt": 1665629640467,
       "updatedAt": 1665629640467,
       "id": 2
+    },
+    {
+      "email": "phuong123456@gmail.com",
+      "password": "$2a$10$M.P6iwWCRRGqo8y/34RX2uuXHAJpeH.MZXljnFj90R2LbF5FvbnPK",
+      "userName": "phuong123456",
+      "role": "user",
+      "createdAt": 1666526315581,
+      "updatedAt": 1666526315581,
+      "id": 3
     }
   ]
 }

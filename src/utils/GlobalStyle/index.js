@@ -6,6 +6,8 @@ const GlobalStyle = createGlobalStyle`
 
     --header-height: 80px;
 
+    --price-color : #FF6D28;
+
     --box-shadow: 0px 0px 10px #bfbfbf;
   }
 

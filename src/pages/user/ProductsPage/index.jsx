@@ -29,6 +29,28 @@ import * as S from "./style";
 
 const { Option } = Select;
 const { Panel } = Collapse;
+const caseSizes = [
+  {
+    RANGE: undefined,
+    NAME: "Tất cả các kích thước",
+  },
+  {
+    RANGE: "0,35.99",
+    NAME: "Dưới 36mm",
+  },
+  {
+    RANGE: "36,40",
+    NAME: "Từ 36mm - 40mm",
+  },
+  {
+    RANGE: "40.01,44",
+    NAME: "Từ 40mm - 44mm",
+  },
+  {
+    RANGE: "44.01,100",
+    NAME: "Trên 44mm",
+  },
+];
 
 const ProductPage = () => {
   const location = useLocation();
@@ -109,6 +131,7 @@ const ProductPage = () => {
   };
 
   const handleFilter = (key, values) => {
+    console.log(key);
     setFilterParams({
       ...filterParams,
       [key]: values,
@@ -135,7 +158,6 @@ const ProductPage = () => {
       [key]: newValue,
       nameCaseSize: nameCaseSize,
     });
-    console.log(filterParams.caseSize);
 
     dispatch(
       getProductListAction({
@@ -225,8 +247,18 @@ const ProductPage = () => {
     );
   };
 
+  const renderCaseSize = useMemo(() => {
+    return caseSizes.map((item) => {
+      return (
+        <Radio key={item.NAME} value={item.RANGE} className={item.NAME}>
+          {item.NAME}
+        </Radio>
+      );
+    });
+  }, [caseSizes]);
+
   const renderCategory = useMemo(() => {
-    return categoryList.data.map((item) => {
+    return categoryList.data?.map((item) => {
       return (
         <Col span={24} key={item.id}>
           <Checkbox value={item.id}>{item.name}</Checkbox>
@@ -235,8 +267,8 @@ const ProductPage = () => {
     });
   }, [categoryList.data]);
 
-  const renderFilterCategory = () => {
-    return filterParams.categoryId.map((filterCategoryId) => {
+  const renderFilterCategory = useMemo(() => {
+    return filterParams.categoryId?.map((filterCategoryId) => {
       const filterCategoryName = categoryList.data.find(
         (item) => item.id === filterCategoryId
       );
@@ -250,9 +282,9 @@ const ProductPage = () => {
         </Tag>
       );
     });
-  };
+  }, [filterParams.categoryId]);
 
-  const renderFilterType = () => {
+  const renderFilterType = useMemo(() => {
     return filterParams.type.map((filterType) => {
       return (
         <Tag
@@ -264,9 +296,9 @@ const ProductPage = () => {
         </Tag>
       );
     });
-  };
+  }, [filterParams.type]);
 
-  const renderFilterGlass = () => {
+  const renderFilterGlass = useMemo(() => {
     return filterParams.glassMaterial.map((filterGlass) => {
       return (
         <Tag
@@ -278,7 +310,7 @@ const ProductPage = () => {
         </Tag>
       );
     });
-  };
+  }, [filterParams.glassMaterial]);
 
   const renderProducts = useMemo(() => {
     return productList.data.map((item) => {
@@ -302,21 +334,9 @@ const ProductPage = () => {
     });
   }, [productList.data]);
 
-  const renderPageBanner = useMemo(() => {
-    return (
-      <>
-        <img alt="" src={bannerImg} />
-
-        <h2>Đồng hồ {title}</h2>
-
-        <div className="overlay"></div>
-      </>
-    );
-  }, [title]);
-
   return (
     <main>
-      <S.PageBannerWrapper>{renderPageBanner}</S.PageBannerWrapper>
+      {/* <S.PageBannerWrapper>{renderPageBanner}</S.PageBannerWrapper> */}
 
       <S.ProductPageWrapper>
         <Row>
@@ -369,23 +389,11 @@ const ProductPage = () => {
                 <Panel header="Đường kính mặt" key="4">
                   <Radio.Group
                     onChange={(e) =>
-                      handleFilterCaseSize("caseSize", e.target.value, e.target)
+                      handleFilterCaseSize("caseSize", e.target.value)
                     }
                     // value={filterParams.caseSize}
                   >
-                    <Radio value={undefined}>Tất cả các kích thước</Radio>
-                    <Radio value="0,35.99" name="Dưới 36mm">
-                      Dưới 36mm
-                    </Radio>
-                    <Radio value="36,40.99" name="Từ 36mm - 40mm">
-                      Từ 36mm - 40mm
-                    </Radio>
-                    <Radio value="41,44.99" name="Từ 41mm - 44mm">
-                      Từ 41mm - 44mm
-                    </Radio>
-                    <Radio value="45,100" name="Trên 44mm">
-                      Trên 44mm
-                    </Radio>
+                    {renderCaseSize}
                   </Radio.Group>
                 </Panel>
                 <Panel header="Chất liệu kính" key="5">
@@ -423,7 +431,6 @@ const ProductPage = () => {
                     </button>
                   </S.SearchBrandWrapper>
                 </Col>
-                <Space style={{ marginBottom: 16 }}></Space>
                 <Col span={8}>
                   <Select
                     allowClear
@@ -439,7 +446,7 @@ const ProductPage = () => {
                 </Col>
               </Row>
               <Space style={{ marginBottom: 16 }}>
-                {renderFilterCategory()}
+                {renderFilterCategory}
                 {filterParams.keyword && (
                   <Tag
                     closable
@@ -448,16 +455,17 @@ const ProductPage = () => {
                     KeyWord: {filterParams.keyword}
                   </Tag>
                 )}
-                {renderFilterType()}
+                {renderFilterType}
+
                 {filterParams.caseSize && (
                   <Tag
                     closable
                     // onClose={() => handleRemoveFilterKeyWord("caseSize")}
                   >
-                    CaseSize: {filterParams.keyword}
+                    CaseSize: {filterParams.nameCaseSize}
                   </Tag>
                 )}
-                {renderFilterGlass()}
+                {renderFilterGlass}
               </Space>
 
               <Spin spinning={productList.loading}>
