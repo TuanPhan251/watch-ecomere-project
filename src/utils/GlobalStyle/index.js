@@ -3,12 +3,15 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
   :root {
     --dark-text-color: #141414;
+    --text-disabled: #bfbfbf;
+    --button-color: #061178;
+    --price-color : #061178;
 
     --header-height: 80px;
 
-    --price-color : #FF6D28;
 
     --box-shadow: 0px 0px 10px #bfbfbf;
+    --boder-basic: 1px solid #d9d9d9;
   }
 
   body {

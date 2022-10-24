@@ -26,6 +26,22 @@ export const ProductPageWrapper = styled.div`
   width: 90%;
   margin: calc(var(--header-height) + 20px) auto 20px;
   background-color: #fff;
+
+  .product_filter-wrapper {
+    height: 100%;
+    padding: 12px;
+    border: var(--boder-basic);
+
+    .product_filter-title {
+      font-size: 16px;
+      font-weight: 500;
+
+      i {
+        margin: 0 12px 0 12px;
+        font-size: 20px;
+      }
+    }
+  }
 `;
 
 export const ProductBrands = styled.div`
@@ -97,35 +113,82 @@ export const ProductsWrapper = styled.div`
 `;
 
 export const ProductItem = styled.div`
+  position: relative;
   flex: 1;
   height: 100%;
   padding: 8px;
   color: var(--dark-text-color);
   text-align: center;
-  border: 1px solid #f5f5f5;
+  border: var(--boder-basic);
   border-radius: 2px;
   overflow: hidden;
   cursor: pointer;
 
-  & h2 {
-    font-size: 0.9rem;
+  & .product_info-name {
+    font-size: 16px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
 
-  & img {
+  & .product_info-image {
     top: 0;
     width: 100%;
     transition: all 0.2s ease;
   }
 
+  .product_info-price-original {
+    color: var(--text-disabled);
+    text-decoration: line-through;
+  }
+
+  .product_info-price-final {
+    color: var(--price-color);
+    font-size: 20px;
+  }
+
+  .product_item-actions {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+
+    .product_item-actions-btn {
+      padding: 8px;
+      margin-bottom: 4px;
+      border: none;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      i {
+        font-size: 24px;
+      }
+
+      :hover {
+        background-color: #ff7875;
+
+        i {
+          color: #fff;
+        }
+      }
+    }
+  }
   &:hover {
     box-shadow: 0 0 8px #ccc;
 
-    & img {
+    .product_info-image {
       transform: translateY(-5px);
+    }
+
+    .product_item-actions {
+      right: 10px;
+      opacity: 1;
+      transform: translateY(-50%);
     }
   }
 `;
