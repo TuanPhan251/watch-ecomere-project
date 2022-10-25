@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -15,6 +15,7 @@ import {
   Spin,
   Rate,
   Tooltip,
+  Drawer,
 } from "antd";
 
 import {
@@ -56,9 +57,10 @@ const caseSizes = [
 
 const ProductPage = () => {
   const location = useLocation();
-  const { pathname, search } = location;
   const { title, gender } = location.state;
   const bannerImg = gender === "male" ? menBanner : womenBanner;
+
+  const [showFilterDrawer, setShowFilterDrawer] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -319,14 +321,43 @@ const ProductPage = () => {
       return (
         <Col
           key={item.id}
+          xxl={4}
           xl={6}
           md={8}
-          sm={12}
+          sm={8}
           xs={12}
           onClick={() => navigate(`/san-pham/${item.id}`)}
         >
           <S.ProductItem>
-            <img className="product_info-image" src={item.image} alt="item" />
+            <div className="product_info-image">
+              <img src={item.image} alt="item" />
+              <div className="product_item-actions">
+                <Tooltip title="Thêm vào giỏ hàng">
+                  <button
+                    className="product_item-actions-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <i className="fa-solid fa-cart-plus"></i>
+                  </button>
+                </Tooltip>
+                <Tooltip
+                  title="Thêm vào danh sách yêu thích"
+                  placement="bottom"
+                >
+                  <button
+                    className="product_item-actions-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
+                </Tooltip>
+              </div>
+            </div>
+
             <h2 className="product_info-name">{item.name}</h2>
 
             <div className="product_info-rating">
@@ -346,29 +377,6 @@ const ProductPage = () => {
               {item.price.toLocaleString()}
               <sup>₫</sup>
             </p>
-
-            <div className="product_item-actions">
-              <Tooltip title="Thêm vào giỏ hàng">
-                <button
-                  className="product_item-actions-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <i className="fa-solid fa-cart-plus"></i>
-                </button>
-              </Tooltip>
-              <Tooltip title="Thêm vào danh sách yêu thích" placement="bottom">
-                <button
-                  className="product_item-actions-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                >
-                  <i className="fa-regular fa-heart"></i>
-                </button>
-              </Tooltip>
-            </div>
           </S.ProductItem>
         </Col>
       );
@@ -388,12 +396,74 @@ const ProductPage = () => {
   }, [bannerImg, title]);
 
   return (
-    <main>
+    <S.Wrapper>
       <S.PageBannerWrapper>{renderPageBanner}</S.PageBannerWrapper>
+
+      <S.MobileFilterDrawer>
+        <Drawer
+          title="Bộ lọc sản phẩm"
+          placement="right"
+          contentWrapperStyle={{ width: 300 }}
+          bodyStyle={{ padding: 16 }}
+          open={showFilterDrawer}
+          onClose={() => setShowFilterDrawer(false)}
+        >
+          <S.MobileFilterList className="mobile_filter-list">
+            <li className="mobile_filter-item">
+              <h3>Hãng</h3>
+              <Checkbox.Group
+                onChange={(value) => handleFilter("categoryId", value)}
+                value={filterParams.categoryId}
+              >
+                <Row>{renderCategory}</Row>
+              </Checkbox.Group>
+            </li>
+            <li className="mobile_filter-item">
+              <h3>Giới tính</h3>
+              <Radio.Group
+                value={filterParams.gender}
+                onChange={(e) => handleNavigate(e.target.value)}
+              >
+                <Radio value="male">Nam</Radio>
+                <Radio value="female">Nữ</Radio>
+              </Radio.Group>
+            </li>
+            <li className="mobile_filter-item">
+              <h3>Loại máy</h3>{" "}
+              <Checkbox.Group
+                onChange={(value) => handleFilter("type", value)}
+                value={filterParams.type}
+              >
+                <Checkbox value="Pin">Pin</Checkbox>
+                <Checkbox value="Automatic">Tự động</Checkbox>
+              </Checkbox.Group>
+            </li>
+            <li className="mobile_filter-item">
+              <h3>Đường kính</h3>
+              {renderCaseSize}
+            </li>
+            <li className="mobile_filter-item">
+              <h3>Chất liệu kính</h3>{" "}
+              <Checkbox.Group
+                onChange={(value) => handleFilter("glassMaterial", value)}
+                value={filterParams.glassMaterial}
+              >
+                <Checkbox value="Mineral glass">Kính khoáng</Checkbox>
+
+                <Checkbox value="Sapphire">Sapphire</Checkbox>
+              </Checkbox.Group>
+            </li>
+          </S.MobileFilterList>
+
+          <S.MobileFilterAction>
+            <button>Xóa bộ lọc</button>
+          </S.MobileFilterAction>
+        </Drawer>
+      </S.MobileFilterDrawer>
 
       <S.ProductPageWrapper>
         <Row>
-          <Col span={4}>
+          <Col xxl={4} xl={4} md={6} sm={0} xs={0}>
             <div className="product_filter-wrapper">
               <p className="product_filter-title">
                 <i className="fa-solid fa-filter"></i>Bộ lọc
@@ -402,6 +472,7 @@ const ProductPage = () => {
               <Collapse
                 ghost
                 bordered={false}
+                defaultActiveKey={["1", "2", "3", "4", "5"]}
                 style={{
                   fontSize: 16,
                 }}
@@ -482,10 +553,10 @@ const ProductPage = () => {
             </div>
           </Col>
 
-          <Col span={20}>
+          <Col xxl={20} xl={20} md={18} sm={24} xs={24}>
             <S.ProductsWrapper>
               <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-                <Col span={16}>
+                <Col xxl={16} xl={16} md={24} sm={24} xs={24}>
                   <S.SearchBrandWrapper>
                     <input
                       type="text"
@@ -495,25 +566,36 @@ const ProductPage = () => {
                     />
                   </S.SearchBrandWrapper>
                 </Col>
-                <Col span={8}>
-                  <span
-                    style={{
-                      fontSize: 16,
-                    }}
-                  >
-                    Sắp xếp theo:{" "}
-                  </span>
-                  <Select
-                    allowClear
-                    placeholder="Giá"
-                    style={{
-                      width: "50%",
-                    }}
-                    onChange={(value) => handleFilter("priceSort", value)}
-                  >
-                    <Option value="asc">Giá: Thấp - Cao</Option>
-                    <Option value="desc">Giá: Cao - Thấp</Option>
-                  </Select>
+                <Col xxl={8} xl={8} md={24} sm={24} xs={24}>
+                  <S.HeadingFilterWrapper>
+                    <span
+                      style={{
+                        fontSize: 16,
+                      }}
+                    >
+                      Sắp xếp theo:{" "}
+                    </span>
+                    <Select
+                      allowClear
+                      placeholder="Giá"
+                      style={{
+                        marginLeft: 8,
+                        width: "40%",
+                      }}
+                      onChange={(value) => handleFilter("priceSort", value)}
+                    >
+                      <Option value="asc">Giá: Thấp - Cao</Option>
+                      <Option value="desc">Giá: Cao - Thấp</Option>
+                    </Select>
+
+                    <button
+                      className="mobile_filter-show-btn"
+                      onClick={() => setShowFilterDrawer(true)}
+                    >
+                      <i className="fa-solid fa-filter"></i>
+                      Bộ lọc
+                    </button>
+                  </S.HeadingFilterWrapper>
                 </Col>
               </Row>
               <Space style={{ marginBottom: 16 }}>
@@ -558,7 +640,7 @@ const ProductPage = () => {
           </Col>
         </Row>
       </S.ProductPageWrapper>
-    </main>
+    </S.Wrapper>
   );
 };
 

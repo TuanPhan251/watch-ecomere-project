@@ -23,7 +23,7 @@ const CheckoutPage = () => {
     const product = {
       data: { ...item },
     };
-    dispatch(addProductAction({ product }));
+    dispatch(addProductAction({ product, productAmount: 1 }));
   };
 
   const handleRemoveProduct = (item, type) => {

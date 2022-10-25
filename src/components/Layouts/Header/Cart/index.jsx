@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { generatePath, useNavigate } from "react-router-dom";
 
 import { removeProductAction } from "../../../../redux/actions/cart.actions";
 
@@ -8,7 +9,12 @@ import { Link } from "react-router-dom";
 import { ROUTES } from "../../../../constants/routes";
 
 const CartDrawer = ({ cartList }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const totalPrice = cartList.reduce((prev, item) => {
+    return item.totalPrice + prev;
+  }, 0);
 
   const handleRemoveProduct = (data, id) => {
     dispatch(removeProductAction({ data, id }));
@@ -17,15 +23,27 @@ const CartDrawer = ({ cartList }) => {
   const renderCartItems = () => {
     return cartList.map((item) => {
       return (
-        <S.ItemContent key={item.id}>
+        <S.ItemContent
+          key={item.id}
+          onClick={() =>
+            navigate(generatePath(ROUTES.USER.PRODUCT_DETAIL, { id: item.id }))
+          }
+        >
           <S.ItemImage>
             <img alt="" src={item.image} />
-            <span>x{item.totalAmount}</span>
           </S.ItemImage>
 
           <S.ItemPrice>
-            <h3>{item.name}</h3>
-            <span>{item.totalPrice.toLocaleString()}VND</span>
+            <h3 className="product_info-name">{item.name}</h3>
+
+            <div className="product_price-wrapper">
+              <span className="product_info-amount">
+                Số lượng: <strong>{item.totalAmount}</strong>
+              </span>
+              <span className="product_info-price">
+                {item.totalPrice.toLocaleString()} <sup>₫</sup>
+              </span>
+            </div>
           </S.ItemPrice>
 
           <S.ItemAction onClick={() => handleRemoveProduct(item, "remove")}>
@@ -63,6 +81,10 @@ const CartDrawer = ({ cartList }) => {
           <S.CartItemsContent>
             <p>Giỏ hàng của bạn</p>
             {renderCartItems()}
+            <p className="cart_items-totalPrice">
+              Tổng: {totalPrice?.toLocaleString()}
+              <sup>₫</sup>
+            </p>
           </S.CartItemsContent>
 
           <S.CartItemsAction>
