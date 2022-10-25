@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Col, Button, Rate, Tooltip, notification } from "antd";
+
+import ProductSpec from "./ProductSpec";
 
 import {
   addProductAction,
@@ -48,198 +50,164 @@ const ProductDetailPage = () => {
     dispatch(getCategoriesListAction());
   }, []);
 
+  const renderProductSpec = useMemo(() => {
+    return <ProductSpec product={productDetail} />;
+  }, [productDetail.data]);
+
   return (
-    <main style={{ minHeight: "100vh" }}>
-      <Row gutter={4}>
-        <S.ProductDetailContainer>
-          <Col span={10}>
-            <S.ProductImageWrapper>
-              <img src={productDetail.data.image} alt="product" />
-            </S.ProductImageWrapper>
-          </Col>
-          <Col span={14}>
-            <S.ProductInfoWrapper>
-              <S.ProductSummary>
-                <h2>{productDetail.data.name}</h2>
+    <S.Wrapper>
+      <S.ProductDetailContainer>
+        <Col xxl={8} xl={8} md={24} sm={24} xm={24}>
+          <S.ProductImageWrapper>
+            <img src={productDetail.data.image} alt="product" />
+          </S.ProductImageWrapper>
+        </Col>
+        <Col xxl={10} xl={10} md={24} sm={24} xm={24}>
+          <S.ProductInfoWrapper>
+            <S.ProductSummary>
+              <h2>{productDetail.data.name}</h2>
 
-                <div className="product_rating">
-                  <Rate disabled allowHalf defaultValue={4.5} />
-                  <span className="product_rating-quantity">(12 đánh giá)</span>
-                </div>
+              <div className="product_rating">
+                <Rate disabled allowHalf defaultValue={4.5} />
+                <span className="product_rating-quantity">(12 đánh giá)</span>
+              </div>
 
-                <p className="product_summary-brand">
-                  Thương hiệu: <span>{productDetail.data.category?.name}</span>
-                </p>
+              <p className="product_summary-brand">
+                Thương hiệu: <span>{productDetail.data.category?.name}</span>
+              </p>
 
-                <p className="product_summary-gender">
-                  Loại sản phẩm:{" "}
-                  <Tooltip title={`Tới trang đồng hồ ${gender}`}>
-                    {productDetail.data.gender === "male" ? (
-                      <Link
-                        onClick={(e) => {
-                          e.preventDefault();
-                          navigate(ROUTES.USER.MEN_DETAIL, {
-                            state: {
-                              title: "Nam",
-                              gender: "male",
-                            },
-                          });
-                        }}
-                      >
-                        Đồng hồ nam
-                      </Link>
-                    ) : (
-                      <Link
-                        onClick={(e) => {
-                          e.preventDefault();
-                          navigate(ROUTES.USER.WOMEN_DETAIL, {
-                            state: {
-                              title: "Nữ",
-                              gender: "female",
-                            },
-                          });
-                        }}
-                      >
-                        Đồng hồ nữ
-                      </Link>
-                    )}
-                  </Tooltip>
-                </p>
-
-                <p className="product_summary-price">
-                  GIÁ:
-                  <span className="product_summary-price-final">
-                    {productDetail.data.price?.toLocaleString()}
-                    <sup>₫</sup>
-                  </span>
-                  <span className="product_summary-price-original">
-                    {productDetail.data.price?.toLocaleString()}
-                    <sup>₫</sup>
-                  </span>
-                </p>
-              </S.ProductSummary>
-
-              <S.PolicyWrapper>
-                <ul className="product_policy-list">
-                  <li className="product_policy-item">
-                    <i className="fa-solid fa-truck"></i>
-                    <span>Miễn phí vận chuyển trên toàn quốc.</span>
-                  </li>
-                  <li className="product_policy-item">
-                    <i className="fa-solid fa-heart-crack"></i>
-                    <span>Bảo hành chính hãng tại trung tâm ủy quyền.</span>
-                  </li>
-                  <li className="product_policy-item">
-                    <i className="fa-solid fa-arrows-rotate"></i>
-                    <span>
-                      Đổi trả miễn phí trong 30 ngày khi có lỗi nhà sản xuất.
-                    </span>
-                  </li>
-                </ul>
-              </S.PolicyWrapper>
-
-              <S.ProductActions>
-                <button
-                  onClick={() => {
-                    handleAddProductToCart();
-                    navigate(ROUTES.USER.CHECKOUT);
-                  }}
-                >
-                  MUA NGAY
-                </button>
-
-                <div className="product_action-addcart">
-                  <div className="product_action-addcart-quantity">
-                    <span>Số lượng: </span>
-                    <button
-                      className="quantity_control-btn"
-                      onClick={() => {
-                        itemQuantity !== 1 && setItemQuantity(itemQuantity - 1);
+              <p className="product_summary-gender">
+                Loại sản phẩm:{" "}
+                <Tooltip title={`Tới trang đồng hồ ${gender}`}>
+                  {productDetail.data.gender === "male" ? (
+                    <Link
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(ROUTES.USER.MEN_DETAIL, {
+                          state: {
+                            title: "Nam",
+                            gender: "male",
+                          },
+                        });
                       }}
                     >
-                      -
-                    </button>
-                    <input type="text" value={itemQuantity} readOnly min={1} />
-                    <button
-                      className="quantity_control-btn"
-                      onClick={() => setItemQuantity(itemQuantity + 1)}
+                      Đồng hồ nam
+                    </Link>
+                  ) : (
+                    <Link
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(ROUTES.USER.WOMEN_DETAIL, {
+                          state: {
+                            title: "Nữ",
+                            gender: "female",
+                          },
+                        });
+                      }}
                     >
-                      +
-                    </button>
-                  </div>
+                      Đồng hồ nữ
+                    </Link>
+                  )}
+                </Tooltip>
+              </p>
 
+              <p className="product_summary-price">
+                GIÁ:
+                <span className="product_summary-price-final">
+                  {productDetail.data.price?.toLocaleString()}
+                  <sup>₫</sup>
+                </span>
+                <span className="product_summary-price-original">
+                  {productDetail.data.price?.toLocaleString()}
+                  <sup>₫</sup>
+                </span>
+              </p>
+            </S.ProductSummary>
+
+            <S.ProductActions>
+              <div className="product_action-addcart">
+                <div className="product_action-addcart-quantity">
+                  <span>Số lượng: </span>
                   <button
-                    className="product_action-addcart-btn"
-                    onClick={handleAddProductToCart}
+                    className="quantity_control-btn"
+                    onClick={() => {
+                      itemQuantity !== 1 && setItemQuantity(itemQuantity - 1);
+                    }}
                   >
-                    THÊM VÀO GIỎ
+                    -
+                  </button>
+                  <input type="text" value={itemQuantity} readOnly min={1} />
+                  <button
+                    className="quantity_control-btn"
+                    onClick={() => setItemQuantity(itemQuantity + 1)}
+                  >
+                    +
                   </button>
                 </div>
-              </S.ProductActions>
-            </S.ProductInfoWrapper>
-          </Col>
-        </S.ProductDetailContainer>
-      </Row>
 
-      <Row>
-        <S.ProductSpecContainer>
-          <S.ProductSpecHeading>
-            Chi tiết thông số sản phẩm
-          </S.ProductSpecHeading>
+                <button
+                  className="product_action-addcart-btn"
+                  onClick={handleAddProductToCart}
+                >
+                  THÊM VÀO GIỎ
+                </button>
+              </div>
 
-          <Col span={12}>
-            <S.ProductSpecCol>
-              <S.ProductSpecItem>
-                <span>Giới tính:</span>
+              <button
+                onClick={() => {
+                  handleAddProductToCart();
+                  navigate(ROUTES.USER.CHECKOUT);
+                }}
+              >
+                MUA NGAY
+              </button>
+            </S.ProductActions>
+          </S.ProductInfoWrapper>
+        </Col>
+
+        <Col xxl={6} xl={6} md={24} sm={24} xm={24}>
+          <S.PolicyWrapper>
+            <ul className="product_policy-list">
+              <li className="product_policy-item">
+                <i className="fa-solid fa-truck"></i>
+                <span>Miễn phí vận chuyển trên toàn quốc.</span>
+              </li>
+              <li className="product_policy-item">
+                <i className="fa-solid fa-heart-crack"></i>
+                <span>Bảo hành chính hãng tại trung tâm ủy quyền.</span>
+              </li>
+              <li className="product_policy-item">
+                <i className="fa-solid fa-arrows-rotate"></i>
                 <span>
-                  {productDetail.data.gender === "male" ? "Nam" : "Nữ"}
+                  Đổi trả miễn phí trong 30 ngày khi có lỗi nhà sản xuất.
                 </span>
-              </S.ProductSpecItem>
-              <S.ProductSpecItem>
-                <span>Kiểu máy:</span>
-                <span>{productDetail.data.movement}</span>
-              </S.ProductSpecItem>
-              <S.ProductSpecItem>
-                <span>Chất liệu kính:</span>
-                <span>{productDetail.data.glassMaterial}</span>
-              </S.ProductSpecItem>
-              <S.ProductSpecItem>
-                <span>Chất liệu vỏ:</span>
-                <span>{productDetail.data.caseMaterial}</span>
-              </S.ProductSpecItem>
-              <S.ProductSpecItem>
-                <span>Chất liệu dây:</span>
-                <span>{productDetail.data.strapMaterial}</span>
-              </S.ProductSpecItem>
-            </S.ProductSpecCol>
+              </li>
+            </ul>
+          </S.PolicyWrapper>
+        </Col>
+      </S.ProductDetailContainer>
+
+      <S.BottomWrapper>
+        <Row>
+          <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
+            {renderProductSpec}
           </Col>
-          <Col span={12}>
-            <S.ProductSpecCol>
-              <S.ProductSpecItem>
-                <span>Đường kính mặt</span>
-                <span>{productDetail.data.caseSize} mm</span>
-              </S.ProductSpecItem>
-              <S.ProductSpecItem>
-                <span>Độ dày:</span>
-                <span>{productDetail.data.caseWidth} mm</span>
-              </S.ProductSpecItem>
-              <S.ProductSpecItem>
-                <span>Độ chống nước:</span>
-                <span>{productDetail.data.waterResist}</span>
-              </S.ProductSpecItem>
-              <S.ProductSpecItem>
-                <span>Cỡ dây:</span>
-                <span>{productDetail.data.strapSize} mm</span>
-              </S.ProductSpecItem>
-              <S.ProductSpecItem>
-                <span>Bảo hành:</span>
-                <span>{productDetail.data.warranty} Năm</span>
-              </S.ProductSpecItem>
-            </S.ProductSpecCol>
+
+          <Col xxl={16} xl={16} lg={16} md={24} sm={24} xs={24}>
+            <S.ProductContent>
+              <h3 className="product_content-heading">Giới thiệu sản phẩm</h3>
+
+              <div
+                className="product_content-main"
+                dangerouslySetInnerHTML={{
+                  __html: productDetail.data.content || "content here",
+                }}
+              ></div>
+            </S.ProductContent>
           </Col>
-        </S.ProductSpecContainer>
-      </Row>
-    </main>
+        </Row>
+      </S.BottomWrapper>
+    </S.Wrapper>
   );
 };
 

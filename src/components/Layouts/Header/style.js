@@ -144,6 +144,10 @@ export const HeaderRight = styled.div`
       text-decoration: underline;
     }
   }
+
+  @media (max-width: 576px) {
+    margin-right: 12px;
+  }
 `;
 
 export const UserWrapper = styled.div`
