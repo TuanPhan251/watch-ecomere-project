@@ -87,6 +87,10 @@ export const HeaderNavMobile = styled.div`
     justify-content: center;
     width: 40px;
     cursor: pointer;
+
+    i {
+      color: #fff;
+    }
   }
 
   @media (max-width: 876px) {
@@ -97,6 +101,7 @@ export const HeaderNavMobile = styled.div`
 export const HeaderNavMobileList = styled.ul`
   list-style: none;
   margin: -24px;
+  background-color: #000;
 
   li {
     display: block;

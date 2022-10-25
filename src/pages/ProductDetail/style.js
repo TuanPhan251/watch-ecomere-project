@@ -147,7 +147,7 @@ export const ProductActions = styled.div`
     cursor: pointer;
 
     :hover {
-      background-color: #262626;
+      background-color: #030852;
     }
   }
 
@@ -172,7 +172,7 @@ export const ProductActions = styled.div`
         border: var(--boder-basic);
 
         :hover {
-          background-color: #262626;
+          background-color: #030852;
           color: #fff;
         }
       }

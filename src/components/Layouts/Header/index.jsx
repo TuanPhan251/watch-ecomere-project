@@ -51,11 +51,15 @@ const Header = () => {
           onClose={() => setShowDrawer(false)}
           open={showDrawer}
           contentWrapperStyle={{ width: "100%" }}
+          bodyStyle={{
+            backgroundColor: "#000",
+          }}
           headerStyle={{
             position: "absolute",
             right: "-20px",
             top: 0,
             border: "none",
+            backgroundColor: "#fff",
           }}
         >
           <S.HeaderNavMobileList>

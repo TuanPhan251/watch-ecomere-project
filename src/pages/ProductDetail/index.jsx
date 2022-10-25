@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Button, Rate, Tooltip } from "antd";
+import { Row, Col, Button, Rate, Tooltip, notification } from "antd";
 
 import {
   addProductAction,
@@ -22,7 +22,24 @@ const ProductDetailPage = () => {
   const [itemQuantity, setItemQuantity] = useState(1);
 
   const handleAddProductToCart = () => {
-    dispatch(addProductAction({ product: productDetail }));
+    dispatch(
+      addProductAction({ product: productDetail, productAmount: itemQuantity })
+    );
+
+    notification.open({
+      message: "Đã thêm sản phẩm vào giỏ hàng",
+      placement: "topRight",
+      top: 100,
+      duration: 2,
+      icon: (
+        <i
+          className="fa-solid fa-check"
+          style={{
+            color: "#73d13d",
+          }}
+        ></i>
+      ),
+    });
   };
 
   useEffect(() => {
