@@ -53,13 +53,13 @@ export const MobileFilterAction = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  background-color: #f8f8fc;
+  background-color: #f5f5f5;
   padding-bottom: 24px;
+  overflow: hidden;
 `;
 
 export const ProductPageWrapper = styled.div`
-  width: 100%;
-  margin: 24px auto 0;
+  margin: 24px 24px 0 24px;
   border-radius: 4px;
   background-color: #fff;
 
