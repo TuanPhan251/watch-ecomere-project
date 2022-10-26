@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
+import slug from "slug";
 
 import { Button, Select, Form, Input, InputNumber, Modal } from "antd";
 
@@ -43,11 +44,13 @@ const CreateProductPage = () => {
         data: {
           ...data,
           categoryId: parseInt(data.categoryId),
+          slug: slug(data.name),
+        },
+        callback: {
+          goToList: () => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE),
         },
       })
     );
-
-    if (createProductData.loading === false) setShowModal(true);
   };
 
   return (
@@ -225,7 +228,7 @@ const CreateProductPage = () => {
             Tạo sản phẩm mới
           </Button>
 
-          <Modal
+          {/* <Modal
             title="Tạo sản phẩm mới"
             open={showModal}
             onCancel={() => {
@@ -256,7 +259,7 @@ const CreateProductPage = () => {
                 ? "Đã tạo sản phẩm mới"
                 : createProductData.error}
             </p>
-          </Modal>
+          </Modal> */}
         </Form.Item>
       </Form>
     </S.CreateProductFormWrapper>

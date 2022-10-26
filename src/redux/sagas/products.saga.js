@@ -89,7 +89,7 @@ function* getProductDetailSaga(action) {
 
 function* createProductSaga(action) {
   try {
-    const { data, params } = action.payload;
+    const { data, callback } = action.payload;
     const result = yield axios.post("http://localhost:4000/products", data);
     yield put({
       type: SUCCESS(PRODUCT_ACTION.CREATE_PRODUCT),
@@ -97,6 +97,7 @@ function* createProductSaga(action) {
         data: result.data,
       },
     });
+    yield callback.goToList();
   } catch (e) {
     console.log(
       "🚀 ~ file: products.saga.js ~ line 49 ~ function*createProductSaga ~ e",
@@ -113,7 +114,7 @@ function* createProductSaga(action) {
 
 function* updateProductSaga(action) {
   try {
-    const { data, id } = action.payload;
+    const { data, id, callback } = action.payload;
     const result = yield axios.patch(
       `http://localhost:4000/products/${id}`,
       data
@@ -124,6 +125,7 @@ function* updateProductSaga(action) {
         data: result.data,
       },
     });
+    yield callback.goToList();
   } catch (e) {
     console.log(
       "🚀 ~ file: products.saga.js ~ line 84 ~ function*updateProductSaga ~ e",

@@ -44,7 +44,7 @@ export const ProductSummary = styled.div`
 
   h2 {
     font-size: 24px;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   .product_rating {
@@ -152,7 +152,7 @@ export const ProductActions = styled.div`
   flex: 1;
   flex-direction: column;
   justify-content: space-around;
-  padding-top: 24px;
+  padding-top: 12px;
   border-radius: 4px;
 
   button {
@@ -173,7 +173,6 @@ export const ProductActions = styled.div`
 
   .product_action-addcart {
     display: flex;
-    margin-top: 12px;
 
     .product_action-addcart-quantity {
       display: flex;

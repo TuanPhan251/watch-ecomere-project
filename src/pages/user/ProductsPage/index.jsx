@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, generatePath } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -326,7 +326,13 @@ const ProductPage = () => {
           md={8}
           sm={8}
           xs={12}
-          onClick={() => navigate(`/san-pham/${item.id}`)}
+          onClick={() =>
+            navigate(
+              generatePath(ROUTES.USER.PRODUCT_DETAIL, {
+                id: `${item.slug}.${item.id}`,
+              })
+            )
+          }
         >
           <S.ProductItem>
             <div className="product_info-image">

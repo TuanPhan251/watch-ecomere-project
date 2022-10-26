@@ -18,7 +18,7 @@ export const HomePageWrapper = styled.main`
   .header_img-wrapper {
     position: relative;
     max-width: 100%;
-    height: 100vh;
+    height: calc(100vh - var(--header-height));
 
     video {
       width: 100%;

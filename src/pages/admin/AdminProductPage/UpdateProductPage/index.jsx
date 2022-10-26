@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
+import slug from "slug";
 
 import {
   Button,
@@ -53,6 +54,22 @@ const UpdateProductPage = () => {
     }
   }, [productDetail.data]);
 
+  const handleUpdateProduct = (data) => {
+    dispatch(
+      updateProductAction({
+        data: {
+          ...data,
+          categoryId: parseInt(data.categoryId),
+          slug: slug(data.name),
+        },
+        id: id,
+        callback: {
+          goToList: () => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE),
+        },
+      })
+    );
+  };
+
   const renderCategoryOptions = useMemo(() => {
     return categoryList.data.map((item) => {
       return (
@@ -62,17 +79,6 @@ const UpdateProductPage = () => {
       );
     });
   }, [categoryList.data]);
-
-  const handleUpdateProduct = (data) => {
-    dispatch(
-      updateProductAction({
-        data: { ...data, categoryId: parseInt(data.categoryId) },
-        id: id,
-      })
-    );
-
-    if (updateProductData.loading === false) setShowModal(true);
-  };
 
   return (
     <S.CreateProductFormWrapper>
@@ -265,7 +271,7 @@ const UpdateProductPage = () => {
               </Button>
             </Space>
 
-            <Modal
+            {/* <Modal
               title="Cập nhật thông tin sản phẩm"
               centered
               open={showModal}
@@ -297,7 +303,7 @@ const UpdateProductPage = () => {
                   ? "Cập nhật sản phẩm thành công"
                   : updateProductData.error}
               </p>
-            </Modal>
+            </Modal> */}
           </Form.Item>
         </Form>
       </Spin>

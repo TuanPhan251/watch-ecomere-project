@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import { ADD_PRODUCT, REMOVE_PRODUCT } from "../CONSTANTS/cart.constant";
 
 const initialValue = {
-  cartList: [],
+  cartList: JSON.parse(localStorage.getItem("cart")) || [],
 };
 
 const cartReducer = createReducer(initialValue, {
@@ -18,10 +18,13 @@ const cartReducer = createReducer(initialValue, {
         totalAmount: productAmount,
         totalPrice: product.data.price,
       };
+      const newCartList = [newItem, ...state.cartList];
+
+      localStorage.setItem("cart", JSON.stringify(newCartList));
 
       return {
         ...state,
-        cartList: [newItem, ...state.cartList],
+        cartList: newCartList,
       };
     } else {
       const totalAmount = state.cartList[index].totalAmount + productAmount;
@@ -30,9 +33,10 @@ const cartReducer = createReducer(initialValue, {
         totalAmount: parseInt(totalAmount),
         totalPrice: parseFloat(totalAmount * product.data.price),
       };
-
       const newCartList = [...state.cartList];
       newCartList.splice(index, 1, existProduct);
+
+      localStorage.setItem("cart", JSON.stringify(newCartList));
 
       return {
         ...state,
@@ -67,6 +71,8 @@ const cartReducer = createReducer(initialValue, {
         };
 
         newCartList.splice(index, 1, newItem);
+        localStorage.setItem("cart", JSON.stringify(newCartList));
+
         return {
           ...state,
           cartList: newCartList,
@@ -75,6 +81,7 @@ const cartReducer = createReducer(initialValue, {
     } else {
       const newCartList = [...state.cartList];
       newCartList.splice(index, 1);
+      localStorage.setItem("cart", JSON.stringify(newCartList));
 
       return {
         ...state,

@@ -173,7 +173,7 @@ const AdminProductPage = () => {
               onCancel={() => setShowModal(false)}
               okText="Xác nhận"
               cancelText="Hủy"
-              confirmLoading={productList.loading}
+              confirmLoading={deleteProductData.loading}
             >
               <p>Không thể hoàn tác sau khi xác nhận, đồng ý xóa ?</p>
             </Modal>
