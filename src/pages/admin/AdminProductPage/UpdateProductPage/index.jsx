@@ -55,12 +55,15 @@ const UpdateProductPage = () => {
   }, [productDetail.data]);
 
   const handleUpdateProduct = (data) => {
+    const finalPrice = data.price * (1 - data.discountPercent / 100);
+
     dispatch(
       updateProductAction({
         data: {
           ...data,
           categoryId: parseInt(data.categoryId),
           slug: slug(data.name),
+          finalPrice: finalPrice,
         },
         id: id,
         callback: {
@@ -82,7 +85,27 @@ const UpdateProductPage = () => {
 
   return (
     <S.CreateProductFormWrapper>
-      <h3>Sửa thông tin sản phẩm</h3>
+      <S.UpdateProductActions>
+        <h3>Sửa thông tin sản phẩm</h3>
+
+        <Space>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={updateProductData.loading}
+            onClick={() => updateForm.submit()}
+          >
+            Cập nhật
+          </Button>
+
+          <Button
+            type="danger"
+            onClick={() => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE)}
+          >
+            Hủy
+          </Button>
+        </Space>
+      </S.UpdateProductActions>
 
       <Spin spinning={productDetail.loading}>
         <Form
@@ -90,6 +113,7 @@ const UpdateProductPage = () => {
           name="basic"
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 8 }}
+          style={{ padding: "12px 0" }}
           autoComplete="off"
           initialValues={initialValue}
           onFinish={(values) => {
@@ -109,7 +133,19 @@ const UpdateProductPage = () => {
             name="price"
             rules={[{ required: true, message: "Hãy nhập giá sản phẩm" }]}
           >
-            <InputNumber style={{ width: "100%" }} />
+            <InputNumber
+              style={{ width: "100%" }}
+              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Khuyến mãi(%)"
+            name="discountPercent"
+            rules={[{ required: true, message: "Hãy nhập khuyến mãi" }]}
+          >
+            <InputNumber min={0} max={99} />
           </Form.Item>
 
           <Form.Item
@@ -251,59 +287,6 @@ const UpdateProductPage = () => {
                 updateForm.setFieldsValue({ content: value })
               }
             />
-          </Form.Item>
-
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Space>
-              <Button
-                type="primary"
-                htmlType="submit"
-                loading={updateProductData.loading}
-              >
-                Cập nhật
-              </Button>
-
-              <Button
-                type="danger"
-                onClick={() => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE)}
-              >
-                Hủy
-              </Button>
-            </Space>
-
-            {/* <Modal
-              title="Cập nhật thông tin sản phẩm"
-              centered
-              open={showModal}
-              onCancel={() => {
-                setShowModal(false);
-                updateForm.resetFields();
-              }}
-              footer={[
-                <Button
-                  key="back"
-                  onClick={() => {
-                    setShowModal(false);
-                    updateForm.resetFields();
-                  }}
-                >
-                  Tiếp tục sửa
-                </Button>,
-                <Button
-                  key="submit"
-                  type="primary"
-                  onClick={() => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE)}
-                >
-                  Tới Danh sách sản phẩm
-                </Button>,
-              ]}
-            >
-              <p>
-                {updateProductData.error === ""
-                  ? "Cập nhật sản phẩm thành công"
-                  : updateProductData.error}
-              </p>
-            </Modal> */}
           </Form.Item>
         </Form>
       </Spin>

@@ -218,6 +218,35 @@ export const ProductItem = styled.div`
       }
     }
   }
+
+  .product_info-discount-label {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+    background-color: #fadb14;
+
+    ::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 100%;
+      border-width: 0px 18px 4px;
+      border-style: solid;
+      border-color: transparent rgb(250, 219, 20, 1);
+    }
+
+    span {
+      color: var(--price-color);
+      font-weight: 500;
+    }
+  }
+
   &:hover {
     box-shadow: 0 0 8px #ccc;
 

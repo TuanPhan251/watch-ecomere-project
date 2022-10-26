@@ -16,7 +16,7 @@ const cartReducer = createReducer(initialValue, {
       const newItem = {
         ...product.data,
         totalAmount: productAmount,
-        totalPrice: product.data.price,
+        totalPrice: product.data.finalPrice,
       };
       const newCartList = [newItem, ...state.cartList];
 
@@ -31,7 +31,7 @@ const cartReducer = createReducer(initialValue, {
       const existProduct = {
         ...product.data,
         totalAmount: parseInt(totalAmount),
-        totalPrice: parseFloat(totalAmount * product.data.price),
+        totalPrice: parseFloat(totalAmount * product.data.finalPrice),
       };
       const newCartList = [...state.cartList];
       newCartList.splice(index, 1, existProduct);
@@ -67,7 +67,7 @@ const cartReducer = createReducer(initialValue, {
         const newItem = {
           ...item,
           totalAmount: totalAmount,
-          totalPrice: totalAmount * item.price,
+          totalPrice: totalAmount * item.finalPrice,
         };
 
         newCartList.splice(index, 1, newItem);
