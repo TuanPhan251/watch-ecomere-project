@@ -318,6 +318,13 @@ const ProductPage = () => {
 
   const renderProducts = useMemo(() => {
     return productList.data.map((item) => {
+      const isDiscount = !!item.discountPercent;
+      const discountPercent = `-${item.discountPercent}%`;
+      let price = item.price;
+      if (isDiscount) {
+        price = item.finalPrice;
+      }
+
       return (
         <Col
           key={item.id}
@@ -375,14 +382,23 @@ const ProductPage = () => {
               />
               <span>(12 đánh giá)</span>
             </div>
-            <p className="product_info-price-original">
-              {item.price.toLocaleString()}
-              <sup>₫</sup>
-            </p>
+
             <p className="product_info-price-final">
-              {item.price.toLocaleString()}
+              {price.toLocaleString()}
               <sup>₫</sup>
             </p>
+            {isDiscount && (
+              <p className="product_info-price-original">
+                {item.price.toLocaleString()}
+                <sup>₫</sup>
+              </p>
+            )}
+
+            {isDiscount && (
+              <div className="product_info-discount-label">
+                <span>{discountPercent}</span>
+              </div>
+            )}
           </S.ProductItem>
         </Col>
       );

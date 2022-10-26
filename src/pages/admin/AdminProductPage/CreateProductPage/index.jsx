@@ -39,12 +39,15 @@ const CreateProductPage = () => {
   };
 
   const handleCreateProduct = (data) => {
+    const finalPrice = data.price * (1 - data.discountPercent / 100);
+
     dispatch(
       createProductAction({
         data: {
           ...data,
           categoryId: parseInt(data.categoryId),
           slug: slug(data.name),
+          finalPrice: finalPrice,
         },
         callback: {
           goToList: () => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE),
@@ -55,13 +58,25 @@ const CreateProductPage = () => {
 
   return (
     <S.CreateProductFormWrapper>
-      <h3>Tạo sản phẩm mới</h3>
+      <S.TopWrapper>
+        <h3>Tạo sản phẩm mới</h3>
+
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={createProductData.loading}
+          onClick={() => createForm.submit()}
+        >
+          Tạo sản phẩm mới
+        </Button>
+      </S.TopWrapper>
 
       <Form
         form={createForm}
         name="basic"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 8 }}
+        style={{ padding: "12px 0" }}
         autoComplete="off"
         onFinish={(values) => {
           handleCreateProduct(values);
@@ -80,7 +95,20 @@ const CreateProductPage = () => {
           name="price"
           rules={[{ required: true, message: "Hãy nhập giá sản phẩm" }]}
         >
-          <InputNumber style={{ width: "100%" }} />
+          <InputNumber
+            style={{ width: "100%" }}
+            formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Khuyến mãi(%)"
+          name="discountPercent"
+          initialValue={0}
+          rules={[{ required: true, message: "Hãy nhập khuyến mãi" }]}
+        >
+          <InputNumber min={0} max={99} />
         </Form.Item>
 
         <Form.Item
@@ -217,49 +245,6 @@ const CreateProductPage = () => {
             theme="snow"
             onChange={(value) => createForm.setFieldsValue({ content: value })}
           />
-        </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            loading={createProductData.loading}
-          >
-            Tạo sản phẩm mới
-          </Button>
-
-          {/* <Modal
-            title="Tạo sản phẩm mới"
-            open={showModal}
-            onCancel={() => {
-              setShowModal(false);
-              createForm.resetFields();
-            }}
-            footer={[
-              <Button
-                key="back"
-                onClick={() => {
-                  setShowModal(false);
-                  createForm.resetFields();
-                }}
-              >
-                Tiếp tục thêm sản phẩm
-              </Button>,
-              <Button
-                key="submit"
-                type="primary"
-                onClick={() => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE)}
-              >
-                Tới Danh sách sản phẩm
-              </Button>,
-            ]}
-          >
-            <p>
-              {createProductData.error === ""
-                ? "Đã tạo sản phẩm mới"
-                : createProductData.error}
-            </p>
-          </Modal> */}
         </Form.Item>
       </Form>
     </S.CreateProductFormWrapper>

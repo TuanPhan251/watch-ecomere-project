@@ -141,6 +141,12 @@ const AdminProductPage = () => {
       render: (price) => `${price.toLocaleString()} đ`,
     },
     {
+      title: "Khuyến mãi",
+      dataIndex: "discountPercent",
+      key: "discountPercent",
+      render: (discountPercent) => `${discountPercent} %`,
+    },
+    {
       title: "Tùy chọn",
       dataIndex: "action",
       key: "action",

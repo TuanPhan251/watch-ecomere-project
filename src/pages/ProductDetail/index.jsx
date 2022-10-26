@@ -23,6 +23,7 @@ const ProductDetailPage = () => {
   const { id } = useParams();
   const productId = parseInt(id.split(".")[1]);
   const gender = productDetail.data.gender === "male" ? "nam" : "nữ";
+  const isDiscount = !!productDetail.data.discountPercent;
 
   const [itemQuantity, setItemQuantity] = useState(1);
 
@@ -118,17 +119,19 @@ const ProductDetailPage = () => {
                 <p className="product_summary-price">
                   GIÁ:
                   <span className="product_summary-price-final">
-                    {productDetail.data.price?.toLocaleString()}
+                    {productDetail.data?.finalPrice?.toLocaleString()}
                     <sup>₫</sup>
                   </span>
-                  <span className="product_summary-price-original">
-                    {productDetail.data.price?.toLocaleString()}
-                    <sup>₫</sup>
-                  </span>
+                  {isDiscount && (
+                    <span className="product_summary-price-original">
+                      {productDetail.data?.price?.toLocaleString()}
+                      <sup>₫</sup>
+                    </span>
+                  )}
                 </p>
               </S.ProductSummary>
 
-              <ProductGift />
+              <ProductGift discount={productDetail.data.discountPercent} />
 
               <S.ProductActions>
                 <div className="product_action-addcart">
