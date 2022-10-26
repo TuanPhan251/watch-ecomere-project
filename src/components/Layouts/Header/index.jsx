@@ -34,9 +34,7 @@ const Header = () => {
     localStorage.removeItem("accessToken");
   };
 
-  const itemsAmount = cartList.reduce((prev, item) => {
-    return prev + item.totalAmount;
-  }, 0);
+  const itemsAmount = cartList.length;
 
   return (
     <S.HeaderContainer>

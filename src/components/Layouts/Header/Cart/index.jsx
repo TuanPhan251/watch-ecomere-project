@@ -26,7 +26,11 @@ const CartDrawer = ({ cartList }) => {
         <S.ItemContent
           key={item.id}
           onClick={() =>
-            navigate(generatePath(ROUTES.USER.PRODUCT_DETAIL, { id: item.id }))
+            navigate(
+              generatePath(ROUTES.USER.PRODUCT_DETAIL, {
+                id: `${item.slug}.${item.id}`,
+              })
+            )
           }
         >
           <S.ItemImage>
