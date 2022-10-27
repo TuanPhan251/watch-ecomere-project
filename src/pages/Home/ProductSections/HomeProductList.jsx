@@ -35,7 +35,9 @@ const HomeProductList = ({ gender }) => {
       return (
         <Col span={12} key={product.id}>
           <Link
-            to={generatePath(ROUTES.USER.PRODUCT_DETAIL, { id: product.id })}
+            to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
+              id: `${product.slug}.${product.id}`,
+            })}
           >
             <S.Product>
               <img src={product.image} alt="product" />

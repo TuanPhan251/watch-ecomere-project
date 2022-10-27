@@ -78,6 +78,30 @@ export const ProductPageWrapper = styled.div`
         font-size: 20px;
       }
     }
+
+    .product_filter-actions {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 12px;
+
+      button {
+        padding: 4px 12px;
+        border: none;
+        background-color: var(--button-color);
+        color: #fff;
+        transition: all 0.3s ease;
+        cursor: pointer;
+
+        :hover {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    margin: 24px 0 0 0;
   }
 `;
 
@@ -220,7 +244,6 @@ export const ProductItem = styled.div`
   }
 
   .product_info-discount-label {
-    content: "";
     position: absolute;
     top: 0;
     left: 10px;
@@ -244,6 +267,31 @@ export const ProductItem = styled.div`
     span {
       color: var(--price-color);
       font-weight: 500;
+    }
+  }
+
+  .product_info-isNew-label {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    width: 60px;
+    height: 24px;
+    padding: 0 4px;
+    background-color: var(--button-color);
+    color: #fff;
+
+    ::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 100%;
+      border-width: 12px 8px 12px 0;
+      border-style: solid;
+      border-color: transparent var(--button-color);
+    }
+
+    span {
+      font-size: 16px;
     }
   }
 

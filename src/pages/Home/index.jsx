@@ -11,6 +11,7 @@ import menImg from "../../assets/banner/men-1.webp";
 import womenImg from "../../assets/banner/women-1.webp";
 
 import * as S from "./style";
+import { Spin } from "antd";
 
 const HomePage = () => {
   const navigate = useNavigate();

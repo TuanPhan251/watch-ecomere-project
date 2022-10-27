@@ -67,7 +67,7 @@ export const HomePageWrapper = styled.main`
       transform: translateX(50%);
       padding: 8px 16px;
       font-size: 16px;
-      background-color: #cf1322;
+      background-color: var(--button-color);
       color: #fff;
       text-transform: uppercase;
       border-radius: 10px;
@@ -211,7 +211,7 @@ export const HomePageWrapper = styled.main`
     color: #fff;
     border: none;
     border-radius: 10px;
-    background-color: #cf1322;
+    background-color: var(--button-color);
     box-shadow: 0 0 4px #262626;
     transition: all 0.3s ease;
     cursor: pointer;
