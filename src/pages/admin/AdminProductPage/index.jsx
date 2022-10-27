@@ -116,6 +116,7 @@ const AdminProductPage = () => {
         return (
           <Space>
             <Avatar shape="square" size={64} src={record.image} />
+            {record.isNew && <span style={{ color: "red" }}>(Mới)</span>}
             <h4>{record.name}</h4>
           </Space>
         );
@@ -192,7 +193,7 @@ const AdminProductPage = () => {
   const tableData = productList.data.map((item) => ({ ...item, key: item.id }));
 
   return (
-    <S.ProductListContainer loading={productList.loading}>
+    <S.ProductListContainer>
       <S.ProductListHeading>
         <h3>Danh sách sản phẩm ({productList.meta.total}) :</h3>
         <Button

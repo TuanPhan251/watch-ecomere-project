@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  background-color: #f5f5f5;
+  background-color: var(--bgr-color);
   padding-bottom: 24px;
 
   overflow: hidden;
@@ -25,6 +25,35 @@ export const ProductImageWrapper = styled.div`
 
   & img {
     width: 100%;
+  }
+
+  .product_info-discount-label {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background-color: #fadb14;
+
+    ::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 100%;
+      border-width: 0px 30px 6px;
+      border-style: solid;
+      border-color: transparent rgb(250, 219, 20, 1);
+    }
+
+    span {
+      font-size: 20px;
+      color: var(--price-color);
+      font-weight: 500;
+    }
   }
 
   @media (max-width: 576px) {
@@ -165,10 +194,6 @@ export const ProductActions = styled.div`
     font-size: 20px;
     transition: all 0.3s ease;
     cursor: pointer;
-
-    :hover {
-      background-color: #030852;
-    }
   }
 
   .product_action-addcart {
@@ -189,11 +214,6 @@ export const ProductActions = styled.div`
         background-color: #fff;
         color: var(--dark-text-color);
         border: var(--boder-basic);
-
-        :hover {
-          background-color: #030852;
-          color: #fff;
-        }
       }
 
       input {

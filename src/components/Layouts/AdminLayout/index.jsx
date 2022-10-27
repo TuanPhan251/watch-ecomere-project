@@ -10,7 +10,7 @@ import LoadingPage from "../Loading";
 
 const AdminLayout = () => {
   const { userInfo } = useSelector((state) => state.user);
-  const [showSidebar, setShowSidebar] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(true);
   const accessToken = localStorage.getItem("accessToken");
   if (accessToken && userInfo.loading) {
     return <LoadingPage />;

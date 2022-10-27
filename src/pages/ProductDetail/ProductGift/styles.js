@@ -7,7 +7,7 @@ export const ProductGiftWrapper = styled.div`
     font-size: 20px;
     padding: 8px;
     color: #fff;
-    background-color: #009432;
+    background-color: var(--price-color);
   }
   .product_gift-list {
     list-style: none;
@@ -18,7 +18,7 @@ export const ProductGiftWrapper = styled.div`
     margin: 8px 0;
 
     i {
-      color: #009432;
+      color: var(--price-color);
       margin-right: 4px;
       font-size: 20px;
     }

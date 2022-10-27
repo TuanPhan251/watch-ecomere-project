@@ -13,6 +13,7 @@ import {
   Modal,
   Space,
   Spin,
+  Checkbox,
 } from "antd";
 
 import { ROUTES } from "../../../../constants/routes";
@@ -56,6 +57,8 @@ const UpdateProductPage = () => {
 
   const handleUpdateProduct = (data) => {
     const finalPrice = data.price * (1 - data.discountPercent / 100);
+    let isDiscount = false;
+    if (data.discountPercent > 0) isDiscount = true;
 
     dispatch(
       updateProductAction({
@@ -64,6 +67,7 @@ const UpdateProductPage = () => {
           categoryId: parseInt(data.categoryId),
           slug: slug(data.name),
           finalPrice: finalPrice,
+          isDiscount: isDiscount,
         },
         id: id,
         callback: {
@@ -126,6 +130,10 @@ const UpdateProductPage = () => {
             rules={[{ required: true, message: "Hãy nhập tên sản phẩm" }]}
           >
             <Input />
+          </Form.Item>
+
+          <Form.Item label="Sản phẩm mới" name="isNew" valuePropName="checked">
+            <Checkbox />
           </Form.Item>
 
           <Form.Item

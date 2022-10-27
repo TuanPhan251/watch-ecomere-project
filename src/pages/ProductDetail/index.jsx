@@ -1,11 +1,13 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Button, Rate, Tooltip, notification } from "antd";
+import { Row, Col, Button, Rate, Tooltip, notification, Spin } from "antd";
 
 import ProductSpec from "./ProductSpec";
 import ProductPolicy from "./ProductPolicy";
 import ProductGift from "./ProductGift";
+
+import MainButton from "../../components/MainButton";
 
 import {
   addProductAction,
@@ -48,11 +50,19 @@ const ProductDetailPage = () => {
     });
   };
 
+  const handleGetItemQuantity = (value) => {
+    if (value < 1) {
+      setItemQuantity(1);
+    } else {
+      setItemQuantity(parseInt(value));
+    }
+  };
+
   useEffect(() => {
     dispatch(getProductDetailAction({ id: productId }));
 
     dispatch(getCategoriesListAction());
-  }, []);
+  }, [productId]);
 
   const renderProductSpec = useMemo(() => {
     return <ProductSpec product={productDetail} />;
@@ -65,6 +75,10 @@ const ProductDetailPage = () => {
           <Col xxl={8} xl={8} md={24} sm={24} xm={24}>
             <S.ProductImageWrapper>
               <img src={productDetail.data.image} alt="product" />
+
+              <div className="product_info-discount-label">
+                <span>- {productDetail.data.discountPercent}%</span>
+              </div>
             </S.ProductImageWrapper>
           </Col>
           <Col xxl={10} xl={10} md={24} sm={24} xm={24}>
@@ -137,39 +151,50 @@ const ProductDetailPage = () => {
                 <div className="product_action-addcart">
                   <div className="product_action-addcart-quantity">
                     <span>Số lượng: </span>
-                    <button
+
+                    <MainButton
                       className="quantity_control-btn"
+                      buttonType="ghost"
                       onClick={() => {
                         itemQuantity !== 1 && setItemQuantity(itemQuantity - 1);
                       }}
                     >
                       -
-                    </button>
-                    <input type="text" value={itemQuantity} readOnly min={1} />
-                    <button
+                    </MainButton>
+                    <input
+                      type="text"
+                      value={itemQuantity}
+                      min={1}
+                      onChange={(e) => handleGetItemQuantity(e.target.value)}
+                    />
+                    <MainButton
+                      buttonType="ghost"
                       className="quantity_control-btn"
                       onClick={() => setItemQuantity(itemQuantity + 1)}
                     >
                       +
-                    </button>
+                    </MainButton>
                   </div>
 
-                  <button
-                    className="product_action-addcart-btn"
+                  <MainButton
+                    buttonType="primary"
                     onClick={handleAddProductToCart}
+                    style={{ marginLeft: "auto", width: "50%" }}
                   >
                     THÊM VÀO GIỎ
-                  </button>
+                  </MainButton>
                 </div>
 
-                <button
+                <MainButton
                   onClick={() => {
                     handleAddProductToCart();
                     navigate(ROUTES.USER.CHECKOUT);
                   }}
+                  buttonType="primary"
+                  style={{ width: "100%" }}
                 >
                   MUA NGAY
-                </button>
+                </MainButton>
               </S.ProductActions>
             </S.ProductInfoWrapper>
           </Col>

@@ -41,6 +41,12 @@ function* getProductListSaga(action) {
         ...(params.glassMaterial && {
           glassMaterial: params.glassMaterial,
         }),
+        ...(params.isNew && {
+          isNew: params.isNew,
+        }),
+        ...(params.isDiscount && {
+          isDiscount: params.isDiscount,
+        }),
       },
     });
     yield put({

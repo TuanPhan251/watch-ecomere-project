@@ -16,6 +16,7 @@ import {
   Rate,
   Tooltip,
   Drawer,
+  Slider,
 } from "antd";
 
 import {
@@ -56,15 +57,11 @@ const caseSizes = [
 ];
 
 const ProductPage = () => {
+  const MAXPRICE = 15000000;
   const location = useLocation();
   const { title, gender } = location.state;
   const bannerImg = gender === "male" ? menBanner : womenBanner;
-
-  const [showFilterDrawer, setShowFilterDrawer] = useState(false);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [filterParams, setFilterParams] = useState({
+  const initialFilterParams = {
     categoryId: [],
     keyword: "",
     priceSort: "",
@@ -72,8 +69,17 @@ const ProductPage = () => {
     caseSize: "",
     nameCaseSize: "",
     glassMaterial: [],
+    priceRange: [0, MAXPRICE],
     gender: gender,
-  });
+    isNew: false,
+    isDiscount: false,
+  };
+
+  const [showFilterDrawer, setShowFilterDrawer] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
   const { productList } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
 
@@ -91,13 +97,7 @@ const ProductPage = () => {
     dispatch(getCategoriesListAction());
 
     setFilterParams({
-      categoryId: [],
-      keyword: "",
-      priceSort: "",
-      type: [],
-      caseSize: "",
-      nameCaseSize: "",
-      glassMaterial: [],
+      ...filterParams,
       gender: gender,
     });
   }, [gender]);
@@ -135,7 +135,7 @@ const ProductPage = () => {
   };
 
   const handleFilter = (key, values) => {
-    console.log(key);
+    console.log(key, values);
     setFilterParams({
       ...filterParams,
       [key]: values,
@@ -151,6 +151,21 @@ const ProductPage = () => {
         },
       })
     );
+  };
+
+  const handleResetFilterParams = () => {
+    setFilterParams({ ...initialFilterParams });
+    dispatch(
+      getProductListAction({
+        params: {
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+          gender: gender,
+        },
+      })
+    );
+
+    dispatch(getCategoriesListAction());
   };
 
   const handleFilterCaseSize = (key, values, nameCaseSize) => {
@@ -399,6 +414,11 @@ const ProductPage = () => {
                 <span>{discountPercent}</span>
               </div>
             )}
+            {item.isNew && (
+              <div className="product_info-isNew-label">
+                <span>Mới</span>
+              </div>
+            )}
           </S.ProductItem>
         </Col>
       );
@@ -441,6 +461,25 @@ const ProductPage = () => {
               </Checkbox.Group>
             </li>
             <li className="mobile_filter-item">
+              <h3>Loại sản phẩm</h3>
+              <Col span={24}>
+                <Checkbox
+                  checked={filterParams.isNew}
+                  onChange={(e) => handleFilter("isNew", e.target.checked)}
+                >
+                  Sản phẩm mới
+                </Checkbox>
+              </Col>
+              <Col span={24}>
+                <Checkbox
+                  checked={filterParams.isDiscount}
+                  onChange={(e) => handleFilter("isDiscount", e.target.checked)}
+                >
+                  Đang giảm giá
+                </Checkbox>
+              </Col>
+            </li>
+            <li className="mobile_filter-item">
               <h3>Giới tính</h3>
               <Radio.Group
                 value={filterParams.gender}
@@ -478,7 +517,9 @@ const ProductPage = () => {
           </S.MobileFilterList>
 
           <S.MobileFilterAction>
-            <button>Xóa bộ lọc</button>
+            <button onClick={() => handleResetFilterParams()}>
+              Xóa bộ lọc
+            </button>
           </S.MobileFilterAction>
         </Drawer>
       </S.MobileFilterDrawer>
@@ -494,11 +535,20 @@ const ProductPage = () => {
               <Collapse
                 ghost
                 bordered={false}
-                defaultActiveKey={["1", "2", "3", "4", "5"]}
+                defaultActiveKey={["1", "2", "3", "4", "5", "6", "7"]}
                 style={{
                   fontSize: 16,
                 }}
               >
+                <Panel header="Khoảng giá" key="7">
+                  <Slider
+                    range
+                    step={100000}
+                    max={MAXPRICE}
+                    defaultValue={filterParams.priceRange}
+                    onAfterChange={(value) => handleFilter("priceRange", value)}
+                  />
+                </Panel>
                 <Panel header="Thương hiệu" key="1">
                   <Checkbox.Group
                     onChange={(value) => handleFilter("categoryId", value)}
@@ -571,7 +621,39 @@ const ProductPage = () => {
                     </Col>
                   </Checkbox.Group>
                 </Panel>
+                <Panel header="Loại sản phẩm" key="6">
+                  <Col span={24}>
+                    <Row>
+                      <Checkbox
+                        checked={filterParams.isNew}
+                        onChange={(e) =>
+                          handleFilter("isNew", e.target.checked)
+                        }
+                      >
+                        Sản phẩm mới
+                      </Checkbox>
+                    </Row>
+                  </Col>
+                  <Col span={24}>
+                    <Row>
+                      <Checkbox
+                        checked={filterParams.isDiscount}
+                        onChange={(e) =>
+                          handleFilter("isDiscount", e.target.checked)
+                        }
+                      >
+                        Đang giảm giá
+                      </Checkbox>
+                    </Row>
+                  </Col>
+                </Panel>
               </Collapse>
+
+              <div className="product_filter-actions">
+                <button onClick={() => handleResetFilterParams()}>
+                  Xóa bộ lọc
+                </button>
+              </div>
             </div>
           </Col>
 
