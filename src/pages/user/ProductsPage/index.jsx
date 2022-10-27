@@ -8,7 +8,6 @@ import {
   Col,
   Collapse,
   Checkbox,
-  Button,
   Space,
   Tag,
   Radio,
@@ -17,11 +16,14 @@ import {
   Tooltip,
   Drawer,
   Slider,
+  notification,
 } from "antd";
+import MainButton from "../../../components/MainButton";
 
 import {
   getProductListAction,
   getCategoriesListAction,
+  addProductAction,
 } from "../../../redux/actions";
 import { PRODUCT_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routes";
@@ -132,6 +134,32 @@ const ProductPage = () => {
         more: true,
       })
     );
+  };
+
+  const handleAddItemToCart = (product) => {
+    dispatch(
+      addProductAction({
+        product: {
+          data: product,
+        },
+        productAmount: 1,
+      })
+    );
+
+    notification.open({
+      message: "Đã thêm sản phẩm vào giỏ hàng",
+      placement: "top",
+      top: 100,
+      duration: 2,
+      icon: (
+        <i
+          className="fa-solid fa-check"
+          style={{
+            color: "#73d13d",
+          }}
+        ></i>
+      ),
+    });
   };
 
   const handleFilter = (key, values) => {
@@ -365,6 +393,7 @@ const ProductPage = () => {
                     className="product_item-actions-btn"
                     onClick={(e) => {
                       e.stopPropagation();
+                      handleAddItemToCart(item);
                     }}
                   >
                     <i className="fa-solid fa-cart-plus"></i>
@@ -731,13 +760,13 @@ const ProductPage = () => {
 
               {productList.data.length !== productList.meta.total && (
                 <Row style={{ justifyContent: "center" }}>
-                  <Button
-                    style={{ marginTop: 16 }}
-                    size="large"
+                  <MainButton
+                    buttonType="primary"
+                    style={{ marginTop: 16, fontSize: 16 }}
                     onClick={() => handleShowMore()}
                   >
                     Xem thêm
-                  </Button>
+                  </MainButton>
                 </Row>
               )}
             </S.ProductsWrapper>

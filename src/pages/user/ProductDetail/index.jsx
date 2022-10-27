@@ -1,20 +1,20 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Button, Rate, Tooltip, notification, Spin } from "antd";
+import { Row, Col, Rate, Tooltip, notification } from "antd";
 
 import ProductSpec from "./ProductSpec";
 import ProductPolicy from "./ProductPolicy";
 import ProductGift from "./ProductGift";
 
-import MainButton from "../../components/MainButton";
+import MainButton from "../../../components/MainButton";
 
 import {
   addProductAction,
   getProductDetailAction,
   getCategoriesListAction,
-} from "../../redux/actions";
-import { ROUTES } from "../../constants/routes";
+} from "../../../redux/actions";
+import { ROUTES } from "../../../constants/routes";
 
 import * as S from "./style";
 
@@ -36,7 +36,7 @@ const ProductDetailPage = () => {
 
     notification.open({
       message: "Đã thêm sản phẩm vào giỏ hàng",
-      placement: "topRight",
+      placement: "topLeft",
       top: 100,
       duration: 2,
       icon: (
@@ -76,9 +76,11 @@ const ProductDetailPage = () => {
             <S.ProductImageWrapper>
               <img src={productDetail.data.image} alt="product" />
 
-              <div className="product_info-discount-label">
-                <span>- {productDetail.data.discountPercent}%</span>
-              </div>
+              {productDetail.data.isDiscount && (
+                <div className="product_info-discount-label">
+                  <span>- {productDetail.data.discountPercent}%</span>
+                </div>
+              )}
             </S.ProductImageWrapper>
           </Col>
           <Col xxl={10} xl={10} md={24} sm={24} xm={24}>

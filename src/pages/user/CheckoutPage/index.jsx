@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Button } from "antd";
 
-import { ROUTES } from "../../constants/routes";
+import { ROUTES } from "../../../constants/routes";
 import {
   addProductAction,
   removeProductAction,
-} from "../../redux/actions/cart.actions";
+} from "../../../redux/actions/cart.actions";
 
 import * as S from "./style";
 

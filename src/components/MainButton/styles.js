@@ -11,7 +11,7 @@ export const MainButton = styled.button`
       color: #fff;
       background-color: var(--button-color);
       border: none;
-      border-radius: 4px;
+      border-radius: 2px;
       cursor: pointer;
       transition: all 0.3s ease;
 
@@ -33,7 +33,7 @@ export const MainButton = styled.button`
       font-size: 20px;
       font-weight: 500;
       color: var(--button-color);
-      background-color: fff;
+      background-color: #fff;
       border: 2px solid var(--button-color);
       border-radius: 4px;
       cursor: pointer;

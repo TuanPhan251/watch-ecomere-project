@@ -2,12 +2,12 @@ import { generatePath, Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getProductListAction } from "../../../redux/actions";
+import { getProductListAction } from "../../../../redux/actions";
 
 import { Col, Row } from "antd";
 
 import * as S from "./style";
-import { ROUTES } from "../../../constants/routes";
+import { ROUTES } from "../../../../constants/routes";
 
 const HomeProductList = ({ gender }) => {
   const navigate = useNavigate();

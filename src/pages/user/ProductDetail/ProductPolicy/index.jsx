@@ -22,12 +22,15 @@ const ProductPolicy = () => {
       <ul className="customer_support-list">
         <h3>Trợ giúp</h3>
         <li className="customer_support-item">
+          <i className="fa-regular fa-circle-question"></i>
           <Link>Chính sách bảo hành</Link>
         </li>
         <li className="customer_support-item">
+          <i className="fa-regular fa-circle-question"></i>
           <Link>Chính sách vận chuyển</Link>
         </li>
         <li className="customer_support-item">
+          <i className="fa-regular fa-circle-question"></i>
           <Link>Chính sách đổi trả sản phẩm</Link>
         </li>
       </ul>
@@ -35,12 +38,15 @@ const ProductPolicy = () => {
       <ul className="customer_support-number">
         <h3>Tư vấn - Đặt hàng</h3>
         <li className="customer_support-item">
+          <i className="fa-solid fa-phone"></i>
           <Link>Gọi mua hàng: (0236) xxxx.xxx</Link>
         </li>
         <li className="customer_support-item">
+          <i className="fa-solid fa-phone"></i>
           <Link>Gọi bảo hành : (0236) xxxx.xxx</Link>
         </li>
         <li className="customer_support-item">
+          <i className="fa-solid fa-phone"></i>
           <Link>Gọi kỹ thuật: (0236) xxxx.xxx</Link>
         </li>
       </ul>
