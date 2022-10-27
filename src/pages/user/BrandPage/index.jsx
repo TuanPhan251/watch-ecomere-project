@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getCategoriesListAction,
   getProductListAction,
-} from "../../redux/actions";
-import { PRODUCT_LIST_LIMIT } from "../../constants/paginations";
+} from "../../../redux/actions";
+import { PRODUCT_LIST_LIMIT } from "../../../constants/paginations";
 
 const { Panel } = Collapse;
 const { Option } = Select;

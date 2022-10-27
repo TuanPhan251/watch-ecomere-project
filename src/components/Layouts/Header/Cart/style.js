@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled, { css } from "styled-components";
 
 export const CartItems = styled.div`
   position: relative;
@@ -48,6 +48,16 @@ export const CartItemsContent = styled.div`
   &::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #f5f5f5;
+  }
+`;
+
+export const EmptyCartContent = styled.div`
+  padding: 12px;
+
+  .empty_cart-img {
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 `;
 
@@ -117,13 +127,13 @@ export const ItemAction = styled.div`
   align-items: center;
   margin: 0 8px;
 
-  & i {
+  .product_btn-remove {
     color: #000;
     padding: 4px;
     font-size: 24px;
 
-    &:hover {
-      color: #a8071a;
+    :hover {
+      color: var(--button-color);
     }
   }
 `;
@@ -134,13 +144,13 @@ export const CartItemsAction = styled.div`
   border-radius: 2px;
   background-color: #fff;
 
-  & button {
+  button {
     width: 100%;
     height: 48px;
     color: #fff;
     border: none;
     border-radius: 2px;
-    background-color: #cf1322;
+    background-color: var(--button-color);
 
     font-size: 18px;
     transition: all 0.2s ease;

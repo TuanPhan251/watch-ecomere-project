@@ -23,7 +23,6 @@ export const HeaderContainer = styled.header`
 
 export const HeaderLogo = styled.div`
   width: 80px;
-  margin-left: 20px;
 
   h2 {
     font-family: "Charmonman", cursive;

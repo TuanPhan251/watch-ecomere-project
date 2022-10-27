@@ -1,17 +1,16 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { ROUTES } from "../../constants/routes";
+import { ROUTES } from "../../../constants/routes";
 
 import HomeProductList from "./ProductSections/HomeProductList";
 
-import headerVideo from "../../assets/banner/Cinematic Watch Broll.webm";
+import headerVideo from "../../../assets/banner/Cinematic Watch Broll.webm";
 
-import menImg from "../../assets/banner/men-1.webp";
-import womenImg from "../../assets/banner/women-1.webp";
+import menImg from "../../../assets/banner/men-1.webp";
+import womenImg from "../../../assets/banner/women-1.webp";
 
 import * as S from "./style";
-import { Spin } from "antd";
 
 const HomePage = () => {
   const navigate = useNavigate();

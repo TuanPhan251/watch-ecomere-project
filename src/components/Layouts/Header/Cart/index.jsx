@@ -16,8 +16,8 @@ const CartDrawer = ({ cartList }) => {
     return item.totalPrice + prev;
   }, 0);
 
-  const handleRemoveProduct = (data, id) => {
-    dispatch(removeProductAction({ data, id }));
+  const handleRemoveProduct = (item, type) => {
+    dispatch(removeProductAction({ item, type }));
   };
 
   const renderCartItems = () => {
@@ -42,7 +42,7 @@ const CartDrawer = ({ cartList }) => {
 
             <div className="product_price-wrapper">
               <span className="product_info-amount">
-                Số lượng: <strong>{item.totalAmount}</strong>
+                Số lượng: {item.totalAmount}
               </span>
               <span className="product_info-price">
                 {item.totalPrice.toLocaleString()} <sup>₫</sup>
@@ -50,8 +50,13 @@ const CartDrawer = ({ cartList }) => {
             </div>
           </S.ItemPrice>
 
-          <S.ItemAction onClick={() => handleRemoveProduct(item, "remove")}>
-            <i className="fa-solid fa-xmark"></i>
+          <S.ItemAction
+            onClick={(e) => {
+              e.stopPropagation();
+              handleRemoveProduct(item, "remove");
+            }}
+          >
+            <i className="fa-solid fa-xmark product_btn-remove"></i>
           </S.ItemAction>
         </S.ItemContent>
       );
@@ -61,15 +66,11 @@ const CartDrawer = ({ cartList }) => {
   return (
     <S.CartItems>
       {cartList.length === 0 ? (
-        <S.CartItemsContent>
-          <img
-            src={emptyCartLogo}
-            alt=""
-            style={{
-              width: "100%",
-              borderRadius: "2px",
-            }}
-          />
+        <S.EmptyCartContent empty={true}>
+          <div className="empty_cart-img">
+            <img src={emptyCartLogo} alt="" />
+          </div>
+
           <p
             style={{
               textAlign: "center",
@@ -79,7 +80,7 @@ const CartDrawer = ({ cartList }) => {
           >
             Chưa có sản phẩm trong giỏ hàng
           </p>
-        </S.CartItemsContent>
+        </S.EmptyCartContent>
       ) : (
         <>
           <S.CartItemsContent>

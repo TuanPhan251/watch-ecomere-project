@@ -26,14 +26,18 @@ export const PolicyWrapper = styled.div`
 
   .customer_support-list {
     width: 100%;
-    list-style: circle;
+    list-style: none;
     margin-top: 12px;
     padding: 12px;
     border-radius: 4px;
     border: var(--boder-basic);
 
+    i {
+      margin-right: 8px;
+    }
+
     .customer_support-item {
-      margin-left: 16px;
+      margin-left: 4px;
       font-size: 16px;
 
       a {
@@ -41,7 +45,7 @@ export const PolicyWrapper = styled.div`
       }
       :hover {
         a {
-          color: var(--price-color);
+          color: var(--button-color);
           font-weight: 500;
         }
       }
@@ -50,14 +54,18 @@ export const PolicyWrapper = styled.div`
 
   .customer_support-number {
     width: 100%;
-    list-style: circle;
+    list-style: none;
     margin-top: 12px;
     padding: 12px;
     border-radius: 4px;
     border: var(--boder-basic);
 
+    i {
+      margin-right: 8px;
+    }
+
     .customer_support-item {
-      margin-left: 16px;
+      margin-left: 4px;
       font-size: 16px;
 
       a {
@@ -66,7 +74,7 @@ export const PolicyWrapper = styled.div`
       :hover {
         a {
           font-weight: 500;
-          color: var(--price-color);
+          color: var(--button-color);
         }
       }
     }

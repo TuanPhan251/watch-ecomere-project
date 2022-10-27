@@ -18,18 +18,6 @@ const Header = () => {
 
   const accessToken = localStorage.getItem("accessToken");
 
-  // const handleChangeHeaderBgrColor = () => {
-  //   window.scrollY > 80 ? setHeaderBgrColor(true) : setHeaderBgrColor(false);
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleChangeHeaderBgrColor);
-
-  //   return () => {
-  //     window.removeEventListener("scroll", handleChangeHeaderBgrColor);
-  //   };
-  // }, []);
-
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
   };
@@ -44,31 +32,49 @@ const Header = () => {
         </div>
 
         <Drawer
-          closable={true}
+          closable={false}
           placement="left"
           onClose={() => setShowDrawer(false)}
           open={showDrawer}
-          contentWrapperStyle={{ width: "100%" }}
-          bodyStyle={{
-            backgroundColor: "#000",
-          }}
-          headerStyle={{
-            position: "absolute",
-            right: "-20px",
-            top: 0,
-            border: "none",
-            backgroundColor: "#fff",
-          }}
+          contentWrapperStyle={{ width: 260 }}
+          drawerStyle={{ backgroundColor: "#000" }}
         >
           <S.HeaderNavMobileList>
+            <li onClick={() => setShowDrawer(false)}>
+              <Link to={ROUTES.USER.HOME}>TRANG CHỦ</Link>
+            </li>
             <li onClick={() => setShowDrawer(false)}>
               <Link to={ROUTES.BRAND}>THƯƠNG HIỆU</Link>
             </li>
             <li onClick={() => setShowDrawer(false)}>
-              <Link to={ROUTES.USER.GENDER_DETAIL}>NAM</Link>
+              <Link
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(ROUTES.USER.MEN_DETAIL, {
+                    state: {
+                      title: "Nam",
+                      gender: "male",
+                    },
+                  });
+                }}
+              >
+                NAM
+              </Link>
             </li>
             <li onClick={() => setShowDrawer(false)}>
-              <Link to={ROUTES.USER.GENDER_DETAIL}>NỮ</Link>
+              <Link
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(ROUTES.USER.MEN_DETAIL, {
+                    state: {
+                      title: "Nữ",
+                      gender: "female",
+                    },
+                  });
+                }}
+              >
+                NỮ
+              </Link>
             </li>
             <li onClick={() => setShowDrawer(false)}>
               <Link to={ROUTES.CONTACT}>LIÊN HỆ</Link>

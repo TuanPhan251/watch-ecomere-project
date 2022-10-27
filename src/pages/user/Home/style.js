@@ -22,7 +22,8 @@ export const HomePageWrapper = styled.main`
 
     video {
       width: 100%;
-      height: 100%;
+      height: calc(100vh - var(--header-height));
+
       object-fit: cover;
     }
 
@@ -52,7 +53,7 @@ export const HomePageWrapper = styled.main`
       font-family: "Charmonman", cursive;
       text-align: center;
       text-shadow: 0 0 10px #262626;
-      animation: ${fadeIn} 4s ease;
+      animation: ${fadeIn} 6s ease;
       animation-fill-mode: forwards;
       animation-delay: 2s;
       opacity: 0;
@@ -69,9 +70,10 @@ export const HomePageWrapper = styled.main`
       font-size: 16px;
       background-color: var(--button-color);
       color: #fff;
+      border: none;
       text-transform: uppercase;
       border-radius: 10px;
-      animation: ${fadeIn} 1s ease;
+      animation: ${fadeIn} 3s ease;
       animation-fill-mode: forwards;
       animation-delay: 4s;
       opacity: 0;
@@ -91,6 +93,22 @@ export const HomePageWrapper = styled.main`
         rgba(0, 0, 0, 0.8)
       );
       z-index: 1;
+    }
+
+    @media (max-width: 576px) {
+      .header_img-header {
+        font-size: 28px;
+        bottom: 50%;
+      }
+
+      .header_img-slogan {
+        bottom: 35%;
+        font-size: 28px;
+      }
+
+      .header-img-action {
+        bottom: 25%;
+      }
     }
   }
 
