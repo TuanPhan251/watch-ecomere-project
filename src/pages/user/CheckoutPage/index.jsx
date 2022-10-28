@@ -5,8 +5,8 @@ import { Button } from "antd";
 
 import { ROUTES } from "../../../constants/routes";
 import {
-  addProductAction,
-  removeProductAction,
+  addItemToCartAction,
+  removeCartItemAction,
 } from "../../../redux/actions/cart.actions";
 
 import * as S from "./style";
@@ -23,11 +23,11 @@ const CheckoutPage = () => {
     const product = {
       data: { ...item },
     };
-    dispatch(addProductAction({ product, productAmount: 1 }));
+    dispatch(addItemToCartAction({ product, productAmount: 1 }));
   };
 
   const handleRemoveProduct = (item, type) => {
-    dispatch(removeProductAction({ item, type }));
+    dispatch(removeCartItemAction({ item, type }));
   };
 
   const renderCartItems = () => {
