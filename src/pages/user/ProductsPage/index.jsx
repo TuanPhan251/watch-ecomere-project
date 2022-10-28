@@ -23,7 +23,7 @@ import MainButton from "../../../components/MainButton";
 import {
   getProductListAction,
   getCategoriesListAction,
-  addProductAction,
+  addItemToCartAction,
 } from "../../../redux/actions";
 import { PRODUCT_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routes";
@@ -32,6 +32,8 @@ import menBanner from "../../../assets/banner/men-banner.jpg";
 import womenBanner from "../../../assets/banner/women-banner.jpg";
 
 import * as S from "./style";
+
+var qs = require("qs");
 
 const { Option } = Select;
 const { Panel } = Collapse;
@@ -61,8 +63,10 @@ const caseSizes = [
 const ProductPage = () => {
   const MAXPRICE = 15000000;
   const location = useLocation();
-  const { title, gender } = location.state;
-  const bannerImg = gender === "male" ? menBanner : womenBanner;
+  const search = location.search.slice(1);
+  const searchObj = qs.parse(search);
+
+  const bannerImg = searchObj.gender === "male" ? menBanner : womenBanner;
   const initialFilterParams = {
     categoryId: [],
     keyword: "",
@@ -72,7 +76,7 @@ const ProductPage = () => {
     nameCaseSize: "",
     glassMaterial: [],
     priceRange: [0, MAXPRICE],
-    gender: gender,
+    gender: searchObj.gender,
     isNew: false,
     isDiscount: false,
   };
@@ -91,7 +95,7 @@ const ProductPage = () => {
         params: {
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
-          gender: gender,
+          gender: searchObj.gender,
         },
       })
     );
@@ -100,9 +104,9 @@ const ProductPage = () => {
 
     setFilterParams({
       ...filterParams,
-      gender: gender,
+      gender: searchObj.gender,
     });
-  }, [gender]);
+  }, [searchObj.gender]);
 
   const handleNavigate = (value) => {
     if (value === "female") {
@@ -129,7 +133,7 @@ const ProductPage = () => {
           ...filterParams,
           page: productList.meta.page + 1,
           limit: PRODUCT_LIST_LIMIT,
-          gender: gender,
+          gender: searchObj.gender,
         },
         more: true,
       })
@@ -138,7 +142,7 @@ const ProductPage = () => {
 
   const handleAddItemToCart = (product) => {
     dispatch(
-      addProductAction({
+      addItemToCartAction({
         product: {
           data: product,
         },
@@ -175,7 +179,7 @@ const ProductPage = () => {
           [key]: values,
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
-          gender: gender,
+          gender: searchObj.gender,
         },
       })
     );
@@ -188,7 +192,7 @@ const ProductPage = () => {
         params: {
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
-          gender: gender,
+          gender: searchObj.gender,
         },
       })
     );
@@ -212,7 +216,7 @@ const ProductPage = () => {
           ...filterParams,
           [key]: newValue,
           page: 1,
-          gender: gender,
+          gender: searchObj.gender,
           limit: PRODUCT_LIST_LIMIT,
         },
       })
@@ -459,12 +463,12 @@ const ProductPage = () => {
       <>
         <img alt="" src={bannerImg} />
 
-        <h2>Đồng hồ {title}</h2>
+        <h2>Đồng hồ {searchObj.gender === "male" ? "Nam" : "Nữ"}</h2>
 
         <div className="overlay"></div>
       </>
     );
-  }, [bannerImg, title]);
+  }, [bannerImg, searchObj.gender]);
 
   return (
     <S.Wrapper>
@@ -755,7 +759,12 @@ const ProductPage = () => {
               </Space>
 
               <Spin spinning={productList.loading}>
-                <Row gutter={[8, 8]}>{renderProducts}</Row>
+                <div
+                  className="product_items-wrapper"
+                  style={{ minHeight: "50vh" }}
+                >
+                  <Row gutter={[8, 8]}>{renderProducts}</Row>
+                </div>
               </Spin>
 
               {productList.data.length !== productList.meta.total && (

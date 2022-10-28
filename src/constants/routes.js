@@ -5,9 +5,6 @@ export const ROUTES = {
   USER: {
     HOME: "/",
     BRAND: "/thuong-hieu",
-    GENDER_DETAIL: "/san-pham?gender=:type",
-    // MEN_DETAIL: "/nam",
-    // WOMEN_DETAIL: "/nu",
     MEN_DETAIL: "/san-pham/gioi-tinh",
     WOMEN_DETAIL: "/san-pham/gioi-tinh",
     CONTACT: "/lien-he",

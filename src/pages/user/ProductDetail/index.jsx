@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Rate, Tooltip, notification } from "antd";
+import { Row, Col, Rate, Tooltip, notification, Skeleton, Spin } from "antd";
 
 import ProductSpec from "./ProductSpec";
 import ProductPolicy from "./ProductPolicy";
@@ -10,9 +10,10 @@ import ProductGift from "./ProductGift";
 import MainButton from "../../../components/MainButton";
 
 import {
-  addProductAction,
+  addItemToCartAction,
   getProductDetailAction,
   getCategoriesListAction,
+  removeProductDetailAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
@@ -31,7 +32,10 @@ const ProductDetailPage = () => {
 
   const handleAddProductToCart = () => {
     dispatch(
-      addProductAction({ product: productDetail, productAmount: itemQuantity })
+      addItemToCartAction({
+        product: productDetail,
+        productAmount: itemQuantity,
+      })
     );
 
     notification.open({
@@ -62,6 +66,10 @@ const ProductDetailPage = () => {
     dispatch(getProductDetailAction({ id: productId }));
 
     dispatch(getCategoriesListAction());
+
+    return () => {
+      dispatch(removeProductDetailAction());
+    };
   }, [productId]);
 
   const renderProductSpec = useMemo(() => {
@@ -70,162 +78,166 @@ const ProductDetailPage = () => {
 
   return (
     <S.Wrapper>
-      <S.ProductDetailContainer>
-        <Row gutter={[8, 8]}>
-          <Col xxl={8} xl={8} md={24} sm={24} xm={24}>
-            <S.ProductImageWrapper>
-              <img src={productDetail.data.image} alt="product" />
+      <Spin spinning={productDetail.loading} wrapperClassName="spin">
+        <S.ProductDetailContainer>
+          <Row gutter={[8, 8]}>
+            <Col xxl={8} xl={8} md={24} sm={24} xm={24}>
+              <S.ProductImageWrapper>
+                <img src={productDetail.data.image} alt="product" />
+                {productDetail.data.isDiscount && (
+                  <div className="product_info-discount-label">
+                    <span>- {productDetail.data.discountPercent}%</span>
+                  </div>
+                )}
+              </S.ProductImageWrapper>
+            </Col>
+            <Col xxl={10} xl={10} md={24} sm={24} xm={24}>
+              <S.ProductInfoWrapper>
+                <S.ProductSummary>
+                  <h2>{productDetail.data.name}</h2>
+                  <div className="product_rating">
+                    <Rate disabled allowHalf defaultValue={4.5} />
+                    <span className="product_rating-quantity">
+                      (12 đánh giá)
+                    </span>
+                  </div>
 
-              {productDetail.data.isDiscount && (
-                <div className="product_info-discount-label">
-                  <span>- {productDetail.data.discountPercent}%</span>
-                </div>
-              )}
-            </S.ProductImageWrapper>
-          </Col>
-          <Col xxl={10} xl={10} md={24} sm={24} xm={24}>
-            <S.ProductInfoWrapper>
-              <S.ProductSummary>
-                <h2>{productDetail.data.name}</h2>
+                  <p className="product_summary-brand">
+                    Thương hiệu:{" "}
+                    <span>{productDetail.data.category?.name}</span>
+                  </p>
 
-                <div className="product_rating">
-                  <Rate disabled allowHalf defaultValue={4.5} />
-                  <span className="product_rating-quantity">(12 đánh giá)</span>
-                </div>
+                  <p className="product_summary-gender">
+                    Loại sản phẩm:{" "}
+                    <Tooltip title={`Tới trang đồng hồ ${gender}`}>
+                      {productDetail.data.gender === "male" ? (
+                        <Link
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(ROUTES.USER.MEN_DETAIL, {
+                              state: {
+                                title: "Nam",
+                                gender: "male",
+                              },
+                            });
+                          }}
+                        >
+                          Đồng hồ nam
+                        </Link>
+                      ) : (
+                        <Link
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(ROUTES.USER.WOMEN_DETAIL, {
+                              state: {
+                                title: "Nữ",
+                                gender: "female",
+                              },
+                            });
+                          }}
+                        >
+                          Đồng hồ nữ
+                        </Link>
+                      )}
+                    </Tooltip>
+                  </p>
 
-                <p className="product_summary-brand">
-                  Thương hiệu: <span>{productDetail.data.category?.name}</span>
-                </p>
-
-                <p className="product_summary-gender">
-                  Loại sản phẩm:{" "}
-                  <Tooltip title={`Tới trang đồng hồ ${gender}`}>
-                    {productDetail.data.gender === "male" ? (
-                      <Link
-                        onClick={(e) => {
-                          e.preventDefault();
-                          navigate(ROUTES.USER.MEN_DETAIL, {
-                            state: {
-                              title: "Nam",
-                              gender: "male",
-                            },
-                          });
-                        }}
-                      >
-                        Đồng hồ nam
-                      </Link>
-                    ) : (
-                      <Link
-                        onClick={(e) => {
-                          e.preventDefault();
-                          navigate(ROUTES.USER.WOMEN_DETAIL, {
-                            state: {
-                              title: "Nữ",
-                              gender: "female",
-                            },
-                          });
-                        }}
-                      >
-                        Đồng hồ nữ
-                      </Link>
-                    )}
-                  </Tooltip>
-                </p>
-
-                <p className="product_summary-price">
-                  GIÁ:
-                  <span className="product_summary-price-final">
-                    {productDetail.data?.finalPrice?.toLocaleString()}
-                    <sup>₫</sup>
-                  </span>
-                  {isDiscount && (
-                    <span className="product_summary-price-original">
-                      {productDetail.data?.price?.toLocaleString()}
+                  <p className="product_summary-price">
+                    GIÁ:
+                    <span className="product_summary-price-final">
+                      {productDetail.data?.finalPrice?.toLocaleString()}
                       <sup>₫</sup>
                     </span>
-                  )}
-                </p>
-              </S.ProductSummary>
+                    {isDiscount && (
+                      <span className="product_summary-price-original">
+                        {productDetail.data?.price?.toLocaleString()}
+                        <sup>₫</sup>
+                      </span>
+                    )}
+                  </p>
+                </S.ProductSummary>
 
-              <ProductGift discount={productDetail.data.discountPercent} />
+                <ProductGift discount={productDetail.data.discountPercent} />
 
-              <S.ProductActions>
-                <div className="product_action-addcart">
-                  <div className="product_action-addcart-quantity">
-                    <span>Số lượng: </span>
+                <S.ProductActions>
+                  <div className="product_action-addcart">
+                    <div className="product_action-addcart-quantity">
+                      <span>Số lượng: </span>
+
+                      <MainButton
+                        className="quantity_control-btn"
+                        buttonType="ghost"
+                        onClick={() => {
+                          itemQuantity !== 1 &&
+                            setItemQuantity(itemQuantity - 1);
+                        }}
+                      >
+                        -
+                      </MainButton>
+                      <input
+                        type="text"
+                        value={itemQuantity}
+                        min={1}
+                        onChange={(e) => handleGetItemQuantity(e.target.value)}
+                      />
+                      <MainButton
+                        buttonType="ghost"
+                        className="quantity_control-btn"
+                        onClick={() => setItemQuantity(itemQuantity + 1)}
+                      >
+                        +
+                      </MainButton>
+                    </div>
 
                     <MainButton
-                      className="quantity_control-btn"
-                      buttonType="ghost"
-                      onClick={() => {
-                        itemQuantity !== 1 && setItemQuantity(itemQuantity - 1);
-                      }}
+                      buttonType="primary"
+                      onClick={handleAddProductToCart}
+                      style={{ marginLeft: "auto", width: "50%" }}
                     >
-                      -
-                    </MainButton>
-                    <input
-                      type="text"
-                      value={itemQuantity}
-                      min={1}
-                      onChange={(e) => handleGetItemQuantity(e.target.value)}
-                    />
-                    <MainButton
-                      buttonType="ghost"
-                      className="quantity_control-btn"
-                      onClick={() => setItemQuantity(itemQuantity + 1)}
-                    >
-                      +
+                      THÊM VÀO GIỎ
                     </MainButton>
                   </div>
 
                   <MainButton
+                    onClick={() => {
+                      handleAddProductToCart();
+                      navigate(ROUTES.USER.CHECKOUT);
+                    }}
                     buttonType="primary"
-                    onClick={handleAddProductToCart}
-                    style={{ marginLeft: "auto", width: "50%" }}
+                    style={{ width: "100%" }}
                   >
-                    THÊM VÀO GIỎ
+                    MUA NGAY
                   </MainButton>
-                </div>
+                </S.ProductActions>
+              </S.ProductInfoWrapper>
+            </Col>
+            <Col xxl={6} xl={6} md={24} sm={24} xm={24}>
+              <ProductPolicy />
+            </Col>
+          </Row>
+        </S.ProductDetailContainer>
 
-                <MainButton
-                  onClick={() => {
-                    handleAddProductToCart();
-                    navigate(ROUTES.USER.CHECKOUT);
+        <S.BottomWrapper>
+          <Row gutter={[8, 8]}>
+            <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
+              {renderProductSpec}
+            </Col>
+
+            <Col xxl={16} xl={16} lg={16} md={24} sm={24} xs={24}>
+              <S.ProductContent>
+                <h3 className="product_content-heading">Giới thiệu sản phẩm</h3>
+
+                <div
+                  className="product_content-main"
+                  dangerouslySetInnerHTML={{
+                    __html: productDetail.data.content || "content here",
                   }}
-                  buttonType="primary"
-                  style={{ width: "100%" }}
-                >
-                  MUA NGAY
-                </MainButton>
-              </S.ProductActions>
-            </S.ProductInfoWrapper>
-          </Col>
-          <Col xxl={6} xl={6} md={24} sm={24} xm={24}>
-            <ProductPolicy />
-          </Col>
-        </Row>
-      </S.ProductDetailContainer>
-
-      <S.BottomWrapper>
-        <Row gutter={[8, 8]}>
-          <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
-            {renderProductSpec}
-          </Col>
-
-          <Col xxl={16} xl={16} lg={16} md={24} sm={24} xs={24}>
-            <S.ProductContent>
-              <h3 className="product_content-heading">Giới thiệu sản phẩm</h3>
-
-              <div
-                className="product_content-main"
-                dangerouslySetInnerHTML={{
-                  __html: productDetail.data.content || "content here",
-                }}
-              ></div>
-            </S.ProductContent>
-          </Col>
-        </Row>
-      </S.BottomWrapper>
+                ></div>
+              </S.ProductContent>
+            </Col>
+          </Row>
+        </S.BottomWrapper>
+      </Spin>
     </S.Wrapper>
   );
 };

@@ -98,6 +98,13 @@ const productReducer = createReducer(initialValue, {
     };
   },
 
+  [REQUEST(PRODUCT_ACTION.REMOVE_PRODUCT_DETAIL)]: (state, action) => {
+    return {
+      ...state,
+      productDetail: { data: [], loading: false, error: "" },
+    };
+  },
+
   [REQUEST(PRODUCT_ACTION.CREATE_PRODUCT)]: (state, action) => {
     return {
       ...state,

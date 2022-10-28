@@ -50,11 +50,9 @@ const Header = () => {
               <Link
                 onClick={(e) => {
                   e.preventDefault();
-                  navigate(ROUTES.USER.MEN_DETAIL, {
-                    state: {
-                      title: "Nam",
-                      gender: "male",
-                    },
+                  navigate({
+                    pathname: ROUTES.USER.MEN_DETAIL,
+                    search: "?gender=male",
                   });
                 }}
               >
@@ -65,11 +63,9 @@ const Header = () => {
               <Link
                 onClick={(e) => {
                   e.preventDefault();
-                  navigate(ROUTES.USER.MEN_DETAIL, {
-                    state: {
-                      title: "Nữ",
-                      gender: "female",
-                    },
+                  navigate({
+                    pathname: ROUTES.USER.MEN_DETAIL,
+                    search: "?gender=female",
                   });
                 }}
               >
@@ -255,11 +251,9 @@ const Header = () => {
               // to={generatePath(ROUTES.USER.MEN_DETAIL, { type: "male" })}
               onClick={(e) => {
                 e.preventDefault();
-                navigate(ROUTES.USER.MEN_DETAIL, {
-                  state: {
-                    title: "Nam",
-                    gender: "male",
-                  },
+                navigate({
+                  pathname: ROUTES.USER.MEN_DETAIL,
+                  search: "?gender=male",
                 });
               }}
               className="title-link"
@@ -426,11 +420,9 @@ const Header = () => {
               // to={generatePath(ROUTES.USER.WOMEN_DETAIL, { type: "female" })}
               onClick={(e) => {
                 e.preventDefault();
-                navigate(ROUTES.USER.MEN_DETAIL, {
-                  state: {
-                    title: "Nữ",
-                    gender: "female",
-                  },
+                navigate({
+                  pathname: ROUTES.USER.MEN_DETAIL,
+                  search: "?gender=female",
                 });
               }}
               className="title-link"

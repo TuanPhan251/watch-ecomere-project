@@ -1,6 +1,13 @@
 import { createAction } from "@reduxjs/toolkit";
 
-import { ADD_PRODUCT, REMOVE_PRODUCT } from "../CONSTANTS/cart.constant";
+import { CART_ACTION, REQUEST } from "../CONSTANTS";
 
-export const addProductAction = createAction(`${ADD_PRODUCT}_ACTION`);
-export const removeProductAction = createAction(`${REMOVE_PRODUCT}_ACTION`);
+export const addItemToCartAction = createAction(
+  REQUEST(CART_ACTION.ADD_TO_CART)
+);
+export const updateCartItemAction = createAction(
+  REQUEST(CART_ACTION.UPDATE_CART_ITEM)
+);
+export const removeCartItemAction = createAction(
+  REQUEST(CART_ACTION.REMOVE_CART_ITEM)
+);

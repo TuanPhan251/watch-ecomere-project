@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { generatePath, useNavigate } from "react-router-dom";
 
-import { removeProductAction } from "../../../../redux/actions/cart.actions";
+import { removeCartItemAction } from "../../../../redux/actions/cart.actions";
 
 import * as S from "./style";
 import emptyCartLogo from "../../../../assets/cart/empty_cart_retina.png";
@@ -16,8 +16,8 @@ const CartDrawer = ({ cartList }) => {
     return item.totalPrice + prev;
   }, 0);
 
-  const handleRemoveProduct = (item, type) => {
-    dispatch(removeProductAction({ item, type }));
+  const handleRemoveProduct = (product) => {
+    dispatch(removeCartItemAction({ product }));
   };
 
   const renderCartItems = () => {
