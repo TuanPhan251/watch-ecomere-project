@@ -273,6 +273,9 @@ export const ProductContent = styled.div`
   }
 
   .product_content-main {
+    max-height: 500px;
+    overflow: auto;
+
     p {
       font-size: 16px;
     }
@@ -281,5 +284,21 @@ export const ProductContent = styled.div`
       width: 100%;
       height: auto;
     }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      background-color: #f5f5f5;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #595959;
+    }
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: #f5f5f5;
+    }
   }
 `;
+
+export const ProductReview = styled.div``;

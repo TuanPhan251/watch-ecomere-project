@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useMemo } from "react";
 import { generatePath, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -33,7 +33,7 @@ const CartSummaryPage = () => {
     );
   };
 
-  const renderCartItems = () => {
+  const renderCartItems = useMemo(() => {
     if (cartList.length !== 0) {
       return cartList.map((item) => {
         return (
@@ -108,14 +108,14 @@ const CartSummaryPage = () => {
         );
       });
     }
-  };
+  }, [cartList]);
 
   if (cartList.length === 0) {
     return (
       <S.Wrapper>
         <S.CheckoutCartContainer>
           <div className="cart-empty">
-            <h2 className="checkout-heading">giỏ hàng</h2>
+            <h2 className="cart_summary-heading">giỏ hàng</h2>
 
             <h3>Giỏ hàng của bạn chưa có sản phẩm nào.</h3>
           </div>
@@ -127,16 +127,16 @@ const CartSummaryPage = () => {
   return (
     <S.Wrapper>
       <S.CheckoutCartContainer>
-        <h2 className="checkout-heading">giỏ hàng</h2>
+        <h2 className="cart_summary-heading">giỏ hàng</h2>
 
         <div className="cart-item-container">
-          <Col span={16}>
+          <Col xxl={16} xl={16} lg={16} md={24} xs={24}>
             <div className="cart-item-wrapper">
-              <div className="cart-item-tbody">{renderCartItems()}</div>
+              <div className="cart-item-tbody">{renderCartItems}</div>
             </div>
           </Col>
 
-          <Col span={8}>
+          <Col xxl={8} xl={8} lg={8} md={24} xs={24}>
             <div className="cart_summary">
               <h3>Đơn hàng của bạn:</h3>
               <p className="cart_total-price">

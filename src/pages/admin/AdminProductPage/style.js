@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Modal } from "antd";
 
 export const ProductListContainer = styled.div`
   display: flex;
@@ -22,4 +23,10 @@ export const ProductListHeading = styled.div`
 
 export const ProductListTable = styled.div`
   height: 100%;
+`;
+
+export const ConfirmModal = styled(Modal)`
+  .ant-modal-content {
+    box-shadow: none;
+  }
 `;

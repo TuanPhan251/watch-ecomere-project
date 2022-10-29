@@ -238,6 +238,7 @@ const ProductDetailPage = () => {
                 }}
               ></div>
             </S.ProductContent>
+            <S.ProductReview></S.ProductReview>
           </Col>
         </Row>
       </S.BottomWrapper>

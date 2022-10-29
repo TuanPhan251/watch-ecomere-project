@@ -4,7 +4,15 @@ import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import slug from "slug";
 
-import { Button, Select, Form, Input, InputNumber, Modal } from "antd";
+import {
+  Button,
+  Select,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Checkbox,
+} from "antd";
 
 import { ROUTES } from "../../../../constants/routes";
 import {
@@ -100,6 +108,10 @@ const CreateProductPage = () => {
             formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
           />
+        </Form.Item>
+
+        <Form.Item label="Sản phẩm mới" name="isNew" valuePropName="checked">
+          <Checkbox />
         </Form.Item>
 
         <Form.Item

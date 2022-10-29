@@ -17,7 +17,9 @@ const HomeProductList = ({ gender }) => {
   const displayProducts = productList.data.filter(
     (product) => product.gender === gender
   );
-  displayProducts.splice(4);
+
+  const shuffled = displayProducts?.sort(() => 0.5 - Math.random());
+  const selected = shuffled.slice(0, 4);
 
   useEffect(() => {
     dispatch(
@@ -31,7 +33,7 @@ const HomeProductList = ({ gender }) => {
   }, []);
 
   const renderMenProducts = () => {
-    return displayProducts.map((product) => {
+    return selected.map((product) => {
       return (
         <Col span={12} key={product.id}>
           <Link

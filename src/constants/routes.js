@@ -19,6 +19,7 @@ export const ROUTES = {
     ACCOUNT_DETAIL_PAGE: "/admin/accounts/:id",
     PRODUCT_LIST_PAGE: "/admin/products",
     CATEGORY_LIST_PAGE: "/admin/categories",
+    CATEGORY_DETAIL_PAGE: "/admin/categories/:id",
     CREATE_PRODUCT_PAGE: "/admin/products/create",
     UPDATE_PRODUCT_PAGE: "/admin/products/update/:id",
   },
