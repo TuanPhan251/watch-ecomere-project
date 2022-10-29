@@ -17,9 +17,9 @@ export const CheckoutCartContainer = styled.div`
   border-radius: 2px;
   box-shadow: var(--box-shadow);
 
-  .checkout-heading {
+  .cart_summary-heading {
     color: var(--dark-text-color);
-    font-size: 26px;
+    font-size: 32px;
     text-transform: uppercase;
     text-align: center;
     margin-bottom: 60px;
@@ -28,6 +28,7 @@ export const CheckoutCartContainer = styled.div`
   .cart-item-container {
     position: relative;
     display: flex;
+    flex-wrap: wrap;
   }
 
   .cart_summary {
@@ -106,6 +107,12 @@ export const CheckoutCartContainer = styled.div`
         }
       }
     }
+
+    @media (max-width: 768px) {
+      justify-self: center;
+      position: block;
+      width: 100%;
+    }
   }
 
   .cart-empty {
@@ -115,6 +122,10 @@ export const CheckoutCartContainer = styled.div`
     h3 {
       text-align: center;
     }
+  }
+
+  @media (max-width: 576px) {
+    margin: 0;
   }
 `;
 
@@ -129,7 +140,11 @@ export const CartItem = styled(Row)`
   }
 
   .item-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
+    height: 100%;
 
     img {
       width: 100%;
@@ -145,11 +160,16 @@ export const CartItem = styled(Row)`
     flex-direction: column;
     justify-content: space-around;
     height: 100%;
-    margin: 0 24px 0 12px;
+    margin-left: 4px;
 
     .item_name {
       color: var(--dark-text-color);
       font-size: 20px;
+      font-weight: 500;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      -webkit-line-clamp: 2;
     }
     button {
       width: fit-content;
@@ -179,6 +199,12 @@ export const CartItem = styled(Row)`
         }
       }
     }
+
+    @media (max-width: 576px) {
+      .item_name {
+        font-size: 16px;
+      }
+    }
   }
 
   .item_info-right-wrapper {
@@ -200,6 +226,7 @@ export const CartItem = styled(Row)`
         width: 40px;
         padding: 4px;
         margin: 0 4px;
+        text-align: center;
         font-size: 16px;
       }
 
@@ -251,6 +278,55 @@ export const CartItem = styled(Row)`
         span {
           color: var(--primary-color);
           font-weight: 500;
+        }
+      }
+    }
+
+    @media (max-width: 576px) {
+      .item-quantity {
+        p {
+          display: block;
+          width: 100%;
+        }
+
+        input {
+          width: 30px;
+          height: fit-content;
+        }
+
+        button {
+          width: 20px;
+          height: fit-content;
+
+          i {
+            font-size: 12px;
+          }
+        }
+      }
+
+      .item_price {
+        .item_price-original {
+          font-size: 14px;
+
+          margin-right: 4px;
+          text-decoration: line-through;
+          color: #ccc;
+        }
+
+        .item_price-final {
+          font-size: 18px;
+          color: var(--price-color);
+        }
+
+        .item_price-discount {
+          width: 100%;
+          font-size: 14px;
+          text-align: right;
+
+          span {
+            color: var(--primary-color);
+            font-weight: 500;
+          }
         }
       }
     }

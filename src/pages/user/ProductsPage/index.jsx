@@ -110,18 +110,14 @@ const ProductPage = () => {
 
   const handleNavigate = (value) => {
     if (value === "female") {
-      navigate(ROUTES.USER.WOMEN_DETAIL, {
-        state: {
-          title: "Nữ",
-          gender: "female",
-        },
+      navigate({
+        pathname: ROUTES.USER.WOMEN_DETAIL,
+        search: "?gender=female",
       });
     } else {
-      navigate(ROUTES.USER.MEN_DETAIL, {
-        state: {
-          title: "Nam",
-          gender: "male",
-        },
+      navigate({
+        pathname: ROUTES.USER.MEN_DETAIL,
+        search: "?gender=male",
       });
     }
   };

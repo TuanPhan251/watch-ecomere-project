@@ -14,7 +14,7 @@ import {
   Row,
   Col,
   Checkbox,
-  Slider,
+  Select,
 } from "antd";
 
 import {
@@ -37,12 +37,16 @@ const AdminProductPage = () => {
   const { categoryList } = useSelector((state) => state.category);
 
   const [showModal, setShowModal] = useState(false);
-  const [filterParams, setFilterParams] = useState({
+  const initialFilterParams = {
     categoryId: [],
     keyword: "",
     gender: [],
     priceRange: [0, MAXPRICE],
-  });
+    priceSort: "",
+    isNew: false,
+    isDiscount: false,
+  };
+  const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
 
   const handleFilter = (value, type) => {
     setFilterParams({
@@ -65,13 +69,14 @@ const AdminProductPage = () => {
     dispatch(
       getProductListAction({
         params: {
+          ...filterParams,
           page: 1,
           limit: 10,
         },
       })
     );
     dispatch(getCategoriesListAction());
-  }, []);
+  }, [filterParams]);
 
   const handleDeleteProduct = (id) => {
     dispatch(
@@ -156,7 +161,8 @@ const AdminProductPage = () => {
           <>
             <Space>
               <Button type="danger" onClick={() => setShowModal(true)}>
-                Xóa
+                <i className="fa-solid fa-trash"></i>
+                <span style={{ marginLeft: 4 }}>Xóa</span>
               </Button>
 
               <Button
@@ -168,14 +174,18 @@ const AdminProductPage = () => {
                   )
                 }
               >
-                Sửa
+                <i className="fa-solid fa-pen-to-square"></i>
+                <span style={{ marginLeft: 4 }}>Sửa</span>
               </Button>
             </Space>
 
-            <Modal
+            <S.ConfirmModal
               title="Xóa sản phẩm"
               open={showModal}
               centered
+              destroyOnClose={true}
+              maskStyle={{ backgroundColor: "rgba(0,0,0, 0.1)" }}
+              style={{ boxShadow: "none" }}
               onOk={() => handleDeleteProduct(record.id)}
               onCancel={() => setShowModal(false)}
               okText="Xác nhận"
@@ -183,7 +193,7 @@ const AdminProductPage = () => {
               confirmLoading={deleteProductData.loading}
             >
               <p>Không thể hoàn tác sau khi xác nhận, đồng ý xóa ?</p>
-            </Modal>
+            </S.ConfirmModal>
           </>
         );
       },
@@ -201,13 +211,16 @@ const AdminProductPage = () => {
           type="primary"
           size="large"
         >
-          Thêm sản phẩm
+          <i className="fa-solid fa-file-pen"></i>
+          <span style={{ marginLeft: 4 }}>Thêm sản phẩm</span>
         </Button>
       </S.ProductListHeading>
 
       <Row gutter={4} style={{ flex: "1" }}>
         <Col span={4}>
-          <p>Bộ lọc</p>
+          <h3>
+            <i className="fa-solid fa-filter"></i>Bộ lọc
+          </h3>
 
           <Input
             placeholder="Nhập để tìm sản phẩm"
@@ -233,26 +246,51 @@ const AdminProductPage = () => {
           </Checkbox.Group>
 
           <p>Giá</p>
-          <Slider
-            range
-            min={0}
-            max={15000000}
-            step={100000}
-            onAfterChange={(value) => handleFilter(value, "priceRange")}
-          ></Slider>
+          <Col span={24}>
+            <Select
+              style={{ width: "100%" }}
+              onChange={(value) => handleFilter(value, "priceSort")}
+              value={filterParams.priceSort}
+            >
+              <Select.Option value="desc">Giá: Cao-Thấp</Select.Option>
+              <Select.Option value="asc">Giá: Thấp-Cao</Select.Option>
+            </Select>
+          </Col>
 
-          <Button
-            onClick={() =>
-              setFilterParams({
-                categoryId: [],
-                keyword: "",
-                gender: [],
-                priceRange: [0, MAXPRICE],
-              })
-            }
-          >
-            Xóa bộ lọc
-          </Button>
+          <p>Loại sản phẩm</p>
+          <Col span={24}>
+            <Row>
+              <Checkbox
+                checked={filterParams.isNew}
+                onChange={(e) => handleFilter(e.target.checked, "isNew")}
+              >
+                Sản phẩm mới
+              </Checkbox>
+            </Row>
+          </Col>
+          <Col span={24}>
+            <Row>
+              <Checkbox
+                checked={filterParams.isDiscount}
+                onChange={(e) => handleFilter(e.target.checked, "isDiscount")}
+              >
+                Đang giảm giá
+              </Checkbox>
+            </Row>
+          </Col>
+
+          <Col span={12} offset={6}>
+            <Button
+              danger
+              ghost
+              style={{
+                marginTop: 24,
+              }}
+              onClick={() => setFilterParams({ ...initialFilterParams })}
+            >
+              Xóa bộ lọc
+            </Button>
+          </Col>
         </Col>
         <Col span={20}>
           <Table

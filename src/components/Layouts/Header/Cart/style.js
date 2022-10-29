@@ -36,18 +36,19 @@ export const CartItemsContent = styled.div`
     text-align: right;
     font-size: 20px;
   }
+
   &::-webkit-scrollbar {
     width: 6px;
-    background-color: #f5f5f5;
+    background-color: #fafafa;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #1f1f1f;
+    background-color: #595959;
   }
 
   &::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    background-color: #f5f5f5;
+    background-color: #fafafa;
   }
 `;
 
