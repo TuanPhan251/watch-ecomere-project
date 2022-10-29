@@ -46,9 +46,7 @@ export const HeaderNav = styled.ul`
     align-items: center;
     justify-content: center;
     height: 100%;
-    width: 25%;
-    margin: 0 8px;
-    padding: 0 20px;
+    width: 20%;
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.2);
@@ -174,7 +172,7 @@ export const UserWrapper = styled.div`
       padding: 12px;
       background-color: #fff;
       border-radius: 4px;
-      box-shadow: 0 0 5px #262626;
+      box-shadow: 0 0 8px #ccc;
       transition: all 0.3s ease;
       transition-delay: 0.2s;
       opacity: 0;
@@ -222,7 +220,8 @@ export const UserWrapper = styled.div`
           }
 
           :last-child {
-            background-color: #cf1322;
+            border-radius: 4px;
+            background-color: var(--button-color);
             color: #fff;
 
             :hover {
@@ -276,11 +275,15 @@ export const HeaderCart = styled.div`
 `;
 export const DropDownMenuWrapperTH = styled.div`
   position: relative;
+  width: 100%;
   display: inline-block;
 
-  /* .title-link:hover .dropdown-container {
-    display: inline-block !important;
-  } */
+  .title-link {
+    display: block;
+    line-height: var(--header-height);
+    width: 100%;
+    padding: 0;
+  }
 
   .dropdown-container {
     z-index: 1;

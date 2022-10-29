@@ -9,7 +9,7 @@ export const ROUTES = {
     WOMEN_DETAIL: "/san-pham/gioi-tinh",
     CONTACT: "/lien-he",
     PRODUCT_DETAIL: "/san-pham/:id",
-    CHECKOUT: "/gio-hang",
+    CART_SUMMARY: "/gio-hang",
   },
 
   ADMIN: {

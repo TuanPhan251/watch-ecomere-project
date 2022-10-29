@@ -94,7 +94,7 @@ const CartDrawer = ({ cartList }) => {
 
           <S.CartItemsAction>
             <button>
-              <Link to={ROUTES.USER.CHECKOUT}>Chi tiết giỏ hàng</Link>
+              <Link to={ROUTES.USER.CART_SUMMARY}>Chi tiết giỏ hàng</Link>
             </button>
           </S.CartItemsAction>
         </>

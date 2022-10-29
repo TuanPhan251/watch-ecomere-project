@@ -6,7 +6,7 @@ export const CartItems = styled.div`
   height: 100%;
   border-radius: 2px;
   background-color: #fff;
-  box-shadow: 0 0 5px #595959;
+  box-shadow: 0 0 8px #ccc;
   color: var(--dark-text-color);
   transform-origin: 95% top;
   z-index: 999;
