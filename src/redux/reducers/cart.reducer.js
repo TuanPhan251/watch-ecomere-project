@@ -44,26 +44,28 @@ const cartReducer = createReducer(initialValue, {
     }
   },
   [REQUEST(CART_ACTION.UPDATE_CART_ITEM)]: (state, actions) => {
-    const { product, productAmount } = actions.payload;
+    const { product, amount } = actions.payload;
+    const newCartList = [...state.cartList];
 
-    let index =
-      state.cartList.findIndex((item) => item.id === product.data?.id) || 0;
+    let index = state.cartList.findIndex((item) => item.id === product.id);
 
-    if (index !== -1) {
+    if (amount === 0) {
+      newCartList.splice(index, 1);
+    } else {
       const newItem = {
-        ...product.data,
-        totalAmount: productAmount,
-        totalPrice: product.data.finalPrice * productAmount,
+        ...product,
+        totalAmount: amount,
+        totalPrice: product.finalPrice * amount,
       };
-      const newCartList = [newItem, ...state.cartList];
-
-      localStorage.setItem("cart", JSON.stringify(newCartList));
-
-      return {
-        ...state,
-        cartList: newCartList,
-      };
+      newCartList.splice(index, 1, newItem);
     }
+
+    localStorage.setItem("cart", JSON.stringify(newCartList));
+
+    return {
+      ...state,
+      cartList: newCartList,
+    };
   },
   [REQUEST(CART_ACTION.REMOVE_CART_ITEM)]: (state, action) => {
     const { product } = action.payload;

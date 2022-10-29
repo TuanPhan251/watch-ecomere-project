@@ -26,7 +26,7 @@ import UpdateProductPage from "./pages/admin/AdminProductPage/UpdateProductPage"
 import HomePage from "./pages/User/Home";
 import ProductPage from "./pages/User/ProductsPage";
 import ProductDetailPage from "./pages/User/ProductDetail";
-import CheckoutPage from "./pages/User/CheckoutPage";
+import CartSummaryPage from "./pages/User/CartSummary";
 import ContactPage from "./pages/User/ContactPage";
 import BrandPage from "./pages/User/BrandPage";
 
@@ -59,7 +59,10 @@ function App() {
               path={ROUTES.USER.PRODUCT_DETAIL}
               element={<ProductDetailPage />}
             />
-            <Route path={ROUTES.USER.CHECKOUT} element={<CheckoutPage />} />
+            <Route
+              path={ROUTES.USER.CART_SUMMARY}
+              element={<CartSummaryPage />}
+            />
             <Route path={ROUTES.USER.CONTACT} element={<ContactPage />} />
             <Route path={ROUTES.USER.BRAND} element={<BrandPage />} />
           </Route>

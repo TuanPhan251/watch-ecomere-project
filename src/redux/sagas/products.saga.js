@@ -18,7 +18,7 @@ function* getProductListSaga(action) {
           q: params.keyword,
         }),
         ...(params.priceOder && {
-          price: params.priceOder,
+          finalPrice: params.priceOder,
         }),
         ...(params.gender && {
           gender: params.gender,

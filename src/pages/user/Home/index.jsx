@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { ROUTES } from "../../../constants/routes";
 
@@ -46,19 +46,18 @@ const HomePage = () => {
         <div className="men_products-banner-img">
           <img alt="" src={menImg} />
           <h3 className="product_banner-title">ĐỒNG HỒ NAM</h3>
-          <button
+          <Link
             className="product_banner-btn"
-            onClick={() =>
-              navigate(ROUTES.USER.MEN_DETAIL, {
-                state: {
-                  title: "Nam",
-                  gender: "male",
-                },
-              })
-            }
+            onClick={(e) => {
+              e.preventDefault();
+              navigate({
+                pathname: ROUTES.USER.MEN_DETAIL,
+                search: "?gender=male",
+              });
+            }}
           >
             KHÁM PHÁ THÊM
-          </button>
+          </Link>
         </div>
 
         <div className="men_products-list">
@@ -70,19 +69,18 @@ const HomePage = () => {
         <div className="women_products-banner-img">
           <img alt="" src={womenImg} />
           <h3 className="product_banner-title">ĐỒNG HỒ NỮ</h3>
-          <button
+          <Link
             className="product_banner-btn"
-            onClick={() =>
-              navigate(ROUTES.USER.WOMEN_DETAIL, {
-                state: {
-                  title: "Nữ",
-                  gender: "female",
-                },
-              })
-            }
+            onClick={(e) => {
+              e.preventDefault();
+              navigate({
+                pathname: ROUTES.USER.MEN_DETAIL,
+                search: "?gender=male",
+              });
+            }}
           >
             KHÁM PHÁ THÊM
-          </button>
+          </Link>
         </div>
 
         <div className="women_products-list">

@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --dark-text-color: #141414;
     --text-disabled: #bfbfbf;
+    --primary-color: #9E2A2B;
     --button-color: #9E2A2B;
     --price-color : #335C67;
     --bgr-color: #f0f0f0;
