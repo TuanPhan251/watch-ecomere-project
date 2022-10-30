@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Tabs } from "antd";
 
 export const Wrapper = styled.div`
   background-color: var(--bgr-color);
@@ -261,15 +262,14 @@ export const BottomWrapper = styled.div`
 
 export const ProductContent = styled.div`
   width: 100%;
-  padding: 32px 16px;
 
   .product_content-heading {
-    width: 100%;
-    margin-bottom: 32px;
+    display: inline-block;
     text-align: center;
-    color: var(--dark-text-color);
-    font-size: 26px;
-    text-transform: uppercase;
+    padding: 8px;
+    color: #fff;
+    background-color: var(--price-color);
+    font-size: 20px;
   }
 
   .product_content-main {
@@ -301,4 +301,30 @@ export const ProductContent = styled.div`
   }
 `;
 
-export const ProductReview = styled.div``;
+export const ProductReview = styled.div`
+  height: 500px;
+`;
+
+export const InfoTabs = styled(Tabs)`
+  margin-top: 24px;
+  padding: 0 12px;
+
+  .ant-tabs-nav {
+    border-bottom: 2px solid var(--price-color);
+  }
+
+  .ant-tabs-tab {
+    padding: 4px 8px !important;
+    background-color: #fff !important;
+    font-size: 20px !important;
+    color: var(--dark-text-color) !important;
+  }
+
+  .ant-tabs-tab.ant-tabs-tab-active {
+    background-color: var(--price-color) !important;
+  }
+
+  .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: #fff;
+  }
+`;
