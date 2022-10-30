@@ -6,17 +6,17 @@ export const ProductSpecContainer = styled.div`
 `;
 
 export const ProductSpecHeading = styled.h3`
-  width: 100%;
-  margin-bottom: 32px;
-  text-align: center;
-  color: var(--dark-text-color);
-  font-size: 26px;
-  text-transform: uppercase;
+  display: inline-block;
+  padding: 0 8px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: var(--price-color);
 `;
 
 export const ProductSpecCol = styled.ul`
   list-style: none;
-  margin: -4px 0;
+  border-top: 2px solid var(--price-color);
 
   & li:nth-child(2n + 1) {
     background-color: #f5f5f5;
@@ -26,8 +26,7 @@ export const ProductSpecCol = styled.ul`
 export const ProductSpecItem = styled.li`
   display: flex;
   justify-content: space-around;
-  padding: 4px 8px;
-  margin: 4px 0;
+  padding: 8px;
   font-size: 16px;
   color: var(--dark-text-color);
   font-weight: 400;

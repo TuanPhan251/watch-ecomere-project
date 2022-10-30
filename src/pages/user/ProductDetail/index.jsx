@@ -1,7 +1,24 @@
-import { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, createElement } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Rate, Tooltip, notification, Skeleton, Spin } from "antd";
+import {
+  Row,
+  Col,
+  Rate,
+  Tooltip,
+  notification,
+  Skeleton,
+  Spin,
+  Comment,
+  Avatar,
+  Tabs,
+} from "antd";
+import {
+  DislikeFilled,
+  DislikeOutlined,
+  LikeFilled,
+  LikeOutlined,
+} from "@ant-design/icons";
 
 import ProductSpec from "./ProductSpec";
 import ProductPolicy from "./ProductPolicy";
@@ -29,6 +46,20 @@ const ProductDetailPage = () => {
   const isDiscount = !!productDetail.data.discountPercent;
 
   const [itemQuantity, setItemQuantity] = useState(1);
+
+  const [likes, setLikes] = useState(0);
+  const [dislikes, setDislikes] = useState(0);
+  const [action, setAction] = useState(null);
+  const like = () => {
+    setLikes(1);
+    setDislikes(0);
+    setAction("liked");
+  };
+  const dislike = () => {
+    setLikes(0);
+    setDislikes(1);
+    setAction("disliked");
+  };
 
   const handleAddProductToCart = () => {
     dispatch(
@@ -75,6 +106,68 @@ const ProductDetailPage = () => {
   const renderProductSpec = useMemo(() => {
     return <ProductSpec product={productDetail} />;
   }, [productDetail.data]);
+
+  const actions = [
+    <Tooltip key="comment-basic-like" title="Like">
+      <span onClick={like}>
+        {createElement(action === "liked" ? LikeFilled : LikeOutlined)}
+        <span className="comment-action">{likes}</span>
+      </span>
+    </Tooltip>,
+    <Tooltip key="comment-basic-dislike" title="Dislike">
+      <span onClick={dislike}>
+        {React.createElement(
+          action === "disliked" ? DislikeFilled : DislikeOutlined
+        )}
+        <span className="comment-action">{dislikes}</span>
+      </span>
+    </Tooltip>,
+    <span key="comment-basic-reply-to">Reply to</span>,
+  ];
+
+  const items = [
+    {
+      label: "Giới thiệu sản phẩm",
+      key: "item-1",
+      children: (
+        <S.ProductContent>
+          <div
+            className="product_content-main"
+            dangerouslySetInnerHTML={{
+              __html: productDetail.data.content || "content here",
+            }}
+          ></div>
+        </S.ProductContent>
+      ),
+    },
+    {
+      label: "Nhận xét và đánh giá",
+      key: "item-2",
+      children: (
+        <S.ProductReview>
+          <Comment
+            actions={actions}
+            author={<a>Han Solo</a>}
+            avatar={
+              <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+            }
+            content={
+              <p>
+                We supply a series of design principles, practical patterns and
+                high quality design resources (Sketch and Axure), to help people
+                create their product prototypes beautifully and efficiently.
+              </p>
+            }
+            datetime={
+              <Tooltip title="2016-11-22 11:22:33">
+                <span>8 hours ago</span>
+              </Tooltip>
+            }
+          />
+        </S.ProductReview>
+      ),
+    },
+  ];
 
   if (productDetail.loading)
     return (
@@ -228,17 +321,7 @@ const ProductDetailPage = () => {
           </Col>
 
           <Col xxl={16} xl={16} lg={16} md={24} sm={24} xs={24}>
-            <S.ProductContent>
-              <h3 className="product_content-heading">Giới thiệu sản phẩm</h3>
-
-              <div
-                className="product_content-main"
-                dangerouslySetInnerHTML={{
-                  __html: productDetail.data.content || "content here",
-                }}
-              ></div>
-            </S.ProductContent>
-            <S.ProductReview></S.ProductReview>
+            <S.InfoTabs type="card" items={items} defaultActiveKey="item-1" />
           </Col>
         </Row>
       </S.BottomWrapper>
