@@ -75,7 +75,7 @@ const HomePage = () => {
               e.preventDefault();
               navigate({
                 pathname: ROUTES.USER.MEN_DETAIL,
-                search: "?gender=male",
+                search: "?gender=female",
               });
             }}
           >

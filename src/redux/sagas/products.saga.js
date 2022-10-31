@@ -74,9 +74,11 @@ function* getProductListSaga(action) {
 function* getProductDetailSaga(action) {
   try {
     const { id } = action.payload;
-    const result = yield axios.get(
-      `http://localhost:4000/products/${id}/?_expand=category`
-    );
+    const result = yield axios.get(`http://localhost:4000/products/${id}`, {
+      params: {
+        _expand: "category",
+      },
+    });
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
       payload: {
@@ -120,11 +122,13 @@ function* createProductSaga(action) {
 
 function* updateProductSaga(action) {
   try {
-    const { data, id, callback } = action.payload;
+    const { data, id, callback, comment } = action.payload;
     const result = yield axios.patch(
       `http://localhost:4000/products/${id}`,
       data
     );
+    yield axios.post(`http://localhost:4000/comments/`, comment);
+
     yield put({
       type: SUCCESS(PRODUCT_ACTION.UPDATE_PRODUCT),
       payload: {

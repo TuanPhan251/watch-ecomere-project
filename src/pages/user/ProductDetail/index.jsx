@@ -1,8 +1,19 @@
-import { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, createElement } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Col, Rate, Tooltip, notification, Skeleton, Spin } from "antd";
-
+import {
+  Row,
+  Col,
+  Rate,
+  Tooltip,
+  notification,
+  Spin,
+  Comment,
+  Avatar,
+  Form,
+  Input,
+  Button,
+} from "antd";
 import ProductSpec from "./ProductSpec";
 import ProductPolicy from "./ProductPolicy";
 import ProductGift from "./ProductGift";
@@ -14,17 +25,29 @@ import {
   getProductDetailAction,
   getCategoriesListAction,
   removeProductDetailAction,
+  updateProductAction,
+  getCommentListAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
 import * as S from "./style";
 
 const ProductDetailPage = () => {
+  const { id } = useParams();
+  const productId = parseInt(id.split(".")[1]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { productDetail } = useSelector((state) => state.product);
-  const { id } = useParams();
-  const productId = parseInt(id.split(".")[1]);
+  const { userInfo } = useSelector((state) => state.user);
+
+  const { commentList } = useSelector((state) => state.comments);
+  const comments = commentList.data?.filter(
+    (item) => item.productId === productId
+  );
+  const isCommented = comments?.some(
+    (item) => item.userId === userInfo?.data?.id
+  );
+
   const gender = productDetail.data.gender === "male" ? "nam" : "nữ";
   const isDiscount = !!productDetail.data.discountPercent;
 
@@ -62,10 +85,28 @@ const ProductDetailPage = () => {
     }
   };
 
+  const handleCreateComment = (value) => {
+    const data = {
+      ...value,
+      userName: userInfo?.data?.userName,
+      userId: userInfo?.data?.id,
+      productId: productDetail.data.id,
+    };
+
+    dispatch(
+      updateProductAction({
+        id: productDetail.data.id,
+        values: productDetail.data,
+        comment: data,
+      })
+    );
+  };
+
   useEffect(() => {
     dispatch(getProductDetailAction({ id: productId }));
 
     dispatch(getCategoriesListAction());
+    dispatch(getCommentListAction());
 
     return () => {
       dispatch(removeProductDetailAction());
@@ -75,6 +116,107 @@ const ProductDetailPage = () => {
   const renderProductSpec = useMemo(() => {
     return <ProductSpec product={productDetail} />;
   }, [productDetail.data]);
+
+  const renderUserComments = useMemo(() => {
+    return comments?.map((item) => {
+      return (
+        <Comment
+          key={item.id}
+          author={<a>{item.userName}</a>}
+          avatar={
+            <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+          }
+          content={
+            <>
+              <Rate disabled value={item.rating} style={{ fontSize: 14 }} />
+              <p>{item.content}</p>
+            </>
+          }
+          datetime={
+            <Tooltip title={item.createdAt || "abc"}>
+              <span></span>
+            </Tooltip>
+          }
+        />
+      );
+    });
+  }, [comments]);
+
+  const Editor = ({ onChange, onSubmit, submitting, value }) => (
+    <>
+      <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+      <Form name="rate-form" onFinish={(value) => handleCreateComment(value)}>
+        <Form.Item
+          label="Đánh giá"
+          name="rating"
+          rules={[
+            {
+              required: true,
+              message: "Chưa chọn điểm đánh giá",
+            },
+          ]}
+        >
+          <Rate allowHalf />
+        </Form.Item>
+
+        <Form.Item
+          label="Nội dung"
+          name="content"
+          rules={[
+            {
+              required: true,
+              message: "Chưa nhập nội dung đánh giá",
+            },
+          ]}
+        >
+          <Input.TextArea rows={4} />
+        </Form.Item>
+        <Form.Item>
+          <Button htmlType="submit">Đánh giá</Button>
+        </Form.Item>
+      </Form>
+    </>
+  );
+
+  const items = [
+    {
+      label: (
+        <span>
+          <i
+            className="fa-regular fa-file-lines"
+            style={{ margin: "0 12px" }}
+          ></i>
+          Giới thiệu
+        </span>
+      ),
+      key: "item-1",
+      children: (
+        <S.ProductContent>
+          <div
+            className="product_content-main"
+            dangerouslySetInnerHTML={{
+              __html: productDetail.data.content || "content here",
+            }}
+          ></div>
+        </S.ProductContent>
+      ),
+    },
+    {
+      label: (
+        <span>
+          <i className="fa-regular fa-comment" style={{ margin: "0 12px" }}></i>
+          Đánh giá
+        </span>
+      ),
+      key: "item-2",
+      children: (
+        <S.ProductReview>
+          {!isCommented && <Comment content={<Editor />} />}
+          {renderUserComments}
+        </S.ProductReview>
+      ),
+    },
+  ];
 
   if (productDetail.loading)
     return (
@@ -89,7 +231,7 @@ const ProductDetailPage = () => {
     <S.Wrapper>
       <S.ProductDetailContainer>
         <Row gutter={[8, 8]}>
-          <Col xxl={8} xl={8} md={24} sm={24} xm={24}>
+          <Col xxl={8} xl={8} md={8} sm={24} xs={24}>
             <S.ProductImageWrapper>
               <img src={productDetail.data.image} alt="product" />
               {productDetail.data.isDiscount && (
@@ -97,9 +239,17 @@ const ProductDetailPage = () => {
                   <span>- {productDetail.data.discountPercent}%</span>
                 </div>
               )}
+
+              <div className="product_like-icon">
+                <Tooltip title="Thêm vào yêu thích">
+                  <button>
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
+                </Tooltip>
+              </div>
             </S.ProductImageWrapper>
           </Col>
-          <Col xxl={10} xl={10} md={24} sm={24} xm={24}>
+          <Col xxl={10} xl={10} md={10} sm={24} xs={24}>
             <S.ProductInfoWrapper>
               <S.ProductSummary>
                 <h2>{productDetail.data.name}</h2>
@@ -215,7 +365,7 @@ const ProductDetailPage = () => {
               </S.ProductActions>
             </S.ProductInfoWrapper>
           </Col>
-          <Col xxl={6} xl={6} md={24} sm={24} xm={24}>
+          <Col xxl={6} xl={6} md={6} sm={24} xs={24}>
             <ProductPolicy />
           </Col>
         </Row>
@@ -223,22 +373,12 @@ const ProductDetailPage = () => {
 
       <S.BottomWrapper>
         <Row gutter={[8, 8]}>
-          <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             {renderProductSpec}
           </Col>
 
-          <Col xxl={16} xl={16} lg={16} md={24} sm={24} xs={24}>
-            <S.ProductContent>
-              <h3 className="product_content-heading">Giới thiệu sản phẩm</h3>
-
-              <div
-                className="product_content-main"
-                dangerouslySetInnerHTML={{
-                  __html: productDetail.data.content || "content here",
-                }}
-              ></div>
-            </S.ProductContent>
-            <S.ProductReview></S.ProductReview>
+          <Col xxl={16} xl={16} lg={16} md={16} sm={24} xs={24}>
+            <S.InfoTabs type="card" items={items} defaultActiveKey="item-1" />
           </Col>
         </Row>
       </S.BottomWrapper>
