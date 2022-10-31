@@ -26,35 +26,32 @@ import {
   getCategoriesListAction,
   removeProductDetailAction,
   updateProductAction,
+  getCommentListAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
 import * as S from "./style";
 
 const ProductDetailPage = () => {
+  const { id } = useParams();
+  const productId = parseInt(id.split(".")[1]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { productDetail } = useSelector((state) => state.product);
-  const { comments } = productDetail.data;
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 44 ~ ProductDetailPage ~ comments",
-    comments
-  );
   const { userInfo } = useSelector((state) => state.user);
+
+  const { commentList } = useSelector((state) => state.comments);
+  const comments = commentList.data?.filter(
+    (item) => item.productId === productId
+  );
   const isCommented = comments?.some(
     (item) => item.userId === userInfo?.data?.id
   );
-  const { id } = useParams();
-  const productId = parseInt(id.split(".")[1]);
+
   const gender = productDetail.data.gender === "male" ? "nam" : "nữ";
   const isDiscount = !!productDetail.data.discountPercent;
 
   const [itemQuantity, setItemQuantity] = useState(1);
-  const [comment, setComment] = useState(comments);
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 54 ~ ProductDetailPage ~ comment",
-    comment
-  );
 
   const handleAddProductToCart = () => {
     dispatch(
@@ -109,6 +106,7 @@ const ProductDetailPage = () => {
     dispatch(getProductDetailAction({ id: productId }));
 
     dispatch(getCategoriesListAction());
+    dispatch(getCommentListAction());
 
     return () => {
       dispatch(removeProductDetailAction());
@@ -120,7 +118,7 @@ const ProductDetailPage = () => {
   }, [productDetail.data]);
 
   const renderUserComments = useMemo(() => {
-    return comment?.map((item) => {
+    return comments?.map((item) => {
       return (
         <Comment
           key={item.id}
@@ -130,7 +128,7 @@ const ProductDetailPage = () => {
           }
           content={
             <>
-              <Rate value={item.rating} style={{ fontSize: 14 }} />
+              <Rate disabled value={item.rating} style={{ fontSize: 14 }} />
               <p>{item.content}</p>
             </>
           }
@@ -142,7 +140,7 @@ const ProductDetailPage = () => {
         />
       );
     });
-  }, [productDetail.data]);
+  }, [comments]);
 
   const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <>
