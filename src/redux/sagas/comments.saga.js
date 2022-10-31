@@ -3,9 +3,14 @@ import axios from "axios";
 
 import { REQUEST, SUCCESS, FAIL, COMMENTS_ACTION } from "../CONSTANTS/";
 
-function* getCommentListSaga() {
+function* getCommentListSaga(action) {
   try {
-    const result = yield axios.get("http://localhost:4000/comments");
+    const { productId } = action.payload;
+    const result = yield axios.get("http://localhost:4000/comments", {
+      params: {
+        productId: productId,
+      },
+    });
     yield put({
       type: `${SUCCESS(COMMENTS_ACTION.GET_COMMENTS_LIST)}`,
       payload: {
@@ -24,8 +29,8 @@ function* getCommentListSaga() {
 
 function* createCommentSaga(action) {
   try {
-    const { value } = action.payload;
-    const result = yield axios.post("http://localhost:4000/comments", value);
+    const { data, productId } = action.payload;
+    const result = yield axios.post("http://localhost:4000/comments", data);
     yield put({
       type: `${SUCCESS(COMMENTS_ACTION.CREATE_COMMENT)}`,
       payload: {

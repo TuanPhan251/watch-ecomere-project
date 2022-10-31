@@ -61,7 +61,6 @@ const commentsReducer = createReducer(initialValue, {
       ...state,
       commentList: {
         ...state.commentList,
-        data: data,
         loading: false,
         error: "",
       },

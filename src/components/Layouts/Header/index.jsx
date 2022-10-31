@@ -621,10 +621,22 @@ const Header = () => {
                         </Link>
                       ) : (
                         <>
-                          <Link to="" className="user_actions-btn">
+                          <Link
+                            to={ROUTES.USER.USER_INFO}
+                            className="user_actions-btn"
+                          >
+                            Thông tin tài khoản
+                          </Link>
+                          <Link
+                            to={ROUTES.USER.USER_INFO_ORDER}
+                            className="user_actions-btn"
+                          >
                             Đơn hàng của bạn
                           </Link>
-                          <Link to="" className="user_actions-btn">
+                          <Link
+                            to={ROUTES.USER.USER_INFO_WISHLIST}
+                            className="user_actions-btn"
+                          >
                             Sản phẩm đã thích
                           </Link>
                         </>

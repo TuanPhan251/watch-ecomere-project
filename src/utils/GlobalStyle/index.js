@@ -25,6 +25,21 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     scroll-behavior: smooth;
+
+    
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #fafafa;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #595959;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #fafafa;
+  }
   }
 
   h1, h2 , h3 , h4 , h5 ,h6 ,p , ul , li {

@@ -71,6 +71,33 @@ function* getProductListSaga(action) {
   }
 }
 
+function* getNewProductsSaga(action) {
+  try {
+    const { params } = action.payload;
+    const result = yield axios.get("http://localhost:4000/products", {
+      params: {
+        _expand: "category",
+        ...(params.isNew && {
+          isNew: params.isNew,
+        }),
+      },
+    });
+    yield put({
+      type: SUCCESS(PRODUCT_ACTION.GET_NEW_PRODUCTS_LIST),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(PRODUCT_ACTION.GET_NEW_PRODUCTS_LIST),
+      payload: {
+        error: "đã có lỗi xảy ra",
+      },
+    });
+  }
+}
+
 function* getProductDetailSaga(action) {
   try {
     const { id } = action.payload;
@@ -186,6 +213,11 @@ export default function* productSaga() {
     500,
     REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST),
     getProductListSaga
+  );
+  yield debounce(
+    500,
+    REQUEST(PRODUCT_ACTION.GET_NEW_PRODUCTS_LIST),
+    getNewProductsSaga
   );
   yield takeEvery(
     REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL),

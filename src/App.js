@@ -23,12 +23,16 @@ import AdminUsersPage from "./pages/admin/AdminUserPage";
 import CreateProductPage from "./pages/admin/AdminProductPage/CreateProductPage";
 import UpdateProductPage from "./pages/admin/AdminProductPage/UpdateProductPage";
 
-import HomePage from "./pages/user/Home";
-import ProductPage from "./pages/user/ProductsPage";
-import ProductDetailPage from "./pages/user/ProductDetail";
-import CartSummaryPage from "./pages/user/CartSummary";
-import ContactPage from "./pages/user/ContactPage";
-import BrandPage from "./pages/user/BrandPage";
+import HomePage from "./pages/User/Home";
+import ProductPage from "./pages/User/ProductsPage";
+import ProductDetailPage from "./pages/User/ProductDetail";
+import CartSummaryPage from "./pages/User/CartSummary";
+import ContactPage from "./pages/User/ContactPage";
+import BrandPage from "./pages/User/BrandPage";
+import UserInfoPage from "./pages/User/UserInfo";
+import UserInfoOrderPage from "./pages/User/UserInfo/UserInfoOrder";
+import UserInfoPasswordPage from "./pages/User/UserInfo/UserInfoPassword";
+import UserInfoWishListPage from "./pages/User/UserInfo/UserInfoWishList";
 
 function App() {
   const dispatch = useDispatch();
@@ -65,6 +69,19 @@ function App() {
             />
             <Route path={ROUTES.USER.CONTACT} element={<ContactPage />} />
             <Route path={ROUTES.USER.BRAND} element={<BrandPage />} />
+            <Route path={ROUTES.USER.USER_INFO} element={<UserInfoPage />} />
+            <Route
+              path={ROUTES.USER.USER_INFO_ORDER}
+              element={<UserInfoOrderPage />}
+            />
+            <Route
+              path={ROUTES.USER.USER_INFO_PASSWORD}
+              element={<UserInfoPasswordPage />}
+            />
+            <Route
+              path={ROUTES.USER.USER_INFO_WISHLIST}
+              element={<UserInfoWishListPage />}
+            />
           </Route>
 
           <Route element={<AdminLayout />}>
