@@ -7,19 +7,13 @@ import {
   Rate,
   Tooltip,
   notification,
-  Skeleton,
   Spin,
   Comment,
   Avatar,
-  Tabs,
+  Form,
+  Input,
+  Button,
 } from "antd";
-import {
-  DislikeFilled,
-  DislikeOutlined,
-  LikeFilled,
-  LikeOutlined,
-} from "@ant-design/icons";
-
 import ProductSpec from "./ProductSpec";
 import ProductPolicy from "./ProductPolicy";
 import ProductGift from "./ProductGift";
@@ -31,6 +25,7 @@ import {
   getProductDetailAction,
   getCategoriesListAction,
   removeProductDetailAction,
+  updateProductAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
@@ -40,26 +35,26 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { productDetail } = useSelector((state) => state.product);
+  const { comments } = productDetail.data;
+  console.log(
+    "🚀 ~ file: index.jsx ~ line 44 ~ ProductDetailPage ~ comments",
+    comments
+  );
+  const { userInfo } = useSelector((state) => state.user);
+  const isCommented = comments?.some(
+    (item) => item.userId === userInfo?.data?.id
+  );
   const { id } = useParams();
   const productId = parseInt(id.split(".")[1]);
   const gender = productDetail.data.gender === "male" ? "nam" : "nữ";
   const isDiscount = !!productDetail.data.discountPercent;
 
   const [itemQuantity, setItemQuantity] = useState(1);
-
-  const [likes, setLikes] = useState(0);
-  const [dislikes, setDislikes] = useState(0);
-  const [action, setAction] = useState(null);
-  const like = () => {
-    setLikes(1);
-    setDislikes(0);
-    setAction("liked");
-  };
-  const dislike = () => {
-    setLikes(0);
-    setDislikes(1);
-    setAction("disliked");
-  };
+  const [comment, setComment] = useState(comments);
+  console.log(
+    "🚀 ~ file: index.jsx ~ line 54 ~ ProductDetailPage ~ comment",
+    comment
+  );
 
   const handleAddProductToCart = () => {
     dispatch(
@@ -93,6 +88,23 @@ const ProductDetailPage = () => {
     }
   };
 
+  const handleCreateComment = (value) => {
+    const data = {
+      ...value,
+      userName: userInfo?.data?.userName,
+      userId: userInfo?.data?.id,
+      productId: productDetail.data.id,
+    };
+
+    dispatch(
+      updateProductAction({
+        id: productDetail.data.id,
+        values: productDetail.data,
+        comment: data,
+      })
+    );
+  };
+
   useEffect(() => {
     dispatch(getProductDetailAction({ id: productId }));
 
@@ -107,27 +119,78 @@ const ProductDetailPage = () => {
     return <ProductSpec product={productDetail} />;
   }, [productDetail.data]);
 
-  const actions = [
-    <Tooltip key="comment-basic-like" title="Like">
-      <span onClick={like}>
-        {createElement(action === "liked" ? LikeFilled : LikeOutlined)}
-        <span className="comment-action">{likes}</span>
-      </span>
-    </Tooltip>,
-    <Tooltip key="comment-basic-dislike" title="Dislike">
-      <span onClick={dislike}>
-        {React.createElement(
-          action === "disliked" ? DislikeFilled : DislikeOutlined
-        )}
-        <span className="comment-action">{dislikes}</span>
-      </span>
-    </Tooltip>,
-    <span key="comment-basic-reply-to">Reply to</span>,
-  ];
+  const renderUserComments = useMemo(() => {
+    return comment?.map((item) => {
+      return (
+        <Comment
+          key={item.id}
+          author={<a>{item.userName}</a>}
+          avatar={
+            <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+          }
+          content={
+            <>
+              <Rate value={item.rating} style={{ fontSize: 14 }} />
+              <p>{item.content}</p>
+            </>
+          }
+          datetime={
+            <Tooltip title={item.createdAt || "abc"}>
+              <span></span>
+            </Tooltip>
+          }
+        />
+      );
+    });
+  }, [productDetail.data]);
+
+  const Editor = ({ onChange, onSubmit, submitting, value }) => (
+    <>
+      <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+      <Form name="rate-form" onFinish={(value) => handleCreateComment(value)}>
+        <Form.Item
+          label="Đánh giá"
+          name="rating"
+          rules={[
+            {
+              required: true,
+              message: "Chưa chọn điểm đánh giá",
+            },
+          ]}
+        >
+          <Rate allowHalf />
+        </Form.Item>
+
+        <Form.Item
+          label="Nội dung"
+          name="content"
+          rules={[
+            {
+              required: true,
+              message: "Chưa nhập nội dung đánh giá",
+            },
+          ]}
+        >
+          <Input.TextArea rows={4} />
+        </Form.Item>
+        <Form.Item>
+          <Button htmlType="submit">Đánh giá</Button>
+        </Form.Item>
+      </Form>
+    </>
+  );
 
   const items = [
     {
-      label: "Giới thiệu sản phẩm",
+      label: (
+        <span>
+          <i
+            className="fa-regular fa-file-lines"
+            style={{ margin: "0 12px" }}
+          ></i>
+          Giới thiệu
+        </span>
+      ),
       key: "item-1",
       children: (
         <S.ProductContent>
@@ -141,29 +204,17 @@ const ProductDetailPage = () => {
       ),
     },
     {
-      label: "Nhận xét và đánh giá",
+      label: (
+        <span>
+          <i className="fa-regular fa-comment" style={{ margin: "0 12px" }}></i>
+          Đánh giá
+        </span>
+      ),
       key: "item-2",
       children: (
         <S.ProductReview>
-          <Comment
-            actions={actions}
-            author={<a>Han Solo</a>}
-            avatar={
-              <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
-            }
-            content={
-              <p>
-                We supply a series of design principles, practical patterns and
-                high quality design resources (Sketch and Axure), to help people
-                create their product prototypes beautifully and efficiently.
-              </p>
-            }
-            datetime={
-              <Tooltip title="2016-11-22 11:22:33">
-                <span>8 hours ago</span>
-              </Tooltip>
-            }
-          />
+          {!isCommented && <Comment content={<Editor />} />}
+          {renderUserComments}
         </S.ProductReview>
       ),
     },
@@ -182,7 +233,7 @@ const ProductDetailPage = () => {
     <S.Wrapper>
       <S.ProductDetailContainer>
         <Row gutter={[8, 8]}>
-          <Col xxl={8} xl={8} md={24} sm={24} xm={24}>
+          <Col xxl={8} xl={8} md={8} sm={24} xs={24}>
             <S.ProductImageWrapper>
               <img src={productDetail.data.image} alt="product" />
               {productDetail.data.isDiscount && (
@@ -190,9 +241,17 @@ const ProductDetailPage = () => {
                   <span>- {productDetail.data.discountPercent}%</span>
                 </div>
               )}
+
+              <div className="product_like-icon">
+                <Tooltip title="Thêm vào yêu thích">
+                  <button>
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
+                </Tooltip>
+              </div>
             </S.ProductImageWrapper>
           </Col>
-          <Col xxl={10} xl={10} md={24} sm={24} xm={24}>
+          <Col xxl={10} xl={10} md={10} sm={24} xs={24}>
             <S.ProductInfoWrapper>
               <S.ProductSummary>
                 <h2>{productDetail.data.name}</h2>
@@ -308,7 +367,7 @@ const ProductDetailPage = () => {
               </S.ProductActions>
             </S.ProductInfoWrapper>
           </Col>
-          <Col xxl={6} xl={6} md={24} sm={24} xm={24}>
+          <Col xxl={6} xl={6} md={6} sm={24} xs={24}>
             <ProductPolicy />
           </Col>
         </Row>
@@ -316,11 +375,11 @@ const ProductDetailPage = () => {
 
       <S.BottomWrapper>
         <Row gutter={[8, 8]}>
-          <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
             {renderProductSpec}
           </Col>
 
-          <Col xxl={16} xl={16} lg={16} md={24} sm={24} xs={24}>
+          <Col xxl={16} xl={16} lg={16} md={16} sm={24} xs={24}>
             <S.InfoTabs type="card" items={items} defaultActiveKey="item-1" />
           </Col>
         </Row>

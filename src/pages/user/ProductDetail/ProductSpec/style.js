@@ -9,7 +9,7 @@ export const ProductSpecHeading = styled.h3`
   display: inline-block;
   padding: 0 8px;
   color: #fff;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 400;
   background-color: var(--price-color);
 `;

@@ -9,9 +9,10 @@ export const Wrapper = styled.div`
 `;
 
 export const ProductDetailContainer = styled.section`
+  max-width: 1200px;
   display: flex;
   flex-wrap: wrap;
-  margin: calc(var(--header-height) + 24px) 24px 0;
+  margin: calc(var(--header-height) + 24px) auto 0;
   padding: 12px;
   background-color: #fff;
   border-radius: 2px;
@@ -22,6 +23,7 @@ export const ProductDetailContainer = styled.section`
 `;
 
 export const ProductImageWrapper = styled.div`
+  position: relative;
   border: var(--boder-basic);
 
   & img {
@@ -54,6 +56,32 @@ export const ProductImageWrapper = styled.div`
       font-size: 20px;
       color: var(--price-color);
       font-weight: 500;
+    }
+  }
+
+  .product_like-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 8px;
+      background-color: transparent;
+      border: none;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      i {
+        font-size: 30px;
+      }
+
+      :hover {
+        background-color: #ddd;
+      }
     }
   }
 
@@ -139,6 +167,16 @@ export const ProductSummary = styled.div`
 
       .product_summary-price-final {
         font-size: 28px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .product_summary-price-original {
+        font-size: 20px;
+      }
+
+      .product_summary-price-final {
+        font-size: 24px;
       }
     }
   }
@@ -251,7 +289,8 @@ export const ProductActions = styled.div`
 //product spec section
 
 export const BottomWrapper = styled.div`
-  margin: 0 24px;
+  max-width: 1200px;
+  margin: 0 auto;
   background-color: #fff;
   border-top: var(--boder-basic);
 
@@ -316,8 +355,9 @@ export const InfoTabs = styled(Tabs)`
   .ant-tabs-tab {
     padding: 4px 8px !important;
     background-color: #fff !important;
-    font-size: 20px !important;
+    font-size: 16px !important;
     color: var(--dark-text-color) !important;
+    border: none !important;
   }
 
   .ant-tabs-tab.ant-tabs-tab-active {

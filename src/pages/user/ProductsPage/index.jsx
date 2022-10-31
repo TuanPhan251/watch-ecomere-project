@@ -371,7 +371,7 @@ const ProductPage = () => {
       return (
         <Col
           key={item.id}
-          xxl={4}
+          xxl={6}
           xl={6}
           md={8}
           sm={8}
@@ -555,7 +555,7 @@ const ProductPage = () => {
 
       <S.ProductPageWrapper>
         <Row>
-          <Col xxl={4} xl={4} md={6} sm={0} xs={0}>
+          <Col xxl={6} xl={6} md={6} sm={0} xs={0}>
             <div className="product_filter-wrapper">
               <p className="product_filter-title">
                 <i className="fa-solid fa-filter"></i>Bộ lọc
@@ -570,6 +570,16 @@ const ProductPage = () => {
                 }}
               >
                 <Panel header="Khoảng giá" key="7">
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <span>
+                      0<sup>đ</sup>
+                    </span>
+                    <span>
+                      15.000.000<sup>đ</sup>
+                    </span>
+                  </div>
                   <Slider
                     range
                     step={100000}
@@ -686,7 +696,7 @@ const ProductPage = () => {
             </div>
           </Col>
 
-          <Col xxl={20} xl={20} md={18} sm={24} xs={24}>
+          <Col xxl={18} xl={18} md={18} sm={24} xs={24}>
             <S.ProductsWrapper>
               <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
                 <Col xxl={16} xl={16} md={24} sm={24} xs={24}>
