@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 export const HeaderContainer = styled.header`
+  display: flex;
+  align-items: center;
   position: fixed;
   top: 0;
   right: 0;
@@ -263,6 +265,7 @@ export const CartItemsWrapper = styled.div`
 export const HeaderCart = styled.div`
   position: relative;
   padding: 4px;
+  margin-right: 8px;
   cursor: pointer;
 
   & i {
@@ -274,6 +277,10 @@ export const HeaderCart = styled.div`
     opacity: 1;
     visibility: visible;
     top: calc(100% + 30px);
+  }
+
+  @media (max-width: 576px) {
+    margin-right: 0;
   }
 
   @media (max-width: 868px) {

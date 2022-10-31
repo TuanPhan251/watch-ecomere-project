@@ -5,6 +5,9 @@ import { PRODUCT_ACTION, REQUEST } from "../CONSTANTS";
 export const getProductListAction = createAction(
   REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST)
 );
+export const getNewProductsList = createAction(
+  REQUEST(PRODUCT_ACTION.GET_NEW_PRODUCTS_LIST)
+);
 export const getProductDetailAction = createAction(
   REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL)
 );

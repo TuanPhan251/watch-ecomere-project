@@ -275,7 +275,7 @@ export const ProductItem = styled.div`
     position: absolute;
     top: 10px;
     right: 0;
-    width: 60px;
+    padding: 4px 8px;
     height: 24px;
     padding: 0 4px;
     background-color: var(--button-color);
@@ -286,13 +286,9 @@ export const ProductItem = styled.div`
       position: absolute;
       top: 0;
       right: 100%;
-      border-width: 12px 8px 12px 0;
+      border-width: 12px 6px 12px 0;
       border-style: solid;
       border-color: transparent var(--button-color);
-    }
-
-    span {
-      font-size: 16px;
     }
   }
 

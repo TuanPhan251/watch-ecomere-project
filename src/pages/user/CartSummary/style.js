@@ -9,7 +9,9 @@ export const Wrapper = styled.div`
 `;
 
 export const CheckoutCartContainer = styled.div`
-  margin: 0 24px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
   padding: 24px 12px;
   height: 100%;
   min-height: 100vh;

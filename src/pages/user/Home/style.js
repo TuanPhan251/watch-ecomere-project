@@ -130,10 +130,24 @@ export const HomePageWrapper = styled.main`
     }
   }
 
+  .new_products-section {
+    margin: 60px 0;
+
+    .new_products_section-heading {
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .new_products-list {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
   .men_products-section {
     display: flex;
     height: 100%;
-    margin: 80px 0;
 
     .men_products-banner-img {
       width: 50%;
@@ -242,6 +256,124 @@ export const HomePageWrapper = styled.main`
     @media (max-width: 868px) {
       top: unset;
       bottom: 10%;
+      font-size: 16px;
+    }
+  }
+`;
+
+export const EmailRegister = styled.section`
+  padding: 40px 0;
+
+  .email_register-inner {
+    padding: 120px 0;
+    background-image: url(${(props) => props.bgrImage});
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+
+    .email_register-content {
+      max-width: 500px;
+      padding: 24px;
+      margin: 0 auto;
+      border-radius: 8px;
+      background-color: rgba(0, 0, 0, 0.1);
+
+      h3 {
+        margin-bottom: 24px;
+        color: #fff;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 32px;
+        line-height: 50px;
+      }
+
+      p {
+        margin-bottom: 24px;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+      }
+
+      .email_register-form {
+        display: flex;
+        justify-content: center;
+
+        input {
+          padding: 8px 16px;
+          width: 300px;
+          font-size: 16px;
+          outline: none;
+        }
+
+        button {
+          padding: 0 12px;
+          color: #fff;
+          font-size: 16px;
+          background-color: var(--button-color);
+          border: none;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+`;
+
+export const Product = styled.div`
+  position: relative;
+  flex: 1;
+  height: 100%;
+  padding: 12px;
+  color: var(--dark-text-color);
+  text-align: center;
+  overflow: hidden;
+  cursor: pointer;
+
+  & h2 {
+    margin-top: 16px;
+    font-size: 16px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  & img {
+    width: 75%;
+    transition: all 0.2s ease;
+  }
+
+  &:hover {
+    box-shadow: 0 0 8px #ccc;
+
+    & img {
+      transform: scale(1.05);
+    }
+
+    h2 {
+      color: #cf1322;
+    }
+  }
+
+  .new_product-label {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 8px;
+    background-color: var(--primary-color);
+
+    ::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 100%;
+      border-width: 16px 8px 16px 0;
+      border-style: solid;
+      border-color: transparent var(--button-color);
+    }
+
+    span {
+      color: #fff;
       font-size: 16px;
     }
   }
