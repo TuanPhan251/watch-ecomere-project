@@ -1,63 +1,90 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useMemo } from "react";
+import { useNavigate, useLocation, generatePath } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-import { Select, Row, Col, Collapse, Space, Tag, Slider, Spin } from "antd";
-import { TreeSelect } from "antd";
-import { useEffect, useMemo, useState } from "react";
-
-import * as S from "./styles";
-import "../BrandPage/main.scss";
-
-import { useDispatch, useSelector } from "react-redux";
 import {
-  getCategoriesListAction,
+  Select,
+  Row,
+  Col,
+  Collapse,
+  Checkbox,
+  Space,
+  Tag,
+  Radio,
+  Spin,
+  Rate,
+  Tooltip,
+  Drawer,
+  Slider,
+  notification,
+} from "antd";
+import MainButton from "../../../components/MainButton";
+
+import {
   getProductListAction,
+  getCategoriesListAction,
+  addItemToCartAction,
 } from "../../../redux/actions";
 import { PRODUCT_LIST_LIMIT } from "../../../constants/paginations";
+import { ROUTES } from "../../../constants/routes";
 
-const { Panel } = Collapse;
+import bannerBrand from "../../../assets/banner/men-banner.jpg";
+
+import * as S from "./styles";
+
+var qs = require("qs");
+
 const { Option } = Select;
-const { SHOW_PARENT } = TreeSelect;
+const { Panel } = Collapse;
+const caseSizes = [
+  {
+    RANGE: undefined,
+    NAME: "Tất cả các kích thước",
+  },
+  {
+    RANGE: "0,35.99",
+    NAME: "Dưới 36mm",
+  },
+  {
+    RANGE: "36,40",
+    NAME: "Từ 36mm - 40mm",
+  },
+  {
+    RANGE: "40.01,44",
+    NAME: "Từ 40mm - 44mm",
+  },
+  {
+    RANGE: "44.01,100",
+    NAME: "Trên 44mm",
+  },
+];
 
 const BrandPage = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { productList } = useSelector((state) => state.product);
+  const MAXPRICE = 15000000;
+  const location = useLocation();
+  const search = location.search.slice(1);
+  const searchObj = qs.parse(search);
 
-  const { categoryList } = useSelector((state) => state.category);
-  const [value, setValue] = useState([]);
-  const [filterParams, setFilterParams] = useState({
-    categoryId: "",
+  const initialFilterParams = {
+    categoryId: [],
     keyword: "",
     priceSort: "",
-    type: "",
+    type: [],
     caseSize: "",
-    glassMaterial: "",
-    price: [],
-  });
-
-  const onChange = (newValue) => {
-    handleFilter("categoryId", newValue);
-    setValue(newValue);
+    nameCaseSize: "",
+    glassMaterial: [],
+    priceRange: [0, MAXPRICE],
+    isNew: false,
+    isDiscount: false,
   };
-  const treeData = categoryList.data.map((item) => {
-    return {
-      title: item.name,
-      value: item.id,
-      key: item.id,
-    };
-  });
 
-  const tProps = {
-    treeData,
-    value,
-    onChange,
-    treeCheckable: true,
-    showCheckedStrategy: SHOW_PARENT,
-    placeholder: "Các thương hiệu nổi tiếng",
-    style: {
-      width: "100%",
-    },
-  };
+  const [showFilterDrawer, setShowFilterDrawer] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
+  const { productList } = useSelector((state) => state.product);
+  const { categoryList } = useSelector((state) => state.category);
 
   useEffect(() => {
     dispatch(
@@ -68,7 +95,12 @@ const BrandPage = () => {
         },
       })
     );
+
     dispatch(getCategoriesListAction());
+
+    setFilterParams({
+      ...filterParams,
+    });
   }, []);
 
   const handleShowMore = () => {
@@ -82,6 +114,32 @@ const BrandPage = () => {
         more: true,
       })
     );
+  };
+
+  const handleAddItemToCart = (product) => {
+    dispatch(
+      addItemToCartAction({
+        product: {
+          data: product,
+        },
+        productAmount: 1,
+      })
+    );
+
+    notification.open({
+      message: "Đã thêm sản phẩm vào giỏ hàng",
+      placement: "top",
+      top: 100,
+      duration: 2,
+      icon: (
+        <i
+          className="fa-solid fa-check"
+          style={{
+            color: "#73d13d",
+          }}
+        ></i>
+      ),
+    });
   };
 
   const handleFilter = (key, values) => {
@@ -101,16 +159,30 @@ const BrandPage = () => {
     );
   };
 
-  const handleFilterCaseSize = (key, values) => {
-    console.log(key);
+  const handleResetFilterParams = () => {
+    setFilterParams({ ...initialFilterParams });
+    dispatch(
+      getProductListAction({
+        params: {
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+
+    dispatch(getCategoriesListAction());
+  };
+
+  const handleFilterCaseSize = (key, values, nameCaseSize) => {
     if (values) {
       var newValue = values.split(",").map(Number);
     }
-
     setFilterParams({
       ...filterParams,
       [key]: newValue,
+      nameCaseSize: nameCaseSize,
     });
+
     dispatch(
       getProductListAction({
         params: {
@@ -123,16 +195,17 @@ const BrandPage = () => {
     );
   };
 
-  const handleChangeFilterParams = (key, value) => {
+  const handleRemoveFilterCategory = (id) => {
+    const newCategoryId = filterParams.categoryId.filter((item) => item !== id);
     setFilterParams({
       ...filterParams,
-      [key]: value,
+      categoryId: newCategoryId,
     });
     dispatch(
       getProductListAction({
         params: {
           ...filterParams,
-          [key]: value,
+          categoryId: newCategoryId,
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
         },
@@ -140,198 +213,523 @@ const BrandPage = () => {
     );
   };
 
-  const handleRemoveFilterKeyword = () => {
+  const handleRemoveFilterGlass = (filterGlass) => {
+    const newGlass = filterParams.glassMaterial.filter(
+      (item) => item !== filterGlass
+    );
+
     setFilterParams({
       ...filterParams,
-      keyword: "",
+      glassMaterial: newGlass,
     });
     dispatch(
       getProductListAction({
         params: {
           ...filterParams,
-          keyword: "",
+          glassMaterial: newGlass,
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
         },
       })
     );
   };
+
+  const handleRemoveFilterType = (filterType) => {
+    const newType = filterParams.type.filter((item) => item !== filterType);
+
+    setFilterParams({
+      ...filterParams,
+      type: newType,
+    });
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          type: newType,
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
+  const handleRemoveFilterKeyWord = (key) => {
+    setFilterParams({
+      ...filterParams,
+      [key]: "",
+    });
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          [key]: "",
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
+  const renderCaseSize = useMemo(() => {
+    return caseSizes.map((item) => {
+      return (
+        <Radio key={item.NAME} value={item.RANGE} className={item.NAME}>
+          {item.NAME}
+        </Radio>
+      );
+    });
+  }, [caseSizes]);
+
+  const renderCategory = useMemo(() => {
+    return categoryList.data?.map((item) => {
+      return (
+        <Col span={24} key={item.id}>
+          <Checkbox value={item.id}>{item.name}</Checkbox>
+        </Col>
+      );
+    });
+  }, [categoryList.data]);
+
+  const renderFilterCategory = useMemo(() => {
+    return filterParams.categoryId?.map((filterCategoryId) => {
+      const filterCategoryName = categoryList.data.find(
+        (item) => item.id === filterCategoryId
+      );
+      return (
+        <Tag
+          key={filterCategoryId}
+          closable
+          onClose={() => handleRemoveFilterCategory(filterCategoryId)}
+        >
+          {filterCategoryName.name}
+        </Tag>
+      );
+    });
+  }, [filterParams.categoryId]);
+
+  const renderFilterType = useMemo(() => {
+    return filterParams.type.map((filterType) => {
+      return (
+        <Tag
+          key={filterType}
+          closable
+          onClose={() => handleRemoveFilterType(filterType)}
+        >
+          {filterType}
+        </Tag>
+      );
+    });
+  }, [filterParams.type]);
+
+  const renderFilterGlass = useMemo(() => {
+    return filterParams.glassMaterial.map((filterGlass) => {
+      return (
+        <Tag
+          key={filterGlass}
+          closable
+          onClose={() => handleRemoveFilterGlass(filterGlass)}
+        >
+          {filterGlass}
+        </Tag>
+      );
+    });
+  }, [filterParams.glassMaterial]);
 
   const renderProducts = useMemo(() => {
     return productList.data.map((item) => {
+      const isDiscount = !!item.discountPercent;
+      const discountPercent = `-${item.discountPercent}%`;
+      let price = item.price;
+      if (isDiscount) {
+        price = item.finalPrice;
+      }
+
       return (
         <Col
           key={item.id}
-          xl={4}
-          md={6}
+          xxl={4}
+          xl={6}
+          md={8}
           sm={8}
-          xm={12}
-          onClick={() => navigate(`/san-pham/${item.id}`)}
+          xs={12}
+          onClick={() =>
+            navigate(
+              generatePath(ROUTES.USER.PRODUCT_DETAIL, {
+                id: `${item.slug}.${item.id}`,
+              })
+            )
+          }
         >
-          <S.ProductItem>
-            <img src={item.image} alt="item" />
-            <h2>{item.name}</h2>
-            <p style={{ color: "var(--price-color)" }}>
-              {item.price?.toLocaleString()}đ
+          <S.BrandItem>
+            <div className="product_info-image">
+              <img src={item.image} alt="item" />
+              <div className="product_item-actions">
+                <Tooltip title="Thêm vào giỏ hàng">
+                  <button
+                    className="product_item-actions-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleAddItemToCart(item);
+                    }}
+                  >
+                    <i className="fa-solid fa-cart-plus"></i>
+                  </button>
+                </Tooltip>
+                <Tooltip
+                  title="Thêm vào danh sách yêu thích"
+                  placement="bottom"
+                >
+                  <button
+                    className="product_item-actions-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                    }}
+                  >
+                    <i className="fa-regular fa-heart"></i>
+                  </button>
+                </Tooltip>
+              </div>
+            </div>
+
+            <h2 className="product_info-name">{item.name}</h2>
+
+            <div className="product_info-rating">
+              <Rate
+                allowHalf
+                disabled
+                defaultValue={4.5}
+                style={{ fontSize: 14 }}
+              />
+              <span>(12 đánh giá)</span>
+            </div>
+
+            <p className="product_info-price-final">
+              {price.toLocaleString()}
+              <sup>₫</sup>
             </p>
-            <p>{item.category.name}</p>
-          </S.ProductItem>
+            {isDiscount && (
+              <p className="product_info-price-original">
+                {item.price.toLocaleString()}
+                <sup>₫</sup>
+              </p>
+            )}
+
+            {isDiscount && (
+              <div className="product_info-discount-label">
+                <span>{discountPercent}</span>
+              </div>
+            )}
+            {item.isNew && (
+              <div className="product_info-isNew-label">
+                <span>Mới</span>
+              </div>
+            )}
+          </S.BrandItem>
         </Col>
       );
     });
   }, [productList.data]);
 
+  const renderPageBanner = useMemo(() => {
+    return (
+      <>
+        <img alt="" src={bannerBrand} />
+
+        <h2>Đồng hồ </h2>
+
+        <div className="overlay"></div>
+      </>
+    );
+  }, [bannerBrand]);
+
   return (
-    <main style={{ backgroundColor: "#f0f0f0" }}>
-      <S.BrandPageWrapper>
-        <div className="brand-container">
-          <div className="brand-item">
-            <img
-              alt="Casio logo"
-              src="https://cdn.tgdd.vn/Brand/1/Casio7264-b_39.jpg"
-            />
-          </div>
-          <div className="brand-item">
-            <img
-              alt="Orient logo"
-              src="https://cdn.tgdd.vn/Brand/1/ORIENTl-220x48.jpg"
-            />
-          </div>
-          <div className="brand-item">
-            <img
-              alt="Citizen logo"
-              src="https://cdn.tgdd.vn/Brand/1/Citizen7264-b_41.jpg"
-            />
-          </div>
-          <div className="brand-item">
-            <img
-              alt="Anne logo"
-              src="https://cdn.tgdd.vn/Brand/1/ANNEKLEINl-220x48.jpg"
-            />
-          </div>
-          <div className="brand-item">
-            <img
-              alt="Tissot logo"
-              src="https://cdn.tgdd.vn/Brand/1/MATHEYTISSOTl-220x48.jpg"
-            />
-          </div>
-        </div>
+    <S.Wrapper>
+      <S.PageBannerWrapper>{renderPageBanner}</S.PageBannerWrapper>
 
-        <S.TextBrandWrapper>
-          <p className="text-content">
-            "Một sản phẩm có thể lỗi thời nhanh chóng, nhưng một thương hiệu
-            thành công sống mãi với thời gian"
-          </p>
-        </S.TextBrandWrapper>
-        <Space style={{ width: "100%", justifyContent: "space-between" }}>
-          <S.SearchBrandWrapper>
-            <input
-              type="text"
-              placeholder="Tìm tên thương hiệu"
-              onChange={(e) => handleFilter("keyword", e.target.value)}
-              value={filterParams.keyword}
-            />
-            <button>
-              <i className="fa-solid fa-magnifying-glass"></i>
-            </button>
-          </S.SearchBrandWrapper>
-          <S.BrandFilterWrapper>
-            <span>Bộ lọc: </span>
-            <TreeSelect {...tProps} style={{ width: 200, marginLeft: "8px" }} />
-            <Select
-              allowClear
-              placeholder="Giá"
-              style={{
-                width: 120,
-                marginLeft: "8px",
-              }}
-              onChange={(value) => handleFilter("priceSort", value)}
-            >
-              <Option value="asc">Thấp - Cao</Option>
-              <Option value="desc">Cao - Thấp</Option>
-            </Select>
-            <Select
-              allowClear
-              placeholder="Loại máy"
-              style={{
-                width: 160,
-                marginLeft: "8px",
-              }}
-              onChange={(value) => handleFilter("type", value)}
-            >
-              <Option value="Pin">Pin</Option>
-              <Option value="Automatic">Tự động</Option>
-            </Select>
-            <Select
-              allowClear
-              placeholder="Đường kính mặt"
-              style={{
-                width: 160,
-                marginLeft: "8px",
-              }}
-              onChange={(value) => handleFilterCaseSize("caseSize", value)}
-            >
-              <Option value="0,35.99">Dưới 36mm</Option>
-              <Option value="36,40.99">Từ 36mm - 40mm</Option>
-              <Option value="41,44.99">Từ 41mm - 44mm</Option>
-              <Option value="45,100">Trên 44mm</Option>
-            </Select>
-            <Select
-              allowClear
-              placeholder="Chất liệu kính"
-              style={{
-                width: 160,
-                marginLeft: "8px",
-              }}
-              onChange={(value) => handleFilter("glassMaterial", value)}
-            >
-              <Option value="Mineral Glass">Kính khoáng</Option>
-              <Option value="sapphire">Sapphire</Option>
-            </Select>
-          </S.BrandFilterWrapper>
-        </Space>
-
-        <Space style={{ marginBottom: 16, marginLeft: 12 }}>
-          {filterParams.keyword && (
-            <Tag
-              color="geekblue"
-              closable
-              onClose={() => handleRemoveFilterKeyword()}
-            >
-              KeyWord: {filterParams.keyword}
-            </Tag>
-          )}
-        </Space>
-
-        <Slider
-          range
-          min={0}
-          max={15000000}
-          step={100000}
-          onChange={(value) => handleChangeFilterParams("price", value)}
-          style={{ width: "40%", marginLeft: "50px" }}
+      <S.MobileFilterDrawer>
+        <Drawer
+          title="Bộ lọc sản phẩm"
+          placement="right"
+          contentWrapperStyle={{ width: 300 }}
+          bodyStyle={{ padding: 16 }}
+          open={showFilterDrawer}
+          onClose={() => setShowFilterDrawer(false)}
         >
-          Tìm sản phẩm theo giá
-        </Slider>
-        <S.ProductsWrapper>
-          <Spin spinning={productList.loading}>
-            <Row gutter={[8, 8]}>{renderProducts}</Row>
-          </Spin>
+          <S.MobileFilterList className="mobile_filter-list">
+            <li className="mobile_filter-item">
+              <h3>Hãng</h3>
+              <Checkbox.Group
+                onChange={(value) => handleFilter("categoryId", value)}
+                value={filterParams.categoryId}
+              >
+                <Row>{renderCategory}</Row>
+              </Checkbox.Group>
+            </li>
+            <li className="mobile_filter-item">
+              <h3>Loại sản phẩm</h3>
+              <Col span={24}>
+                <Checkbox
+                  checked={filterParams.isNew}
+                  onChange={(e) => handleFilter("isNew", e.target.checked)}
+                >
+                  Sản phẩm mới
+                </Checkbox>
+              </Col>
+              <Col span={24}>
+                <Checkbox
+                  checked={filterParams.isDiscount}
+                  onChange={(e) => handleFilter("isDiscount", e.target.checked)}
+                >
+                  Đang giảm giá
+                </Checkbox>
+              </Col>
+            </li>
 
-          <div className="button-container-1">
-            <span className="mas">Show more!</span>
-            <button
-              id="work"
-              type="button"
-              name="Hover"
-              onClick={() => handleShowMore()}
-            >
-              Show more!
+            <li className="mobile_filter-item">
+              <h3>Loại máy</h3>{" "}
+              <Checkbox.Group
+                onChange={(value) => handleFilter("type", value)}
+                value={filterParams.type}
+              >
+                <Checkbox value="Pin">Pin</Checkbox>
+                <Checkbox value="Automatic">Tự động</Checkbox>
+              </Checkbox.Group>
+            </li>
+            <li className="mobile_filter-item">
+              <h3>Đường kính</h3>
+              {renderCaseSize}
+            </li>
+            <li className="mobile_filter-item">
+              <h3>Chất liệu kính</h3>{" "}
+              <Checkbox.Group
+                onChange={(value) => handleFilter("glassMaterial", value)}
+                value={filterParams.glassMaterial}
+              >
+                <Checkbox value="Mineral glass">Kính khoáng</Checkbox>
+
+                <Checkbox value="Sapphire">Sapphire</Checkbox>
+              </Checkbox.Group>
+            </li>
+          </S.MobileFilterList>
+
+          <S.MobileFilterAction>
+            <button onClick={() => handleResetFilterParams()}>
+              Xóa bộ lọc
             </button>
-          </div>
-        </S.ProductsWrapper>
+          </S.MobileFilterAction>
+        </Drawer>
+      </S.MobileFilterDrawer>
+
+      <S.BrandPageWrapper>
+        <Row>
+          <Col xxl={4} xl={4} md={6} sm={0} xs={0}>
+            <div className="product_filter-wrapper">
+              <p className="product_filter-title">
+                <i className="fa-solid fa-filter"></i>Bộ lọc
+              </p>
+
+              <Collapse
+                ghost
+                bordered={false}
+                defaultActiveKey={["1", "2", "3", "4", "5", "6", "7"]}
+                style={{
+                  fontSize: 16,
+                }}
+              >
+                <Panel header="Khoảng giá" key="7">
+                  <Slider
+                    range
+                    step={100000}
+                    max={MAXPRICE}
+                    defaultValue={filterParams.priceRange}
+                    onAfterChange={(value) => handleFilter("priceRange", value)}
+                  />
+                </Panel>
+                <Panel header="Thương hiệu" key="1">
+                  <Checkbox.Group
+                    onChange={(value) => handleFilter("categoryId", value)}
+                    value={filterParams.categoryId}
+                  >
+                    <Row>{renderCategory}</Row>
+                  </Checkbox.Group>
+                </Panel>
+
+                <Panel
+                  header="Loại máy"
+                  key="3"
+                  style={{
+                    fontSize: 16,
+                  }}
+                >
+                  <Checkbox.Group
+                    onChange={(value) => handleFilter("type", value)}
+                    value={filterParams.type}
+                  >
+                    <Col span={24}>
+                      <Row>
+                        <Checkbox value="Pin">Pin</Checkbox>
+                      </Row>
+                      <Row>
+                        <Checkbox value="Automatic">Tự động</Checkbox>
+                      </Row>
+                    </Col>
+                  </Checkbox.Group>
+                </Panel>
+
+                <Panel header="Đường kính mặt" key="4">
+                  <Radio.Group
+                    onChange={(e) =>
+                      handleFilterCaseSize("caseSize", e.target.value)
+                    }
+                    // value={filterParams.caseSize}
+                  >
+                    {renderCaseSize}
+                  </Radio.Group>
+                </Panel>
+                <Panel header="Chất liệu kính" key="5">
+                  <Checkbox.Group
+                    onChange={(value) => handleFilter("glassMaterial", value)}
+                    value={filterParams.glassMaterial}
+                  >
+                    <Col span={24}>
+                      <Row>
+                        <Checkbox value="Mineral glass">Kính khoáng</Checkbox>
+                      </Row>
+                      <Row>
+                        <Checkbox value="Sapphire">Sapphire</Checkbox>
+                      </Row>
+                    </Col>
+                  </Checkbox.Group>
+                </Panel>
+                <Panel header="Loại sản phẩm" key="6">
+                  <Col span={24}>
+                    <Row>
+                      <Checkbox
+                        checked={filterParams.isNew}
+                        onChange={(e) =>
+                          handleFilter("isNew", e.target.checked)
+                        }
+                      >
+                        Sản phẩm mới
+                      </Checkbox>
+                    </Row>
+                  </Col>
+                  <Col span={24}>
+                    <Row>
+                      <Checkbox
+                        checked={filterParams.isDiscount}
+                        onChange={(e) =>
+                          handleFilter("isDiscount", e.target.checked)
+                        }
+                      >
+                        Đang giảm giá
+                      </Checkbox>
+                    </Row>
+                  </Col>
+                </Panel>
+              </Collapse>
+
+              <div className="product_filter-actions">
+                <button onClick={() => handleResetFilterParams()}>
+                  Xóa bộ lọc
+                </button>
+              </div>
+            </div>
+          </Col>
+
+          <Col xxl={20} xl={20} md={18} sm={24} xs={24}>
+            <S.BrandsWrapper>
+              <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
+                <Col xxl={16} xl={16} md={24} sm={24} xs={24}>
+                  <S.SearchBrandWrapper>
+                    <input
+                      type="text"
+                      placeholder="Nhập để tìm sản phẩm"
+                      onChange={(e) => handleFilter("keyword", e.target.value)}
+                      value={filterParams.keyword}
+                    />
+                  </S.SearchBrandWrapper>
+                </Col>
+                <Col xxl={8} xl={8} md={24} sm={24} xs={24}>
+                  <S.HeadingFilterWrapper>
+                    <span
+                      style={{
+                        fontSize: 16,
+                      }}
+                    >
+                      Sắp xếp theo:{" "}
+                    </span>
+                    <Select
+                      allowClear
+                      placeholder="Giá"
+                      style={{
+                        marginLeft: 8,
+                        width: "40%",
+                      }}
+                      onChange={(value) => handleFilter("priceSort", value)}
+                    >
+                      <Option value="asc">Giá: Thấp - Cao</Option>
+                      <Option value="desc">Giá: Cao - Thấp</Option>
+                    </Select>
+
+                    <button
+                      className="mobile_filter-show-btn"
+                      onClick={() => setShowFilterDrawer(true)}
+                    >
+                      <i className="fa-solid fa-filter"></i>
+                      Bộ lọc
+                    </button>
+                  </S.HeadingFilterWrapper>
+                </Col>
+              </Row>
+              <Space style={{ marginBottom: 16 }}>
+                {renderFilterCategory}
+                {filterParams.keyword && (
+                  <Tag
+                    closable
+                    onClose={() => handleRemoveFilterKeyWord("keyword")}
+                  >
+                    KeyWord: {filterParams.keyword}
+                  </Tag>
+                )}
+                {renderFilterType}
+
+                {filterParams.caseSize && (
+                  <Tag
+                    closable
+                    // onClose={() => handleRemoveFilterKeyWord("caseSize")}
+                  >
+                    CaseSize: {filterParams.nameCaseSize}
+                  </Tag>
+                )}
+                {renderFilterGlass}
+              </Space>
+
+              <Spin spinning={productList.loading}>
+                <div
+                  className="product_items-wrapper"
+                  style={{ minHeight: "50vh" }}
+                >
+                  <Row gutter={[8, 8]}>{renderProducts}</Row>
+                </div>
+              </Spin>
+
+              {productList.data.length !== productList.meta.total && (
+                <Row style={{ justifyContent: "center" }}>
+                  <MainButton
+                    buttonType="primary"
+                    style={{ marginTop: 16, fontSize: 16 }}
+                    onClick={() => handleShowMore()}
+                  >
+                    Xem thêm
+                  </MainButton>
+                </Row>
+              )}
+            </S.BrandsWrapper>
+          </Col>
+        </Row>
       </S.BrandPageWrapper>
-    </main>
+    </S.Wrapper>
   );
 };
 
