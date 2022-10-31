@@ -25,7 +25,7 @@ import {
   getProductDetailAction,
   getCategoriesListAction,
   removeProductDetailAction,
-  updateProductAction,
+  createCommentAction,
   getCommentListAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
@@ -41,10 +41,11 @@ const ProductDetailPage = () => {
   const { userInfo } = useSelector((state) => state.user);
 
   const { commentList } = useSelector((state) => state.comments);
-  const comments = commentList.data?.filter(
-    (item) => item.productId === productId
+  console.log(
+    "🚀 ~ file: index.jsx ~ line 44 ~ ProductDetailPage ~ commentList",
+    commentList
   );
-  const isCommented = comments?.some(
+  const isCommented = commentList.data?.some(
     (item) => item.userId === userInfo?.data?.id
   );
 
@@ -52,7 +53,6 @@ const ProductDetailPage = () => {
   const isDiscount = !!productDetail.data.discountPercent;
 
   const [itemQuantity, setItemQuantity] = useState(1);
-
   const handleAddProductToCart = () => {
     dispatch(
       addItemToCartAction({
@@ -93,20 +93,14 @@ const ProductDetailPage = () => {
       productId: productDetail.data.id,
     };
 
-    dispatch(
-      updateProductAction({
-        id: productDetail.data.id,
-        values: productDetail.data,
-        comment: data,
-      })
-    );
+    dispatch(createCommentAction({ data, productId }));
   };
 
   useEffect(() => {
     dispatch(getProductDetailAction({ id: productId }));
 
     dispatch(getCategoriesListAction());
-    dispatch(getCommentListAction());
+    dispatch(getCommentListAction({ productId }));
 
     return () => {
       dispatch(removeProductDetailAction());
@@ -118,7 +112,7 @@ const ProductDetailPage = () => {
   }, [productDetail.data]);
 
   const renderUserComments = useMemo(() => {
-    return comments?.map((item) => {
+    return commentList.data?.map((item) => {
       return (
         <Comment
           key={item.id}
@@ -140,7 +134,7 @@ const ProductDetailPage = () => {
         />
       );
     });
-  }, [comments]);
+  }, [commentList.data]);
 
   const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <>

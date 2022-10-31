@@ -471,6 +471,17 @@
       "createdAt": 1667191114427,
       "updatedAt": 1667191114427,
       "id": 2
+    },
+    {
+      "rating": 5,
+      "content": "sdf",
+      "userName": "tuan123",
+      "userId": 4,
+      "productId": 6,
+      "createdAt": 1667203101398,
+      "updatedAt": 1667203101399,
+      "id": 3
     }
-  ]
+  ],
+  "wishlists": []
 }
