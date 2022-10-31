@@ -5,7 +5,7 @@ export const ProductGiftWrapper = styled.div`
 
   .product_gift-heading {
     display: inline-block;
-    font-size: 20px;
+    font-size: 16px;
     padding: 0 8px;
     color: #fff;
     background-color: var(--price-color);

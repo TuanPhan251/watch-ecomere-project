@@ -2,9 +2,6 @@ import { Link } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 export const HeaderContainer = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   position: fixed;
   top: 0;
   right: 0;
@@ -19,6 +16,16 @@ export const HeaderContainer = styled.header`
   @media (max-width: 876px) {
     padding: 0;
   }
+`;
+
+export const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
 `;
 
 export const HeaderLogo = styled.div`
@@ -36,20 +43,22 @@ export const HeaderLogo = styled.div`
 
 export const HeaderNav = styled.ul`
   display: flex;
-  width: 50%;
   height: 100%;
-  margin: 0 auto 0 20px;
   list-style: none;
 
+  .title-link {
+    display: block;
+    line-height: var(--header-height);
+    width: 100%;
+    padding: 0;
+  }
+
   & li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: inline-block;
+    margin: 0 8px;
     height: 100%;
-    width: 20%;
 
     &:hover {
-      background-color: rgba(255, 255, 255, 0.2);
       cursor: pointer;
     }
     &:hover .dropdown-container {
@@ -277,13 +286,6 @@ export const DropDownMenuWrapperTH = styled.div`
   position: relative;
   width: 100%;
   display: inline-block;
-
-  .title-link {
-    display: block;
-    line-height: var(--header-height);
-    width: 100%;
-    padding: 0;
-  }
 
   .dropdown-container {
     z-index: 1;

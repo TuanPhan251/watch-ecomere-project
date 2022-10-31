@@ -59,7 +59,8 @@ export const Wrapper = styled.div`
 `;
 
 export const ProductPageWrapper = styled.div`
-  margin: 24px 24px 0 24px;
+  max-width: 1200px;
+  margin: 24px auto 0;
   border-radius: 4px;
   background-color: #fff;
 
