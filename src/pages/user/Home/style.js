@@ -14,6 +14,7 @@ const fadeIn = keyframes`
 
 export const HomePageWrapper = styled.main`
   margin-bottom: 30px;
+  background-color: var(--bgr-color);
 
   .header_img-wrapper {
     position: relative;
@@ -131,23 +132,38 @@ export const HomePageWrapper = styled.main`
   }
 
   .new_products-section {
-    margin: 60px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    max-width: 1200px;
+    width: 100%;
+    margin: 40px auto;
+    padding-bottom: 60px;
+    background-color: #fff;
 
     .new_products_section-heading {
-      font-size: 24px;
+      display: inline-block;
+      padding: 4px 8px;
+      margin: 24px;
+      font-size: 26px;
       text-align: center;
+      border-radius: 2px;
     }
 
     .new_products-list {
-      margin-top: 24px;
       display: flex;
       flex-wrap: wrap;
+      padding: 12px;
     }
   }
 
   .men_products-section {
     display: flex;
     height: 100%;
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
 
     .men_products-banner-img {
       width: 50%;
@@ -155,6 +171,8 @@ export const HomePageWrapper = styled.main`
 
       img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     }
 
@@ -171,6 +189,8 @@ export const HomePageWrapper = styled.main`
 
         img {
           width: 100%;
+          height: 100%;
+          object-fit: cover;
         }
       }
 
@@ -183,6 +203,9 @@ export const HomePageWrapper = styled.main`
   .women_products-section {
     display: flex;
     flex-direction: row-reverse;
+    max-width: 1200px;
+    width: 100%;
+    margin: auto;
 
     .women_products-banner-img {
       position: relative;
@@ -190,6 +213,8 @@ export const HomePageWrapper = styled.main`
 
       img {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
       }
     }
 
@@ -265,7 +290,7 @@ export const EmailRegister = styled.section`
   padding: 40px 0;
 
   .email_register-inner {
-    padding: 120px 0;
+    padding: 100px 0;
     background-image: url(${(props) => props.bgrImage});
     background-attachment: fixed;
     background-position: center center;
@@ -325,6 +350,7 @@ export const Product = styled.div`
   height: 100%;
   padding: 12px;
   color: var(--dark-text-color);
+  background-color: #fff;
   text-align: center;
   overflow: hidden;
   cursor: pointer;
@@ -340,14 +366,12 @@ export const Product = styled.div`
 
   & img {
     width: 75%;
-    transition: all 0.2s ease;
+    transition: all 0.5s ease;
   }
 
   &:hover {
-    box-shadow: 0 0 8px #ccc;
-
     & img {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
 
     h2 {
@@ -375,6 +399,17 @@ export const Product = styled.div`
     span {
       color: #fff;
       font-size: 16px;
+    }
+
+    @media (max-width: 576px) {
+      padding: 0 2px;
+      ::before {
+        border-width: 11px 8px 11px 0;
+      }
+      span {
+        color: #fff;
+        font-size: 14px;
+      }
     }
   }
 `;

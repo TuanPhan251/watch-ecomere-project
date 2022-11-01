@@ -341,8 +341,9 @@
       "slug": "dong-ho-timex-southview-41mm-nam-tw2t34800",
       "finalPrice": 3006000,
       "createdAt": 1667029648664,
-      "updatedAt": 1667029648664,
-      "id": 14
+      "updatedAt": 1667266192742,
+      "id": 14,
+      "isDiscount": true
     },
     {
       "name": "Đồng hồ MATHEY TISSOT 26 mm Nữ D710PI ",
@@ -483,5 +484,6 @@
       "id": 3
     }
   ],
-  "wishlists": []
+  "wishlists": [],
+  "images": []
 }
