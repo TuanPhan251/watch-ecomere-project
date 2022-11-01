@@ -17,7 +17,6 @@ export const CheckoutCartContainer = styled.div`
   min-height: 100vh;
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: var(--box-shadow);
 
   .cart_summary-heading {
     color: var(--dark-text-color);

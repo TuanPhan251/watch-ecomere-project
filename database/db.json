@@ -390,8 +390,9 @@
       "slug": "dong-ho-mathey-tissot-city-metal-28-mm-nu-d31186mbi",
       "finalPrice": 3742500,
       "createdAt": 1667030021460,
-      "updatedAt": 1667190901558,
-      "id": 16
+      "updatedAt": 1667278597541,
+      "id": 16,
+      "isDiscount": true
     }
   ],
   "categories": [
@@ -482,6 +483,11 @@
       "createdAt": 1667203101398,
       "updatedAt": 1667203101399,
       "id": 3
+    },
+    {
+      "createdAt": 1667278597586,
+      "updatedAt": 1667278597586,
+      "id": 4
     }
   ],
   "wishlists": [],

@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { useNavigate, useLocation, generatePath } from "react-router-dom";
+import { useNavigate, useLocation, generatePath, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -17,8 +17,10 @@ import {
   Drawer,
   Slider,
   notification,
+  Breadcrumb,
 } from "antd";
 import MainButton from "../../../components/MainButton";
+import BreadCrumb from "../../../components/Breadcrumb";
 
 import {
   getProductListAction,
@@ -469,6 +471,24 @@ const ProductPage = () => {
   return (
     <S.Wrapper>
       <S.PageBannerWrapper>{renderPageBanner}</S.PageBannerWrapper>
+
+      <S.BreadcrumbWrapper>
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item>
+            <Link to={ROUTES.USER.HOME}>Trang chủ</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={ROUTES.USER.BRAND}>Sản phẩm</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            {searchObj.gender === "male" ? (
+              <Link>Đồng hồ nam</Link>
+            ) : (
+              <Link>Đồng hồ nữ</Link>
+            )}
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </S.BreadcrumbWrapper>
 
       <S.MobileFilterDrawer>
         <Drawer

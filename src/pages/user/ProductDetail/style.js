@@ -1,6 +1,17 @@
 import styled from "styled-components";
 import { Tabs } from "antd";
 
+export const TopSpacer = styled.div`
+  height: var(--header-height);
+`;
+
+export const BreadcrumbWrapper = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+  padding: 24px 0;
+`;
+
 export const Wrapper = styled.div`
   background-color: var(--bgr-color);
   padding-bottom: 24px;
@@ -12,7 +23,7 @@ export const ProductDetailContainer = styled.section`
   max-width: 1200px;
   display: flex;
   flex-wrap: wrap;
-  margin: calc(var(--header-height) + 24px) auto 0;
+  margin: auto;
   padding: 12px;
   background-color: #fff;
   border-radius: 2px;
