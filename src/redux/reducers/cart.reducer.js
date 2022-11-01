@@ -68,13 +68,10 @@ const cartReducer = createReducer(initialValue, {
     };
   },
   [REQUEST(CART_ACTION.REMOVE_CART_ITEM)]: (state, action) => {
-    const { product } = action.payload;
-    const newCartList = [...state.cartList];
-
-    let index = state.cartList.findIndex(
-      (cartItem) => cartItem.id === product.id
+    const { productId } = action.payload;
+    const newCartList = [...state.cartList].filter(
+      (item) => item.id !== productId
     );
-    newCartList.splice(index, 1);
     localStorage.setItem("cart", JSON.stringify(newCartList));
 
     return {

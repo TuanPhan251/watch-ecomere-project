@@ -613,12 +613,20 @@ const Header = () => {
                   <div className="user_actions">
                     {accessToken &&
                       (userInfo.data.role === "admin" ? (
-                        <Link
-                          to={ROUTES.ADMIN.DASH_BOARD}
-                          className="user_actions-btn"
-                        >
-                          Tới trang quản trị
-                        </Link>
+                        <>
+                          <Link
+                            to={ROUTES.USER.USER_INFO}
+                            className="user_actions-btn"
+                          >
+                            Thông tin tài khoản
+                          </Link>{" "}
+                          <Link
+                            to={ROUTES.ADMIN.DASH_BOARD}
+                            className="user_actions-btn"
+                          >
+                            Tới trang quản trị
+                          </Link>
+                        </>
                       ) : (
                         <>
                           <Link

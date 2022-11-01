@@ -22,6 +22,13 @@ const fadeIn = keyframes`
   }
 `;
 
+export const BreadcrumbWrapper = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+  padding-top: 24px;
+`;
+
 export const MobileFilterDrawer = styled.div``;
 
 export const MobileFilterList = styled.ul`

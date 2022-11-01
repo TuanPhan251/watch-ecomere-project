@@ -13,6 +13,7 @@ import {
   Form,
   Input,
   Button,
+  Breadcrumb,
 } from "antd";
 import ProductSpec from "./ProductSpec";
 import ProductPolicy from "./ProductPolicy";
@@ -230,6 +231,20 @@ const ProductDetailPage = () => {
 
   return (
     <S.Wrapper>
+      <S.TopSpacer></S.TopSpacer>
+
+      <S.BreadcrumbWrapper>
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item>
+            <Link to={ROUTES.USER.HOME}>Trang chủ</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={ROUTES.USER.BRAND}>Sản phẩm</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>{productDetail.data.name}</Breadcrumb.Item>
+        </Breadcrumb>
+      </S.BreadcrumbWrapper>
+
       <S.ProductDetailContainer>
         <Row gutter={[8, 8]}>
           <Col xxl={8} xl={8} md={8} sm={24} xs={24}>

@@ -13,7 +13,7 @@ const fadeIn = keyframes`
 `;
 
 export const HomePageWrapper = styled.main`
-  margin-bottom: 30px;
+  padding-bottom: 40px;
   background-color: var(--bgr-color);
 
   .header_img-wrapper {

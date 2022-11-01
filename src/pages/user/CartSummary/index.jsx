@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { generatePath, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Button, Col, Row } from "antd";
+import { Modal, Col, Row, Popconfirm } from "antd";
 
 import { ROUTES } from "../../../constants/routes";
 import {
@@ -11,17 +11,20 @@ import {
 } from "../../../redux/actions/cart.actions";
 
 import * as S from "./style";
+import { useState } from "react";
 
 const CartSummaryPage = () => {
   const dispatch = useDispatch();
   const { cartList } = useSelector((state) => state.cart);
 
+  const [showModal, setShowModal] = useState(false);
+
   const totalPrice = cartList.reduce((prev, item) => {
     return prev + item.totalPrice;
   }, 0);
 
-  const handleRemoveProduct = (product) => {
-    dispatch(removeCartItemAction({ product }));
+  const handleRemoveProduct = (productId) => {
+    dispatch(removeCartItemAction({ productId }));
   };
 
   const handleUpdateCartItem = (product, quantity, type) => {
@@ -53,10 +56,18 @@ const CartSummaryPage = () => {
                 >
                   {item.name}
                 </Link>
-                <button onClick={() => handleRemoveProduct(item, "remove")}>
-                  <i className="fa-solid fa-trash"></i>
-                  <span>Xóa khỏi giỏ</span>
-                </button>
+
+                <Popconfirm
+                  title="Xóa sản phẩm khỏi giỏ?"
+                  okText="Ok"
+                  cancelText="Hủy"
+                  onConfirm={() => handleRemoveProduct(item.id)}
+                >
+                  <button onClick={() => null}>
+                    <i className="fa-regular fa-trash-can"></i>
+                    <span>Xóa khỏi giỏ</span>
+                  </button>
+                </Popconfirm>
               </div>
             </Col>
 
@@ -64,13 +75,22 @@ const CartSummaryPage = () => {
               <div className="item_info-right-wrapper">
                 <div className="item-quantity">
                   <p>Số lượng: </p>
-                  <button
-                    onClick={() =>
-                      handleUpdateCartItem(item, item.totalAmount, "minus")
-                    }
+                  <Popconfirm
+                    title="Xóa sản phẩm khỏi giỏ?"
+                    okText="Ok"
+                    cancelText="Hủy"
+                    onConfirm={() => handleRemoveProduct(item.id)}
                   >
-                    <i className="fa-solid fa-minus"></i>
-                  </button>
+                    <button
+                      onClick={() => {
+                        if (item.totalAmount === 1) return null;
+                        handleUpdateCartItem(item, item.totalAmount, "minus");
+                      }}
+                    >
+                      <i className="fa-solid fa-minus"></i>
+                    </button>
+                  </Popconfirm>
+
                   <input
                     min={1}
                     readOnly

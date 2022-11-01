@@ -1,36 +1,40 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import { useLocation, Link } from "react-router-dom";
 import { Breadcrumb } from "antd";
 
-import { ROUTES } from "../../constants/routes";
+const BreadCrumb = () => {
+  const location = useLocation();
+  const breadCrumbView = () => {
+    const { pathname } = location;
+    const pathnames = pathname.split("/").filter((item) => item);
+    const capatilize = (s) => s.charAt(0).toUpperCase() + s.slice(1);
+    return (
+      <div>
+        <Breadcrumb>
+          {pathnames.length > 0 ? (
+            <Breadcrumb.Item>
+              <Link to="/">Home</Link>
+            </Breadcrumb.Item>
+          ) : (
+            <Breadcrumb.Item>Home</Breadcrumb.Item>
+          )}
+          {pathnames.map((name, index) => {
+            const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;
+            const isLast = index === pathnames.length - 1;
+            return isLast ? (
+              <Breadcrumb.Item>{capatilize(name)}</Breadcrumb.Item>
+            ) : (
+              <Breadcrumb.Item>
+                <Link to={`${routeTo}`}>{capatilize(name)}</Link>
+              </Breadcrumb.Item>
+            );
+          })}
+        </Breadcrumb>
+      </div>
+    );
+  };
 
-import * as S from "./styles";
-
-const routes = [
-  {
-    path: ROUTES.USER.HOME,
-    breadcrumbName: "Trang chủ",
-  },
-  {
-    path: ROUTES.USER.GENDER_DETAIL,
-    breadcrumbName: "Đồng hồ nam",
-  },
-  {
-    path: ROUTES.USER.GENDER_DETAIL,
-    breadcrumbName: "Đồng hồ nữ",
-  },
-];
-function itemRender(route, params, routes, paths) {
-  console.log("🚀 ~ file: index.jsx ~ line 23 ~ itemRender ~ params", params);
-  const last = routes.indexOf(route) === routes.length - 1;
-  return last ? (
-    <span>{route.breadcrumbName}</span>
-  ) : (
-    <Link to={paths.join("/")}>{route.breadcrumbName}</Link>
-  );
-}
-
-const BreadcrumbComponent = () => {
-  return <Breadcrumb itemRender={itemRender} routes={routes} />;
+  return <>{breadCrumbView()}</>;
 };
 
-export default BreadcrumbComponent;
+export default BreadCrumb;
