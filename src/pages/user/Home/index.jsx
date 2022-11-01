@@ -46,10 +46,10 @@ const HomePage = () => {
     });
   };
 
-  const renderNewProducts = () => {
+  const renderNewProducts = useMemo(() => {
     return selectedNewProducts?.map((item) => {
       return (
-        <Col span={6}>
+        <Col xxl={6} xl={6} md={12} sm={12} xs={12} key={item.id}>
           <Link
             to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
               id: `${item.slug}.${item.id}`,
@@ -67,7 +67,7 @@ const HomePage = () => {
         </Col>
       );
     });
-  };
+  }, [newProductsList.data]);
 
   return (
     <S.HomePageWrapper>
@@ -91,7 +91,7 @@ const HomePage = () => {
         <h3 className="new_products_section-heading">Sản phẩm mới</h3>
 
         <div className="new_products-list">
-          <Row gutter={[4]}>{renderNewProducts()}</Row>
+          <Row>{renderNewProducts}</Row>
         </div>
       </section>
 

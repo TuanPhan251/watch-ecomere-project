@@ -38,13 +38,13 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { productDetail } = useSelector((state) => state.product);
+  console.log(
+    "🚀 ~ file: index.jsx ~ line 41 ~ ProductDetailPage ~ productDetail",
+    productDetail
+  );
   const { userInfo } = useSelector((state) => state.user);
 
   const { commentList } = useSelector((state) => state.comments);
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 44 ~ ProductDetailPage ~ commentList",
-    commentList
-  );
   const isCommented = commentList.data?.some(
     (item) => item.userId === userInfo?.data?.id
   );
@@ -135,6 +135,13 @@ const ProductDetailPage = () => {
       );
     });
   }, [commentList.data]);
+
+  const renderProductImages = useMemo(() => {
+    if (!productDetail.data.images?.length) return null;
+    return productDetail.data.images?.map((item) => {
+      return <img src={item.image} alt={item.name} />;
+    });
+  }, [productDetail.data]);
 
   const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <>
@@ -228,6 +235,8 @@ const ProductDetailPage = () => {
           <Col xxl={8} xl={8} md={8} sm={24} xs={24}>
             <S.ProductImageWrapper>
               <img src={productDetail.data.image} alt="product" />
+              {/* {renderProductImages} */}
+
               {productDetail.data.isDiscount && (
                 <div className="product_info-discount-label">
                   <span>- {productDetail.data.discountPercent}%</span>

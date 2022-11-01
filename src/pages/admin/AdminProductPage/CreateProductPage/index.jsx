@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import slug from "slug";
@@ -10,14 +10,15 @@ import {
   Form,
   Input,
   InputNumber,
-  Modal,
+  Upload,
   Checkbox,
 } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 import { ROUTES } from "../../../../constants/routes";
 import {
   createProductAction,
-  getProductListAction,
+  getCategoriesListAction,
 } from "../../../../redux/actions";
 
 import * as S from "./styles";
@@ -27,14 +28,14 @@ const { Option } = Select;
 const CreateProductPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { createProductData, productList } = useSelector(
-    (state) => state.product
-  );
+  const { createProductData } = useSelector((state) => state.product);
 
   const [createForm] = Form.useForm();
   const { categoryList } = useSelector((state) => state.category);
 
-  const [showModal, setShowModal] = useState(false);
+  useEffect(() => {
+    dispatch(getCategoriesListAction());
+  }, []);
 
   const renderCategoryOptions = () => {
     return categoryList.data.map((item) => {
@@ -46,17 +47,38 @@ const CreateProductPage = () => {
     });
   };
 
-  const handleCreateProduct = (data) => {
+  const convertImageToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const handleCreateProduct = async (data) => {
+    const { images, ...productData } = data;
+    const newImages = [];
     const finalPrice = data.price * (1 - data.discountPercent / 100);
 
-    dispatch(
+    for (let i = 0; i < images.length; i++) {
+      const imgBase64 = await convertImageToBase64(images[i].originFileObj);
+      await newImages.push({
+        name: images[i].name,
+        type: images[i].type,
+        image: imgBase64,
+      });
+    }
+
+    await dispatch(
       createProductAction({
         data: {
-          ...data,
+          ...productData,
           categoryId: parseInt(data.categoryId),
           slug: slug(data.name),
           finalPrice: finalPrice,
         },
+        images: newImages,
         callback: {
           goToList: () => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE),
         },
@@ -250,6 +272,23 @@ const CreateProductPage = () => {
           ]}
         >
           <InputNumber />
+        </Form.Item>
+
+        <Form.Item
+          label="Ảnh sản phẩm"
+          name="images"
+          valuePropName="fileList"
+          getValueFromEvent={(e) => {
+            if (Array.isArray(e)) return e;
+            return e?.fileList;
+          }}
+        >
+          <Upload listType="picture-card" beforeUpload={Upload.LIST_IGNORE}>
+            <div>
+              <PlusOutlined />
+              <div style={{ marginTop: 8 }}>Chọn ảnh</div>
+            </div>
+          </Upload>
         </Form.Item>
 
         <Form.Item label="Nội dung mô tả" name="content">
