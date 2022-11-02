@@ -71,6 +71,8 @@ const CreateProductPage = () => {
       });
     }
 
+    console.log(newImages);
+
     await dispatch(
       createProductAction({
         data: {

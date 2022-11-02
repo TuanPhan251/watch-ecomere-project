@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import slug from "slug";
@@ -10,18 +10,24 @@ import {
   Form,
   Input,
   InputNumber,
-  Modal,
+  Upload,
   Space,
   Spin,
   Checkbox,
 } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 import { ROUTES } from "../../../../constants/routes";
 import {
   updateProductAction,
   getCategoriesListAction,
   getProductDetailAction,
+  removeProductDetailAction,
 } from "../../../../redux/actions";
+import {
+  convertBase64ToImage,
+  convertImageToBase64,
+} from "../../../../utils/function/files";
 
 import * as S from "./styles";
 
@@ -30,7 +36,6 @@ const { Option } = Select;
 const UpdateProductPage = () => {
   const { id } = useParams();
   const [updateForm] = Form.useForm();
-  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -47,29 +52,74 @@ const UpdateProductPage = () => {
     dispatch(getProductDetailAction({ id }));
 
     dispatch(getCategoriesListAction());
+
+    return () => {
+      dispatch(removeProductDetailAction());
+    };
   }, [id]);
 
   useEffect(() => {
     if (productDetail.data.id) {
       updateForm.resetFields();
+      setImagesField(productDetail.data.images);
     }
   }, [productDetail.data]);
 
-  const handleUpdateProduct = (data) => {
+  const setImagesField = async (images) => {
+    const newImage = [];
+
+    for (let i = 0; i < images.length; i++) {
+      const imageFile = await convertBase64ToImage(
+        images[i].url,
+        images[i].name,
+        images[i].type
+      );
+      await newImage.push({
+        id: images[i].id,
+        lastModified: imageFile.lastModified,
+        lastModifiedDate: imageFile.lastModifiedDate,
+        name: imageFile.name,
+        type: imageFile.type,
+        originFileObj: imageFile,
+        thumbUrl: images[i].thumbUrl,
+      });
+    }
+
+    await updateForm.setFieldValue("images", newImage);
+  };
+
+  const handleUpdateProduct = async (data) => {
+    const { images, ...productData } = data;
     const finalPrice = data.price * (1 - data.discountPercent / 100);
     let isDiscount = false;
     if (data.discountPercent > 0) isDiscount = true;
+    const newImages = [];
 
-    dispatch(
+    for (let i = 0; i < images.length; i++) {
+      const imgBase64 = await convertImageToBase64(images[i].originFileObj);
+      await newImages.push({
+        ...(images[i].id && { id: images[i].id }),
+        name: images[i].name,
+        type: images[i].type,
+        thumbUrl: images[i].thumbUrl,
+        url: imgBase64,
+      });
+    }
+
+    console.log(newImages);
+
+    await dispatch(
       updateProductAction({
         data: {
-          ...data,
+          ...productData,
           categoryId: parseInt(data.categoryId),
           slug: slug(data.name),
           finalPrice: finalPrice,
           isDiscount: isDiscount,
         },
         id: id,
+        images: newImages,
+        initialImageIds: productDetail.data.images.map((item) => item.id),
         callback: {
           goToList: () => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE),
         },
@@ -286,6 +336,23 @@ const UpdateProductPage = () => {
             ]}
           >
             <InputNumber />
+          </Form.Item>
+
+          <Form.Item
+            label="Ảnh sản phẩm"
+            name="images"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => {
+              if (Array.isArray(e)) return e;
+              return e?.fileList;
+            }}
+          >
+            <Upload listType="picture-card" beforeUpload={Upload.LIST_IGNORE}>
+              <div>
+                <PlusOutlined />
+                <div style={{ marginTop: 8 }}>Chọn ảnh</div>
+              </div>
+            </Upload>
           </Form.Item>
 
           <Form.Item label="Nội dung mô tả" name="content">
