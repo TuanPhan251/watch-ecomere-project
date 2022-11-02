@@ -37,6 +37,12 @@ function* createCommentSaga(action) {
         data: result.data,
       },
     });
+    yield put({
+      type: `${REQUEST(COMMENTS_ACTION.GET_COMMENTS_LIST)}`,
+      payload: {
+        productId: productId,
+      },
+    });
   } catch (e) {
     yield put({
       type: `${FAIL(COMMENTS_ACTION.CREATE_COMMENT)}`,

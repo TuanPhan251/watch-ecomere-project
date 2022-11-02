@@ -488,6 +488,36 @@
       "createdAt": 1667278597586,
       "updatedAt": 1667278597586,
       "id": 4
+    },
+    {
+      "rating": 4.5,
+      "content": "ffdsfsdf",
+      "userName": "phuong1",
+      "userId": 2,
+      "productId": 5,
+      "createdAt": 1667306474004,
+      "updatedAt": 1667306474005,
+      "id": 5
+    },
+    {
+      "rating": 5,
+      "content": "ok",
+      "userName": "phuong1",
+      "userId": 2,
+      "productId": 9,
+      "createdAt": 1667307446870,
+      "updatedAt": 1667307446870,
+      "id": 6
+    },
+    {
+      "rating": 5,
+      "content": "ok",
+      "userName": "phuong1",
+      "userId": 2,
+      "productId": 1,
+      "createdAt": 1667307685685,
+      "updatedAt": 1667307685685,
+      "id": 7
     }
   ],
   "wishlists": [],

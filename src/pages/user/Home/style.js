@@ -132,20 +132,15 @@ export const HomePageWrapper = styled.main`
   }
 
   .new_products-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
     max-width: 1200px;
     width: 100%;
     margin: 40px auto;
-    padding-bottom: 60px;
+    padding: 60px 0;
     background-color: #fff;
 
     .new_products_section-heading {
-      display: inline-block;
       padding: 4px 8px;
-      margin: 24px;
+      margin-bottom: 60px;
       font-size: 26px;
       text-align: center;
       border-radius: 2px;

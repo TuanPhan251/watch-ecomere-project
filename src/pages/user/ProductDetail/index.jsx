@@ -18,6 +18,7 @@ import {
 import ProductSpec from "./ProductSpec";
 import ProductPolicy from "./ProductPolicy";
 import ProductGift from "./ProductGift";
+import ProductFamily from "./ProductFamily";
 
 import MainButton from "../../../components/MainButton";
 
@@ -28,6 +29,7 @@ import {
   removeProductDetailAction,
   createCommentAction,
   getCommentListAction,
+  getProductListAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
@@ -38,12 +40,11 @@ const ProductDetailPage = () => {
   const productId = parseInt(id.split(".")[1]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { productDetail } = useSelector((state) => state.product);
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 41 ~ ProductDetailPage ~ productDetail",
-    productDetail
-  );
+  const { productDetail, productList } = useSelector((state) => state.product);
   const { userInfo } = useSelector((state) => state.user);
+  const similarProductList = productList.data?.filter(
+    (item) => item.id !== productId
+  );
 
   const { commentList } = useSelector((state) => state.comments);
   const isCommented = commentList.data?.some(
@@ -54,6 +55,30 @@ const ProductDetailPage = () => {
   const isDiscount = !!productDetail.data.discountPercent;
 
   const [itemQuantity, setItemQuantity] = useState(1);
+
+  useEffect(() => {
+    dispatch(
+      getProductListAction({
+        params: {
+          page: 1,
+          limit: 999,
+          gender: productDetail.data.gender,
+        },
+      })
+    );
+  }, [productId]);
+
+  useEffect(() => {
+    dispatch(getProductDetailAction({ id: productId }));
+
+    dispatch(getCategoriesListAction());
+    dispatch(getCommentListAction({ productId }));
+
+    return () => {
+      dispatch(removeProductDetailAction());
+    };
+  }, [productId]);
+
   const handleAddProductToCart = () => {
     dispatch(
       addItemToCartAction({
@@ -96,17 +121,6 @@ const ProductDetailPage = () => {
 
     dispatch(createCommentAction({ data, productId }));
   };
-
-  useEffect(() => {
-    dispatch(getProductDetailAction({ id: productId }));
-
-    dispatch(getCategoriesListAction());
-    dispatch(getCommentListAction({ productId }));
-
-    return () => {
-      dispatch(removeProductDetailAction());
-    };
-  }, [productId]);
 
   const renderProductSpec = useMemo(() => {
     return <ProductSpec product={productDetail} />;
@@ -400,6 +414,8 @@ const ProductDetailPage = () => {
           </Col>
         </Row>
       </S.BottomWrapper>
+
+      <ProductFamily similarProductList={similarProductList} />
     </S.Wrapper>
   );
 };
