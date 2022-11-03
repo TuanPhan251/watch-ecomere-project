@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { useNavigate, useLocation, generatePath } from "react-router-dom";
+import { useNavigate, useLocation, generatePath, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -17,8 +17,10 @@ import {
   Drawer,
   Slider,
   notification,
+  Breadcrumb,
 } from "antd";
 import MainButton from "../../../components/MainButton";
+import BreadCrumb from "../../../components/Breadcrumb";
 
 import {
   getProductListAction,
@@ -28,7 +30,7 @@ import {
 import { PRODUCT_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routes";
 
-import bannerBrand from "../../../assets/banner/men-banner.jpg";
+import menBanner from "../../../assets/banner/men-banner.jpg";
 
 import * as S from "./styles";
 
@@ -59,7 +61,7 @@ const caseSizes = [
   },
 ];
 
-const BrandPage = () => {
+const ProductPage = () => {
   const MAXPRICE = 15000000;
   const location = useLocation();
   const search = location.search.slice(1);
@@ -143,6 +145,7 @@ const BrandPage = () => {
   };
 
   const handleFilter = (key, values) => {
+    console.log(key, values);
     setFilterParams({
       ...filterParams,
       [key]: values,
@@ -189,6 +192,7 @@ const BrandPage = () => {
           ...filterParams,
           [key]: newValue,
           page: 1,
+
           limit: PRODUCT_LIST_LIMIT,
         },
       })
@@ -347,7 +351,7 @@ const BrandPage = () => {
       return (
         <Col
           key={item.id}
-          xxl={4}
+          xxl={6}
           xl={6}
           md={8}
           sm={8}
@@ -360,7 +364,7 @@ const BrandPage = () => {
             )
           }
         >
-          <S.BrandItem>
+          <S.ProductItem>
             <div className="product_info-image">
               <img src={item.image} alt="item" />
               <div className="product_item-actions">
@@ -424,7 +428,7 @@ const BrandPage = () => {
                 <span>Mới</span>
               </div>
             )}
-          </S.BrandItem>
+          </S.ProductItem>
         </Col>
       );
     });
@@ -433,18 +437,32 @@ const BrandPage = () => {
   const renderPageBanner = useMemo(() => {
     return (
       <>
-        <img alt="" src={bannerBrand} />
+        <img alt="" src={menBanner} />
 
-        <h2>Đồng hồ </h2>
+        <h2>Thương hiệu nổi tiếng </h2>
 
         <div className="overlay"></div>
       </>
     );
-  }, [bannerBrand]);
+  }, [menBanner]);
 
   return (
     <S.Wrapper>
       <S.PageBannerWrapper>{renderPageBanner}</S.PageBannerWrapper>
+
+      <S.BreadcrumbWrapper>
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item>
+            <Link to={ROUTES.USER.HOME}>Trang chủ</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link to={ROUTES.USER.BRAND}>Sản phẩm</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link>Thương hiệu</Link>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </S.BreadcrumbWrapper>
 
       <S.MobileFilterDrawer>
         <Drawer
@@ -520,9 +538,9 @@ const BrandPage = () => {
         </Drawer>
       </S.MobileFilterDrawer>
 
-      <S.BrandPageWrapper>
+      <S.ProductPageWrapper>
         <Row>
-          <Col xxl={4} xl={4} md={6} sm={0} xs={0}>
+          <Col xxl={6} xl={6} md={6} sm={0} xs={0}>
             <div className="product_filter-wrapper">
               <p className="product_filter-title">
                 <i className="fa-solid fa-filter"></i>Bộ lọc
@@ -537,6 +555,16 @@ const BrandPage = () => {
                 }}
               >
                 <Panel header="Khoảng giá" key="7">
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <span>
+                      0<sup>đ</sup>
+                    </span>
+                    <span>
+                      15.000.000<sup>đ</sup>
+                    </span>
+                  </div>
                   <Slider
                     range
                     step={100000}
@@ -637,8 +665,8 @@ const BrandPage = () => {
             </div>
           </Col>
 
-          <Col xxl={20} xl={20} md={18} sm={24} xs={24}>
-            <S.BrandsWrapper>
+          <Col xxl={18} xl={18} md={18} sm={24} xs={24}>
+            <S.ProductsWrapper>
               <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
                 <Col xxl={16} xl={16} md={24} sm={24} xs={24}>
                   <S.SearchBrandWrapper>
@@ -725,12 +753,12 @@ const BrandPage = () => {
                   </MainButton>
                 </Row>
               )}
-            </S.BrandsWrapper>
+            </S.ProductsWrapper>
           </Col>
         </Row>
-      </S.BrandPageWrapper>
+      </S.ProductPageWrapper>
     </S.Wrapper>
   );
 };
 
-export default BrandPage;
+export default ProductPage;

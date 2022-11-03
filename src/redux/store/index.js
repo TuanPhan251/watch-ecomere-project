@@ -7,6 +7,7 @@ import categoryReducer from "../reducers/category.reducer";
 import userReducer from "../reducers/user.reducer";
 import commentsReducer from "../reducers/comments.reducer";
 import rootSaga from "../sagas";
+import locationReducer from "../reducers/location.reducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -17,6 +18,7 @@ const store = configureStore({
     category: categoryReducer,
     user: userReducer,
     comments: commentsReducer,
+    location: locationReducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({

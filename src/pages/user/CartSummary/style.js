@@ -1,17 +1,28 @@
 import styled from "styled-components";
 import { Row } from "antd";
+import imageForm from "../../../assets/banner/image-form-info.png";
 
 export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
   margin-top: var(--header-height);
   min-height: 100vh;
   background-color: var(--bgr-color);
   padding: 24px 0;
+  justify-content: center;
+`;
+
+export const StepContainer = styled.div`
+  display: flex;
+  width: 10%;
+  background-color: #fff;
+  border-right: 2px solid #ccc;
 `;
 
 export const CheckoutCartContainer = styled.div`
-  max-width: 1200px;
-  width: 100%;
-  margin: 0 auto;
+  /* max-width: 1200px; */
+  width: 70%;
+  /* margin: 0 auto; */
   padding: 24px 12px;
   height: 100%;
   min-height: 100vh;
@@ -333,3 +344,5 @@ export const CartItem = styled(Row)`
     }
   }
 `;
+
+//Info
