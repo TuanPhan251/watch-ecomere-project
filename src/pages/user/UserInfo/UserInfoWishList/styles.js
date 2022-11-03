@@ -28,3 +28,80 @@ export const UserInfo = styled.div`
     text-align: center;
   }
 `;
+
+export const ProductsWrapper = styled.div`
+  margin-top: 40px;
+`;
+
+export const ProductItem = styled.div`
+  position: relative;
+  height: 100%;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+
+  .product-image {
+    display: flex;
+    padding: 4px;
+    justify-content: center;
+
+    img {
+      width: 60%;
+    }
+  }
+
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px;
+    color: var(--dark-text-color);
+    background-color: rgba(51, 92, 103, 0.1);
+
+    h3 {
+      text-align: center;
+      font-size: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    p {
+      color: var(--primary-color);
+      font-size: 16px;
+      font-weight: 500;
+    }
+  }
+
+  .product-action {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 4px;
+      border: none;
+      border-radius: 50%;
+      background-color: #fff;
+      transition: all 0.3s ease;
+      cursor: pointer;
+
+      i {
+        color: #000;
+        font-size: 18px;
+      }
+
+      :hover {
+        background-color: #ddd;
+      }
+    }
+  }
+
+  :hover {
+    box-shadow: 0 0 8px #ccc;
+  }
+`;

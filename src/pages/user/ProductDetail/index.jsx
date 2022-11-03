@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, createElement } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -30,6 +30,9 @@ import {
   createCommentAction,
   getCommentListAction,
   getProductListAction,
+  getWishlistAction,
+  addWishlistAction,
+  removeWishlistAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
@@ -44,6 +47,11 @@ const ProductDetailPage = () => {
   const { userInfo } = useSelector((state) => state.user);
   const similarProductList = productList.data?.filter(
     (item) => item.id !== productId
+  );
+
+  const { wishlist } = useSelector((state) => state.wishlist);
+  const isWishlist = wishlist.data.some(
+    (item) => item.productId === productDetail.data.id
   );
 
   const { commentList } = useSelector((state) => state.comments);
@@ -73,6 +81,7 @@ const ProductDetailPage = () => {
 
     dispatch(getCategoriesListAction());
     dispatch(getCommentListAction({ productId }));
+    dispatch(getWishlistAction({ userId: userInfo.data.id }));
 
     return () => {
       dispatch(removeProductDetailAction());
@@ -96,7 +105,7 @@ const ProductDetailPage = () => {
         <i
           className="fa-solid fa-check"
           style={{
-            color: "#73d13d",
+            color: "#335C67",
           }}
         ></i>
       ),
@@ -120,6 +129,65 @@ const ProductDetailPage = () => {
     };
 
     dispatch(createCommentAction({ data, productId }));
+  };
+
+  const handleAddItemToWishlist = () => {
+    dispatch(
+      addWishlistAction({
+        data: {
+          userId: userInfo.data.id,
+          productId: productDetail.data.id,
+        },
+        userId: userInfo.data.id,
+      })
+    );
+
+    notification.open({
+      message: "Đã thêm sản phẩm vào yêu thích",
+      placement: "top",
+      top: 100,
+      duration: 2,
+      icon: (
+        <i
+          className="fa-regular fa-heart"
+          style={{
+            color: "#335C67",
+          }}
+        ></i>
+      ),
+    });
+  };
+
+  const handleRemoveItemWishlist = () => {
+    const deletedWishlist = Object.assign(
+      {},
+      ...wishlist.data.filter(
+        (item) => item.productId === productDetail.data.id
+      )
+    );
+    console.log(
+      "🚀 ~ file: index.jsx ~ line 150 ~ handleRemoveItemWishlist ~ deletedWishlist",
+      deletedWishlist
+    );
+
+    dispatch(
+      removeWishlistAction({ id: deletedWishlist.id, userId: userInfo.data.id })
+    );
+
+    notification.open({
+      message: "Đã xóa sản phẩm khỏi yêu thích",
+      placement: "top",
+      top: 100,
+      duration: 2,
+      icon: (
+        <i
+          className="fa-solid fa-heart-crack"
+          style={{
+            color: "#335C67",
+          }}
+        ></i>
+      ),
+    });
   };
 
   const renderProductSpec = useMemo(() => {
@@ -273,11 +341,25 @@ const ProductDetailPage = () => {
               )}
 
               <div className="product_like-icon">
-                <Tooltip title="Thêm vào yêu thích">
-                  <button>
-                    <i className="fa-regular fa-heart"></i>
-                  </button>
-                </Tooltip>
+                {isWishlist ? (
+                  <Tooltip title="Xóa khỏi yêu thích">
+                    <S.AddWishlistBtn
+                      isWishlist={isWishlist}
+                      onClick={() => handleRemoveItemWishlist()}
+                    >
+                      <i className="fa-solid fa-heart"></i>
+                    </S.AddWishlistBtn>
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Thêm vào yêu thích">
+                    <S.AddWishlistBtn
+                      isWishlist={isWishlist}
+                      onClick={() => handleAddItemToWishlist()}
+                    >
+                      <i className="fa-regular fa-heart"></i>
+                    </S.AddWishlistBtn>
+                  </Tooltip>
+                )}
               </div>
             </S.ProductImageWrapper>
           </Col>

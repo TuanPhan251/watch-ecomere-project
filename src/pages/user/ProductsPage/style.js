@@ -190,6 +190,8 @@ export const ProductItem = styled.div`
   text-align: center;
   border: var(--boder-basic);
   border-radius: 2px;
+  transition: all 0.3s ease;
+
   overflow: hidden;
   cursor: pointer;
 
