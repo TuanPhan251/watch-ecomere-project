@@ -48,6 +48,9 @@ function* getProductListSaga(action) {
         ...(params.isDiscount && {
           isDiscount: params.isDiscount,
         }),
+        ...(params.productId && {
+          id: params.productId,
+        }),
       },
     });
     yield put({

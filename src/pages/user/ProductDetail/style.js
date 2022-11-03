@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Tabs } from "antd";
 
 export const TopSpacer = styled.div`
@@ -74,31 +74,39 @@ export const ProductImageWrapper = styled.div`
     position: absolute;
     top: 10px;
     right: 10px;
-
-    button {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 8px;
-      background-color: transparent;
-      border: none;
-      border-radius: 50%;
-      transition: all 0.3s ease;
-      cursor: pointer;
-
-      i {
-        font-size: 30px;
-      }
-
-      :hover {
-        background-color: #ddd;
-      }
-    }
   }
 
   @media (max-width: 576px) {
     margin-bottom: 8px;
   }
+`;
+
+export const AddWishlistBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  i {
+    font-size: 30px;
+  }
+
+  :hover {
+    background-color: #ddd;
+  }
+
+  ${(props) =>
+    props.isWishlist &&
+    css`
+      i {
+        color: var(--price-color);
+      }
+    `}
 `;
 
 export const ProductInfoWrapper = styled.div`

@@ -544,7 +544,36 @@
       "id": 7
     }
   ],
-  "wishlists": [],
+  "wishlists": [
+    {
+      "userId": 3,
+      "productId": 2,
+      "createdAt": 1667443472476,
+      "updatedAt": 1667443472476,
+      "id": 4
+    },
+    {
+      "userId": 2,
+      "productId": 8,
+      "createdAt": 1667453834432,
+      "updatedAt": 1667453834432,
+      "id": 5
+    },
+    {
+      "userId": 2,
+      "productId": 1,
+      "createdAt": 1667454071891,
+      "updatedAt": 1667454071891,
+      "id": 6
+    },
+    {
+      "userId": 2,
+      "productId": 7,
+      "createdAt": 1667454074874,
+      "updatedAt": 1667454074874,
+      "id": 7
+    }
+  ],
   "images": [
     {
       "name": "mathey-tissot-h411bpi1-nam-2-org.jpg",
