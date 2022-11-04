@@ -1,21 +1,31 @@
 import { useMemo } from "react";
 import { generatePath, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 
-import { Modal, Col, Row, Popconfirm } from "antd";
+import { Modal, Col, Row, Popconfirm, Steps } from "antd";
 
 import { ROUTES } from "../../../constants/routes";
 import {
   removeCartItemAction,
   updateCartItemAction,
 } from "../../../redux/actions/cart.actions";
-
+import Cart from "../CartSummary/components/cart";
+import Info from "./components/info";
+import Success from "../CartSummary/components/success";
+import Payment from "../CartSummary/components/payment";
 import * as S from "./style";
-import { useState } from "react";
+import {
+  UserOutlined,
+  ShoppingCartOutlined,
+  DollarOutlined,
+  FileDoneOutlined,
+} from "@ant-design/icons";
 
 const CartSummaryPage = () => {
   const dispatch = useDispatch();
   const { cartList } = useSelector((state) => state.cart);
+  const [step, setStep] = useState(0);
 
   const [showModal, setShowModal] = useState(false);
 
@@ -27,108 +37,20 @@ const CartSummaryPage = () => {
     dispatch(removeCartItemAction({ productId }));
   };
 
-  const handleUpdateCartItem = (product, quantity, type) => {
-    dispatch(
-      updateCartItemAction({
-        product,
-        amount: type === "plus" ? quantity + 1 : quantity - 1,
-      })
-    );
-  };
+  const renderCheckOutItem = useMemo(() => {
+    switch (step) {
+      case 1:
+        return <Info setStep={setStep} />;
+      case 2:
+        return <Payment setStep={setStep} />;
+      case 3:
+        return <Success setStep={setStep} />;
 
-  const renderCartItems = useMemo(() => {
-    if (cartList.length !== 0) {
-      return cartList.map((item) => {
-        return (
-          <S.CartItem key={item.id}>
-            <Col span={4}>
-              <div className="item-img">
-                <img src={item.image} alt="" />
-              </div>
-            </Col>
-            <Col span={12}>
-              <div className="item-action">
-                <Link
-                  className="item_name"
-                  to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
-                    id: `${item.slug}.${item.id}`,
-                  })}
-                >
-                  {item.name}
-                </Link>
-
-                <Popconfirm
-                  title="Xóa sản phẩm khỏi giỏ?"
-                  okText="Ok"
-                  cancelText="Hủy"
-                  onConfirm={() => handleRemoveProduct(item.id)}
-                >
-                  <button onClick={() => null}>
-                    <i className="fa-regular fa-trash-can"></i>
-                    <span>Xóa khỏi giỏ</span>
-                  </button>
-                </Popconfirm>
-              </div>
-            </Col>
-
-            <Col span={8}>
-              <div className="item_info-right-wrapper">
-                <div className="item-quantity">
-                  <p>Số lượng: </p>
-                  <Popconfirm
-                    title="Xóa sản phẩm khỏi giỏ?"
-                    okText="Ok"
-                    cancelText="Hủy"
-                    onConfirm={() => handleRemoveProduct(item.id)}
-                  >
-                    <button
-                      onClick={() => {
-                        if (item.totalAmount === 1) return null;
-                        handleUpdateCartItem(item, item.totalAmount, "minus");
-                      }}
-                    >
-                      <i className="fa-solid fa-minus"></i>
-                    </button>
-                  </Popconfirm>
-
-                  <input
-                    min={1}
-                    readOnly
-                    type="text"
-                    value={item.totalAmount}
-                    onChange={(e) => {
-                      if (e.target.value < 1) return handleRemoveProduct;
-                    }}
-                  />
-                  <button
-                    onClick={() =>
-                      handleUpdateCartItem(item, item.totalAmount, "plus")
-                    }
-                  >
-                    <i className="fa-solid fa-plus"></i>
-                  </button>
-                </div>
-
-                <div className="item_price">
-                  <span className="item_price-original">
-                    {(item.totalAmount * item.price)?.toLocaleString()}
-                    <sup>đ</sup>
-                  </span>
-                  <span className="item_price-final">
-                    {item.totalPrice?.toLocaleString()}
-                    <sup>đ</sup>
-                  </span>
-                  <p className="item_price-discount">
-                    Tiết kiệm <span>{item.discountPercent}%</span>
-                  </p>
-                </div>
-              </div>
-            </Col>
-          </S.CartItem>
-        );
-      });
+      case 0:
+      default:
+        return <Cart setStep={setStep} />;
     }
-  }, [cartList]);
+  }, [step]);
 
   if (cartList.length === 0) {
     return (
@@ -146,48 +68,19 @@ const CartSummaryPage = () => {
 
   return (
     <S.Wrapper>
-      <S.CheckoutCartContainer>
-        <h2 className="cart_summary-heading">giỏ hàng</h2>
-
-        <div className="cart-item-container">
-          <Col xxl={16} xl={16} lg={16} md={24} xs={24}>
-            <div className="cart-item-wrapper">
-              <div className="cart-item-tbody">{renderCartItems}</div>
-            </div>
-          </Col>
-
-          <Col xxl={8} xl={8} lg={8} md={24} xs={24}>
-            <div className="cart_summary">
-              <h3>Đơn hàng của bạn:</h3>
-              <p className="cart_total-price">
-                <span className="cart_total-price-title">Tạm tính:</span>
-                <span>
-                  {totalPrice?.toLocaleString()} <sup>đ</sup>
-                </span>
-              </p>
-              <p className="cart_shipping-cost">
-                <span className="cart_shipping-cost-title">
-                  Phí vận chuyển:
-                </span>
-                <span>Miễn phí</span>
-              </p>
-
-              <div className="cart_price-total">
-                <p className="cart_price-total-title">
-                  Tổng cộng (đã bao gồm VAT)
-                </p>
-                <p className="cart_price-total-amount">
-                  {totalPrice?.toLocaleString()} <sup>đ</sup>
-                </p>
-              </div>
-
-              <div className="cart_summary-action">
-                <button>ĐẶT HÀNG NGAY</button>
-              </div>
-            </div>
-          </Col>
-        </div>
-      </S.CheckoutCartContainer>
+      <S.StepContainer>
+        <Steps
+          current={step}
+          direction="vertical"
+          style={{ margin: "30px 0 0 30px" }}
+        >
+          <Steps.Step title="Cart" icon={<ShoppingCartOutlined />}></Steps.Step>
+          <Steps.Step title="Info" icon={<UserOutlined />}></Steps.Step>
+          <Steps.Step title="Payment" icon={<DollarOutlined />}></Steps.Step>
+          <Steps.Step title="Success" icon={<FileDoneOutlined />}></Steps.Step>
+        </Steps>
+      </S.StepContainer>
+      {renderCheckOutItem}
     </S.Wrapper>
   );
 };

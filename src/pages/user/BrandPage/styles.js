@@ -22,6 +22,13 @@ const fadeIn = keyframes`
   }
 `;
 
+export const BreadcrumbWrapper = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  margin: auto;
+  padding-top: 24px;
+`;
+
 export const MobileFilterDrawer = styled.div``;
 
 export const MobileFilterList = styled.ul`
@@ -58,8 +65,9 @@ export const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-export const BrandPageWrapper = styled.div`
-  margin: 24px 24px 0 24px;
+export const ProductPageWrapper = styled.div`
+  max-width: 1200px;
+  margin: 24px auto 0;
   border-radius: 4px;
   background-color: #fff;
 
@@ -105,7 +113,7 @@ export const BrandPageWrapper = styled.div`
   }
 `;
 
-export const BrandBrands = styled.div`
+export const ProductBrands = styled.div`
   display: flex;
   width: 100%;
   padding: 12px;
@@ -163,17 +171,17 @@ export const PageBannerWrapper = styled.div`
   }
 `;
 
-export const BrandFilterWrapper = styled.div`
+export const ProductFilterWrapper = styled.div`
   padding: 12px;
 
   border-bottom: 1px solid #f5f5f5;
 `;
 
-export const BrandsWrapper = styled.div`
+export const ProductsWrapper = styled.div`
   padding: 12px;
 `;
 
-export const BrandItem = styled.div`
+export const ProductItem = styled.div`
   position: relative;
   flex: 1;
   height: 100%;
@@ -274,7 +282,7 @@ export const BrandItem = styled.div`
     position: absolute;
     top: 10px;
     right: 0;
-    width: 60px;
+    padding: 4px 8px;
     height: 24px;
     padding: 0 4px;
     background-color: var(--button-color);
@@ -285,13 +293,9 @@ export const BrandItem = styled.div`
       position: absolute;
       top: 0;
       right: 100%;
-      border-width: 12px 8px 12px 0;
+      border-width: 12px 6px 12px 0;
       border-style: solid;
       border-color: transparent var(--button-color);
-    }
-
-    span {
-      font-size: 16px;
     }
   }
 
