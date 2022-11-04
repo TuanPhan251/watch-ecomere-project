@@ -144,13 +144,7 @@ const AdminProductPage = () => {
       title: "Giá",
       dataIndex: "price",
       key: "price",
-      width: 160,
-      render: (_, record) => (
-        <p>
-          {record.price.toLocaleString()}
-          <sup>đ</sup>
-        </p>
-      ),
+      render: (price) => `${price.toLocaleString()} đ`,
     },
     {
       title: "Khuyến mãi",

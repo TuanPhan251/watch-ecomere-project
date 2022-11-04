@@ -29,7 +29,7 @@ const ProductFamily = ({ similarProductList }) => {
           key={item.id}
           xxl={6}
           xl={6}
-          md={6}
+          md={8}
           sm={8}
           xs={12}
           onClick={() =>

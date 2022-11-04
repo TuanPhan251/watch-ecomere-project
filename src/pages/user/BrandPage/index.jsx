@@ -20,6 +20,7 @@ import {
   Breadcrumb,
 } from "antd";
 import MainButton from "../../../components/MainButton";
+import BreadCrumb from "../../../components/Breadcrumb";
 
 import {
   getProductListAction,
