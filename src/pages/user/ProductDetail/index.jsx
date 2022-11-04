@@ -14,13 +14,17 @@ import {
   Input,
   Button,
   Breadcrumb,
+  InputNumber,
+  Image,
 } from "antd";
+import Slider from "react-slick";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation, Thumbs } from "swiper";
+
 import ProductSpec from "./ProductSpec";
 import ProductPolicy from "./ProductPolicy";
 import ProductGift from "./ProductGift";
 import ProductFamily from "./ProductFamily";
-
-import MainButton from "../../../components/MainButton";
 
 import {
   addItemToCartAction,
@@ -29,7 +33,6 @@ import {
   removeProductDetailAction,
   createCommentAction,
   getCommentListAction,
-  getProductListAction,
   getWishlistAction,
   addWishlistAction,
   removeWishlistAction,
@@ -38,7 +41,16 @@ import { ROUTES } from "../../../constants/routes";
 
 import * as S from "./style";
 
+const settings = {
+  dots: true,
+  infinite: true,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: false,
+};
+
 const ProductDetailPage = () => {
+  const [productQuantity, setProductQuantity] = useState(1);
   const { id } = useParams();
   const productId = parseInt(id.split(".")[1]);
   const navigate = useNavigate();
@@ -62,19 +74,7 @@ const ProductDetailPage = () => {
   const gender = productDetail.data.gender === "male" ? "nam" : "nữ";
   const isDiscount = !!productDetail.data.discountPercent;
 
-  const [itemQuantity, setItemQuantity] = useState(1);
-
-  useEffect(() => {
-    dispatch(
-      getProductListAction({
-        params: {
-          page: 1,
-          limit: 999,
-          gender: productDetail.data.gender,
-        },
-      })
-    );
-  }, [productId]);
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   useEffect(() => {
     dispatch(getProductDetailAction({ id: productId }));
@@ -92,7 +92,7 @@ const ProductDetailPage = () => {
     dispatch(
       addItemToCartAction({
         product: productDetail,
-        productAmount: itemQuantity,
+        productAmount: productQuantity,
       })
     );
 
@@ -110,14 +110,6 @@ const ProductDetailPage = () => {
         ></i>
       ),
     });
-  };
-
-  const handleGetItemQuantity = (value) => {
-    if (value < 1) {
-      setItemQuantity(1);
-    } else {
-      setItemQuantity(parseInt(value));
-    }
   };
 
   const handleCreateComment = (value) => {
@@ -222,7 +214,13 @@ const ProductDetailPage = () => {
   const renderProductImages = useMemo(() => {
     if (!productDetail.data.images?.length) return null;
     return productDetail.data.images?.map((item) => {
-      return <img src={item.image} alt={item.name} />;
+      return (
+        <S.CustomImage
+          key={item.id}
+          src={item.url}
+          className="product_slide-img"
+        />
+      );
     });
   }, [productDetail.data]);
 
@@ -295,8 +293,17 @@ const ProductDetailPage = () => {
       key: "item-2",
       children: (
         <S.ProductReview>
+          <p>Hãy để lại đánh giá của bạn nhé</p>
           {!isCommented && <Comment content={<Editor />} />}
-          {renderUserComments}
+
+          <S.ReviewsWrapper>
+            {commentList.data.length === 0 ? (
+              <p>Chưa có đánh giá nào.</p>
+            ) : (
+              <h3>Đánh giá({commentList.data.length})</h3>
+            )}
+            {renderUserComments}
+          </S.ReviewsWrapper>
         </S.ProductReview>
       ),
     },
@@ -332,7 +339,20 @@ const ProductDetailPage = () => {
           <Col xxl={8} xl={8} md={8} sm={24} xs={24}>
             <S.ProductImageWrapper>
               <img src={productDetail.data.image} alt="product" />
-              {/* {renderProductImages} */}
+
+              {/* <Slider
+                {...settings}
+                customPaging={(i) => {
+                  return (
+                    <div className="thumb_img-wrapper">
+                      <img src={productDetail.data.images[i].url} alt="" />
+                    </div>
+                  );
+                }}
+                dotsClass="slick-dots custom-indicator"
+              >
+                {renderProductImages}
+              </Slider> */}
 
               {productDetail.data.isDiscount && (
                 <div className="product_info-discount-label">
@@ -430,52 +450,37 @@ const ProductDetailPage = () => {
 
               <S.ProductActions>
                 <div className="product_action-addcart">
-                  <div className="product_action-addcart-quantity">
-                    <span>Số lượng: </span>
+                  <Row gutter={[8, 8]}>
+                    <Col span={12}>
+                      <span>Số lượng: </span>
 
-                    <MainButton
-                      className="quantity_control-btn"
-                      buttonType="ghost"
-                      onClick={() => {
-                        itemQuantity !== 1 && setItemQuantity(itemQuantity - 1);
-                      }}
-                    >
-                      -
-                    </MainButton>
-                    <input
-                      type="text"
-                      value={itemQuantity}
-                      min={1}
-                      onChange={(e) => handleGetItemQuantity(e.target.value)}
-                    />
-                    <MainButton
-                      buttonType="ghost"
-                      className="quantity_control-btn"
-                      onClick={() => setItemQuantity(itemQuantity + 1)}
-                    >
-                      +
-                    </MainButton>
-                  </div>
+                      <InputNumber
+                        min={1}
+                        value={productQuantity}
+                        onChange={(value) => setProductQuantity(value)}
+                      />
+                    </Col>
 
-                  <MainButton
-                    buttonType="primary"
-                    onClick={handleAddProductToCart}
-                    style={{ marginLeft: "auto", width: "50%" }}
-                  >
-                    THÊM VÀO GIỎ
-                  </MainButton>
+                    <Col span={12}>
+                      <Button onClick={handleAddProductToCart} block>
+                        <i className="fa-solid fa-cart-plus"></i>
+                        THÊM VÀO GIỎ
+                      </Button>
+                    </Col>
+
+                    <Col span={24}>
+                      <Button
+                        onClick={() => {
+                          handleAddProductToCart();
+                          navigate(ROUTES.USER.CART_SUMMARY);
+                        }}
+                        style={{ width: "100%" }}
+                      >
+                        MUA NGAY
+                      </Button>
+                    </Col>
+                  </Row>
                 </div>
-
-                <MainButton
-                  onClick={() => {
-                    handleAddProductToCart();
-                    navigate(ROUTES.USER.CART_SUMMARY);
-                  }}
-                  buttonType="primary"
-                  style={{ width: "100%" }}
-                >
-                  MUA NGAY
-                </MainButton>
               </S.ProductActions>
             </S.ProductInfoWrapper>
           </Col>

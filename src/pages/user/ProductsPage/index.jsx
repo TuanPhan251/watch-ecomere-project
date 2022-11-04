@@ -18,6 +18,7 @@ import {
   Slider,
   notification,
   Breadcrumb,
+  Input,
 } from "antd";
 import MainButton from "../../../components/MainButton";
 
@@ -29,6 +30,7 @@ import {
 } from "../../../redux/actions";
 import { PRODUCT_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routes";
+import { SLIDER_MARKS } from "./constants";
 
 import menBanner from "../../../assets/banner/men-banner.jpg";
 import womenBanner from "../../../assets/banner/women-banner.jpg";
@@ -225,6 +227,42 @@ const ProductPage = () => {
     );
   };
 
+  const handleRemoveFilterDiscount = () => {
+    setFilterParams({
+      ...filterParams,
+      isDiscount: false,
+    });
+
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          isDiscount: false,
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
+  const handleRemoveFilterNew = () => {
+    setFilterParams({
+      ...filterParams,
+      isNew: false,
+    });
+
+    dispatch(
+      getProductListAction({
+        params: {
+          ...filterParams,
+          isNew: false,
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
   const handleRemoveFilterCategory = (id) => {
     const newCategoryId = filterParams.categoryId.filter((item) => item !== id);
     setFilterParams({
@@ -365,6 +403,14 @@ const ProductPage = () => {
     });
   }, [filterParams.glassMaterial]);
 
+  const renderFilterDiscount = useMemo(() => {
+    return (
+      <Tag closable onClose={() => handleRemoveFilterDiscount()}>
+        Giảm giá
+      </Tag>
+    );
+  }, [filterParams.isDiscount]);
+
   const renderProducts = useMemo(() => {
     return productList.data.map((item) => {
       const isDiscount = !!item.discountPercent;
@@ -375,86 +421,78 @@ const ProductPage = () => {
       }
 
       return (
-        <Col
-          key={item.id}
-          xxl={6}
-          xl={6}
-          md={8}
-          sm={8}
-          xs={12}
-          onClick={() =>
-            navigate(
-              generatePath(ROUTES.USER.PRODUCT_DETAIL, {
-                id: `${item.slug}.${item.id}`,
-              })
-            )
-          }
-        >
-          <S.ProductItem>
-            <div className="product_info-image">
-              <img src={item.image} alt="item" />
-              <div className="product_item-actions">
-                <Tooltip title="Thêm vào giỏ hàng">
-                  <button
-                    className="product_item-actions-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAddItemToCart(item);
-                    }}
+        <Col key={item.id} xxl={6} xl={6} md={8} sm={8} xs={12}>
+          <Link
+            to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
+              id: `${item.slug}.${item.id}`,
+            })}
+          >
+            <S.ProductItem>
+              <div className="product_info-image">
+                <img src={item.image} alt="item" />
+                <div className="product_item-actions">
+                  <Tooltip title="Thêm vào giỏ hàng">
+                    <button
+                      className="product_item-actions-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleAddItemToCart(item);
+                      }}
+                    >
+                      <i className="fa-solid fa-cart-plus"></i>
+                    </button>
+                  </Tooltip>
+                  <Tooltip
+                    title="Thêm vào danh sách yêu thích"
+                    placement="bottom"
                   >
-                    <i className="fa-solid fa-cart-plus"></i>
-                  </button>
-                </Tooltip>
-                <Tooltip
-                  title="Thêm vào danh sách yêu thích"
-                  placement="bottom"
-                >
-                  <button
-                    className="product_item-actions-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <i className="fa-regular fa-heart"></i>
-                  </button>
-                </Tooltip>
+                    <button
+                      className="product_item-actions-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
+                      <i className="fa-regular fa-heart"></i>
+                    </button>
+                  </Tooltip>
+                </div>
               </div>
-            </div>
 
-            <h2 className="product_info-name">{item.name}</h2>
+              <h2 className="product_info-name">{item.name}</h2>
 
-            <div className="product_info-rating">
-              <Rate
-                allowHalf
-                disabled
-                defaultValue={4.5}
-                style={{ fontSize: 14 }}
-              />
-              <span>(12 đánh giá)</span>
-            </div>
+              <div className="product_info-rating">
+                <Rate
+                  allowHalf
+                  disabled
+                  defaultValue={4.5}
+                  style={{ fontSize: 14 }}
+                />
+                <span>(12 đánh giá)</span>
+              </div>
 
-            <p className="product_info-price-final">
-              {price.toLocaleString()}
-              <sup>₫</sup>
-            </p>
-            {isDiscount && (
-              <p className="product_info-price-original">
-                {item.price.toLocaleString()}
+              <p className="product_info-price-final">
+                {price.toLocaleString()}
                 <sup>₫</sup>
               </p>
-            )}
+              {isDiscount && (
+                <p className="product_info-price-original">
+                  {item.price.toLocaleString()}
+                  <sup>₫</sup>
+                </p>
+              )}
 
-            {isDiscount && (
-              <div className="product_info-discount-label">
-                <span>{discountPercent}</span>
-              </div>
-            )}
-            {item.isNew && (
-              <div className="product_info-isNew-label">
-                <span>Mới</span>
-              </div>
-            )}
-          </S.ProductItem>
+              {isDiscount && (
+                <div className="product_info-discount-label">
+                  <span>{discountPercent}</span>
+                </div>
+              )}
+              {item.isNew && (
+                <div className="product_info-isNew-label">
+                  <span>Mới</span>
+                </div>
+              )}
+            </S.ProductItem>
+          </Link>
         </Col>
       );
     });
@@ -594,18 +632,9 @@ const ProductPage = () => {
                 }}
               >
                 <Panel header="Khoảng giá" key="7">
-                  <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <span>
-                      0<sup>đ</sup>
-                    </span>
-                    <span>
-                      15.000.000<sup>đ</sup>
-                    </span>
-                  </div>
                   <Slider
                     range
+                    marks={SLIDER_MARKS}
                     step={100000}
                     max={MAXPRICE}
                     defaultValue={filterParams.priceRange}
@@ -723,17 +752,16 @@ const ProductPage = () => {
           <Col xxl={18} xl={18} md={18} sm={24} xs={24}>
             <S.ProductsWrapper>
               <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
-                <Col xxl={16} xl={16} md={24} sm={24} xs={24}>
+                <Col xxl={12} xl={12} md={12} sm={24} xs={24}>
                   <S.SearchBrandWrapper>
-                    <input
-                      type="text"
+                    <Input
                       placeholder="Nhập để tìm sản phẩm"
                       onChange={(e) => handleFilter("keyword", e.target.value)}
                       value={filterParams.keyword}
                     />
                   </S.SearchBrandWrapper>
                 </Col>
-                <Col xxl={8} xl={8} md={24} sm={24} xs={24}>
+                <Col xxl={12} xl={12} md={12} sm={24} xs={24}>
                   <S.HeadingFilterWrapper>
                     <span
                       style={{
@@ -747,7 +775,7 @@ const ProductPage = () => {
                       placeholder="Giá"
                       style={{
                         marginLeft: 8,
-                        width: "40%",
+                        width: "50%",
                       }}
                       onChange={(value) => handleFilter("priceSort", value)}
                     >
@@ -786,6 +814,18 @@ const ProductPage = () => {
                   </Tag>
                 )}
                 {renderFilterGlass}
+
+                {filterParams.isDiscount && (
+                  <Tag closable onClose={() => handleRemoveFilterDiscount()}>
+                    Đang giảm giá{" "}
+                  </Tag>
+                )}
+
+                {filterParams.isNew && (
+                  <Tag closable onClose={() => handleRemoveFilterNew()}>
+                    Sản phẩm mới{" "}
+                  </Tag>
+                )}
               </Space>
 
               <Spin spinning={productList.loading}>
