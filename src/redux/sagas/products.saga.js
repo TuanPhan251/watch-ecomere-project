@@ -48,6 +48,9 @@ function* getProductListSaga(action) {
         ...(params.isDiscount && {
           isDiscount: params.isDiscount,
         }),
+        ...(params.productId && {
+          id: params.productId,
+        }),
       },
     });
     yield put({
@@ -158,12 +161,34 @@ function* createProductSaga(action) {
 
 function* updateProductSaga(action) {
   try {
-    const { data, id, callback, comment } = action.payload;
+    const { data, id, callback, images, initialImageIds } = action.payload;
     const result = yield axios.patch(
       `http://localhost:4000/products/${id}`,
       data
     );
-    yield axios.post(`http://localhost:4000/comments/`, comment);
+
+    for (let i = 0; i < images.length; i++) {
+      if (!images[i].id) {
+        yield axios.post("http://localhost:4000/images", {
+          ...images[i],
+          productId: result.data.id,
+        });
+      }
+    }
+    for (let j = 0; j < initialImageIds.length; j++) {
+      const keepImage = images.find(
+        (item) => item.id && item.id === initialImageIds[j]
+      );
+      console.log(
+        "🚀 ~ file: products.saga.js ~ line 177 ~ function*updateProductSaga ~ keepImage",
+        keepImage
+      );
+      if (!keepImage) {
+        yield axios.delete(
+          `http://localhost:4000/images/${initialImageIds[j]}`
+        );
+      }
+    }
 
     yield put({
       type: SUCCESS(PRODUCT_ACTION.UPDATE_PRODUCT),

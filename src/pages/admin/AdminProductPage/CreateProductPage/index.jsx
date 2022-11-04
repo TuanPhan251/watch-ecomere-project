@@ -66,9 +66,12 @@ const CreateProductPage = () => {
       await newImages.push({
         name: images[i].name,
         type: images[i].type,
-        image: imgBase64,
+        url: imgBase64,
+        thumbUrl: images[i].thumbUrl,
       });
     }
+
+    console.log(newImages);
 
     await dispatch(
       createProductAction({

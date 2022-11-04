@@ -1,6 +1,7 @@
 import { useRef, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, generatePath } from "react-router-dom";
+import Slider from "react-slick";
 
 import { ROUTES } from "../../../constants/routes";
 import { getNewProductsList } from "../../../redux/actions";
@@ -16,6 +17,46 @@ import bgrImage from "../../../assets/banner/bgr-img.jpg";
 import * as S from "./style";
 import { Card, Carousel, Col, Row } from "antd";
 
+function SampleNextArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", color: "black" }}
+      onClick={onClick}
+    />
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{ ...style, display: "block", color: "black" }}
+      onClick={onClick}
+    />
+  );
+}
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 4,
+  autoplay: true,
+  responsive: [
+    {
+      breakpoint: 576,
+      settings: {
+        slidesToShow: 2,
+        infinite: true,
+        dots: true,
+      },
+    },
+  ],
+};
+
 const HomePage = () => {
   window.title = "asdf";
   const dispatch = useDispatch();
@@ -26,7 +67,7 @@ const HomePage = () => {
   const newProducts = [...newProductsList.data];
 
   const shuffled = newProducts.sort(() => 0.5 - Math.random());
-  const selectedNewProducts = shuffled.slice(0, 4);
+  const selectedNewProducts = shuffled.slice(0, 8);
   const videoRef = useRef();
 
   useEffect(() => {
@@ -49,7 +90,7 @@ const HomePage = () => {
   const renderNewProducts = useMemo(() => {
     return selectedNewProducts?.map((item) => {
       return (
-        <Col xxl={6} xl={6} md={12} sm={12} xs={12} key={item.id}>
+        <Col xxl={24} xl={24} md={24} sm={24} xs={24} key={item.id}>
           <Link
             to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
               id: `${item.slug}.${item.id}`,
@@ -89,10 +130,9 @@ const HomePage = () => {
 
       <section className="new_products-section">
         <h3 className="new_products_section-heading">Sản phẩm mới</h3>
+        <Slider {...settings}>{renderNewProducts}</Slider>
 
-        <div className="new_products-list">
-          <Row>{renderNewProducts}</Row>
-        </div>
+        <div className="new_products-list"></div>
       </section>
 
       <section className="men_products-section">

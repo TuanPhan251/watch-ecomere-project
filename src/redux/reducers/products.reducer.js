@@ -140,7 +140,22 @@ const productReducer = createReducer(initialValue, {
   [REQUEST(PRODUCT_ACTION.REMOVE_PRODUCT_DETAIL)]: (state, action) => {
     return {
       ...state,
-      productDetail: { data: [], loading: false, error: "" },
+      productList: {
+        data: [],
+        meta: {},
+        loading: false,
+        error: "",
+      },
+      newProductsList: {
+        data: [],
+        loading: false,
+        error: "",
+      },
+      productDetail: {
+        data: [],
+        loading: false,
+        error: "",
+      },
     };
   },
 

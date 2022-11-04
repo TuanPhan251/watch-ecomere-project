@@ -20,12 +20,12 @@ import {
   Breadcrumb,
 } from "antd";
 import MainButton from "../../../components/MainButton";
-import BreadCrumb from "../../../components/Breadcrumb";
 
 import {
   getProductListAction,
   getCategoriesListAction,
   addItemToCartAction,
+  removeProductDetailAction,
 } from "../../../redux/actions";
 import { PRODUCT_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routes";
@@ -108,6 +108,10 @@ const ProductPage = () => {
       ...filterParams,
       gender: searchObj.gender,
     });
+
+    return () => {
+      dispatch(removeProductDetailAction());
+    };
   }, [searchObj.gender]);
 
   const handleNavigate = (value) => {

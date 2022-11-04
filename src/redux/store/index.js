@@ -6,6 +6,7 @@ import productReducer from "../reducers/products.reducer";
 import categoryReducer from "../reducers/category.reducer";
 import userReducer from "../reducers/user.reducer";
 import commentsReducer from "../reducers/comments.reducer";
+import wishlistReducer from "../reducers/wishlist.reducer";
 import rootSaga from "../sagas";
 import locationReducer from "../reducers/location.reducer";
 
@@ -19,6 +20,7 @@ const store = configureStore({
     user: userReducer,
     comments: commentsReducer,
     location: locationReducer,
+    wishlist: wishlistReducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({
