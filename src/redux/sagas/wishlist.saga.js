@@ -38,12 +38,12 @@ function* addWishlistSaga(action) {
         data: result.data,
       },
     });
-    yield put({
-      type: `${REQUEST(WISHLIST_ACTION.GET_WISHLIST)}`,
-      payload: {
-        userId: userId,
-      },
-    });
+    // yield put({
+    //   type: `${REQUEST(WISHLIST_ACTION.GET_WISHLIST)}`,
+    //   payload: {
+    //     userId: userId,
+    //   },
+    // });
   } catch (e) {
     yield put({
       type: `${FAIL(WISHLIST_ACTION.ADD_WISHLIST)}`,
@@ -56,20 +56,22 @@ function* addWishlistSaga(action) {
 
 function* removeWishlistSaga(action) {
   try {
-    const { id, userId } = action.payload;
+    const { id, userId, callback } = action.payload;
     const result = yield axios.delete(`http://localhost:4000/wishlists/${id}`);
     yield put({
-      type: `${SUCCESS(WISHLIST_ACTION.ADD_WISHLIST)}`,
+      type: `${SUCCESS(WISHLIST_ACTION.REMOVE_WISHLIST)}`,
       payload: {
-        data: result.data,
+        id: id,
       },
     });
-    yield put({
-      type: `${REQUEST(WISHLIST_ACTION.GET_WISHLIST)}`,
-      payload: {
-        userId: userId,
-      },
-    });
+    // yield put({
+    //   type: `${REQUEST(WISHLIST_ACTION.GET_WISHLIST)}`,
+    //   payload: {
+    //     userId: userId,
+    //   },
+    // });
+
+    if (callback) yield callback.getWishlists();
   } catch (e) {
     yield put({
       type: `${FAIL(WISHLIST_ACTION.ADD_WISHLIST)}`,
