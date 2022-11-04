@@ -66,6 +66,10 @@ function* getProductListSaga(action) {
       },
     });
   } catch (e) {
+    console.log(
+      "🚀 ~ file: products.saga.js ~ line 73 ~ function*getProductListSaga ~ e",
+      e
+    );
     yield put({
       type: FAIL(PRODUCT_ACTION.GET_PRODUCT_LIST),
       payload: {
@@ -104,7 +108,7 @@ function* getNewProductsSaga(action) {
 
 function* getProductDetailSaga(action) {
   try {
-    const { id } = action.payload;
+    const { id, gender } = action.payload;
     const result = yield axios.get(`http://localhost:4000/products/${id}`, {
       params: {
         _expand: "category",
@@ -115,6 +119,17 @@ function* getProductDetailSaga(action) {
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
       payload: {
         data: result.data,
+      },
+    });
+
+    yield put({
+      type: REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST),
+      payload: {
+        params: {
+          page: 1,
+          limit: 999,
+          gender: result.data.gender,
+        },
       },
     });
   } catch (e) {

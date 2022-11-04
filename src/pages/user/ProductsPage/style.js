@@ -123,7 +123,7 @@ export const PageBannerWrapper = styled.div`
   position: relative;
   margin-top: var(--header-height);
   width: 100%;
-  padding-top: 30%;
+  padding-top: 20%;
 
   img {
     position: absolute;
@@ -321,27 +321,6 @@ export const SearchBrandWrapper = styled.div`
   margin: 0 0 10px 0;
   align-items: center;
 
-  & input {
-    height: 36px;
-    width: 100%;
-    padding: 8px;
-    margin-right: 4px;
-    outline: none;
-    border: none;
-    border-radius: 2px;
-    background-color: #f0f0f0;
-    transition: all 0.2s ease;
-
-    &:focus,
-    &:active {
-      border: none;
-      background-color: #fff;
-
-      outline: 1px solid #061178;
-      box-shadow: 0 0 5px #061178;
-    }
-  }
-
   & button {
     padding: 4px;
     border: none;
@@ -355,7 +334,6 @@ export const SearchBrandWrapper = styled.div`
 `;
 
 export const HeadingFilterWrapper = styled.div`
-  display: flex;
   align-items: center;
 
   .mobile_filter-show-btn {
@@ -371,7 +349,7 @@ export const HeadingFilterWrapper = styled.div`
       font-size: 20px;
     }
 
-    @media (max-width: 868px) {
+    @media (max-width: 768px) {
       display: inline-block;
       margin-left: auto;
     }
