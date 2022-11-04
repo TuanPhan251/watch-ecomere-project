@@ -1,6 +1,12 @@
 import { createReducer } from "@reduxjs/toolkit";
 
-import { PRODUCT_ACTION, REQUEST, SUCCESS, FAIL } from "../CONSTANTS";
+import {
+  PRODUCT_ACTION,
+  REQUEST,
+  SUCCESS,
+  FAIL,
+  WISHLIST_ACTION,
+} from "../CONSTANTS";
 
 const initialValue = {
   productList: {
@@ -251,6 +257,42 @@ const productReducer = createReducer(initialValue, {
         ...state.updateProductData,
         loading: false,
         error: error,
+      },
+    };
+  },
+
+  [SUCCESS(WISHLIST_ACTION.ADD_WISHLIST)]: (state, action) => {
+    const { data } = action.payload;
+
+    return {
+      ...state,
+      productDetail: {
+        ...state.productDetail,
+        data: {
+          ...state.productDetail.data,
+          wishlists: [...state.productDetail.data.wishlists, data],
+        },
+        loading: false,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(WISHLIST_ACTION.REMOVE_WISHLIST)]: (state, action) => {
+    const { id } = action.payload;
+    const newWishlist = state.productDetail.data.wishlists?.filter(
+      (item) => item.id !== id
+    );
+
+    return {
+      ...state,
+      productDetail: {
+        ...state.productDetail,
+        data: {
+          ...state.productDetail.data,
+          wishlists: newWishlist,
+        },
+        loading: false,
+        error: "",
       },
     };
   },

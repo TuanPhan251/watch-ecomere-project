@@ -564,24 +564,24 @@
     },
     {
       "userId": 2,
-      "productId": 8,
-      "createdAt": 1667453834432,
-      "updatedAt": 1667453834432,
-      "id": 5
+      "productId": 6,
+      "createdAt": 1667551814807,
+      "updatedAt": 1667551814807,
+      "id": 8
     },
     {
       "userId": 2,
-      "productId": 1,
-      "createdAt": 1667454071891,
-      "updatedAt": 1667454071891,
-      "id": 6
+      "productId": 5,
+      "createdAt": 1667551862966,
+      "updatedAt": 1667551862966,
+      "id": 10
     },
     {
       "userId": 2,
-      "productId": 17,
-      "createdAt": 1667539531224,
-      "updatedAt": 1667539531224,
-      "id": 7
+      "productId": 7,
+      "createdAt": 1667551869096,
+      "updatedAt": 1667551869096,
+      "id": 11
     }
   ],
   "images": [

@@ -38,7 +38,15 @@ const UserInfoWishListPage = () => {
     );
 
     dispatch(
-      removeWishlistAction({ id: deletedWishlist.id, userId: userInfo.data.id })
+      removeWishlistAction({
+        id: deletedWishlist.id,
+        userId: userInfo.data.id,
+        callback: {
+          getWishlists: () => {
+            dispatch(getWishlistAction({ userId: userInfo.data.id }));
+          },
+        },
+      })
     );
 
     notification.open({

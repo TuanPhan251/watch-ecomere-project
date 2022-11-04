@@ -17,9 +17,6 @@ import {
   InputNumber,
   Image,
 } from "antd";
-import Slider from "react-slick";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FreeMode, Navigation, Thumbs } from "swiper";
 
 import ProductSpec from "./ProductSpec";
 import ProductPolicy from "./ProductPolicy";
@@ -61,10 +58,11 @@ const ProductDetailPage = () => {
     (item) => item.id !== productId
   );
 
-  const { wishlist } = useSelector((state) => state.wishlist);
-  const isWishlist = wishlist.data.some(
-    (item) => item.productId === productDetail.data.id
-  );
+  const isWishlist = userInfo.data.id
+    ? productDetail.data.wishlists?.some(
+        (item) => item.userId === userInfo.data.id
+      )
+    : false;
 
   const { commentList } = useSelector((state) => state.comments);
   const isCommented = commentList.data?.some(
@@ -74,14 +72,11 @@ const ProductDetailPage = () => {
   const gender = productDetail.data.gender === "male" ? "nam" : "nữ";
   const isDiscount = !!productDetail.data.discountPercent;
 
-  const [thumbsSwiper, setThumbsSwiper] = useState(null);
-
   useEffect(() => {
     dispatch(getProductDetailAction({ id: productId }));
 
     dispatch(getCategoriesListAction());
     dispatch(getCommentListAction({ productId }));
-    dispatch(getWishlistAction({ userId: userInfo.data.id }));
 
     return () => {
       dispatch(removeProductDetailAction());
@@ -123,63 +118,67 @@ const ProductDetailPage = () => {
     dispatch(createCommentAction({ data, productId }));
   };
 
-  const handleAddItemToWishlist = () => {
-    dispatch(
-      addWishlistAction({
-        data: {
-          userId: userInfo.data.id,
-          productId: productDetail.data.id,
-        },
-        userId: userInfo.data.id,
-      })
-    );
+  const handleToggleWishlist = () => {
+    if (userInfo.data.id) {
+      if (isWishlist) {
+        const wishlistData = productDetail.data.wishlists?.find(
+          (item) => item.userId === userInfo.data.id
+        );
 
-    notification.open({
-      message: "Đã thêm sản phẩm vào yêu thích",
-      placement: "top",
-      top: 100,
-      duration: 2,
-      icon: (
-        <i
-          className="fa-regular fa-heart"
-          style={{
-            color: "#335C67",
-          }}
-        ></i>
-      ),
-    });
-  };
+        if (wishlistData) {
+          dispatch(
+            removeWishlistAction({
+              id: wishlistData.id,
+              productId: productDetail.data.id,
+            })
+          );
+        }
 
-  const handleRemoveItemWishlist = () => {
-    const deletedWishlist = Object.assign(
-      {},
-      ...wishlist.data.filter(
-        (item) => item.productId === productDetail.data.id
-      )
-    );
-    console.log(
-      "🚀 ~ file: index.jsx ~ line 150 ~ handleRemoveItemWishlist ~ deletedWishlist",
-      deletedWishlist
-    );
+        notification.open({
+          message: "Đã xóa sản phẩm khỏi yêu thích",
+          placement: "top",
+          top: 100,
+          duration: 2,
+          icon: (
+            <i
+              className="fa-solid fa-heart-crack"
+              style={{
+                color: "#335C67",
+              }}
+            ></i>
+          ),
+        });
+      } else {
+        dispatch(
+          addWishlistAction({
+            data: {
+              userId: userInfo.data.id,
+              productId: productDetail.data.id,
+            },
+            userId: userInfo.data.id,
+          })
+        );
 
-    dispatch(
-      removeWishlistAction({ id: deletedWishlist.id, userId: userInfo.data.id })
-    );
-
-    notification.open({
-      message: "Đã xóa sản phẩm khỏi yêu thích",
-      placement: "top",
-      top: 100,
-      duration: 2,
-      icon: (
-        <i
-          className="fa-solid fa-heart-crack"
-          style={{
-            color: "#335C67",
-          }}
-        ></i>
-      ),
-    });
+        notification.open({
+          message: "Đã thêm sản phẩm vào yêu thích",
+          placement: "top",
+          top: 100,
+          duration: 2,
+          icon: (
+            <i
+              className="fa-regular fa-heart"
+              style={{
+                color: "#335C67",
+              }}
+            ></i>
+          ),
+        });
+      }
+    } else {
+      notification.warn({
+        message: "Bạn cần đăng nhập để thực hiện chức năng này.",
+      });
+    }
   };
 
   const renderProductSpec = useMemo(() => {
@@ -361,7 +360,7 @@ const ProductDetailPage = () => {
               )}
 
               <div className="product_like-icon">
-                {isWishlist ? (
+                {/* {isWishlist ? (
                   <Tooltip title="Xóa khỏi yêu thích">
                     <S.AddWishlistBtn
                       isWishlist={isWishlist}
@@ -379,7 +378,23 @@ const ProductDetailPage = () => {
                       <i className="fa-regular fa-heart"></i>
                     </S.AddWishlistBtn>
                   </Tooltip>
-                )}
+                )} */}
+
+                <Button
+                  size="small"
+                  danger={isWishlist}
+                  icon={
+                    isWishlist ? (
+                      <i className="fa-solid fa-heart"></i>
+                    ) : (
+                      <i className="fa-regular fa-heart"></i>
+                    )
+                  }
+                  onClick={() => handleToggleWishlist()}
+                >
+                  {" "}
+                  {productDetail.data.wishlists?.length || 0} thích{" "}
+                </Button>
               </div>
             </S.ProductImageWrapper>
           </Col>
