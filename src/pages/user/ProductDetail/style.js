@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Tabs, Image } from "antd";
+import { Tabs } from "antd";
 
 export const TopSpacer = styled.div`
   height: var(--header-height);
@@ -27,32 +27,18 @@ export const ProductDetailContainer = styled.section`
   padding: 12px;
   background-color: #fff;
   border-radius: 2px;
-`;
 
-export const CustomImage = styled(Image)``;
+  @media (max-width: 576px) {
+    margin: var(--header-height) 0 0;
+  }
+`;
 
 export const ProductImageWrapper = styled.div`
   position: relative;
   border: var(--boder-basic);
 
-  img {
+  & img {
     width: 100%;
-  }
-
-  .ant-image {
-    position: relative;
-    padding-top: 100%;
-    width: 100%;
-
-    .product_slide-img {
-      position: absolute;
-      inset: 0px;
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-position: center center;
-      object-fit: cover;
-    }
   }
 
   .product_info-discount-label {
@@ -66,7 +52,6 @@ export const ProductImageWrapper = styled.div`
     width: 60px;
     height: 60px;
     background-color: #fadb14;
-    z-index: 9;
 
     ::before {
       content: "";
@@ -89,30 +74,6 @@ export const ProductImageWrapper = styled.div`
     position: absolute;
     top: 10px;
     right: 10px;
-    z-index: 9;
-  }
-
-  .custom-indicator {
-    position: relative;
-    display: flex !important;
-    gap: 8px;
-    height: auto;
-    padding: 8px 0;
-    background-color: #fff;
-
-    li {
-      flex: 1;
-      margin: 0;
-      height: 100%;
-
-      .thumb_img-wrapper {
-        border: var(--boder-basic);
-
-        img {
-          width: 100%;
-        }
-      }
-    }
   }
 
   @media (max-width: 576px) {
@@ -282,27 +243,64 @@ export const ProductActions = styled.div`
   border-radius: 4px;
 
   button {
-    font-size: 16px;
-    font-weight: 500;
-    color: #fff;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
     background-color: var(--button-color);
-
-    :hover,
-    :active,
-    :focus {
-      color: var(--primary-color);
-      border-color: var(--primary-color);
-    }
+    color: #fff;
+    font-size: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
   }
 
   .product_action-addcart {
+    display: flex;
+
     .product_action-addcart-quantity {
       display: flex;
       align-items: center;
       justify-content: center;
+
+      span {
+        font-size: 16px;
+        margin-right: 8px;
+      }
+
+      button {
+        width: 30px;
+        background-color: #fff;
+        color: var(--dark-text-color);
+        border: var(--boder-basic);
+      }
+
+      input {
+        outline: none;
+        display: block;
+        margin: 0 4px;
+        width: 40px;
+        line-height: 40px;
+        text-align: center;
+        font-size: 16px;
+        border: var(--boder-basic);
+        border-radius: 2px;
+      }
+    }
+
+    .product_action-addcart-btn {
+      flex: 1;
+      margin-left: 24px;
     }
 
     @media (max-width: 576px) {
+      flex-wrap: wrap;
+      .product_action-addcart-quantity {
+        width: 100%;
+      }
+
+      .product_action-addcart-btn {
+        margin: 8px 0;
+      }
     }
   }
 `;
@@ -363,10 +361,6 @@ export const ProductContent = styled.div`
 
 export const ProductReview = styled.div`
   height: 500px;
-`;
-
-export const ReviewsWrapper = styled.div`
-  border-top: 1px solid #ddd;
 `;
 
 export const InfoTabs = styled(Tabs)`

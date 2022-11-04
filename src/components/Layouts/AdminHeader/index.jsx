@@ -1,10 +1,6 @@
-import { useSelector } from "react-redux";
-
 import * as S from "./styles";
 
 const AdminHeader = ({ setShowSidebar, showSidebar }) => {
-  const { userInfo } = useSelector((state) => state.user);
-
   return (
     <S.AdminHeaderContainer>
       <button
@@ -13,9 +9,9 @@ const AdminHeader = ({ setShowSidebar, showSidebar }) => {
       >
         <i className="fa-solid fa-bars"></i>
       </button>
-      <h2 className="admin_header-heading">Trang quản trị</h2>
+      <h2 className="admin_header-heading">admin page</h2>
 
-      <h3 className="admin_header-account">{userInfo.data.userName}</h3>
+      <h3 className="admin_header-account">Tuấn, Phương</h3>
     </S.AdminHeaderContainer>
   );
 };

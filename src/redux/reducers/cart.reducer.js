@@ -15,7 +15,7 @@ const cartReducer = createReducer(initialValue, {
       const newItem = {
         ...product.data,
         totalAmount: productAmount,
-        totalPrice: product.data.finalPrice * productAmount,
+        totalPrice: product.data.finalPrice,
       };
       const newCartList = [newItem, ...state.cartList];
 
