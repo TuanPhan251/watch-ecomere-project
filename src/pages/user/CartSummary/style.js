@@ -3,8 +3,8 @@ import { Row } from "antd";
 import imageForm from "../../../assets/banner/image-form-info.png";
 
 export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
   margin-top: var(--header-height);
   min-height: 100vh;
   background-color: var(--bgr-color);
@@ -12,17 +12,23 @@ export const Wrapper = styled.div`
   justify-content: center;
 `;
 
+export const CheckoutContainer = styled.div`
+  max-width: 1200px;
+  width: 100%;
+`;
+
 export const StepContainer = styled.div`
-  display: flex;
-  width: 10%;
+  max-width: 1200px;
+  width: 100%;
+  padding: 12px;
+  margin: 12px auto;
   background-color: #fff;
-  border-right: 2px solid #ccc;
+  padding: 12px;
 `;
 
 export const CheckoutCartContainer = styled.div`
-  /* max-width: 1200px; */
-  width: 70%;
-  /* margin: 0 auto; */
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 24px 12px;
   height: 100%;
   min-height: 100vh;
@@ -41,6 +47,11 @@ export const CheckoutCartContainer = styled.div`
     position: relative;
     display: flex;
     flex-wrap: wrap;
+
+    .cart-item-tbody {
+      padding: 4px 12px 0;
+      box-shadow: 0 0 4px #ddd;
+    }
   }
 
   .cart_summary {
@@ -110,7 +121,7 @@ export const CheckoutCartContainer = styled.div`
         border-radius: 4px;
         background-color: var(--button-color);
         color: #fff;
-        font-size: 20px;
+        font-size: 16px;
         transition: all 0.3s ease;
         cursor: pointer;
 
@@ -223,7 +234,7 @@ export const CartItem = styled(Row)`
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
 
     .item-quantity {
       display: flex;
@@ -345,4 +356,8 @@ export const CartItem = styled(Row)`
   }
 `;
 
-//Info
+//info
+
+export const CartInfoSummary = styled.div`
+  margin-bottom: 12px;
+`;

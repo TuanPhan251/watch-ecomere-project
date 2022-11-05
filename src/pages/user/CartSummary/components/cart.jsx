@@ -75,23 +75,33 @@ const Cart = ({ setStep }) => {
 
             <Col span={8}>
               <div className="item_info-right-wrapper">
+                <div className="item_price">
+                  {item.isDiscount && (
+                    <span className="item_price-original">
+                      {(item.totalAmount * item.price)?.toLocaleString()}
+                      <sup>đ</sup>
+                    </span>
+                  )}
+                  <span className="item_price-final">
+                    {item.totalPrice?.toLocaleString()}
+                    <sup>đ</sup>
+                  </span>
+                  {item.isDiscount && (
+                    <p className="item_price-discount">
+                      Tiết kiệm <span>{item.discountPercent}%</span>
+                    </p>
+                  )}
+                </div>
+
                 <div className="item-quantity">
-                  <p>Số lượng: </p>
-                  <Popconfirm
-                    title="Xóa sản phẩm khỏi giỏ?"
-                    okText="Ok"
-                    cancelText="Hủy"
-                    onConfirm={() => handleRemoveProduct(item.id)}
+                  <button
+                    onClick={() => {
+                      if (item.totalAmount === 1) return null;
+                      handleUpdateCartItem(item, item.totalAmount, "minus");
+                    }}
                   >
-                    <button
-                      onClick={() => {
-                        if (item.totalAmount === 1) return null;
-                        handleUpdateCartItem(item, item.totalAmount, "minus");
-                      }}
-                    >
-                      <i className="fa-solid fa-minus"></i>
-                    </button>
-                  </Popconfirm>
+                    <i className="fa-solid fa-minus"></i>
+                  </button>
 
                   <input
                     min={1}
@@ -109,20 +119,6 @@ const Cart = ({ setStep }) => {
                   >
                     <i className="fa-solid fa-plus"></i>
                   </button>
-                </div>
-
-                <div className="item_price">
-                  <span className="item_price-original">
-                    {(item.totalAmount * item.price)?.toLocaleString()}
-                    <sup>đ</sup>
-                  </span>
-                  <span className="item_price-final">
-                    {item.totalPrice?.toLocaleString()}
-                    <sup>đ</sup>
-                  </span>
-                  <p className="item_price-discount">
-                    Tiết kiệm <span>{item.discountPercent}%</span>
-                  </p>
                 </div>
               </div>
             </Col>
@@ -158,21 +154,19 @@ const Cart = ({ setStep }) => {
             </p>
 
             <div className="cart_price-total">
-              <p className="cart_price-total-title">
-                Tổng cộng (đã bao gồm VAT)
-              </p>
+              <p className="cart_price-total-title">Tổng cộng</p>
               <p className="cart_price-total-amount">
                 {totalPrice?.toLocaleString()} <sup>đ</sup>
               </p>
             </div>
 
             <div className="cart_summary-action">
-              <button>ĐẶT HÀNG NGAY</button>
+              <button onClick={() => setStep(STEP.INFO)}>ĐẶT HÀNG NGAY</button>
             </div>
           </div>
         </Col>
       </div>
-      <Row style={{ justifyContent: "space-between", marginTop: 30 }}>
+      {/* <Row style={{ justifyContent: "space-between", marginTop: 30 }}>
         <Button
           size="large"
           style={{ backgroundColor: "yellow", minWidth: 200 }}
@@ -187,7 +181,7 @@ const Cart = ({ setStep }) => {
         >
           Next
         </Button>
-      </Row>
+      </Row> */}
     </S.CheckoutCartContainer>
   );
 };

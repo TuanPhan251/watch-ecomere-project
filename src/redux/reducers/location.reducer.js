@@ -121,6 +121,27 @@ const locationReducer = createReducer(initialValue, {
       },
     };
   },
+
+  [REQUEST(LOCATION_ACTION.CLEAR_LOCATION)]: (state, action) => {
+    return {
+      ...state,
+      cityList: {
+        data: [],
+        loading: false,
+        error: "",
+      },
+      districtList: {
+        data: [],
+        loading: false,
+        error: "",
+      },
+      wardList: {
+        data: [],
+        loading: false,
+        error: "",
+      },
+    };
+  },
 });
 
 export default locationReducer;
