@@ -15,12 +15,6 @@ import Info from "./components/info";
 import Success from "../CartSummary/components/success";
 import Payment from "../CartSummary/components/payment";
 import * as S from "./style";
-import {
-  UserOutlined,
-  ShoppingCartOutlined,
-  DollarOutlined,
-  FileDoneOutlined,
-} from "@ant-design/icons";
 
 const CartSummaryPage = () => {
   const dispatch = useDispatch();
@@ -69,17 +63,26 @@ const CartSummaryPage = () => {
   return (
     <S.Wrapper>
       <S.StepContainer>
-        <Steps
-          current={step}
-          direction="vertical"
-          style={{ margin: "30px 0 0 30px" }}
-        >
-          <Steps.Step title="Cart" icon={<ShoppingCartOutlined />}></Steps.Step>
-          <Steps.Step title="Info" icon={<UserOutlined />}></Steps.Step>
-          <Steps.Step title="Payment" icon={<DollarOutlined />}></Steps.Step>
-          <Steps.Step title="Success" icon={<FileDoneOutlined />}></Steps.Step>
+        <Steps current={step}>
+          <Steps.Step
+            title="Giỏ hàng"
+            icon={<i className="fa-solid fa-cart-shopping"></i>}
+          ></Steps.Step>
+          <Steps.Step
+            title="Thông tin"
+            icon={<i className="fa-regular fa-user"></i>}
+          ></Steps.Step>
+          <Steps.Step
+            title="Thanh toán"
+            icon={<i className="fa-solid fa-dollar-sign"></i>}
+          ></Steps.Step>
+          <Steps.Step
+            title="Hoàn thành"
+            icon={<i className="fa-regular fa-circle-check"></i>}
+          ></Steps.Step>
         </Steps>
       </S.StepContainer>
+
       {renderCheckOutItem}
     </S.Wrapper>
   );

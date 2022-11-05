@@ -11,3 +11,6 @@ export const getDistrictListAction = createAction(
 export const getWardListAction = createAction(
   REQUEST(LOCATION_ACTION.GET_WARD_LIST)
 );
+export const clearLocationAction = createAction(
+  REQUEST(LOCATION_ACTION.CLEAR_LOCATION)
+);

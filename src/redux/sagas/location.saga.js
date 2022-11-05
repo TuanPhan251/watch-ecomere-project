@@ -27,7 +27,7 @@ function* getDistrictListSaga(action) {
     const { cityCode } = action.payload;
     const result = yield axios.get("http://localhost:4000/districts", {
       params: {
-        parentCode: cityCode,
+        parentcode: cityCode,
       },
     });
     yield put({
@@ -50,7 +50,7 @@ function* getWardListSaga(action) {
     const { districtCode } = action.payload;
     const result = yield axios.get("http://localhost:4000/wards", {
       params: {
-        parentCode: districtCode,
+        parentcode: districtCode,
       },
     });
     yield put({

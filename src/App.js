@@ -23,16 +23,16 @@ import AdminUsersPage from "./pages/admin/AdminUserPage";
 import CreateProductPage from "./pages/admin/AdminProductPage/CreateProductPage";
 import UpdateProductPage from "./pages/admin/AdminProductPage/UpdateProductPage";
 
-import HomePage from "./pages/User/Home";
-import ProductPage from "./pages/User/ProductsPage";
-import ProductDetailPage from "./pages/User/ProductDetail";
-import CartSummaryPage from "./pages/User/CartSummary";
-import ContactPage from "./pages/User/ContactPage";
-import BrandPage from "./pages/User/BrandPage";
-import UserInfoPage from "./pages/User/UserInfo";
-import UserInfoOrderPage from "./pages/User/UserInfo/UserInfoOrder";
-import UserInfoPasswordPage from "./pages/User/UserInfo/UserInfoPassword";
-import UserInfoWishListPage from "./pages/User/UserInfo/UserInfoWishList";
+import HomePage from "./pages/user/Home";
+import ProductPage from "./pages/user/ProductsPage";
+import ProductDetailPage from "./pages/user/ProductDetail";
+import CartSummaryPage from "./pages/user/CartSummary";
+import ContactPage from "./pages/user/ContactPage";
+import BrandPage from "./pages/user/BrandPage";
+import UserInfoPage from "./pages/user/UserInfo";
+import UserInfoOrderPage from "./pages/user/UserInfo/UserInfoOrder";
+import UserInfoPasswordPage from "./pages/user/UserInfo/UserInfoPassword";
+import UserInfoWishListPage from "./pages/user/UserInfo/UserInfoWishList";
 
 function App() {
   const dispatch = useDispatch();
