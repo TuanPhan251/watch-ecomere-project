@@ -2,24 +2,21 @@ import { useMemo } from "react";
 import { generatePath, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Modal, Col, Row, Popconfirm, Button } from "antd";
+import { Col, Row, Popconfirm, Button } from "antd";
 
 import { ROUTES } from "../../../../constants/routes";
-import { STEP } from "../components/constants/step";
+import { STEP } from "./constants/step";
 import {
   removeCartItemAction,
   updateCartItemAction,
 } from "../../../../redux/actions/cart.actions";
 
 import * as S from "../style";
-import { useState } from "react";
 
 const Cart = ({ setStep }) => {
   const dispatch = useDispatch();
   const { cartList } = useSelector((state) => state.cart);
   const navigate = useNavigate();
-
-  const [showModal, setShowModal] = useState(false);
 
   const totalPrice = cartList.reduce((prev, item) => {
     return prev + item.totalPrice;
@@ -166,22 +163,15 @@ const Cart = ({ setStep }) => {
           </div>
         </Col>
       </div>
-      {/* <Row style={{ justifyContent: "space-between", marginTop: 30 }}>
+      <Row style={{ justifyContent: "space-between", marginTop: 30 }}>
         <Button
           size="large"
           style={{ backgroundColor: "yellow", minWidth: 200 }}
-          onClick={() => navigate(ROUTES.USER.PRODUCT_DETAIL)}
+          onClick={() => navigate(ROUTES.USER.BRAND)}
         >
-          Quay về trang sản phẩm
+          Quay lại trang sản phẩm
         </Button>
-        <Button
-          size="large"
-          style={{ backgroundColor: "yellow", minWidth: 200 }}
-          onClick={() => setStep(STEP.INFO)}
-        >
-          Next
-        </Button>
-      </Row> */}
+      </Row>
     </S.CheckoutCartContainer>
   );
 };

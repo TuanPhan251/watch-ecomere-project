@@ -1,12 +1,11 @@
 import * as S from "../style";
-import { Form, generatePath, Link, useNavigate } from "react-router-dom";
-import { Button, Col, Input, Popconfirm, Radio, Row } from "antd";
+import { generatePath, Link } from "react-router-dom";
+import { Button, Col, Popconfirm, Radio, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { useMemo } from "react";
 
-import imageForm from "../../../../assets/banner/image-form-info.png";
 import { ROUTES } from "../../../../constants/routes";
-import { STEP } from "../components/constants/step";
+import { STEP } from "./constants/step";
 import {
   removeCartItemAction,
   updateCartItemAction,
@@ -15,7 +14,6 @@ import {
 const Payment = ({ setStep }) => {
   const dispatch = useDispatch();
   const { cartList } = useSelector((state) => state.cart);
-  const navigate = useNavigate();
   const totalPrice = cartList.reduce((prev, item) => {
     return prev + item.totalPrice;
   }, 0);
@@ -172,7 +170,7 @@ const Payment = ({ setStep }) => {
 
               <div className="cart_price-total">
                 <p className="cart_price-total-title">
-                  Tổng cộng (đã bao gồm VAT)
+                  Tổng cộng (bao gồm VAT)
                 </p>
                 <p className="cart_price-total-amount">
                   {totalPrice?.toLocaleString()} <sup>đ</sup>
@@ -180,7 +178,9 @@ const Payment = ({ setStep }) => {
               </div>
 
               <div className="cart_summary-action">
-                <button>ĐẶT HÀNG NGAY</button>
+                <button onClick={() => setStep(STEP.SUCCESS)}>
+                  Thanh toán
+                </button>
               </div>
             </div>
           </Col>
@@ -193,14 +193,7 @@ const Payment = ({ setStep }) => {
           style={{ backgroundColor: "yellow", minWidth: 200 }}
           onClick={() => setStep(STEP.INFO)}
         >
-          Back
-        </Button>
-        <Button
-          size="large"
-          style={{ backgroundColor: "yellow", minWidth: 200 }}
-          onClick={() => setStep(STEP.SUCCESS)}
-        >
-          Next
+          Quay lại
         </Button>
       </Row>
     </S.CheckoutCartContainer>

@@ -1,9 +1,7 @@
 import * as S from "../style";
-import imageForm from "../../../../assets/banner/image-form-info.png";
-import { Form, useNavigate } from "react-router-dom";
-import { Button, Input } from "antd";
+import { useNavigate } from "react-router-dom";
+import { Button } from "antd";
 import { ROUTES } from "../../../../constants/routes";
-import { STEP } from "../components/constants/step";
 
 const Info = ({ setStep }) => {
   const navigate = useNavigate();
@@ -15,9 +13,9 @@ const Info = ({ setStep }) => {
       <Button
         size="large"
         style={{ backgroundColor: "yellow", minWidth: 200 }}
-        onClick={() => navigate(ROUTES.USER.HOME)}
+        onClick={() => navigate(ROUTES.USER.BRAND)}
       >
-        Quay về trang chủ
+        Tiếp tục mua sắm
       </Button>
     </S.CheckoutCartContainer>
   );
