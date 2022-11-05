@@ -12,7 +12,7 @@ import {
   Space,
   Table,
 } from "antd";
-import { STEP } from "../components/constants/step";
+import { STEP } from "./constants/step";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
@@ -303,19 +303,18 @@ const Info = ({ setStep }) => {
       <Row justify="space-around" style={{ marginTop: 24 }}>
         <Button
           size="large"
-          type="primary"
-          ghost
+          style={{ backgroundColor: "yellow", minWidth: 200 }}
           onClick={() => setStep(STEP.CART)}
         >
-          Quay lại
+          Quay lại
         </Button>
         <Button
           size="large"
-          type="primary"
+          style={{ backgroundColor: "yellow", minWidth: 200 }}
           onClick={() => setStep(STEP.PAYMENT)}
           // onClick={() => infoForm.submit()}
         >
-          Tiếp tục
+          Tiếp tục
         </Button>
       </Row>
     </S.CheckoutCartContainer>

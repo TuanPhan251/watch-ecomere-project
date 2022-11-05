@@ -403,14 +403,6 @@ const ProductPage = () => {
     });
   }, [filterParams.glassMaterial]);
 
-  const renderFilterDiscount = useMemo(() => {
-    return (
-      <Tag closable onClose={() => handleRemoveFilterDiscount()}>
-        Giảm giá
-      </Tag>
-    );
-  }, [filterParams.isDiscount]);
-
   const renderProducts = useMemo(() => {
     return productList.data.map((item) => {
       const isDiscount = !!item.discountPercent;
@@ -622,7 +614,6 @@ const ProductPage = () => {
               <p className="product_filter-title">
                 <i className="fa-solid fa-filter"></i>Bộ lọc
               </p>
-
               <Collapse
                 ghost
                 bordered={false}
@@ -649,7 +640,6 @@ const ProductPage = () => {
                     <Row>{renderCategory}</Row>
                   </Checkbox.Group>
                 </Panel>
-
                 <Panel header="Giới tính" key="2">
                   <Radio.Group
                     value={filterParams.gender}
@@ -665,7 +655,6 @@ const ProductPage = () => {
                     </Col>
                   </Radio.Group>
                 </Panel>
-
                 <Panel
                   header="Loại máy"
                   key="3"
@@ -687,7 +676,6 @@ const ProductPage = () => {
                     </Col>
                   </Checkbox.Group>
                 </Panel>
-
                 <Panel header="Đường kính mặt" key="4">
                   <Radio.Group
                     onChange={(e) =>
@@ -740,7 +728,6 @@ const ProductPage = () => {
                   </Col>
                 </Panel>
               </Collapse>
-
               <div className="product_filter-actions">
                 <button onClick={() => handleResetFilterParams()}>
                   Xóa bộ lọc
@@ -748,7 +735,6 @@ const ProductPage = () => {
               </div>
             </div>
           </Col>
-
           <Col xxl={18} xl={18} md={18} sm={24} xs={24}>
             <S.ProductsWrapper>
               <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
@@ -782,7 +768,6 @@ const ProductPage = () => {
                       <Option value="asc">Giá: Thấp - Cao</Option>
                       <Option value="desc">Giá: Cao - Thấp</Option>
                     </Select>
-
                     <button
                       className="mobile_filter-show-btn"
                       onClick={() => setShowFilterDrawer(true)}

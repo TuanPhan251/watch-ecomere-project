@@ -10,10 +10,10 @@ import {
   removeCartItemAction,
   updateCartItemAction,
 } from "../../../redux/actions/cart.actions";
-import Cart from "../CartSummary/components/cart";
+import Cart from "./components/cart";
 import Info from "./components/info";
-import Success from "../CartSummary/components/success";
-import Payment from "../CartSummary/components/payment";
+import Success from "./components/success";
+import Payment from "./components/payment";
 import * as S from "./style";
 
 const CartSummaryPage = () => {

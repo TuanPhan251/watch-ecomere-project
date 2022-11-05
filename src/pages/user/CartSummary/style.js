@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Row } from "antd";
-import imageForm from "../../../assets/banner/image-form-info.png";
 
 export const Wrapper = styled.div`
   /* display: flex;
@@ -37,12 +36,11 @@ export const CheckoutCartContainer = styled.div`
 
   .cart_summary-heading {
     color: var(--dark-text-color);
-    font-size: 32px;
+    font-size: 28px;
     text-transform: uppercase;
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 20px;
   }
-
   .cart-item-container {
     position: relative;
     display: flex;
@@ -61,7 +59,7 @@ export const CheckoutCartContainer = styled.div`
     right: 0;
     width: 90%;
     min-height: 200px;
-    padding: 12px;
+    padding: 12px 10px 12px 12px;
 
     margin: auto;
     box-shadow: 0px 4px 8px #ccc;
@@ -121,7 +119,7 @@ export const CheckoutCartContainer = styled.div`
         border-radius: 4px;
         background-color: var(--button-color);
         color: #fff;
-        font-size: 16px;
+        font-size: 20px;
         transition: all 0.3s ease;
         cursor: pointer;
 
