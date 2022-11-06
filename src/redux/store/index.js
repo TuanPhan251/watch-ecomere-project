@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "@redux-saga/core";
+import rootSaga from "../sagas";
 
 import cartReducer from "../reducers/cart.reducer";
 import productReducer from "../reducers/products.reducer";
@@ -7,8 +8,8 @@ import categoryReducer from "../reducers/category.reducer";
 import userReducer from "../reducers/user.reducer";
 import commentsReducer from "../reducers/comments.reducer";
 import wishlistReducer from "../reducers/wishlist.reducer";
-import rootSaga from "../sagas";
 import locationReducer from "../reducers/location.reducer";
+import discountReducer from "../reducers/discount.reducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -21,6 +22,7 @@ const store = configureStore({
     comments: commentsReducer,
     location: locationReducer,
     wishlist: wishlistReducer,
+    discount: discountReducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({

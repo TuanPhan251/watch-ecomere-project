@@ -1,8 +1,8 @@
 import * as S from "../style";
 import { generatePath, Link } from "react-router-dom";
-import { Button, Col, Popconfirm, Radio, Row } from "antd";
+import { Button, Col, Form, Input, Popconfirm, Radio, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { ROUTES } from "../../../../constants/routes";
 import { STEP } from "./constants/step";
@@ -21,7 +21,6 @@ const Payment = ({ setStep }) => {
   const handleRemoveProduct = (productId) => {
     dispatch(removeCartItemAction({ productId }));
   };
-
   const handleUpdateCartItem = (product, quantity, type) => {
     dispatch(
       updateCartItemAction({
@@ -30,6 +29,7 @@ const Payment = ({ setStep }) => {
       })
     );
   };
+
   const renderCartItems = useMemo(() => {
     if (cartList.length !== 0) {
       return cartList.map((item) => {
@@ -155,6 +155,7 @@ const Payment = ({ setStep }) => {
           <Col xxl={8} xl={8} lg={8} md={24} xs={24}>
             <div className="cart_summary">
               <h3>Đơn hàng của bạn:</h3>
+
               <p className="cart_total-price">
                 <span className="cart_total-price-title">Tạm tính:</span>
                 <span>
