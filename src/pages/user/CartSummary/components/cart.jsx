@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { generatePath, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -21,15 +21,31 @@ const Cart = ({ setStep }) => {
 
   const { cartList } = useSelector((state) => state.cart);
   const { discount } = useSelector((state) => state.discount);
+  console.log("🚀 ~ file: cart.jsx ~ line 24 ~ Cart ~ discount", discount);
+  const haveCoupon = !(discount.data.length === 0);
+  console.log("🚀 ~ file: cart.jsx ~ line 26 ~ Cart ~ haveCoupon", haveCoupon);
 
   const navigate = useNavigate();
 
   const totalPrice = cartList.reduce((prev, item) => {
     return prev + item.totalPrice;
   }, 0);
+
+  const discountPrice = totalPrice * (1 - discount.data[0]?.discount / 100);
   const [discountValue, setDiscountValue] = useState(0);
 
   const [totalDiscountPrice, setTotalDiscountPrice] = useState(totalPrice);
+
+  useEffect(() => {
+    if (!haveCoupon) {
+      inputForm.setFields([
+        {
+          name: "discountInput",
+          errors: ["Mã không có hiệu lực"],
+        },
+      ]);
+    }
+  }, [discount.data]);
 
   const handleRemoveProduct = (productId) => {
     dispatch(removeCartItemAction({ productId }));
@@ -49,25 +65,21 @@ const Cart = ({ setStep }) => {
         data: value.discountInput,
       })
     );
-    if (discount.data[0]) {
-      inputForm.setFields([
-        {
-          name: "discountInput",
-          errors: ["Nhập mã thành công"],
-        },
-      ]);
-      setDiscountValue(discount.data[0].discount);
-      setTotalDiscountPrice(totalPrice - (discountValue * totalPrice) / 100);
-    } else if (discount.data) {
-      inputForm.setFields([
-        {
-          name: "discountInput",
-          errors: ["Mã không có hiệu lực"],
-        },
-      ]);
-      setDiscountValue(0);
-      setTotalDiscountPrice(totalPrice);
-    }
+    // if (discount.data[0]) {
+    //   inputForm.setFields([
+    //     {
+    //       name: "discountInput",
+    //       errors: ["Nhập mã thành công"],
+    //     },
+    //   ]);
+    // } else if (discount.data) {
+    //   inputForm.setFields([
+    //     {
+    //       name: "discountInput",
+    //       errors: ["Mã không có hiệu lực"],
+    //     },
+    //   ]);
+    // }
   };
 
   const renderCartItems = useMemo(() => {
@@ -176,7 +188,16 @@ const Cart = ({ setStep }) => {
             <h3>Đơn hàng của bạn:</h3>
             <div className="cart_summary-discount">
               <Form form={inputForm} onFinish={(value) => handlePayment(value)}>
-                <Form.Item label="Nhập mã giảm giá" name="discountInput">
+                <Form.Item
+                  label="Nhập mã giảm giá"
+                  name="discountInput"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Bạn phải nhập mã giảm giá",
+                    },
+                  ]}
+                >
                   <Input />
                 </Form.Item>
                 <Button
@@ -198,16 +219,21 @@ const Cart = ({ setStep }) => {
               <span className="cart_shipping-cost-title">Phí vận chuyển:</span>
               <span>Miễn phí</span>
             </p>
-            <p className="cart_shipping-cost">
-              <span className="cart_shipping-cost-title">Giảm giá:</span>
+            {haveCoupon && (
+              <p className="cart_shipping-cost">
+                <span className="cart_shipping-cost-title">Giảm giá:</span>
 
-              <span>{discountValue}%</span>
-            </p>
+                <span>{discount.data[0]?.discount}%</span>
+              </p>
+            )}
 
             <div className="cart_price-total">
               <p className="cart_price-total-title">Tổng cộng</p>
               <p className="cart_price-total-amount">
-                {totalDiscountPrice?.toLocaleString()} <sup>đ</sup>
+                {haveCoupon
+                  ? discountPrice?.toLocaleString()
+                  : totalPrice?.toLocaleString()}{" "}
+                <sup>đ</sup>
               </p>
             </div>
 
