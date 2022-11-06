@@ -52,6 +52,13 @@ export const CheckoutCartContainer = styled.div`
     }
   }
 
+  .cart_summary-discount {
+    justify-self: center;
+    width: 100%;
+    min-height: 40px;
+
+    margin-bottom: 10px;
+  }
   .cart_summary {
     justify-self: center;
     position: sticky;

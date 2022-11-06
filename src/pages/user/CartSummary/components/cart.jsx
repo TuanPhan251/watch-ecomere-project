@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { generatePath, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Col, Row, Popconfirm, Button } from "antd";
+import { Col, Row, Popconfirm, Button, Form, Input } from "antd";
 
 import { ROUTES } from "../../../../constants/routes";
 import { STEP } from "./constants/step";
@@ -10,17 +10,26 @@ import {
   removeCartItemAction,
   updateCartItemAction,
 } from "../../../../redux/actions/cart.actions";
+import { getDiscountAction } from "../../../../redux/actions/discount.action";
 
 import * as S from "../style";
+import { useState } from "react";
 
 const Cart = ({ setStep }) => {
   const dispatch = useDispatch();
+  const [inputForm] = Form.useForm();
+
   const { cartList } = useSelector((state) => state.cart);
+  const { discount } = useSelector((state) => state.discount);
+
   const navigate = useNavigate();
 
   const totalPrice = cartList.reduce((prev, item) => {
     return prev + item.totalPrice;
   }, 0);
+  const [discountValue, setDiscountValue] = useState(0);
+
+  const [totalDiscountPrice, setTotalDiscountPrice] = useState(totalPrice);
 
   const handleRemoveProduct = (productId) => {
     dispatch(removeCartItemAction({ productId }));
@@ -33,6 +42,32 @@ const Cart = ({ setStep }) => {
         amount: type === "plus" ? quantity + 1 : quantity - 1,
       })
     );
+  };
+  const handlePayment = (value) => {
+    dispatch(
+      getDiscountAction({
+        data: value.discountInput,
+      })
+    );
+    if (discount.data[0]) {
+      inputForm.setFields([
+        {
+          name: "discountInput",
+          errors: ["Nhập mã thành công"],
+        },
+      ]);
+      setDiscountValue(discount.data[0].discount);
+      setTotalDiscountPrice(totalPrice - (discountValue * totalPrice) / 100);
+    } else if (discount.data) {
+      inputForm.setFields([
+        {
+          name: "discountInput",
+          errors: ["Mã không có hiệu lực"],
+        },
+      ]);
+      setDiscountValue(0);
+      setTotalDiscountPrice(totalPrice);
+    }
   };
 
   const renderCartItems = useMemo(() => {
@@ -139,6 +174,20 @@ const Cart = ({ setStep }) => {
         <Col xxl={8} xl={8} lg={8} md={24} xs={24}>
           <div className="cart_summary">
             <h3>Đơn hàng của bạn:</h3>
+            <div className="cart_summary-discount">
+              <Form form={inputForm} onFinish={(value) => handlePayment(value)}>
+                <Form.Item label="Nhập mã giảm giá" name="discountInput">
+                  <Input />
+                </Form.Item>
+                <Button
+                  htmlType="submit"
+                  // onClick={handlePayment}
+                  style={{ width: "100%" }}
+                >
+                  Sử dụng
+                </Button>
+              </Form>
+            </div>
             <p className="cart_total-price">
               <span className="cart_total-price-title">Tạm tính:</span>
               <span>
@@ -149,11 +198,16 @@ const Cart = ({ setStep }) => {
               <span className="cart_shipping-cost-title">Phí vận chuyển:</span>
               <span>Miễn phí</span>
             </p>
+            <p className="cart_shipping-cost">
+              <span className="cart_shipping-cost-title">Giảm giá:</span>
+
+              <span>{discountValue}%</span>
+            </p>
 
             <div className="cart_price-total">
               <p className="cart_price-total-title">Tổng cộng</p>
               <p className="cart_price-total-amount">
-                {totalPrice?.toLocaleString()} <sup>đ</sup>
+                {totalDiscountPrice?.toLocaleString()} <sup>đ</sup>
               </p>
             </div>
 

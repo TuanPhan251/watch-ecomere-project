@@ -96255,5 +96255,12 @@
       "status": 1,
       "region": null
     }
+  ],
+  "discount": [
+    {
+      "id": 1,
+      "name": "phuong",
+      "discount": 10
+    }
   ]
 }

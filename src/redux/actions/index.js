@@ -5,3 +5,4 @@ export * from "./products.action";
 export * from "./user.action";
 export * from "./location.action";
 export * from "./wishlist.action";
+export * from "./discount.action";
