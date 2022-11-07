@@ -2,6 +2,9 @@ import { createReducer } from "@reduxjs/toolkit";
 import { CART_ACTION, REQUEST } from "../CONSTANTS";
 const initialValue = {
   cartList: JSON.parse(localStorage.getItem("cart")) || [],
+  checkoutInfo: {},
+  checkoutPayment: {},
+  checkoutCoupon: {},
 };
 
 const cartReducer = createReducer(initialValue, {
@@ -77,6 +80,20 @@ const cartReducer = createReducer(initialValue, {
     return {
       ...state,
       cartList: newCartList,
+    };
+  },
+  [REQUEST(CART_ACTION.SET_COUPON_DATA)]: (state, action) => {
+    const { data } = action.payload;
+
+    return {
+      ...state,
+      checkoutCoupon: data,
+    };
+  },
+  [REQUEST(CART_ACTION.SET_CHECKOUT_INFO_DATA)]: (state, action) => {
+    return {
+      ...state,
+      checkoutInfo: action.payload,
     };
   },
 });

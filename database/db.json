@@ -584,6 +584,56 @@
       "id": 11
     }
   ],
+  "orders": [
+    {
+      "nameInfo": "phuong1",
+      "emailInfo": "phuong1@gmail.com",
+      "phoneNumber": 42343242,
+      "address": "111",
+      "cityId": 9737,
+      "cityName": "Thành phố Hồ Chí Minh",
+      "districtId": 9897,
+      "districtName": "Quận 10",
+      "wardId": 9907,
+      "wardName": "Phường 02",
+      "method": "cod",
+      "coupon": "phuong",
+      "couponValue": 10,
+      "userId": 2,
+      "orderCode": "c1990012-7078-43cf-aa74-d3243a4f0159",
+      "totalPrice": 2014245,
+      "status": "pending",
+      "createdAt": 1667813278603,
+      "updatedAt": 1667813278603,
+      "id": 1
+    }
+  ],
+  "orderProducts": [
+    {
+      "orderId": 1,
+      "productId": 2,
+      "productName": "Đồng hồ CASIO 40 mm Nam MTP-VT01GL-1B2UDF ",
+      "price": 1139050,
+      "quantity": 1,
+      "slug": "dong-ho-casio-40-mm-nam-mtp-vt01gl-1b2udf",
+      "image": "https://cdn.tgdd.vn/Products/Images/7264/286440/casio-mtp-vt01gl-1b2udf-nam-2-1.jpg",
+      "createdAt": 1667813278674,
+      "updatedAt": 1667813278674,
+      "id": 1
+    },
+    {
+      "orderId": 1,
+      "productId": 1,
+      "productName": "Đồng hồ CASIO 41 mm Nam MTP-VD02L-7EUDF ",
+      "price": 1099000,
+      "quantity": 1,
+      "slug": "dong-ho-casio-41-mm-nam-mtp-vd02l-7eudf",
+      "image": "https://cdn.tgdd.vn/Products/Images/7264/286439/casio-mtp-vd02l-7eudf-nam-2-1.jpg",
+      "createdAt": 1667813278750,
+      "updatedAt": 1667813278751,
+      "id": 2
+    }
+  ],
   "images": [
     {
       "name": "mathey-tissot-h411bpi1-nam-2-org.jpg",

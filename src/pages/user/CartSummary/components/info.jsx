@@ -20,6 +20,7 @@ import {
   getDistrictListAction,
   getWardListAction,
   clearLocationAction,
+  setCheckoutInfoAction,
 } from "../../../../redux/actions";
 import { useMemo } from "react";
 
@@ -29,7 +30,7 @@ const Info = ({ setStep }) => {
     (state) => state.location
   );
   const { userInfo } = useSelector((state) => state.user);
-  const { cartList } = useSelector((state) => state.cart);
+  const { cartList, checkoutCoupon } = useSelector((state) => state.cart);
   const [infoForm] = Form.useForm();
 
   const initialFormValue = {
@@ -59,7 +60,25 @@ const Info = ({ setStep }) => {
   }, [userInfo.data]);
 
   const handleSubmitInfoForm = (values) => {
-    console.log(values);
+    const { cityCode, districtCode, wardCode, ...otherValues } = values;
+    const cityData = cityList.data.find((item) => item.code === cityCode);
+    const districtData = districtList.data.find(
+      (item) => item.code === districtCode
+    );
+    const wardData = wardList.data.find((item) => item.code === wardCode);
+
+    dispatch(
+      setCheckoutInfoAction({
+        ...otherValues,
+        cityId: cityData.id,
+        cityName: cityData.name,
+        districtId: districtData.id,
+        districtName: districtData.name,
+        wardId: wardData.id,
+        wardName: wardData.name,
+      })
+    );
+    setStep(STEP.PAYMENT);
   };
 
   const renderCityOptions = useMemo(() => {
@@ -155,12 +174,20 @@ const Info = ({ setStep }) => {
             columns={tableColumn}
             dataSource={tableData}
             pagination={false}
-            footer={() => (
-              <h4 style={{ textAlign: "right" }}>
-                Thành tiền: {totalPrice?.toLocaleString()}
-                <sup>đ</sup>
-              </h4>
-            )}
+            footer={() =>
+              checkoutCoupon.discountPrice ? (
+                <h4 style={{ textAlign: "right" }}>
+                  Thành tiền: {checkoutCoupon.discountPrice?.toLocaleString()}
+                  <sup>đ</sup> (Đã áp dụng mã giảm giá {checkoutCoupon.discount}
+                  %)
+                </h4>
+              ) : (
+                <h4 style={{ textAlign: "right" }}>
+                  Thành tiền: {totalPrice?.toLocaleString()}
+                  <sup>đ</sup>
+                </h4>
+              )
+            }
           />
         </Card>
       </S.CartInfoSummary>
@@ -171,7 +198,7 @@ const Info = ({ setStep }) => {
           form={infoForm}
           initialValues={initialFormValue}
           layout="vertical"
-          onFinish={(values) => console.log(values)}
+          onFinish={(values) => handleSubmitInfoForm(values)}
         >
           <Row gutter={[16, 16]}>
             <Col span={8}>
@@ -311,8 +338,8 @@ const Info = ({ setStep }) => {
         <Button
           size="large"
           style={{ backgroundColor: "yellow", minWidth: 200 }}
-          onClick={() => setStep(STEP.PAYMENT)}
-          // onClick={() => infoForm.submit()}
+          // onClick={() => setStep(STEP.PAYMENT)}
+          onClick={() => infoForm.submit()}
         >
           Tiếp tục
         </Button>

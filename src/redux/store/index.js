@@ -10,6 +10,7 @@ import commentsReducer from "../reducers/comments.reducer";
 import wishlistReducer from "../reducers/wishlist.reducer";
 import locationReducer from "../reducers/location.reducer";
 import discountReducer from "../reducers/discount.reducer";
+import orderReducer from "../reducers/order.reducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -23,6 +24,7 @@ const store = configureStore({
     location: locationReducer,
     wishlist: wishlistReducer,
     discount: discountReducer,
+    order: orderReducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({

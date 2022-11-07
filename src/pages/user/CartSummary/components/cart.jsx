@@ -10,7 +10,10 @@ import {
   removeCartItemAction,
   updateCartItemAction,
 } from "../../../../redux/actions/cart.actions";
-import { getDiscountAction } from "../../../../redux/actions/discount.action";
+import {
+  getDiscountAction,
+  setCouponInfoAction,
+} from "../../../../redux/actions/";
 
 import * as S from "../style";
 import { useState } from "react";
@@ -21,9 +24,7 @@ const Cart = ({ setStep }) => {
 
   const { cartList } = useSelector((state) => state.cart);
   const { discount } = useSelector((state) => state.discount);
-  console.log("🚀 ~ file: cart.jsx ~ line 24 ~ Cart ~ discount", discount);
   const haveCoupon = !(discount.data.length === 0);
-  console.log("🚀 ~ file: cart.jsx ~ line 26 ~ Cart ~ haveCoupon", haveCoupon);
 
   const navigate = useNavigate();
 
@@ -80,6 +81,19 @@ const Cart = ({ setStep }) => {
     //     },
     //   ]);
     // }
+  };
+
+  const handleSubmitCartForm = () => {
+    if (haveCoupon)
+      dispatch(
+        setCouponInfoAction({
+          data: {
+            ...discount.data[0],
+            discountPrice: discountPrice,
+          },
+        })
+      );
+    setStep(STEP.INFO);
   };
 
   const renderCartItems = useMemo(() => {
@@ -238,7 +252,9 @@ const Cart = ({ setStep }) => {
             </div>
 
             <div className="cart_summary-action">
-              <button onClick={() => setStep(STEP.INFO)}>ĐẶT HÀNG NGAY</button>
+              <button onClick={() => handleSubmitCartForm()}>
+                ĐẶT HÀNG NGAY
+              </button>
             </div>
           </div>
         </Col>
