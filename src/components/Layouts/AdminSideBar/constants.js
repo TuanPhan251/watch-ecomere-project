@@ -7,6 +7,11 @@ export const SidebarContent = [
     icon: <i className="fa-solid fa-table-columns"></i>,
   },
   {
+    title: "Đơn hàng",
+    path: ROUTES.ADMIN.ORDER_LIST_PAGE,
+    icon: <i className="fa-solid fa-clipboard-list"></i>,
+  },
+  {
     title: "Người dùng",
     path: ROUTES.ADMIN.USER_LIST_PAGE,
     icon: <i className="fa-solid fa-users"></i>,
@@ -14,7 +19,7 @@ export const SidebarContent = [
   {
     title: "Tài khoản",
     path: ROUTES.ADMIN.ACCOUNT_LIST_PAGE,
-    icon: <i className="fa-solid fa-clipboard"></i>,
+    icon: <i className="fa-solid fa-address-book"></i>,
   },
   {
     title: "Sản phẩm",
@@ -25,10 +30,5 @@ export const SidebarContent = [
     title: "Danh mục",
     path: ROUTES.ADMIN.CATEGORY_LIST_PAGE,
     icon: <i className="fa-solid fa-list"></i>,
-  },
-  {
-    title: "Trang chủ",
-    path: "/",
-    icon: <i className="fa-solid fa-house"></i>,
   },
 ];

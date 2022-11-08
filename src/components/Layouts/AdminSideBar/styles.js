@@ -54,19 +54,6 @@ export const SidebarLink = styled(Link)`
     font-size: 18px;
   }
 
-  :nth-child(6) {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px;
-    margin-top: auto;
-
-    :hover {
-      background-color: #fff;
-      color: #000;
-    }
-  }
-
   ${(props) =>
     props.$active &&
     css`

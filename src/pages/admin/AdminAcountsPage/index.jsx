@@ -82,9 +82,9 @@ const AdminAccountsPage = () => {
 
   return (
     <S.Wrapper>
-      <S.Wrapper>
-        <h3>Danh sách tài khoản ({userList.meta.total})</h3>
-      </S.Wrapper>
+      <S.TopWrapper>
+        <h2>Danh sách tài khoản ({userList.meta.total})</h2>
+      </S.TopWrapper>
 
       <Row gutter={4}>
         <Col span={4}>

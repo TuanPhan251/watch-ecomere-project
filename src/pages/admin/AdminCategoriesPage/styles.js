@@ -7,9 +7,5 @@ export const Wrapper = styled.div`
 export const TopWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-
-  h3 {
-    font-size: 24px;
-    margin-bottom: 24px;
-  }
+  margin-bottom: 24px;
 `;
