@@ -1,192 +1,316 @@
-import * as S from "../style";
-import { generatePath, Link } from "react-router-dom";
-import { Button, Col, Form, Input, Popconfirm, Radio, Row } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { useMemo, useState } from "react";
+import { generatePath, Link } from "react-router-dom";
+import {
+  Avatar,
+  Button,
+  Card,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  InputNumber,
+  Popconfirm,
+  Radio,
+  Row,
+  Space,
+  Table,
+} from "antd";
+import { v4 as uuidv4 } from "uuid";
 
 import { ROUTES } from "../../../../constants/routes";
 import { STEP } from "./constants/step";
-import {
-  removeCartItemAction,
-  updateCartItemAction,
-} from "../../../../redux/actions/cart.actions";
+import { BANKS } from "./constants/banks.constant";
+import { orderProductAction } from "../../../../redux/actions/";
+import * as S from "../style";
 
 const Payment = ({ setStep }) => {
+  const [paymentForm] = Form.useForm();
   const dispatch = useDispatch();
-  const { cartList } = useSelector((state) => state.cart);
+  const { userInfo } = useSelector((state) => state.user);
+  const { cartList, checkoutCoupon, checkoutInfo } = useSelector(
+    (state) => state.cart
+  );
   const totalPrice = cartList.reduce((prev, item) => {
     return prev + item.totalPrice;
   }, 0);
 
-  const handleRemoveProduct = (productId) => {
-    dispatch(removeCartItemAction({ productId }));
-  };
-  const handleUpdateCartItem = (product, quantity, type) => {
-    dispatch(
-      updateCartItemAction({
-        product,
-        amount: type === "plus" ? quantity + 1 : quantity - 1,
-      })
-    );
-  };
+  const handleSubmitPaymentForm = (values) => {
+    console.log(values);
 
-  const renderCartItems = useMemo(() => {
-    if (cartList.length !== 0) {
-      return cartList.map((item) => {
-        return (
-          <S.CartItem key={item.id}>
-            <Col span={4}>
-              <div className="item-img">
-                <img src={item.image} alt="" />
-              </div>
-            </Col>
-            <Col span={12}>
-              <div className="item-action">
-                <Link
-                  className="item_name"
-                  to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
-                    id: `${item.slug}.${item.id}`,
-                  })}
-                >
-                  {item.name}
-                </Link>
-
-                <Popconfirm
-                  title="Xóa sản phẩm khỏi giỏ?"
-                  okText="Ok"
-                  cancelText="Hủy"
-                  onConfirm={() => handleRemoveProduct(item.id)}
-                >
-                  <button onClick={() => null}>
-                    <i className="fa-regular fa-trash-can"></i>
-                    <span>Xóa khỏi giỏ</span>
-                  </button>
-                </Popconfirm>
-              </div>
-            </Col>
-
-            <Col span={8}>
-              <div className="item_info-right-wrapper">
-                <div className="item-quantity">
-                  <p>Số lượng: </p>
-                  <Popconfirm
-                    title="Xóa sản phẩm khỏi giỏ?"
-                    okText="Ok"
-                    cancelText="Hủy"
-                    onConfirm={() => handleRemoveProduct(item.id)}
-                  >
-                    <button
-                      onClick={() => {
-                        if (item.totalAmount === 1) return null;
-                        handleUpdateCartItem(item, item.totalAmount, "minus");
-                      }}
-                    >
-                      <i className="fa-solid fa-minus"></i>
-                    </button>
-                  </Popconfirm>
-
-                  <input
-                    min={1}
-                    readOnly
-                    type="text"
-                    value={item.totalAmount}
-                    onChange={(e) => {
-                      if (e.target.value < 1) return handleRemoveProduct;
-                    }}
-                  />
-                  <button
-                    onClick={() =>
-                      handleUpdateCartItem(item, item.totalAmount, "plus")
-                    }
-                  >
-                    <i className="fa-solid fa-plus"></i>
-                  </button>
-                </div>
-
-                <div className="item_price">
-                  <span className="item_price-original">
-                    {(item.totalAmount * item.price)?.toLocaleString()}
-                    <sup>đ</sup>
-                  </span>
-                  <span className="item_price-final">
-                    {item.totalPrice?.toLocaleString()}
-                    <sup>đ</sup>
-                  </span>
-                  <p className="item_price-discount">
-                    Tiết kiệm <span>{item.discountPercent}%</span>
-                  </p>
-                </div>
-              </div>
-            </Col>
-          </S.CartItem>
-        );
-      });
+    if (userInfo.data.id) {
+      dispatch(
+        orderProductAction({
+          ...checkoutInfo,
+          ...values,
+          coupon: checkoutCoupon.name,
+          couponValue: checkoutCoupon.discount,
+          userId: userInfo.data.id,
+          orderCode: uuidv4(),
+          totalPrice: checkoutCoupon.discountPrice
+            ? checkoutCoupon.discountPrice
+            : totalPrice,
+          status: "pending",
+          products: cartList.map((item) => ({
+            productId: item.id,
+            productName: item.name,
+            price: item.finalPrice,
+            quantity: item.totalAmount,
+            slug: item.slug,
+            image: item.image,
+          })),
+        })
+      );
     }
-  }, [cartList]);
+
+    setStep(STEP.SUCCESS);
+  };
+
+  const tableColumn = [
+    {
+      title: "Tên sản phẩm",
+      dataIndex: "name",
+      key: "name",
+      render: (_, record) => {
+        return (
+          <Space>
+            <Avatar shape="square" size={64} src={record.image} />
+            <h4>{record.name}</h4>
+          </Space>
+        );
+      },
+      width: 200,
+      fixed: "left",
+    },
+    {
+      title: "Hãng",
+      dataIndex: "category",
+      key: "category",
+      width: 80,
+      render: (category) => category.name,
+    },
+    {
+      title: "Số lượng",
+      dataIndex: "totalAmount",
+      key: "totalAmount",
+      width: 80,
+    },
+    {
+      title: "Đơn giá",
+      dataIndex: "price",
+      key: "price",
+      width: 100,
+      render: (_, record) => (
+        <p>
+          {record.price.toLocaleString()}
+          <sup>đ</sup>
+        </p>
+      ),
+    },
+    {
+      title: "Tổng tiền",
+      dataIndex: "totalPrice",
+      key: "totalPrice",
+      width: 100,
+      render: (_, record) => (
+        <p>
+          {record.totalPrice.toLocaleString()}
+          <sup>đ</sup>
+        </p>
+      ),
+    },
+  ];
+
+  const tableData = cartList.map((item) => ({ ...item, key: item.id }));
+
   return (
     <S.CheckoutCartContainer>
       <h2 className="cart_summary-heading">Thanh toán</h2>
-      <div>
-        <h3>Chọn phương thức thanh toán</h3>
-
-        <div>
-          <Radio.Group
-            style={{ display: "flex", flexDirection: "column", rowGap: 20 }}
+      <Row gutter={8}>
+        <Col span={12}>
+          <Form
+            form={paymentForm}
+            layout="vertical"
+            name="paymentForm"
+            onFinish={(values) => handleSubmitPaymentForm(values)}
           >
-            <Radio name="payment" value="card">
-              Thanh toán bằng thẻ
-            </Radio>
-            <Radio name="payment" value="money">
-              Thanh toán bằng tiền mặt
-            </Radio>
-          </Radio.Group>
-        </div>
-      </div>
+            <Card size="small">
+              <Form.Item
+                label="Chọn hình thức thanh toán"
+                name="method"
+                rules={[
+                  {
+                    required: true,
+                    message: "Bạn phải chọn 1 hình thức thanh toán",
+                  },
+                ]}
+              >
+                <Radio.Group
+                // style={{ display: "flex", flexDirection: "column", rowGap: 20 }}
+                >
+                  <Row>
+                    <Col span={24}>
+                      <Radio value="cod">Thanh toán khi nhận hàng(COD)</Radio>
+                    </Col>
+                    <Col span={24}>
+                      <Radio value="visa">Thanh toán bằng thẻ VISA</Radio>
+                    </Col>
+                    <Col span={24}>
+                      <Radio value="atm">Thanh toán bằng thẻ ATM</Radio>
+                    </Col>
+                  </Row>
+                </Radio.Group>
+              </Form.Item>
+              <Form.Item
+                noStyle
+                shouldUpdate={(prevValues, currentValues) =>
+                  prevValues.method !== currentValues.method
+                }
+              >
+                {({ getFieldValue }) =>
+                  getFieldValue("method") === "visa" && (
+                    <Card size="small">
+                      <Form.Item
+                        label="Số thẻ"
+                        name="cardNumber"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Bạn phải nhập mã thẻ",
+                          },
+                          {
+                            pattern: /^4[0-9]{12}(?:[0-9]{3})?$/,
+                            message: "Mã thẻ không đúng định dạng",
+                          },
+                        ]}
+                      >
+                        <InputNumber
+                          style={{ width: "100%" }}
+                          placeholder="VD: 4123 4567 8901 2345"
+                        />
+                      </Form.Item>
+                      <Form.Item
+                        label="Tên in trên thẻ"
+                        name="cardName"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Bạn phải nhập tên in trên thẻ",
+                          },
+                        ]}
+                      >
+                        <Input placeholder="VD: NGUYEN VAN A" />
+                      </Form.Item>
+                      <Form.Item
+                        label="Ngày hết hạn"
+                        name="date"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Bạn phải nhập ngày hết hạn thẻ",
+                          },
+                          {
+                            type: "date",
+                            message: "Bạn phải nhập ngày hết hạn thẻ",
+                          },
+                        ]}
+                      >
+                        <DatePicker picker="month" placeholder="MM/YY" />
+                      </Form.Item>
+                      <Form.Item
+                        label="Mã bảo mật"
+                        name="code"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Bạn phải nhập mã bảo mật thẻ",
+                          },
+                        ]}
+                      >
+                        <InputNumber placeholder="VD: 123" />
+                      </Form.Item>
+                    </Card>
+                  )
+                }
+              </Form.Item>
+              <Form.Item
+                noStyle
+                shouldUpdate={(prevValues, currentValues) =>
+                  prevValues.method !== currentValues.method
+                }
+              >
+                {({ getFieldValue }) =>
+                  getFieldValue("method") === "atm" && (
+                    <Card size="small">
+                      <Form.Item
+                        name="bank"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Bạn phải chọn 1 ngân hàng",
+                          },
+                        ]}
+                      >
+                        <Radio.Group size="large">
+                          <Row gutter={[8, 8]}>
+                            {BANKS.map((item) => {
+                              return (
+                                <Col span={8} key={item.name}>
+                                  <Radio.Button value={item.name}>
+                                    <img
+                                      src={item.imageUrl}
+                                      alt=""
+                                      width="80"
+                                      height="30"
+                                      style={{
+                                        objectFit: "cover",
+                                      }}
+                                    />
+                                  </Radio.Button>
+                                </Col>
+                              );
+                            })}
+                          </Row>
+                        </Radio.Group>
+                      </Form.Item>
+                    </Card>
+                  )
+                }
+              </Form.Item>
+            </Card>
+          </Form>
+        </Col>
 
-      <div>
-        <h3>Xem lại đơn hàng của bạn</h3>
-        <div className="cart-item-container">
-          <Col xxl={16} xl={16} lg={16} md={24} xs={24}>
-            <div className="cart-item-wrapper">
-              <div className="cart-item-tbody">{renderCartItems}</div>
-            </div>
-          </Col>
+        <Col span={12}>
+          <Card size="small" title="Thông tin đơn hàng">
+            <Table
+              columns={tableColumn}
+              dataSource={tableData}
+              pagination={false}
+              scroll={{
+                x: 800,
+              }}
+            />
+          </Card>
 
-          <Col xxl={8} xl={8} lg={8} md={24} xs={24}>
-            <div className="cart_summary">
-              <h3>Đơn hàng của bạn:</h3>
-
-              <p className="cart_total-price">
-                <span className="cart_total-price-title">Tạm tính:</span>
-                <span>
-                  {totalPrice?.toLocaleString()} <sup>đ</sup>
-                </span>
-              </p>
-              <p className="cart_shipping-cost">
-                <span className="cart_shipping-cost-title">
-                  Phí vận chuyển:
-                </span>
-                <span>Miễn phí</span>
-              </p>
-
-              <div className="cart_price-total">
-                <p className="cart_price-total-title">
-                  Tổng cộng (bao gồm VAT)
-                </p>
-                <p className="cart_price-total-amount">
-                  {totalPrice?.toLocaleString()} <sup>đ</sup>
-                </p>
-              </div>
-
-              <div className="cart_summary-action">
-                <button onClick={() => setStep(STEP.SUCCESS)}>
-                  Thanh toán
-                </button>
-              </div>
-            </div>
-          </Col>
-        </div>
-      </div>
+          <Card size="small" title="Thông tin người nhận">
+            <p>Tên khách hàng: {checkoutInfo.nameInfo}</p>
+            <p>Email: {checkoutInfo.emailInfo}</p>
+            <p>Số điện thoại: {checkoutInfo.phoneNumber}</p>
+            <p>
+              Địa chỉ giao hàng: {checkoutInfo.address} -{" "}
+              {checkoutInfo.wardName} - {checkoutInfo.districtName} -{" "}
+              {checkoutInfo.cityName}
+            </p>
+            <p>
+              Tổng tiền cần thanh toán:{" "}
+              {checkoutCoupon.discountPrice
+                ? checkoutCoupon.discountPrice?.toLocaleString()
+                : totalPrice?.toLocaleString()}
+              <sup>đ</sup>
+            </p>
+          </Card>
+        </Col>
+      </Row>
 
       <Row justify="space-between">
         <Button
@@ -195,6 +319,14 @@ const Payment = ({ setStep }) => {
           onClick={() => setStep(STEP.INFO)}
         >
           Quay lại
+        </Button>
+
+        <Button
+          size="large"
+          type="primary"
+          onClick={() => paymentForm.submit()}
+        >
+          Xác nhận
         </Button>
       </Row>
     </S.CheckoutCartContainer>

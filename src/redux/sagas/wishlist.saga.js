@@ -74,7 +74,7 @@ function* removeWishlistSaga(action) {
     if (callback) yield callback.getWishlists();
   } catch (e) {
     yield put({
-      type: `${FAIL(WISHLIST_ACTION.ADD_WISHLIST)}`,
+      type: `${FAIL(WISHLIST_ACTION.REMOVE_WISHLIST)}`,
       payload: {
         error: "đã có lỗi xảy ra!",
       },

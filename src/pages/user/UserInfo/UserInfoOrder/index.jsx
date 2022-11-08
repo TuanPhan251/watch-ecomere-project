@@ -1,12 +1,20 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { Avatar, Col, Row } from "antd";
+
+import { getOrderListAction } from "../../../../redux/actions";
 
 import UserSideBar from "../SideBar";
 import * as S from "./styles";
 
 const UserInfoOrderPage = () => {
+  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(getOrderListAction({ userId: userInfo.data.id }));
+  }, []);
 
   return (
     <S.Wrapper>

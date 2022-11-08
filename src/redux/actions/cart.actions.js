@@ -11,3 +11,12 @@ export const updateCartItemAction = createAction(
 export const removeCartItemAction = createAction(
   REQUEST(CART_ACTION.REMOVE_CART_ITEM)
 );
+export const setCheckoutInfoAction = createAction(
+  REQUEST(CART_ACTION.SET_CHECKOUT_INFO_DATA)
+);
+export const setCouponInfoAction = createAction(
+  REQUEST(CART_ACTION.SET_COUPON_DATA)
+);
+export const setPaymentInfoAction = createAction(
+  REQUEST(CART_ACTION.SET_PAYMENT_DATA)
+);
