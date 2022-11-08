@@ -602,9 +602,9 @@
       "userId": 2,
       "orderCode": "c1990012-7078-43cf-aa74-d3243a4f0159",
       "totalPrice": 2014245,
-      "status": "pending",
+      "status": "delivering",
       "createdAt": 1667813278603,
-      "updatedAt": 1667813278603,
+      "updatedAt": 1667896746645,
       "id": 1
     }
   ],

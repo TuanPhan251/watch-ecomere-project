@@ -69,7 +69,7 @@ const AdminCategoryPage = () => {
   return (
     <S.Wrapper>
       <S.TopWrapper>
-        <h3>Danh sách nhãn hàng</h3>
+        <h2>Danh sách nhãn hàng</h2>
         <Button type="primary" size="large">
           Thêm nhãn hàng
         </Button>

@@ -211,7 +211,7 @@ const AdminProductPage = () => {
   return (
     <S.ProductListContainer>
       <S.ProductListHeading>
-        <h3>Danh sách sản phẩm ({productList.meta.total}) :</h3>
+        <h2>Danh sách sản phẩm ({productList.meta.total}) :</h2>
         <Button
           onClick={() => navigate(`${ROUTES.ADMIN.CREATE_PRODUCT_PAGE}`)}
           type="primary"

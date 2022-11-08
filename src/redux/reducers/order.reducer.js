@@ -8,8 +8,18 @@ const initialValue = {
     loading: false,
     error: "",
   },
-  coupons: {
+  allOrders: {
+    data: [],
+    meta: {},
+    loading: false,
+    error: "",
+  },
+  orderDetail: {
     data: {},
+    loading: false,
+    error: "",
+  },
+  updateOrderData: {
     loading: false,
     error: "",
   },
@@ -19,8 +29,8 @@ const orderReducer = createReducer(initialValue, {
   [REQUEST(ORDER_ACTION.ORDER_PRODUCT)]: (state, action) => {
     return {
       ...state,
-      wishlist: {
-        ...state.wishlist,
+      orderList: {
+        ...state.orderList,
         loading: true,
         error: "",
       },
@@ -30,8 +40,8 @@ const orderReducer = createReducer(initialValue, {
     const { data } = action.payload;
     return {
       ...state,
-      wishlist: {
-        ...state.wishlist,
+      orderList: {
+        ...state.orderList,
         data: data,
         loading: false,
         error: "",
@@ -42,8 +52,8 @@ const orderReducer = createReducer(initialValue, {
     const { error } = action.payload;
     return {
       ...state,
-      wishlist: {
-        ...state.wishlist,
+      orderList: {
+        ...state.orderList,
         loading: false,
         error: error,
       },
@@ -53,8 +63,8 @@ const orderReducer = createReducer(initialValue, {
   [REQUEST(ORDER_ACTION.GET_ORDER_LIST)]: (state, action) => {
     return {
       ...state,
-      wishlist: {
-        ...state.wishlist,
+      orderList: {
+        ...state.orderList,
         loading: true,
         error: "",
       },
@@ -63,8 +73,8 @@ const orderReducer = createReducer(initialValue, {
   [SUCCESS(ORDER_ACTION.GET_ORDER_LIST)]: (state, action) => {
     return {
       ...state,
-      wishlist: {
-        ...state.wishlist,
+      orderList: {
+        ...state.orderList,
         loading: false,
         error: "",
       },
@@ -74,8 +84,108 @@ const orderReducer = createReducer(initialValue, {
     const { error } = action.payload;
     return {
       ...state,
-      wishlist: {
-        ...state.wishlist,
+      orderList: {
+        ...state.orderList,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
+  [REQUEST(ORDER_ACTION.GET_ALL_ORDERS)]: (state, action) => {
+    return {
+      ...state,
+      allOrders: {
+        ...state.allOrders,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(ORDER_ACTION.GET_ALL_ORDERS)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      allOrders: {
+        ...state.allOrders,
+        data: data,
+        loading: false,
+        error: "",
+      },
+    };
+  },
+  [FAIL(ORDER_ACTION.GET_ALL_ORDERS)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      allOrders: {
+        ...state.allOrders,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
+  [REQUEST(ORDER_ACTION.GET_ORDER_DETAIL)]: (state, action) => {
+    return {
+      ...state,
+      orderDetail: {
+        ...state.orderDetail,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(ORDER_ACTION.GET_ORDER_DETAIL)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      orderDetail: {
+        ...state.orderDetail,
+        data: data,
+        loading: false,
+        error: "",
+      },
+    };
+  },
+  [FAIL(ORDER_ACTION.GET_ORDER_DETAIL)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      orderDetail: {
+        ...state.orderDetail,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
+  [REQUEST(ORDER_ACTION.UPDATE_ORDER_STATUS)]: (state, action) => {
+    return {
+      ...state,
+      updateOrderData: {
+        ...state.updateOrderData,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(ORDER_ACTION.UPDATE_ORDER_STATUS)]: (state, action) => {
+    return {
+      ...state,
+      updateOrderData: {
+        ...state.updateOrderData,
+        loading: false,
+        error: "",
+      },
+    };
+  },
+  [FAIL(ORDER_ACTION.UPDATE_ORDER_STATUS)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      updateOrderData: {
+        ...state.updateOrderData,
         loading: false,
         error: error,
       },
@@ -85,31 +195,10 @@ const orderReducer = createReducer(initialValue, {
   [REQUEST(ORDER_ACTION.CLEAR_ORDER_LIST)]: (state, action) => {
     return {
       ...state,
-      wishlist: {
-        ...state.wishlist,
-        loading: true,
-        error: "",
-      },
-    };
-  },
-  [SUCCESS(ORDER_ACTION.CLEAR_ORDER_LIST)]: (state, action) => {
-    return {
-      ...state,
-      wishlist: {
-        ...state.wishlist,
+      orderList: {
+        data: [],
         loading: false,
         error: "",
-      },
-    };
-  },
-  [FAIL(ORDER_ACTION.CLEAR_ORDER_LIST)]: (state, action) => {
-    const { error } = action.payload;
-    return {
-      ...state,
-      wishlist: {
-        ...state.wishlist,
-        loading: false,
-        error: error,
       },
     };
   },

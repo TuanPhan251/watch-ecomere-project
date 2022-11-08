@@ -28,6 +28,85 @@ function* getOrderListSaga(action) {
   }
 }
 
+function* getAllOrdersSaga(action) {
+  try {
+    const { params } = action.payload;
+    const result = yield axios.get("http://localhost:4000/orders", {
+      params: {
+        _page: params.page,
+        _limit: params.limit,
+        _embed: "orderProducts",
+      },
+    });
+    yield put({
+      type: `${SUCCESS(ORDER_ACTION.GET_ALL_ORDERS)}`,
+      payload: {
+        data: result.data,
+        meta: {
+          total: parseInt(result.headers["x-total-count"]),
+          page: params.page,
+          limit: params.limit,
+        },
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: `${FAIL(ORDER_ACTION.GET_ALL_ORDERS)}`,
+      payload: {
+        error: "đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
+function* getOrderDetailSaga(action) {
+  try {
+    const { id, callback } = action.payload;
+    const result = yield axios.get(`http://localhost:4000/orders/${id}`, {
+      params: {
+        _embed: "orderProducts",
+      },
+    });
+    yield put({
+      type: `${SUCCESS(ORDER_ACTION.GET_ORDER_DETAIL)}`,
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: `${FAIL(ORDER_ACTION.GET_ORDER_DETAIL)}`,
+      payload: {
+        error: "đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
+function* updateOrderStatusSaga(action) {
+  try {
+    const { id, data, callback } = action.payload;
+    const result = yield axios.patch(
+      `http://localhost:4000/orders/${id}`,
+      data
+    );
+    yield put({
+      type: `${SUCCESS(ORDER_ACTION.UPDATE_ORDER_STATUS)}`,
+      payload: {
+        data: result.data,
+      },
+    });
+    yield callback.goToList();
+  } catch (e) {
+    yield put({
+      type: `${FAIL(ORDER_ACTION.UPDATE_ORDER_STATUS)}`,
+      payload: {
+        error: "đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
 function* orderProductSaga(action) {
   try {
     const { products, ...orderSaga } = action.payload;
@@ -78,6 +157,12 @@ function* clearOrderListSaga(action) {
 
 export default function* orderSaga() {
   yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_LIST), getOrderListSaga);
+  yield takeEvery(REQUEST(ORDER_ACTION.GET_ALL_ORDERS), getAllOrdersSaga);
+  yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_DETAIL), getOrderDetailSaga);
+  yield takeEvery(
+    REQUEST(ORDER_ACTION.UPDATE_ORDER_STATUS),
+    updateOrderStatusSaga
+  );
   yield takeEvery(REQUEST(ORDER_ACTION.ORDER_PRODUCT), orderProductSaga);
   yield takeEvery(REQUEST(ORDER_ACTION.CLEAR_ORDER_LIST), clearOrderListSaga);
 }
