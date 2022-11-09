@@ -427,6 +427,7 @@ const ProductPage = () => {
                     <button
                       className="product_item-actions-btn"
                       onClick={(e) => {
+                        e.preventDefault();
                         e.stopPropagation();
                         handleAddItemToCart(item);
                       }}

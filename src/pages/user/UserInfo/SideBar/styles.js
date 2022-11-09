@@ -27,16 +27,15 @@ export const UserSideBar = styled.div`
     list-style: none;
   }
 
+  .user_sidebar-item-link {
+    color: var(--dark-text-color);
+  }
+
   .user_sidebar-item {
     padding: 8px;
     i {
       font-size: 16px;
       width: 20px;
-    }
-
-    .user_sidebar-item-link {
-      color: var(--dark-text-color);
-      margin-left: 4px;
     }
   }
 `;

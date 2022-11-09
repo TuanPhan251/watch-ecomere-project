@@ -11,16 +11,15 @@ const UserSideBar = () => {
   const renderUserSidebar = () => {
     return userPageSidebar.map((item, index) => {
       return (
-        <S.UserSidebarItem
-          className="user_sidebar-item"
-          key={index}
-          $active={pathname === item.path}
-        >
-          {item.icon}
-          <Link className="user_sidebar-item-link" to={item.path}>
+        <Link className="user_sidebar-item-link" to={item.path} key={index}>
+          <S.UserSidebarItem
+            className="user_sidebar-item"
+            $active={pathname === item.path}
+          >
+            {item.icon}
             {item.title}
-          </Link>
-        </S.UserSidebarItem>
+          </S.UserSidebarItem>
+        </Link>
       );
     });
   };

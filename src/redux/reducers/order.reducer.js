@@ -19,6 +19,10 @@ const initialValue = {
     loading: false,
     error: "",
   },
+  orderProductData: {
+    loading: false,
+    error: "",
+  },
   updateOrderData: {
     loading: false,
     error: "",
@@ -29,20 +33,18 @@ const orderReducer = createReducer(initialValue, {
   [REQUEST(ORDER_ACTION.ORDER_PRODUCT)]: (state, action) => {
     return {
       ...state,
-      orderList: {
-        ...state.orderList,
+      orderProductData: {
+        ...state.orderProductData,
         loading: true,
         error: "",
       },
     };
   },
   [SUCCESS(ORDER_ACTION.ORDER_PRODUCT)]: (state, action) => {
-    const { data } = action.payload;
     return {
       ...state,
-      orderList: {
-        ...state.orderList,
-        data: data,
+      orderProductData: {
+        ...state.orderProductData,
         loading: false,
         error: "",
       },
@@ -52,8 +54,8 @@ const orderReducer = createReducer(initialValue, {
     const { error } = action.payload;
     return {
       ...state,
-      orderList: {
-        ...state.orderList,
+      orderProductData: {
+        ...state.orderProductData,
         loading: false,
         error: error,
       },
@@ -71,10 +73,12 @@ const orderReducer = createReducer(initialValue, {
     };
   },
   [SUCCESS(ORDER_ACTION.GET_ORDER_LIST)]: (state, action) => {
+    const { data } = action.payload;
     return {
       ...state,
       orderList: {
         ...state.orderList,
+        data: data,
         loading: false,
         error: "",
       },

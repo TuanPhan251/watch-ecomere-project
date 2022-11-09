@@ -1,15 +1,10 @@
 import { useMemo } from "react";
-import { generatePath, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 
-import { Modal, Col, Row, Popconfirm, Steps } from "antd";
+import { Steps } from "antd";
+import emptyCartImg from "../../../assets/cart/empty_cart_retina.png";
 
-import { ROUTES } from "../../../constants/routes";
-import {
-  removeCartItemAction,
-  updateCartItemAction,
-} from "../../../redux/actions/cart.actions";
 import Cart from "./components/cart";
 import Info from "./components/info";
 import Success from "./components/success";
@@ -17,19 +12,8 @@ import Payment from "./components/payment";
 import * as S from "./style";
 
 const CartSummaryPage = () => {
-  const dispatch = useDispatch();
   const { cartList } = useSelector((state) => state.cart);
   const [step, setStep] = useState(0);
-
-  const [showModal, setShowModal] = useState(false);
-
-  const totalPrice = cartList.reduce((prev, item) => {
-    return prev + item.totalPrice;
-  }, 0);
-
-  const handleRemoveProduct = (productId) => {
-    dispatch(removeCartItemAction({ productId }));
-  };
 
   const renderCheckOutItem = useMemo(() => {
     switch (step) {
@@ -54,6 +38,10 @@ const CartSummaryPage = () => {
             <h2 className="cart_summary-heading">giỏ hàng</h2>
 
             <h3>Giỏ hàng của bạn chưa có sản phẩm nào.</h3>
+
+            <div>
+              <img src={emptyCartImg} alt="" />
+            </div>
           </div>
         </S.CheckoutCartContainer>
       </S.Wrapper>

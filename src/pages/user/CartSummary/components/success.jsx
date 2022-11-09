@@ -1,10 +1,17 @@
-import * as S from "../style";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+
+import { clearCartItemAction } from "../../../../redux/actions";
+
 import { Button, Result } from "antd";
 import { ROUTES } from "../../../../constants/routes";
 
+import * as S from "../style";
+
 const Info = ({ setStep }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <S.CheckoutCartContainer>
