@@ -182,11 +182,14 @@ const AdminOrderDetailPage = () => {
               </Form.Item>
 
               <Form.Item label="Trạng thái đơn hàng" name="status">
-                <Select>
+                <Select disabled={orderDetail.data.status === "userCancel"}>
                   <Option value="pending">Chờ xác nhận</Option>
                   <Option value="delivering">Đang giao hàng</Option>
                   <Option value="done">Hoàn thành</Option>
                   <Option value="cancel">Hủy đơn</Option>
+                  <Option value="userCancel" disabled>
+                    Người đặt hủy
+                  </Option>
                 </Select>
               </Form.Item>
 
@@ -196,13 +199,24 @@ const AdminOrderDetailPage = () => {
                   span: 16,
                 }}
               >
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  loading={updateOrderData.loading}
-                >
-                  Thay đổi
-                </Button>
+                <Space>
+                  {orderDetail.data.status !== "userCancel" && (
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      loading={updateOrderData.loading}
+                    >
+                      Thay đổi
+                    </Button>
+                  )}
+
+                  <Button
+                    onClick={() => navigate(ROUTES.ADMIN.ORDER_LIST_PAGE)}
+                  >
+                    {" "}
+                    Quay lại
+                  </Button>
+                </Space>
               </Form.Item>
             </Form>
           </Card>

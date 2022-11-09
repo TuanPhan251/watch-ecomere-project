@@ -203,7 +203,7 @@ const Info = ({ setStep }) => {
           <Row gutter={[16, 16]}>
             <Col span={8}>
               <Form.Item
-                label="Họ tên người dùng"
+                label="Họ tên người nhận"
                 name="nameInfo"
                 rules={[
                   {

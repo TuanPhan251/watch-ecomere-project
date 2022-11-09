@@ -95,6 +95,9 @@ const AdminOrderListPage = () => {
           case "cancel": {
             return <span>Đã hủy</span>;
           }
+          case "userCancel": {
+            return <span>Đã hủy</span>;
+          }
           case "done": {
             return <span>Hoàn thành</span>;
           }

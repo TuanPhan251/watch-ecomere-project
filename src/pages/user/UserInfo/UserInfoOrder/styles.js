@@ -28,3 +28,16 @@ export const UserInfo = styled.div`
     text-align: center;
   }
 `;
+
+export const OrderItemList = styled.div``;
+
+export const OrderItem = styled.div`
+  display: flex;
+
+  .order__item-name,
+  .order__item-price,
+  .order__item-quantity {
+    display: flex;
+    align-items: center;
+  }
+`;

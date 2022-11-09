@@ -96,6 +96,17 @@ const cartReducer = createReducer(initialValue, {
       checkoutInfo: action.payload,
     };
   },
+  [REQUEST(CART_ACTION.CLEAR_CART_ITEM)]: (state, action) => {
+    localStorage.setItem("cart", JSON.stringify([]));
+
+    return {
+      ...state,
+      cartList: [],
+      checkoutInfo: {},
+      checkoutPayment: {},
+      checkoutCoupon: {},
+    };
+  },
 });
 
 export default cartReducer;

@@ -26,6 +26,7 @@ import * as S from "../style";
 const Payment = ({ setStep }) => {
   const [paymentForm] = Form.useForm();
   const dispatch = useDispatch();
+  const { orderProductData } = useSelector((state) => state.order);
   const { userInfo } = useSelector((state) => state.user);
   const { cartList, checkoutCoupon, checkoutInfo } = useSelector(
     (state) => state.cart
@@ -58,11 +59,14 @@ const Payment = ({ setStep }) => {
             slug: item.slug,
             image: item.image,
           })),
+          callback: {
+            goToSuccess: () => {
+              setStep(STEP.SUCCESS);
+            },
+          },
         })
       );
     }
-
-    setStep(STEP.SUCCESS);
   };
 
   const tableColumn = [
@@ -325,6 +329,7 @@ const Payment = ({ setStep }) => {
           size="large"
           type="primary"
           onClick={() => paymentForm.submit()}
+          loading={orderProductData.loading}
         >
           Xác nhận
         </Button>

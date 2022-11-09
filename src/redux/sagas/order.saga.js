@@ -1,7 +1,13 @@
 import { takeEvery, put } from "redux-saga/effects";
 import axios from "axios";
 
-import { REQUEST, SUCCESS, FAIL, ORDER_ACTION } from "../CONSTANTS/";
+import {
+  REQUEST,
+  SUCCESS,
+  FAIL,
+  ORDER_ACTION,
+  CART_ACTION,
+} from "../CONSTANTS/";
 
 function* getOrderListSaga(action) {
   try {
@@ -85,7 +91,7 @@ function* getOrderDetailSaga(action) {
 
 function* updateOrderStatusSaga(action) {
   try {
-    const { id, data, callback } = action.payload;
+    const { id, data, callback, userId } = action.payload;
     const result = yield axios.patch(
       `http://localhost:4000/orders/${id}`,
       data
@@ -96,7 +102,8 @@ function* updateOrderStatusSaga(action) {
         data: result.data,
       },
     });
-    yield callback.goToList();
+    if (callback.goToList) yield callback.goToList();
+    if (callback.getOrderList) yield callback.getOrderList();
   } catch (e) {
     yield put({
       type: `${FAIL(ORDER_ACTION.UPDATE_ORDER_STATUS)}`,
@@ -109,8 +116,8 @@ function* updateOrderStatusSaga(action) {
 
 function* orderProductSaga(action) {
   try {
-    const { products, ...orderSaga } = action.payload;
-    const result = yield axios.post("http://localhost:4000/orders", orderSaga);
+    const { products, callback, ...orderData } = action.payload;
+    const result = yield axios.post("http://localhost:4000/orders", orderData);
     for (let i = 0; i < products.length; i++) {
       yield axios.post("http://localhost:4000/orderProducts", {
         orderId: result.data.id,
@@ -123,6 +130,10 @@ function* orderProductSaga(action) {
         data: result.data,
       },
     });
+    yield put({
+      type: `${REQUEST(CART_ACTION.CLEAR_CART_ITEM)}`,
+    });
+    yield callback.goToSuccess();
   } catch (e) {
     yield put({
       type: `${FAIL(ORDER_ACTION.ORDER_PRODUCT)}`,
