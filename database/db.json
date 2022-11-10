@@ -473,9 +473,9 @@
       "email": "tuan@gmail.com",
       "password": "$2a$10$bmRoP6V4CyQHth3KwfcLg..OWAQYaLuh2tqM8FwflzZjtRr19K29e",
       "userName": "tuan123",
-      "role": "user",
-      "createdAt": 1667182024841,
-      "updatedAt": 1667182024842,
+      "role": "admin",
+      "createdAt": "2022-10-31T02:07:04.841Z",
+      "updatedAt": 1668068233930,
       "id": 4
     }
   ],
@@ -509,11 +509,6 @@
       "id": 3
     },
     {
-      "createdAt": 1667278597586,
-      "updatedAt": 1667278597586,
-      "id": 4
-    },
-    {
       "rating": 4.5,
       "content": "ffdsfsdf",
       "userName": "phuong1",
@@ -535,16 +530,6 @@
     },
     {
       "rating": 5,
-      "content": "ok",
-      "userName": "phuong1",
-      "userId": 2,
-      "productId": 1,
-      "createdAt": 1667307685685,
-      "updatedAt": 1667307685685,
-      "id": 7
-    },
-    {
-      "rating": 5,
       "content": "dhgfh",
       "userName": "phuong1",
       "userId": 2,
@@ -552,6 +537,56 @@
       "createdAt": 1667482776562,
       "updatedAt": 1667482776562,
       "id": 8
+    },
+    {
+      "rating": 5,
+      "content": "sản phẩm tốt, giá phải chăng",
+      "userName": "phuong1",
+      "userId": 2,
+      "productId": 13,
+      "createdAt": 1668050659376,
+      "updatedAt": 1668050659376,
+      "id": 9
+    },
+    {
+      "rating": 3,
+      "content": "giá cao quá",
+      "userName": "phuong1",
+      "userId": 2,
+      "productId": 8,
+      "createdAt": 1668050821156,
+      "updatedAt": 1668050821156,
+      "id": 10
+    },
+    {
+      "rating": 4,
+      "content": "tạm được",
+      "userName": "phuong1",
+      "userId": 2,
+      "productId": 1,
+      "createdAt": 1668051570049,
+      "updatedAt": 1668051570050,
+      "id": 11
+    },
+    {
+      "rating": 5,
+      "content": "quá đẹp và sang trọng",
+      "userName": "phuong1",
+      "userId": 2,
+      "productId": 7,
+      "createdAt": 1668068187104,
+      "updatedAt": 1668068187104,
+      "id": 12
+    },
+    {
+      "rating": 4.5,
+      "content": "giá quá tốt",
+      "userName": "tuan123",
+      "userId": 4,
+      "productId": 17,
+      "createdAt": 1668068974902,
+      "updatedAt": 1668068974902,
+      "id": 13
     }
   ],
   "wishlists": [
@@ -603,6 +638,27 @@
       "createdAt": 1667982573731,
       "updatedAt": 1667982573731,
       "id": 15
+    },
+    {
+      "userId": 2,
+      "productId": 14,
+      "createdAt": 1668049837948,
+      "updatedAt": 1668049837949,
+      "id": 16
+    },
+    {
+      "userId": 4,
+      "productId": 6,
+      "createdAt": 1668068298867,
+      "updatedAt": 1668068298867,
+      "id": 17
+    },
+    {
+      "userId": 4,
+      "productId": 17,
+      "createdAt": 1668068307616,
+      "updatedAt": 1668068307616,
+      "id": 18
     }
   ],
   "orders": [

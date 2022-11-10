@@ -135,7 +135,7 @@ export const HomePageWrapper = styled.main`
     max-width: 1200px;
     width: 100%;
     margin: 40px auto;
-    padding: 60px 0;
+    padding: 60px 30px;
     background-color: #fff;
 
     .new_products_section-heading {
@@ -350,6 +350,24 @@ export const Product = styled.div`
   overflow: hidden;
   cursor: pointer;
 
+  .newProduct__image {
+    position: relative;
+    padding-top: 100%;
+    width: 100%;
+
+    & img {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.5s ease;
+    }
+  }
+
   & h2 {
     margin-top: 16px;
     font-size: 16px;
@@ -357,11 +375,6 @@ export const Product = styled.div`
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-  }
-
-  & img {
-    width: 75%;
-    transition: all 0.5s ease;
   }
 
   &:hover {

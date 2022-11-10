@@ -224,9 +224,10 @@ export const ProductItem = styled.div`
 
   .product_item-actions {
     opacity: 0;
+    visibility: hidden;
     position: absolute;
-    top: 50%;
     right: 0;
+    bottom: 10%;
     display: flex;
     flex-direction: column;
     transition: all 0.3s ease;
@@ -250,6 +251,12 @@ export const ProductItem = styled.div`
           color: #fff;
         }
       }
+    }
+
+    @media (max-width: 768px) {
+      opacity: 1;
+      visibility: visible;
+      bottom: 0;
     }
   }
 
@@ -310,8 +317,10 @@ export const ProductItem = styled.div`
 
     .product_item-actions {
       right: 0;
+      bottom: 0;
       opacity: 1;
-      transform: translateY(-50%);
+      visibility: visible;
+      /* transform: translateY(-50%); */
     }
   }
 `;
