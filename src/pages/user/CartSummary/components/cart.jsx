@@ -2,7 +2,7 @@ import { useMemo, useEffect } from "react";
 import { generatePath, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Col, Row, Popconfirm, Button, Form, Input } from "antd";
+import { Col, Row, Popconfirm, Button, Form, Input, notification } from "antd";
 
 import { ROUTES } from "../../../../constants/routes";
 import { STEP } from "./constants/step";
@@ -37,16 +37,16 @@ const Cart = ({ setStep }) => {
 
   const [totalDiscountPrice, setTotalDiscountPrice] = useState(totalPrice);
 
-  useEffect(() => {
-    if (!haveCoupon) {
-      inputForm.setFields([
-        {
-          name: "discountInput",
-          errors: ["Mã không có hiệu lực"],
-        },
-      ]);
-    }
-  }, [discount.data]);
+  // useEffect(() => {
+  //   if (!haveCoupon) {
+  //     inputForm.setFields([
+  //       {
+  //         name: "discountInput",
+  //         errors: ["Mã không có hiệu lực"],
+  //       },
+  //     ]);
+  //   }
+  // }, [discount.data]);
 
   const handleRemoveProduct = (productId) => {
     dispatch(removeCartItemAction({ productId }));
@@ -60,27 +60,34 @@ const Cart = ({ setStep }) => {
       })
     );
   };
-  const handlePayment = (value) => {
+  const handleApplyCoupon = (value) => {
     dispatch(
       getDiscountAction({
         data: value.discountInput,
+        callback: {
+          successApply: () => {
+            notification.success({
+              message: "Thành công",
+              description: "Đã áp dụng mã giảm giá",
+              top: 100,
+            });
+          },
+          errorApply: () => {
+            notification.error({
+              message: "Thất bại",
+              description: "Mã giảm giá không tồn tại.",
+              top: 100,
+            });
+            inputForm.setFields([
+              {
+                name: "discountInput",
+                errors: ["Mã không tồn tại"],
+              },
+            ]);
+          },
+        },
       })
     );
-    // if (discount.data[0]) {
-    //   inputForm.setFields([
-    //     {
-    //       name: "discountInput",
-    //       errors: ["Nhập mã thành công"],
-    //     },
-    //   ]);
-    // } else if (discount.data) {
-    //   inputForm.setFields([
-    //     {
-    //       name: "discountInput",
-    //       errors: ["Mã không có hiệu lực"],
-    //     },
-    //   ]);
-    // }
   };
 
   const handleSubmitCartForm = () => {
@@ -201,14 +208,17 @@ const Cart = ({ setStep }) => {
           <div className="cart_summary">
             <h3>Đơn hàng của bạn:</h3>
             <div className="cart_summary-discount">
-              <Form form={inputForm} onFinish={(value) => handlePayment(value)}>
+              <Form
+                form={inputForm}
+                onFinish={(value) => handleApplyCoupon(value)}
+              >
                 <Form.Item
                   label="Nhập mã giảm giá"
                   name="discountInput"
                   rules={[
                     {
                       required: true,
-                      message: "Bạn phải nhập mã giảm giá",
+                      message: "Bạn chưa nhập mã",
                     },
                   ]}
                 >
@@ -216,7 +226,7 @@ const Cart = ({ setStep }) => {
                 </Form.Item>
                 <Button
                   htmlType="submit"
-                  // onClick={handlePayment}
+                  // onClick={handleApplyCoupon}
                   style={{ width: "100%" }}
                 >
                   Sử dụng

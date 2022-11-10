@@ -30,9 +30,9 @@ import {
   removeProductDetailAction,
   createCommentAction,
   getCommentListAction,
-  getWishlistAction,
   addWishlistAction,
   removeWishlistAction,
+  clearCommentListAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
@@ -68,9 +68,18 @@ const ProductDetailPage = () => {
   const isCommented = commentList.data?.some(
     (item) => item.userId === userInfo?.data?.id
   );
+  const averageRating = commentList.data
+    ? commentList.data.reduce((total, item) => {
+        return total + item.rating;
+      }, 0) / commentList.data.length
+    : undefined;
 
   const gender = productDetail.data.gender === "male" ? "nam" : "nữ";
   const isDiscount = !!productDetail.data.discountPercent;
+
+  useEffect(() => {
+    return () => {};
+  }, []);
 
   useEffect(() => {
     dispatch(getProductDetailAction({ id: productId }));
@@ -80,6 +89,7 @@ const ProductDetailPage = () => {
 
     return () => {
       dispatch(removeProductDetailAction());
+      dispatch(clearCommentListAction());
     };
   }, [productId]);
 
@@ -225,7 +235,6 @@ const ProductDetailPage = () => {
 
   const Editor = ({ onChange, onSubmit, submitting, value }) => (
     <>
-      <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
       <Form name="rate-form" onFinish={(value) => handleCreateComment(value)}>
         <Form.Item
           label="Đánh giá"
@@ -292,7 +301,11 @@ const ProductDetailPage = () => {
       key: "item-2",
       children: (
         <S.ProductReview>
-          <p>Hãy để lại đánh giá của bạn nhé</p>
+          {!isCommented ? (
+            <p>Hãy để lại đánh giá của bạn nhé</p>
+          ) : (
+            <p>Cảm ơn bạn đã đánh giá sản phẩm</p>
+          )}
           {!isCommented && <Comment content={<Editor />} />}
 
           <S.ReviewsWrapper>
@@ -339,6 +352,7 @@ const ProductDetailPage = () => {
             <S.ProductImageWrapper>
               <img src={productDetail.data.image} alt="product" />
 
+              {/* slider cho ảnh thật sau này, cấm xóa */}
               {/* <Slider
                 {...settings}
                 customPaging={(i) => {
@@ -360,34 +374,20 @@ const ProductDetailPage = () => {
               )}
 
               <div className="product_like-icon">
-                {/* {isWishlist ? (
-                  <Tooltip title="Xóa khỏi yêu thích">
-                    <S.AddWishlistBtn
-                      isWishlist={isWishlist}
-                      onClick={() => handleRemoveItemWishlist()}
-                    >
-                      <i className="fa-solid fa-heart"></i>
-                    </S.AddWishlistBtn>
-                  </Tooltip>
-                ) : (
-                  <Tooltip title="Thêm vào yêu thích">
-                    <S.AddWishlistBtn
-                      isWishlist={isWishlist}
-                      onClick={() => handleAddItemToWishlist()}
-                    >
-                      <i className="fa-regular fa-heart"></i>
-                    </S.AddWishlistBtn>
-                  </Tooltip>
-                )} */}
-
                 <Button
                   size="small"
                   danger={isWishlist}
                   icon={
                     isWishlist ? (
-                      <i className="fa-solid fa-heart"></i>
+                      <i
+                        className="fa-solid fa-heart"
+                        style={{ marginRight: 4 }}
+                      ></i>
                     ) : (
-                      <i className="fa-regular fa-heart"></i>
+                      <i
+                        className="fa-regular fa-heart"
+                        style={{ marginRight: 4 }}
+                      ></i>
                     )
                   }
                   onClick={() => handleToggleWishlist()}
@@ -403,8 +403,14 @@ const ProductDetailPage = () => {
               <S.ProductSummary>
                 <h2>{productDetail.data.name}</h2>
                 <div className="product_rating">
-                  <Rate disabled allowHalf defaultValue={4.5} />
-                  <span className="product_rating-quantity">(12 đánh giá)</span>
+                  <Rate disabled allowHalf value={averageRating} />
+                  <span className="product_rating-quantity">
+                    (
+                    {commentList.data
+                      ? `${commentList.data.length} đánh giá`
+                      : "Chưa có đánh giá nào"}
+                    )
+                  </span>
                 </div>
 
                 <p className="product_summary-brand">
@@ -477,14 +483,22 @@ const ProductDetailPage = () => {
                     </Col>
 
                     <Col span={12}>
-                      <Button onClick={handleAddProductToCart} block>
-                        <i className="fa-solid fa-cart-plus"></i>
+                      <Button
+                        size="large"
+                        onClick={handleAddProductToCart}
+                        block
+                      >
+                        <i
+                          className="fa-solid fa-cart-plus"
+                          style={{ marginRight: 12 }}
+                        ></i>
                         THÊM VÀO GIỎ
                       </Button>
                     </Col>
 
                     <Col span={24}>
                       <Button
+                        size="large"
                         onClick={() => {
                           handleAddProductToCart();
                           navigate(ROUTES.USER.CART_SUMMARY);

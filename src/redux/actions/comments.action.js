@@ -8,3 +8,6 @@ export const getCommentListAction = createAction(
 export const createCommentAction = createAction(
   REQUEST(COMMENTS_ACTION.CREATE_COMMENT)
 );
+export const clearCommentListAction = createAction(
+  REQUEST(COMMENTS_ACTION.CLEAR_COMMENTS_LIST)
+);

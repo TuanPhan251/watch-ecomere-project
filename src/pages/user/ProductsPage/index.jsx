@@ -405,10 +405,15 @@ const ProductPage = () => {
 
   const renderProducts = useMemo(() => {
     return productList.data.map((item) => {
-      const isDiscount = !!item.discountPercent;
+      const haveComment = item.comments.length !== 0;
+      const averageRating = haveComment
+        ? item.comments.reduce((total, comment) => {
+            return total + comment.rating;
+          }, 0) / item.comments.length
+        : undefined;
       const discountPercent = `-${item.discountPercent}%`;
       let price = item.price;
-      if (isDiscount) {
+      if (item.isDiscount) {
         price = item.finalPrice;
       }
 
@@ -435,7 +440,7 @@ const ProductPage = () => {
                       <i className="fa-solid fa-cart-plus"></i>
                     </button>
                   </Tooltip>
-                  <Tooltip
+                  {/* <Tooltip
                     title="Thêm vào danh sách yêu thích"
                     placement="bottom"
                   >
@@ -447,7 +452,7 @@ const ProductPage = () => {
                     >
                       <i className="fa-regular fa-heart"></i>
                     </button>
-                  </Tooltip>
+                  </Tooltip> */}
                 </div>
               </div>
 
@@ -457,24 +462,24 @@ const ProductPage = () => {
                 <Rate
                   allowHalf
                   disabled
-                  defaultValue={4.5}
+                  value={averageRating}
                   style={{ fontSize: 14 }}
                 />
-                <span>(12 đánh giá)</span>
+                {haveComment && <span>({item.comments?.length} đánh giá)</span>}
               </div>
 
               <p className="product_info-price-final">
                 {price.toLocaleString()}
                 <sup>₫</sup>
               </p>
-              {isDiscount && (
+              {item.isDiscount && (
                 <p className="product_info-price-original">
                   {item.price.toLocaleString()}
                   <sup>₫</sup>
                 </p>
               )}
 
-              {isDiscount && (
+              {item.isDiscount && (
                 <div className="product_info-discount-label">
                   <span>{discountPercent}</span>
                 </div>

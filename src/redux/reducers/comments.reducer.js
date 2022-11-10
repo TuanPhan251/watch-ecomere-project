@@ -77,6 +77,17 @@ const commentsReducer = createReducer(initialValue, {
       },
     };
   },
+
+  [REQUEST(COMMENTS_ACTION.CLEAR_COMMENTS_LIST)]: (state, action) => {
+    return {
+      ...state,
+      commentList: {
+        data: [],
+        loading: false,
+        error: "",
+      },
+    };
+  },
 });
 
 export default commentsReducer;

@@ -66,10 +66,10 @@ export const CheckoutCartContainer = styled.div`
     right: 0;
     width: 90%;
     min-height: 200px;
-    padding: 12px 10px 12px 12px;
-
     margin: auto;
-    box-shadow: 0px 4px 8px #ccc;
+    padding: 12px 10px 12px 12px;
+    border-radius: 2px;
+    box-shadow: 0px 0px 4px #ddd;
 
     h3 {
       font-size: 20px;

@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 export const ProductSpecContainer = styled.div`
   width: 100%;
-  padding: 32px 16px;
+  padding: 24px 16px;
 `;
 
 export const ProductSpecHeading = styled.h3`
   display: inline-block;
-  padding: 0 8px;
+  padding: 4px 8px;
   color: #fff;
   font-size: 16px;
   font-weight: 400;

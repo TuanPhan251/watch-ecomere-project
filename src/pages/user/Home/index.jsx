@@ -15,14 +15,14 @@ import womenImg from "../../../assets/banner/women-1.webp";
 import bgrImage from "../../../assets/banner/bgr-img.jpg";
 
 import * as S from "./style";
-import { Card, Carousel, Col, Row } from "antd";
+import { Card, Carousel, Col, Row, Spin } from "antd";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", color: "black" }}
+      style={{ ...style, display: "block", color: "red" }}
       onClick={onClick}
     />
   );
@@ -97,7 +97,9 @@ const HomePage = () => {
             })}
           >
             <S.Product>
-              <img src={item.image} alt="product" />
+              <div className="newProduct__image">
+                <img src={item.image} alt="product" />
+              </div>
               <h2>{item.name}</h2>
 
               <div className="new_product-label">
@@ -109,6 +111,17 @@ const HomePage = () => {
       );
     });
   }, [newProductsList.data]);
+
+  if (newProductsList.loading)
+    return (
+      <Spin spinning={true}>
+        <div
+          style={{
+            minHeight: "100vh",
+          }}
+        ></div>
+      </Spin>
+    );
 
   return (
     <S.HomePageWrapper>
@@ -130,7 +143,13 @@ const HomePage = () => {
 
       <section className="new_products-section">
         <h3 className="new_products_section-heading">Sản phẩm mới</h3>
-        <Slider {...settings}>{renderNewProducts}</Slider>
+        <Slider
+          {...settings}
+          prevArrow={<SamplePrevArrow />}
+          nextArrow={<SampleNextArrow />}
+        >
+          {renderNewProducts}
+        </Slider>
 
         <div className="new_products-list"></div>
       </section>

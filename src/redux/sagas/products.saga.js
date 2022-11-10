@@ -9,7 +9,7 @@ function* getProductListSaga(action) {
     const result = yield axios.get("http://localhost:4000/products", {
       params: {
         _expand: "category",
-        _embed: "images",
+        _embed: ["images", "comments"],
         _page: params.page,
         _limit: params.limit,
         ...(params.categoryId && {
@@ -112,7 +112,7 @@ function* getProductDetailSaga(action) {
     const result = yield axios.get(`http://localhost:4000/products/${id}`, {
       params: {
         _expand: "category",
-        _embed: ["images", "wishlists"],
+        _embed: ["images", "wishlists", "comments"],
       },
     });
     yield put({

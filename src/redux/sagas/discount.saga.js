@@ -5,7 +5,7 @@ import { REQUEST, SUCCESS, FAIL, DISCOUNT_ACTION } from "../CONSTANTS/";
 
 function* getDiscountSaga(action) {
   try {
-    const { data } = action.payload;
+    const { data, callback } = action.payload;
     const result = yield axios.get("http://localhost:4000/discount", {
       params: {
         name: data,
@@ -18,6 +18,8 @@ function* getDiscountSaga(action) {
         data: result.data,
       },
     });
+    if (result.data.length === 0) yield callback.errorApply();
+    if (result.data.length !== 0) yield callback.successApply();
   } catch (e) {
     yield put({
       type: `${FAIL(DISCOUNT_ACTION.DISCOUNT)}`,
