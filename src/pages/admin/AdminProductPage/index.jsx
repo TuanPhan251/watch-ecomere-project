@@ -21,6 +21,7 @@ import {
   getCategoriesListAction,
   getProductListAction,
   deleteProductAction,
+  removeProductDetailAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
@@ -76,6 +77,10 @@ const AdminProductPage = () => {
       })
     );
     dispatch(getCategoriesListAction());
+
+    return () => {
+      dispatch(removeProductDetailAction());
+    };
   }, [filterParams]);
 
   const handleDeleteProduct = (id) => {
@@ -144,7 +149,7 @@ const AdminProductPage = () => {
       title: "Giá",
       dataIndex: "price",
       key: "price",
-      width: 160,
+      width: 120,
       render: (_, record) => (
         <p>
           {record.price.toLocaleString()}

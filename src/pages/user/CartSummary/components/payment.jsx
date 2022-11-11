@@ -130,7 +130,7 @@ const Payment = ({ setStep }) => {
     <S.CheckoutCartContainer>
       <h2 className="cart_summary-heading">Thanh toán</h2>
       <Row gutter={8}>
-        <Col span={12}>
+        <Col xxl={12} lg={12} md={24} sm={24} xs={24}>
           <Form
             form={paymentForm}
             layout="vertical"
@@ -284,9 +284,9 @@ const Payment = ({ setStep }) => {
           </Form>
         </Col>
 
-        <Col span={12}>
+        <Col xxl={12} lg={12} md={24} sm={24} xs={24}>
           <Card size="small" title="Thông tin đơn hàng">
-            <Table
+            <S.TableCustom
               columns={tableColumn}
               dataSource={tableData}
               pagination={false}
@@ -316,10 +316,16 @@ const Payment = ({ setStep }) => {
         </Col>
       </Row>
 
-      <Row justify="space-between">
+      <Row
+        justify="space-around"
+        style={{
+          marginTop: 24,
+        }}
+      >
         <Button
           size="large"
-          style={{ backgroundColor: "yellow", minWidth: 200 }}
+          type="primary"
+          ghost
           onClick={() => setStep(STEP.INFO)}
         >
           Quay lại

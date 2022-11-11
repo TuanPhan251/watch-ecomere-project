@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 
+export const Wrapper = styled.div``;
+
 export const AdminMainContainer = styled.div`
   position: relative;
   width: 100%;

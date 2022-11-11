@@ -1,9 +1,20 @@
 import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+
+import { Button, Col, Row, Space } from "antd";
+
+import { ROUTES } from "../../../constants/routes";
 
 import * as S from "./styles";
 
 const AdminHeader = ({ setShowSidebar, showSidebar }) => {
+  const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.user);
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate(ROUTES.LOGIN);
+  };
 
   return (
     <S.AdminHeaderContainer>
@@ -15,7 +26,25 @@ const AdminHeader = ({ setShowSidebar, showSidebar }) => {
       </button>
       <h2 className="admin_header-heading">Trang quản trị</h2>
 
-      <h3 className="admin_header-account">{userInfo.data.userName}</h3>
+      <div className="admin_header-account">
+        <h3>{userInfo.data.userName}</h3>
+        <i className="fa-solid fa-circle-user"></i>
+
+        <div className="account_dropdown-wrapper">
+          <Row gutter={[8, 8]}>
+            <Col span={24}>
+              <Button block>
+                <Link to={ROUTES.USER.HOME}>Về trang chủ</Link>
+              </Button>
+            </Col>
+            <Col span={24}>
+              <Button type="danger" block onClick={() => handleLogout()}>
+                Đăng xuất{" "}
+              </Button>
+            </Col>
+          </Row>
+        </div>
+      </div>
     </S.AdminHeaderContainer>
   );
 };

@@ -1,6 +1,8 @@
 import { useEffect } from "react";
+import { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { generatePath, Link, useLocation } from "react-router-dom";
+import { Avatar, Col, Row, Spin, notification, Tooltip } from "antd";
 
 import {
   getWishlistAction,
@@ -8,12 +10,11 @@ import {
   getProductListAction,
   removeProductDetailAction,
 } from "../../../../redux/actions";
+import BreadCrumb from "../../../../components/BreadCrumb";
 
-import { Avatar, Col, Row, Spin, notification, Tooltip } from "antd";
+import { ROUTES } from "../../../../constants/routes";
 import UserSideBar from "../SideBar";
 import * as S from "./styles";
-import { useMemo } from "react";
-import { ROUTES } from "../../../../constants/routes";
 
 const UserInfoWishListPage = () => {
   const dispatch = useDispatch();
@@ -109,6 +110,22 @@ const UserInfoWishListPage = () => {
   return (
     <S.Wrapper>
       <S.TopSpacer></S.TopSpacer>
+
+      <S.BreadCrumbWrapper>
+        <BreadCrumb
+          breadCrumbItems={[
+            {
+              title: "Trang chủ",
+              path: ROUTES.USER.HOME,
+            },
+            {
+              title: "Sản phẩm yêu thích",
+              path: "",
+            },
+          ]}
+        />
+      </S.BreadCrumbWrapper>
+
       <S.UserPageContent>
         <Row gutter={16}>
           <Col span={6}>

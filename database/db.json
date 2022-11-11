@@ -439,6 +439,12 @@
     {
       "id": 5,
       "name": "Tissot"
+    },
+    {
+      "name": "DW",
+      "createdAt": 1668136076045,
+      "updatedAt": 1668136076045,
+      "id": 6
     }
   ],
   "users": [
@@ -648,17 +654,17 @@
     },
     {
       "userId": 4,
-      "productId": 6,
-      "createdAt": 1668068298867,
-      "updatedAt": 1668068298867,
-      "id": 17
-    },
-    {
-      "userId": 4,
       "productId": 17,
       "createdAt": 1668068307616,
       "updatedAt": 1668068307616,
       "id": 18
+    },
+    {
+      "userId": 4,
+      "productId": 6,
+      "createdAt": 1668157335009,
+      "updatedAt": 1668157335009,
+      "id": 19
     }
   ],
   "orders": [
@@ -679,9 +685,9 @@
       "userId": 2,
       "orderCode": "c1990012-7078-43cf-aa74-d3243a4f0159",
       "totalPrice": 2014245,
-      "status": "pending",
+      "status": "done",
       "createdAt": 1667813278603,
-      "updatedAt": 1667984425476,
+      "updatedAt": 1668139448049,
       "id": 1
     },
     {
@@ -787,6 +793,27 @@
       "createdAt": 1667983503312,
       "updatedAt": 1667983645609,
       "id": 6
+    },
+    {
+      "nameInfo": "tuan123",
+      "emailInfo": "tuan@gmail.com",
+      "phoneNumber": 90000000,
+      "address": "45 Ngô Quyền",
+      "cityId": 7224,
+      "cityName": "Thành phố Đà Nẵng",
+      "districtId": 7256,
+      "districtName": "Quận Sơn Trà",
+      "wardId": 7257,
+      "wardName": "Phường Thọ Quang",
+      "method": "atm",
+      "bank": "Vietcombank",
+      "userId": 4,
+      "orderCode": "ed60febd-11e7-4ad8-b7e0-e7d137fa0396",
+      "totalPrice": 15303550,
+      "status": "pending",
+      "createdAt": 1668153210673,
+      "updatedAt": 1668153210674,
+      "id": 7
     }
   ],
   "orderProducts": [
@@ -969,6 +996,54 @@
       "createdAt": 1667983503466,
       "updatedAt": 1667983503466,
       "id": 15
+    },
+    {
+      "orderId": 7,
+      "productId": 17,
+      "productName": "Đồng hồ MATHEY TISSOT Urban 42 mm Nam H411BPI1",
+      "price": 4867500,
+      "quantity": 1,
+      "slug": "dong-ho-mathey-tissot-urban-42-mm-nam-h411bpi1",
+      "image": "https://cdn.tgdd.vn/Products/Images/7264/218348/mathey-tissot-h411bpi1-nam-2-org.jpg",
+      "createdAt": 1668153210767,
+      "updatedAt": 1668153210768,
+      "id": 16
+    },
+    {
+      "orderId": 7,
+      "productId": 14,
+      "productName": "Đồng hồ TIMEX Southview 41mm Nam TW2T34800",
+      "price": 3006000,
+      "quantity": 1,
+      "slug": "dong-ho-timex-southview-41mm-nam-tw2t34800",
+      "image": "https://product.hstatic.net/1000270050/product/timex-tw2t34800-nau-600x600__1__3e8bbd1b49b54d09ad29b93f474f8e08_master.jpg",
+      "createdAt": 1668153210847,
+      "updatedAt": 1668153210847,
+      "id": 17
+    },
+    {
+      "orderId": 7,
+      "productId": 8,
+      "productName": "Đồng hồ ORIENT SK 41.7 mm Nam RA-AA0B04R19B",
+      "price": 6291000,
+      "quantity": 1,
+      "slug": "dong-ho-orient-sk-417-mm-nam-ra-aa0b04r19b",
+      "image": "https://cdn.tgdd.vn/Products/Images/7264/275056/orient-ra-aa0b04r19b-1.jpg",
+      "createdAt": 1668153210920,
+      "updatedAt": 1668153210920,
+      "id": 18
+    },
+    {
+      "orderId": 7,
+      "productId": 2,
+      "productName": "Đồng hồ CASIO 40 mm Nam MTP-VT01GL-1B2UDF ",
+      "price": 1139050,
+      "quantity": 1,
+      "slug": "dong-ho-casio-40-mm-nam-mtp-vt01gl-1b2udf",
+      "image": "https://cdn.tgdd.vn/Products/Images/7264/286440/casio-mtp-vt01gl-1b2udf-nam-2-1.jpg",
+      "createdAt": 1668153210994,
+      "updatedAt": 1668153210994,
+      "id": 19
     }
   ],
   "images": [

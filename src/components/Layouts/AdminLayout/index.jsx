@@ -20,7 +20,7 @@ const AdminLayout = () => {
   )
     return <Navigate to={ROUTES.USER.HOME} />;
   return (
-    <>
+    <S.Wrapper>
       <AdminHeader setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
       <S.AdminMainContainer>
         <AdminSidebar showSidebar={showSidebar} />
@@ -29,7 +29,7 @@ const AdminLayout = () => {
           <Outlet />
         </S.MainContent>
       </S.AdminMainContainer>
-    </>
+    </S.Wrapper>
   );
 };
 
