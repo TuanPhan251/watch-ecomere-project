@@ -130,6 +130,7 @@ const Info = ({ setStep }) => {
       dataIndex: "category",
       key: "category",
       render: (category) => category.name,
+      responsive: ["md"],
     },
     {
       title: "Số lượng",
@@ -140,19 +141,20 @@ const Info = ({ setStep }) => {
       title: "Đơn giá",
       dataIndex: "price",
       key: "price",
-      width: 200,
+      width: 120,
       render: (_, record) => (
         <p>
           {record.price.toLocaleString()}
           <sup>đ</sup>
         </p>
       ),
+      responsive: ["md"],
     },
     {
       title: "Tổng tiền",
       dataIndex: "totalPrice",
       key: "totalPrice",
-      width: 200,
+      width: 120,
       render: (_, record) => (
         <p>
           {record.totalPrice.toLocaleString()}
@@ -201,7 +203,7 @@ const Info = ({ setStep }) => {
           onFinish={(values) => handleSubmitInfoForm(values)}
         >
           <Row gutter={[16, 16]}>
-            <Col span={8}>
+            <Col xxl={8} lg={8} md={12} sm={24} xs={24}>
               <Form.Item
                 label="Họ tên người nhận"
                 name="nameInfo"
@@ -215,7 +217,7 @@ const Info = ({ setStep }) => {
                 <Input />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col xxl={8} lg={8} md={12} sm={24} xs={24}>
               <Form.Item
                 label="Email"
                 name="emailInfo"
@@ -229,7 +231,7 @@ const Info = ({ setStep }) => {
                 <Input />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col xxl={8} lg={8} md={12} sm={24} xs={24}>
               <Form.Item
                 rules={[
                   {
@@ -243,9 +245,7 @@ const Info = ({ setStep }) => {
                 <InputNumber style={{ width: "100%" }} />
               </Form.Item>
             </Col>
-          </Row>
-          <Row gutter={[16, 16]}>
-            <Col span={8}>
+            <Col xxl={8} lg={8} md={12} sm={24} xs={24}>
               <Form.Item
                 rules={[
                   {
@@ -270,7 +270,7 @@ const Info = ({ setStep }) => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col xxl={8} lg={8} md={12} sm={24} xs={24}>
               <Form.Item
                 rules={[
                   {
@@ -294,7 +294,7 @@ const Info = ({ setStep }) => {
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col xxl={8} lg={8} md={12} sm={24} xs={24}>
               <Form.Item
                 rules={[
                   {
@@ -321,7 +321,7 @@ const Info = ({ setStep }) => {
                 label="Địa chỉ cụ thể"
                 name="address"
               >
-                <Input />
+                <Input.TextArea />
               </Form.Item>
             </Col>
           </Row>
@@ -330,14 +330,15 @@ const Info = ({ setStep }) => {
       <Row justify="space-around" style={{ marginTop: 24 }}>
         <Button
           size="large"
-          style={{ backgroundColor: "yellow", minWidth: 200 }}
+          type="primary"
+          ghost
           onClick={() => setStep(STEP.CART)}
         >
           Quay lại
         </Button>
         <Button
           size="large"
-          style={{ backgroundColor: "yellow", minWidth: 200 }}
+          type="primary"
           // onClick={() => setStep(STEP.PAYMENT)}
           onClick={() => infoForm.submit()}
         >

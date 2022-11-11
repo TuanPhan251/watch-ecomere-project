@@ -33,20 +33,6 @@ const Cart = ({ setStep }) => {
   }, 0);
 
   const discountPrice = totalPrice * (1 - discount.data[0]?.discount / 100);
-  const [discountValue, setDiscountValue] = useState(0);
-
-  const [totalDiscountPrice, setTotalDiscountPrice] = useState(totalPrice);
-
-  // useEffect(() => {
-  //   if (!haveCoupon) {
-  //     inputForm.setFields([
-  //       {
-  //         name: "discountInput",
-  //         errors: ["Mã không có hiệu lực"],
-  //       },
-  //     ]);
-  //   }
-  // }, [discount.data]);
 
   const handleRemoveProduct = (productId) => {
     dispatch(removeCartItemAction({ productId }));
@@ -272,7 +258,8 @@ const Cart = ({ setStep }) => {
       <Row style={{ justifyContent: "space-between", marginTop: 30 }}>
         <Button
           size="large"
-          style={{ backgroundColor: "yellow", minWidth: 200 }}
+          type="primary"
+          ghost
           onClick={() => navigate(ROUTES.USER.BRAND)}
         >
           Quay lại trang sản phẩm

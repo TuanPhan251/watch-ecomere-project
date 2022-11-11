@@ -12,10 +12,6 @@ import { ROUTES } from "../../../constants/routes";
 const AdminOrderListPage = () => {
   const dispatch = useDispatch();
   const { allOrders } = useSelector((state) => state.order);
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 12 ~ AdminOrderListPage ~ allOrders",
-    allOrders
-  );
 
   useEffect(() => {
     dispatch(

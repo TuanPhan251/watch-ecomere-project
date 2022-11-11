@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
-import { Input, Form, Button, Radio, Spin } from "antd";
+import { Input, Form, Button, Radio, Spin, Space } from "antd";
 
 import {
   getUserDetailAction,
@@ -53,7 +53,9 @@ const AccountDetailsPage = () => {
           }}
           initialValues={{
             ...userDetail.data,
-            createdAt: moment(userDetail.data.createdAt).locale("vi"),
+            createdAt: moment(userDetail.data.createdAt).format(
+              "DD, MMMM, YYYY"
+            ),
           }}
           onFinish={(values) => handleUpdateUserInfo(values)}
         >
@@ -91,13 +93,22 @@ const AccountDetailsPage = () => {
               span: 16,
             }}
           >
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={isCurrentAccount}
-            >
-              Thay đổi
-            </Button>
+            <Space>
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={isCurrentAccount}
+              >
+                Thay đổi
+              </Button>
+              <Button
+                type="primary"
+                ghost
+                onClick={() => navigate(ROUTES.ADMIN.ACCOUNT_LIST_PAGE)}
+              >
+                Quay lại
+              </Button>
+            </Space>
           </Form.Item>
         </Form>
       </Spin>

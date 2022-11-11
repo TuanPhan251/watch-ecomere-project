@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Row } from "antd";
+import { Row, Table } from "antd";
 
 export const Wrapper = styled.div`
   /* display: flex;
@@ -365,4 +365,22 @@ export const CartItem = styled(Row)`
 
 export const CartInfoSummary = styled.div`
   margin-bottom: 12px;
+`;
+
+//payment
+
+export const TableCustom = styled(Table)`
+  &::-webkit-scrollbar {
+    width: 6px !important;
+    background-color: #fafafa !important;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #595959 !important;
+  }
+
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3) !important;
+    background-color: #fafafa !important;
+  }
 `;

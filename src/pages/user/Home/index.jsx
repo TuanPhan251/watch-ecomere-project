@@ -15,7 +15,7 @@ import womenImg from "../../../assets/banner/women-1.webp";
 import bgrImage from "../../../assets/banner/bgr-img.jpg";
 
 import * as S from "./style";
-import { Card, Carousel, Col, Row, Spin } from "antd";
+import { Col, Spin } from "antd";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -54,6 +54,14 @@ const settings = {
         dots: true,
       },
     },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 3,
+        infinite: true,
+        dots: true,
+      },
+    },
   ],
 };
 
@@ -69,6 +77,11 @@ const HomePage = () => {
   const shuffled = newProducts.sort(() => 0.5 - Math.random());
   const selectedNewProducts = shuffled.slice(0, 8);
   const videoRef = useRef();
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
 
   useEffect(() => {
     dispatch(

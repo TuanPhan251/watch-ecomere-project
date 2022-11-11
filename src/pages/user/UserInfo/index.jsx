@@ -1,8 +1,11 @@
 import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
 import { Avatar, Col, Row } from "antd";
 
+import BreadCrumb from "../../../components/BreadCrumb";
 import UserSideBar from "./SideBar";
+
+import { ROUTES } from "../../../constants/routes";
+
 import * as S from "./styles";
 
 const UserInfoPage = () => {
@@ -11,6 +14,22 @@ const UserInfoPage = () => {
   return (
     <S.Wrapper>
       <S.TopSpacer></S.TopSpacer>
+
+      <S.BreadCrumbWrapper>
+        <BreadCrumb
+          breadCrumbItems={[
+            {
+              title: "Trang chủ",
+              path: ROUTES.USER.HOME,
+            },
+            {
+              title: "Thông tin tài khoản",
+              path: "",
+            },
+          ]}
+        />
+      </S.BreadCrumbWrapper>
+
       <S.UserPageContent>
         <Row gutter={16}>
           <Col span={6}>

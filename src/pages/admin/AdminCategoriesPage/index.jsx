@@ -1,22 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { generatePath, useNavigate } from "react-router-dom";
 
-import { Button, Col, Row, Space, Table } from "antd";
+import { Button, Col, Row, Space, Table, Modal, Form, Input } from "antd";
 
 import {
   getCategoriesListAction,
   getProductListAction,
+  createCategoryAction,
 } from "../../../redux/actions";
 
 import * as S from "./styles";
 import { ROUTES } from "../../../constants/routes";
 
 const AdminCategoryPage = () => {
+  const [categoryForm] = Form.useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { categoryList } = useSelector((state) => state.category);
+  const { categoryList, createCategory } = useSelector(
+    (state) => state.category
+  );
   const { productList } = useSelector((state) => state.product);
+
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(
@@ -30,6 +36,22 @@ const AdminCategoryPage = () => {
 
     dispatch(getCategoriesListAction());
   }, []);
+
+  const handleCreateCategory = (values) => {
+    dispatch(
+      createCategoryAction({
+        data: values,
+        callback: {
+          resetField: () => {
+            categoryForm.resetFields();
+          },
+          closeModal: () => {
+            setShowModal(false);
+          },
+        },
+      })
+    );
+  };
 
   const tableColumn = [
     {
@@ -55,9 +77,10 @@ const AdminCategoryPage = () => {
       render: () => (
         <Space>
           <Button>Chi tiết</Button>
-          <Button type="danger">Xóa</Button>
+          <Button type="danger">Tạm ẩn</Button>
         </Space>
       ),
+      width: 300,
     },
   ];
 
@@ -70,7 +93,7 @@ const AdminCategoryPage = () => {
     <S.Wrapper>
       <S.TopWrapper>
         <h2>Danh sách nhãn hàng</h2>
-        <Button type="primary" size="large">
+        <Button type="primary" size="large" onClick={() => setShowModal(true)}>
           Thêm nhãn hàng
         </Button>
       </S.TopWrapper>
@@ -82,7 +105,7 @@ const AdminCategoryPage = () => {
 
         <Col span={20}>
           <Table
-            loading={productList.loading}
+            loading={productList.loading || categoryList.loading}
             columns={tableColumn}
             dataSource={tableData}
             pagination={false}
@@ -90,6 +113,47 @@ const AdminCategoryPage = () => {
           />
         </Col>
       </Row>
+
+      <Modal
+        open={showModal}
+        title="Thêm nhãn hàng mới"
+        okText="Tạo"
+        cancelText="Hủy"
+        onCancel={() => setShowModal(false)}
+        confirmLoading={createCategory.loading}
+        onOk={() => {
+          categoryForm
+            .validateFields()
+            .then((values) => {
+              handleCreateCategory(values);
+            })
+            .catch((info) => {
+              console.log("Validate Failed:", info);
+            });
+        }}
+      >
+        <Form
+          form={categoryForm}
+          layout="vertical"
+          name="form_in_modal"
+          initialValues={{
+            modifier: "public",
+          }}
+        >
+          <Form.Item
+            name="name"
+            label="Tên nhãn hàng"
+            rules={[
+              {
+                required: true,
+                message: "Bạn phải nhập tên nhãn hàng",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Form>
+      </Modal>
     </S.Wrapper>
   );
 };

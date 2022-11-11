@@ -8,6 +8,10 @@ const initialValue = {
     loading: false,
     error: "",
   },
+  createCategory: {
+    loading: false,
+    error: "",
+  },
 };
 
 const categoryReducer = createReducer(initialValue, {
@@ -39,6 +43,38 @@ const categoryReducer = createReducer(initialValue, {
       ...state,
       categoryList: {
         ...state.categoryList,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
+  [REQUEST(CATEGORY_ACTION.CREATE_NEW_CATEGORY)]: (state, action) => {
+    return {
+      ...state,
+      createCategory: {
+        ...state.createCategory,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(CATEGORY_ACTION.CREATE_NEW_CATEGORY)]: (state, action) => {
+    return {
+      ...state,
+      createCategory: {
+        ...state.createCategory,
+        loading: false,
+        error: "",
+      },
+    };
+  },
+  [FAIL(CATEGORY_ACTION.CREATE_NEW_CATEGORY)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      createCategory: {
+        ...state.createCategory,
         loading: false,
         error: error,
       },

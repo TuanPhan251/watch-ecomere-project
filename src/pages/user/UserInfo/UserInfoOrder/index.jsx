@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useLocation, generatePath } from "react-router-dom";
 import { Avatar, Button, Col, Row, Table, notification } from "antd";
 import moment from "moment/moment";
 
@@ -8,9 +7,10 @@ import {
   getOrderListAction,
   updateOrderStatusAction,
 } from "../../../../redux/actions";
+import BreadCrumb from "../../../../components/BreadCrumb";
+import UserSideBar from "../SideBar";
 import { ROUTES } from "../../../../constants/routes";
 
-import UserSideBar from "../SideBar";
 import * as S from "./styles";
 
 const UserInfoOrderPage = () => {
@@ -74,7 +74,7 @@ const UserInfoOrderPage = () => {
       render: (_, record) => {
         return record.orderProducts?.length;
       },
-      width: 100,
+      width: 60,
     },
     {
       title: "Địa chỉ giao",
@@ -147,12 +147,28 @@ const UserInfoOrderPage = () => {
   return (
     <S.Wrapper>
       <S.TopSpacer></S.TopSpacer>
+
+      <S.BreadCrumbWrapper>
+        <BreadCrumb
+          breadCrumbItems={[
+            {
+              title: "Trang chủ",
+              path: ROUTES.USER.HOME,
+            },
+            {
+              title: "Lịch sử mua hàng",
+              path: "",
+            },
+          ]}
+        />
+      </S.BreadCrumbWrapper>
+
       <S.UserPageContent>
         <Row gutter={16}>
-          <Col span={6}>
+          <Col xxl={6} lg={6} md={24} sm={24} xs={24}>
             <UserSideBar />
           </Col>
-          <Col span={18}>
+          <Col xxl={18} lg={18} md={24} sm={24} xs={24}>
             <S.UserInfo>
               <h3 className="user_info-title">Lịch sử mua hàng</h3>
 

@@ -227,6 +227,8 @@ const AdminOrderDetailPage = () => {
               Ngày tạo đơn:{" "}
               {moment(orderDetail.data.createdAt).format("DD/MM/YYYY")}
             </h4>
+            <p>Mã đơn: {orderDetail.data.orderCode}</p>
+
             <Table
               columns={tableColumn}
               dataSource={tableData}

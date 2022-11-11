@@ -11,6 +11,12 @@ export const TopSpacer = styled.div`
   height: var(--header-height);
 `;
 
+export const BreadCrumbWrapper = styled.div`
+  max-width: 1200px;
+  width: 100%;
+  margin: 12px auto;
+`;
+
 export const UserPageContent = styled.div`
   max-width: 1200px;
   width: 100%;
@@ -26,6 +32,7 @@ export const UserInfo = styled.div`
   .user_info-title {
     font-size: 20px;
     text-align: center;
+    margin-bottom: 24px;
   }
 `;
 
