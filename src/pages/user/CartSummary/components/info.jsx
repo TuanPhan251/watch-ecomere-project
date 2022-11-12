@@ -129,6 +129,7 @@ const Info = ({ setStep }) => {
       title: "Hãng",
       dataIndex: "category",
       key: "category",
+      align: "center",
       render: (category) => category.name,
       responsive: ["md"],
     },
@@ -136,11 +137,13 @@ const Info = ({ setStep }) => {
       title: "Số lượng",
       dataIndex: "totalAmount",
       key: "totalAmount",
+      align: "center",
     },
     {
       title: "Đơn giá",
       dataIndex: "price",
       key: "price",
+      align: "center",
       width: 120,
       render: (_, record) => (
         <p>
@@ -154,6 +157,7 @@ const Info = ({ setStep }) => {
       title: "Tổng tiền",
       dataIndex: "totalPrice",
       key: "totalPrice",
+      align: "center",
       width: 120,
       render: (_, record) => (
         <p>

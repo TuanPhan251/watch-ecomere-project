@@ -478,7 +478,7 @@
     {
       "email": "tuan@gmail.com",
       "password": "$2a$10$bmRoP6V4CyQHth3KwfcLg..OWAQYaLuh2tqM8FwflzZjtRr19K29e",
-      "userName": "tuan123",
+      "userName": "Hoài Tuấn",
       "role": "admin",
       "createdAt": "2022-10-31T02:07:04.841Z",
       "updatedAt": 1668068233930,
@@ -488,7 +488,6 @@
   "comments": [
     {
       "id": 1,
-      "userName": "phuong123456",
       "userId": 3,
       "productId": 6,
       "content": "Sản phẩm tuyệt vời, gian hàng uy tín xD",
@@ -496,8 +495,7 @@
     },
     {
       "rating": 4,
-      "content": "ádfasf",
-      "userName": "tuan123",
+      "content": "Tốt",
       "userId": 4,
       "productId": 2,
       "createdAt": 1667191114427,
@@ -506,8 +504,7 @@
     },
     {
       "rating": 5,
-      "content": "sdf",
-      "userName": "tuan123",
+      "content": "Tuyệt vời",
       "userId": 4,
       "productId": 6,
       "createdAt": 1667203101398,
@@ -516,8 +513,7 @@
     },
     {
       "rating": 4.5,
-      "content": "ffdsfsdf",
-      "userName": "phuong1",
+      "content": "Quá đẹp",
       "userId": 2,
       "productId": 5,
       "createdAt": 1667306474004,
@@ -527,7 +523,6 @@
     {
       "rating": 5,
       "content": "ok",
-      "userName": "phuong1",
       "userId": 2,
       "productId": 9,
       "createdAt": 1667307446870,
@@ -536,8 +531,7 @@
     },
     {
       "rating": 5,
-      "content": "dhgfh",
-      "userName": "phuong1",
+      "content": "5 xaooo",
       "userId": 2,
       "productId": 2,
       "createdAt": 1667482776562,
@@ -547,7 +541,6 @@
     {
       "rating": 5,
       "content": "sản phẩm tốt, giá phải chăng",
-      "userName": "phuong1",
       "userId": 2,
       "productId": 13,
       "createdAt": 1668050659376,
@@ -557,7 +550,6 @@
     {
       "rating": 3,
       "content": "giá cao quá",
-      "userName": "phuong1",
       "userId": 2,
       "productId": 8,
       "createdAt": 1668050821156,
@@ -567,7 +559,6 @@
     {
       "rating": 4,
       "content": "tạm được",
-      "userName": "phuong1",
       "userId": 2,
       "productId": 1,
       "createdAt": 1668051570049,
@@ -577,7 +568,6 @@
     {
       "rating": 5,
       "content": "quá đẹp và sang trọng",
-      "userName": "phuong1",
       "userId": 2,
       "productId": 7,
       "createdAt": 1668068187104,
@@ -587,7 +577,6 @@
     {
       "rating": 4.5,
       "content": "giá quá tốt",
-      "userName": "tuan123",
       "userId": 4,
       "productId": 17,
       "createdAt": 1668068974902,
@@ -665,6 +654,20 @@
       "createdAt": 1668157335009,
       "updatedAt": 1668157335009,
       "id": 19
+    },
+    {
+      "userId": 4,
+      "productId": 1,
+      "createdAt": 1668218959284,
+      "updatedAt": 1668218959284,
+      "id": 20
+    },
+    {
+      "userId": 4,
+      "productId": 2,
+      "createdAt": 1668221649058,
+      "updatedAt": 1668221649059,
+      "id": 21
     }
   ],
   "orders": [

@@ -136,12 +136,14 @@ const AdminProductPage = () => {
       title: "Hãng",
       dataIndex: "category",
       key: "category",
+      align: "center",
       render: (category) => category.name,
     },
     {
       title: "Giới tính",
       dataIndex: "gender",
       key: "gender",
+      align: "center",
       render: (_, record) => <p>{record.gender === "male" ? "Nam" : "Nữ"}</p>,
       // render: (_, record) => <p>{moment(record.createdAt).fromNow()}</p>,
     },
@@ -149,6 +151,7 @@ const AdminProductPage = () => {
       title: "Giá",
       dataIndex: "price",
       key: "price",
+      align: "center",
       width: 120,
       render: (_, record) => (
         <p>
@@ -161,12 +164,14 @@ const AdminProductPage = () => {
       title: "Khuyến mãi",
       dataIndex: "discountPercent",
       key: "discountPercent",
+      align: "center",
       render: (discountPercent) => `${discountPercent} %`,
     },
     {
       title: "Tùy chọn",
       dataIndex: "action",
       key: "action",
+      align: "center",
       render: (_, record) => {
         return (
           <>

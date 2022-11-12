@@ -10,10 +10,9 @@ import {
   getProductListAction,
   removeProductDetailAction,
 } from "../../../../redux/actions";
-import BreadCrumb from "../../../../components/BreadCrumb";
+import Layout from "../Layout";
 
 import { ROUTES } from "../../../../constants/routes";
-import UserSideBar from "../SideBar";
 import * as S from "./styles";
 
 const UserInfoWishListPage = () => {
@@ -22,7 +21,6 @@ const UserInfoWishListPage = () => {
   const { wishlist } = useSelector((state) => state.wishlist);
 
   const wishlistItems = wishlist.data.map((item) => item.product);
-  const wishlistIds = wishlist.data.map((item) => item.productId);
 
   useEffect(() => {
     dispatch(getWishlistAction({ userId: userInfo.data.id }));
@@ -69,7 +67,7 @@ const UserInfoWishListPage = () => {
   const renderWishlist = useMemo(() => {
     return wishlistItems.map((item) => {
       return (
-        <Col span={6} key={item.id}>
+        <Col xxl={6} lg={6} md={6} sm={12} xs={12} key={item.productId}>
           <Link
             to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
               id: `${item.slug}.${item.id}`,
@@ -108,44 +106,57 @@ const UserInfoWishListPage = () => {
   }, [wishlistItems]);
 
   return (
-    <S.Wrapper>
-      <S.TopSpacer></S.TopSpacer>
+    <Layout>
+      <S.Wrapper>
+        <h3 className="user_info-title">Sản phẩm yêu thích</h3>
 
-      <S.BreadCrumbWrapper>
-        <BreadCrumb
-          breadCrumbItems={[
-            {
-              title: "Trang chủ",
-              path: ROUTES.USER.HOME,
-            },
-            {
-              title: "Sản phẩm yêu thích",
-              path: "",
-            },
-          ]}
-        />
-      </S.BreadCrumbWrapper>
-
-      <S.UserPageContent>
-        <Row gutter={16}>
-          <Col span={6}>
-            <UserSideBar />
-          </Col>
-          <Col span={18}>
-            <S.UserInfo>
-              <h3 className="user_info-title">Sản phẩm yêu thích</h3>
-
-              <S.ProductsWrapper>
-                <Spin spinning={wishlist.loading}>
-                  <Row gutter={[8, 8]}>{renderWishlist}</Row>
-                </Spin>
-              </S.ProductsWrapper>
-            </S.UserInfo>
-          </Col>
-        </Row>
-      </S.UserPageContent>
-    </S.Wrapper>
+        <S.ProductsWrapper>
+          <Spin spinning={wishlist.loading}>
+            <Row gutter={[8, 8]}>{renderWishlist}</Row>
+          </Spin>
+        </S.ProductsWrapper>
+      </S.Wrapper>
+    </Layout>
   );
+
+  //   <S.Wrapper>
+  //     <S.TopSpacer></S.TopSpacer>
+
+  //     <S.BreadCrumbWrapper>
+  //       <BreadCrumb
+  //         breadCrumbItems={[
+  //           {
+  //             title: "Trang chủ",
+  //             path: ROUTES.USER.HOME,
+  //           },
+  //           {
+  //             title: "Sản phẩm yêu thích",
+  //             path: "",
+  //           },
+  //         ]}
+  //       />
+  //     </S.BreadCrumbWrapper>
+
+  //     <S.UserPageContent>
+  //       <Row gutter={16}>
+  //         <Col span={6}>
+  //           <UserSideBar />
+  //         </Col>
+  //         <Col span={18}>
+  //           <S.UserInfo>
+  //             <h3 className="user_info-title">Sản phẩm yêu thích</h3>
+
+  //             <S.ProductsWrapper>
+  //               <Spin spinning={wishlist.loading}>
+  //                 <Row gutter={[8, 8]}>{renderWishlist}</Row>
+  //               </Spin>
+  //             </S.ProductsWrapper>
+  //           </S.UserInfo>
+  //         </Col>
+  //       </Row>
+  //     </S.UserPageContent>
+  //   </S.Wrapper>
+  // );
 };
 
 export default UserInfoWishListPage;

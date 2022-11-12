@@ -120,7 +120,6 @@ const ProductDetailPage = () => {
   const handleCreateComment = (value) => {
     const data = {
       ...value,
-      userName: userInfo?.data?.userName,
       userId: userInfo?.data?.id,
       productId: productDetail.data.id,
     };
@@ -200,13 +199,18 @@ const ProductDetailPage = () => {
       return (
         <Comment
           key={item.id}
-          author={<a>{item.userName}</a>}
+          author={<a>{item.user.userName}</a>}
           avatar={
             <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
           }
           content={
             <>
-              <Rate disabled value={item.rating} style={{ fontSize: 14 }} />
+              <Rate
+                disabled
+                allowHalf
+                value={item.rating}
+                style={{ fontSize: 14 }}
+              />
               <p>{item.content}</p>
             </>
           }

@@ -9,6 +9,7 @@ import {
 } from "../../../../redux/actions";
 import BreadCrumb from "../../../../components/BreadCrumb";
 import UserSideBar from "../SideBar";
+import Layout from "../Layout";
 import { ROUTES } from "../../../../constants/routes";
 
 import * as S from "./styles";
@@ -20,7 +21,7 @@ const UserInfoOrderPage = () => {
 
   useEffect(() => {
     dispatch(getOrderListAction({ userId: userInfo.data.id }));
-  }, []);
+  }, [userInfo.data]);
 
   const handleCancelOrder = (status, id) => {
     if (status === "userCancel" || status === "cancel") {
@@ -68,22 +69,9 @@ const UserInfoOrderPage = () => {
       width: 100,
     },
     {
-      title: "Số sản phẩm",
-      dataIndex: "quantity",
-      key: "quantity",
-      render: (_, record) => {
-        return record.orderProducts?.length;
-      },
-      width: 60,
-    },
-    {
-      title: "Địa chỉ giao",
-      dataIndex: "address",
-      key: "address",
-      render: (_, record) => {
-        const orderAddress = `${record.address}, ${record.wardName}, ${record.districtName}, ${record.cityName}`;
-        return <span>{orderAddress}</span>;
-      },
+      title: "Mã đơn hàng",
+      dataIndex: "orderCode",
+      key: "orderCode",
     },
     {
       title: "Thành tiền",
@@ -97,6 +85,7 @@ const UserInfoOrderPage = () => {
         );
       },
       width: 100,
+      responsive: ["md"],
     },
     {
       title: "Trạng thái",
@@ -145,76 +134,64 @@ const UserInfoOrderPage = () => {
   const tableData = orderList.data?.map((item) => ({ ...item, key: item.id }));
 
   return (
-    <S.Wrapper>
-      <S.TopSpacer></S.TopSpacer>
+    <Layout>
+      <S.Wrapper>
+        <h3 className="user_info-title">Lịch sử mua hàng</h3>
 
-      <S.BreadCrumbWrapper>
-        <BreadCrumb
-          breadCrumbItems={[
-            {
-              title: "Trang chủ",
-              path: ROUTES.USER.HOME,
-            },
-            {
-              title: "Lịch sử mua hàng",
-              path: "",
-            },
-          ]}
+        <Table
+          size="small"
+          loading={orderList.loading}
+          columns={tableColumn}
+          dataSource={tableData}
+          pagination={false}
+          style={{ marginBottom: "auto" }}
+          expandable={{
+            expandedRowRender: (record) => (
+              <S.ExpandTableRow>
+                <Row gutter={[8, 8]}>
+                  <Col span={24}>
+                    <h4>
+                      Địa chỉ:{" "}
+                      {`${record.address}, ${record.wardName}, ${record.districtName}, ${record.cityName}`}
+                    </h4>
+                  </Col>
+                  <Col span={24}>
+                    <h4>
+                      Thành tiền: {record.totalPrice?.toLocaleString()}
+                      <sup>đ</sup>
+                    </h4>
+                  </Col>
+                  {record.orderProducts.map((item) => {
+                    return (
+                      <S.OrderItem key={item.id}>
+                        <Col span={2}>
+                          <img width="100%" src={item.image} alt="" />
+                        </Col>
+
+                        <Col span={12} className="order__item-name">
+                          <h4>{item.productName}</h4>
+                        </Col>
+                        <Col span={6} className="order__item-price">
+                          <span>Đơn giá: </span>
+                          <span>
+                            {item.price?.toLocaleString()}
+                            <sup>đ</sup>
+                          </span>
+                        </Col>
+                        <Col span={4} className="order__item-quantity">
+                          <span>Số lượng: </span>
+                          <span>{item.quantity}</span>
+                        </Col>
+                      </S.OrderItem>
+                    );
+                  })}
+                </Row>
+              </S.ExpandTableRow>
+            ),
+          }}
         />
-      </S.BreadCrumbWrapper>
-
-      <S.UserPageContent>
-        <Row gutter={16}>
-          <Col xxl={6} lg={6} md={24} sm={24} xs={24}>
-            <UserSideBar />
-          </Col>
-          <Col xxl={18} lg={18} md={24} sm={24} xs={24}>
-            <S.UserInfo>
-              <h3 className="user_info-title">Lịch sử mua hàng</h3>
-
-              <Table
-                size="small"
-                loading={orderList.loading}
-                columns={tableColumn}
-                dataSource={tableData}
-                pagination={false}
-                style={{ marginBottom: "auto" }}
-                expandable={{
-                  expandedRowRender: (record) => (
-                    <Row gutter={[8, 8]}>
-                      {record.orderProducts.map((item) => {
-                        return (
-                          <S.OrderItem key={item.id}>
-                            <Col span={2}>
-                              <img width="100%" src={item.image} alt="" />
-                            </Col>
-
-                            <Col span={12} className="order__item-name">
-                              <h4>{item.productName}</h4>
-                            </Col>
-                            <Col span={6} className="order__item-price">
-                              <span>Đơn giá: </span>
-                              <span>
-                                {item.price?.toLocaleString()}
-                                <sup>đ</sup>
-                              </span>
-                            </Col>
-                            <Col span={4} className="order__item-quantity">
-                              <span>Số lượng: </span>
-                              <span>{item.quantity}</span>
-                            </Col>
-                          </S.OrderItem>
-                        );
-                      })}
-                    </Row>
-                  ),
-                }}
-              />
-            </S.UserInfo>
-          </Col>
-        </Row>
-      </S.UserPageContent>
-    </S.Wrapper>
+      </S.Wrapper>
+    </Layout>
   );
 };
 
