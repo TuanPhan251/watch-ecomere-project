@@ -370,17 +370,20 @@ export const CartInfoSummary = styled.div`
 //payment
 
 export const TableCustom = styled(Table)`
-  &::-webkit-scrollbar {
-    width: 6px !important;
-    background-color: #fafafa !important;
-  }
+  .ant-table-content {
+    &::-webkit-scrollbar {
+      height: 8px !important;
+      background-color: #fafafa !important;
+    }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: #595959 !important;
-  }
+    &::-webkit-scrollbar-thumb {
+      cursor: pointer;
+      background-color: #aaa !important;
+    }
 
-  &::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3) !important;
-    background-color: #fafafa !important;
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3) !important;
+      background-color: #fafafa !important;
+    }
   }
 `;

@@ -40,6 +40,7 @@ const AdminOrderListPage = () => {
       title: "Ngày đặt",
       dataIndex: "orderDate",
       key: "orderDate",
+      align: "center",
       render: (_, record) => {
         return <span>{moment(record.createdAt).format("DD/MM/YYYY")}</span>;
       },
@@ -48,11 +49,13 @@ const AdminOrderListPage = () => {
       title: "Tên người nhận",
       dataIndex: "nameInfo",
       key: "nameInfo",
+      align: "center",
     },
     {
       title: "Số sản phẩm",
       dataIndex: "quantity",
       key: "quantity",
+      align: "center",
       render: (_, record) => {
         return record.orderProducts?.length;
       },
@@ -61,6 +64,7 @@ const AdminOrderListPage = () => {
       title: "Địa chỉ giao",
       dataIndex: "address",
       key: "address",
+      align: "center",
       render: (_, record) => {
         const orderAddress = `${record.address}, ${record.wardName}, ${record.districtName}, ${record.cityName}`;
         return <span>{orderAddress}</span>;
@@ -70,6 +74,7 @@ const AdminOrderListPage = () => {
       title: "Thành tiền",
       dataIndex: "totalPrice",
       key: "totalPrice",
+      align: "center",
       render: (_, record) => {
         return (
           <span>
@@ -83,6 +88,7 @@ const AdminOrderListPage = () => {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
+      align: "center",
       render: (_, record) => {
         switch (record.status) {
           case "delivering": {
@@ -107,6 +113,7 @@ const AdminOrderListPage = () => {
       title: "Tùy chọn",
       dataIndex: "actions",
       key: "actions",
+      align: "center",
       render: (_, record) => {
         return (
           <Button>

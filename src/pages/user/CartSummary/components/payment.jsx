@@ -76,33 +76,30 @@ const Payment = ({ setStep }) => {
       key: "name",
       render: (_, record) => {
         return (
-          <Space>
-            <Avatar shape="square" size={64} src={record.image} />
-            <h4>{record.name}</h4>
-          </Space>
+          <div className="product__name">
+            <Space>
+              <Avatar shape="square" size={64} src={record.image} />
+              <h4 className="product__name-heading">{record.name}</h4>
+            </Space>
+          </div>
         );
       },
-      width: 200,
-      fixed: "left",
-    },
-    {
-      title: "Hãng",
-      dataIndex: "category",
-      key: "category",
-      width: 80,
-      render: (category) => category.name,
+      width: 180,
+      align: "center",
     },
     {
       title: "Số lượng",
       dataIndex: "totalAmount",
       key: "totalAmount",
-      width: 80,
+      width: 40,
+      align: "center",
     },
     {
       title: "Đơn giá",
       dataIndex: "price",
       key: "price",
-      width: 100,
+      align: "center",
+      width: 60,
       render: (_, record) => (
         <p>
           {record.price.toLocaleString()}
@@ -114,7 +111,8 @@ const Payment = ({ setStep }) => {
       title: "Tổng tiền",
       dataIndex: "totalPrice",
       key: "totalPrice",
-      width: 100,
+      align: "center",
+      width: 60,
       render: (_, record) => (
         <p>
           {record.totalPrice.toLocaleString()}
@@ -287,12 +285,10 @@ const Payment = ({ setStep }) => {
         <Col xxl={12} lg={12} md={24} sm={24} xs={24}>
           <Card size="small" title="Thông tin đơn hàng">
             <S.TableCustom
+              size="small"
               columns={tableColumn}
               dataSource={tableData}
               pagination={false}
-              scroll={{
-                x: 800,
-              }}
             />
           </Card>
 

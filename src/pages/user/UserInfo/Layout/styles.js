@@ -29,24 +29,7 @@ export const UserInfo = styled.div`
   padding: 12px;
   background-color: #fff;
 
-  .user_info-title {
-    font-size: 20px;
-    text-align: center;
-  }
-  .user_info-summary {
-    width: 90%;
-    margin: 0 auto;
-    padding: 12px;
-    border: var(--boder-basic);
-    border-radius: 4px;
-
-    p {
-      font-size: 16px;
-      color: var(--dark-text-color);
-
-      span {
-        font-weight: 500;
-      }
-    }
+  @media (max-width: 992px) {
+    margin-top: 12px;
   }
 `;

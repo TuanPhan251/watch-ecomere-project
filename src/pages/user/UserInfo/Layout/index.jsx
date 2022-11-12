@@ -9,7 +9,7 @@ import { ROUTES } from "../../../../constants/routes";
 
 import * as S from "./styles";
 
-const UserInfoPage = () => {
+const UserInfoPage = (props) => {
   const { userInfo } = useSelector((state) => state.user);
   const { pathname } = useLocation();
 
@@ -75,13 +75,11 @@ const UserInfoPage = () => {
 
       <S.UserPageContent>
         <Row gutter={16}>
-          <Col span={6}>
+          <Col xxl={6} lg={6} md={24} sm={24} xs={24}>
             <UserSideBar />
           </Col>
-          <Col span={18}>
-            <S.UserInfo>
-              <Outlet />
-            </S.UserInfo>
+          <Col xxl={18} lg={16} md={24} sm={24} xs={24}>
+            <S.UserInfo>{props.children}</S.UserInfo>
           </Col>
         </Row>
       </S.UserPageContent>

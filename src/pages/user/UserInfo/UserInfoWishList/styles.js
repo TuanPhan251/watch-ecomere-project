@@ -1,45 +1,35 @@
 import styled, { css } from "styled-components";
 
 export const Wrapper = styled.div`
-  min-height: 100vh;
-  background-color: var(--bgr-color);
-  padding-bottom: 12px;
-`;
-
-export const TopSpacer = styled.div`
-  width: 100%;
-  height: var(--header-height);
-`;
-
-export const BreadCrumbWrapper = styled.div`
-  max-width: 1200px;
-  width: 100%;
-  margin: 12px auto;
-`;
-
-export const UserPageContent = styled.div`
-  max-width: 1200px;
-  width: 100%;
-  min-height: calc(100vh - var(--header-height));
-  margin: 12px auto;
-`;
-
-export const UserInfo = styled.div`
-  min-height: 500px;
-  padding: 12px;
-  background-color: #fff;
-
   .user_info-title {
     font-size: 20px;
     text-align: center;
   }
+  .user_info-summary {
+    width: 90%;
+    margin: 0 auto;
+    padding: 12px;
+    border: var(--boder-basic);
+    border-radius: 4px;
+
+    p {
+      font-size: 16px;
+      color: var(--dark-text-color);
+
+      span {
+        font-weight: 500;
+      }
+    }
+  }
 `;
 
 export const ProductsWrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 24px;
 `;
 
 export const ProductItem = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
   height: 100%;
   border: 1px solid #ddd;
@@ -47,20 +37,31 @@ export const ProductItem = styled.div`
   transition: all 0.3s ease;
 
   .product-image {
-    display: flex;
-    padding: 4px;
-    justify-content: center;
+    position: relative;
+    width: 100%;
+    padding-top: 70%;
 
     img {
-      width: 60%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: all 0.5s ease;
     }
   }
 
   .product-info {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
     padding: 4px;
+    height: auto;
     color: var(--dark-text-color);
     background-color: rgba(51, 92, 103, 0.1);
 
