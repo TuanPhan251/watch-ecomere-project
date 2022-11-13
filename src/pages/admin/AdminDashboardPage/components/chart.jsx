@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
-import "./chartjs-adapter-moment";
+import "chartjs-adapter-moment";
 function ChartInfo(props) {
   const chartRef = useRef(null);
   const { dataChart } = props;
