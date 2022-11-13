@@ -5,11 +5,11 @@ export const AdminSidebarContainer = styled.aside`
   position: absolute;
   top: 0;
   left: ${(props) => (props.showSidebar ? "0px" : "-200px")};
-  bottom: 0;
+  top: 0;
   display: flex;
   flex-direction: column;
   width: 200px;
-  min-height: 100vh;
+  min-height: 100%;
   background-color: #262626;
   color: #fff;
   transition: all 0.3s;
