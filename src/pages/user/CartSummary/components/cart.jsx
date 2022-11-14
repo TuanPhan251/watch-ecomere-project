@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { Col, Row, Popconfirm, Button, Form, Input, notification } from "antd";
 
+import emptyCartImg from "../../../../assets/cart/empty_cart_retina.png";
+
 import { ROUTES } from "../../../../constants/routes";
 import { STEP } from "./constants/step";
 import {
@@ -178,6 +180,24 @@ const Cart = ({ setStep }) => {
       });
     }
   }, [cartList]);
+
+  if (cartList.length === 0) {
+    return (
+      <S.CheckoutCartContainer>
+        <div className="cart-empty">
+          <h2 className="cart_summary-heading">giỏ hàng</h2>
+
+          <h3>Giỏ hàng của bạn chưa có sản phẩm nào.</h3>
+
+          <div>
+            <img src={emptyCartImg} alt="" />
+          </div>
+
+          <Link to={ROUTES.USER.BRAND}>Về trang sản phẩm</Link>
+        </div>
+      </S.CheckoutCartContainer>
+    );
+  }
 
   return (
     <S.CheckoutCartContainer>

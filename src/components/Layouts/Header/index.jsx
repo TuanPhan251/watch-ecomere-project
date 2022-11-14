@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { generatePath, Link, useNavigate } from "react-router-dom";
 
-import { Space, Badge, Drawer, Avatar } from "antd";
+import { Space, Badge, Drawer, Avatar, message } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 import CartDrawer from "./Cart";
@@ -16,13 +16,16 @@ const Header = () => {
   const { cartList } = useSelector((state) => state.cart);
   const [showDrawer, setShowDrawer] = useState(false);
 
+  const itemsAmount = cartList.length;
   const accessToken = localStorage.getItem("accessToken");
 
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
   };
 
-  const itemsAmount = cartList.length;
+  const handleNavigateToCart = () => {
+    navigate(ROUTES.USER.CART_SUMMARY);
+  };
 
   return (
     <S.HeaderContainer>
@@ -583,11 +586,21 @@ const Header = () => {
               </div>
             </S.DropDownMenuWrapperTH>
           </li>
-          <li>
+          {/* <li>
             <Link to={ROUTES.USER.CONTACT} className="title-link">
               LIÊN HỆ
             </Link>
+          </li> */}
+          <li>
+            <Link to={ROUTES.USER.CONTACT} className="title-link">
+              BÀI VIẾT
+            </Link>
           </li>
+          {/* <li>
+            <Link to={ROUTES.USER.ORDER_SEARCH} className="title-link">
+              ĐƠN HÀNG
+            </Link>
+          </li> */}
         </S.HeaderNav>
 
         <S.HeaderRight>
@@ -677,7 +690,7 @@ const Header = () => {
               <Badge count={itemsAmount}>
                 <i
                   className="fa-solid fa-cart-shopping"
-                  onClick={() => navigate(`/gio-hang`)}
+                  onClick={() => handleNavigateToCart()}
                 ></i>
               </Badge>
 

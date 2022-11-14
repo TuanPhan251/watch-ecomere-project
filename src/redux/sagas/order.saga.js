@@ -89,6 +89,37 @@ function* getOrderDetailSaga(action) {
   }
 }
 
+function* getGuestOrderDetailSaga(action) {
+  try {
+    const { orderCode, callback } = action.payload;
+    const result = yield axios.get(`http://localhost:4000/guestOrders/`, {
+      params: {
+        _embed: "guestOrderProducts",
+        orderCode: orderCode,
+      },
+    });
+    yield put({
+      type: `${SUCCESS(ORDER_ACTION.GET_GUEST_ORDER_DETAIL)}`,
+      payload: {
+        data: result.data,
+      },
+    });
+    if (result.data.length !== 0) yield callback.showOrder(true);
+    if (result.data.length === 0) yield callback.showOrder(false);
+  } catch (e) {
+    console.log(
+      "🚀 ~ file: order.saga.js ~ line 110 ~ function*getGuestOrderDetailSaga ~ e",
+      e
+    );
+    yield put({
+      type: `${FAIL(ORDER_ACTION.GET_GUEST_ORDER_DETAIL)}`,
+      payload: {
+        error: "đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
 function* updateOrderStatusSaga(action) {
   try {
     const { id, data, callback, userId } = action.payload;
@@ -133,10 +164,55 @@ function* orderProductSaga(action) {
     yield put({
       type: `${REQUEST(CART_ACTION.CLEAR_CART_ITEM)}`,
     });
+    yield put({
+      type: `${REQUEST(ORDER_ACTION.GET_ORDER_CODE)}`,
+      payload: {
+        data: result.data.orderCode,
+      },
+    });
     yield callback.goToSuccess();
   } catch (e) {
     yield put({
       type: `${FAIL(ORDER_ACTION.ORDER_PRODUCT)}`,
+      payload: {
+        error: "đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
+function* guestOrderProductSaga(action) {
+  try {
+    const { products, callback, ...orderData } = action.payload;
+    const result = yield axios.post(
+      "http://localhost:4000/guestOrders",
+      orderData
+    );
+    for (let i = 0; i < products.length; i++) {
+      yield axios.post("http://localhost:4000/guestOrderProducts", {
+        guestOrderId: result.data.id,
+        ...products[i],
+      });
+    }
+    yield put({
+      type: `${SUCCESS(ORDER_ACTION.GUEST_ORDER_PRODUCT)}`,
+      payload: {
+        data: result.data,
+      },
+    });
+    yield put({
+      type: `${REQUEST(CART_ACTION.CLEAR_CART_ITEM)}`,
+    });
+    yield put({
+      type: `${REQUEST(ORDER_ACTION.GET_ORDER_CODE)}`,
+      payload: {
+        data: result.data.orderCode,
+      },
+    });
+    yield callback.goToSuccess();
+  } catch (e) {
+    yield put({
+      type: `${FAIL(ORDER_ACTION.GUEST_ORDER_PRODUCT)}`,
       payload: {
         error: "đã có lỗi xảy ra!",
       },
@@ -171,9 +247,17 @@ export default function* orderSaga() {
   yield takeEvery(REQUEST(ORDER_ACTION.GET_ALL_ORDERS), getAllOrdersSaga);
   yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_DETAIL), getOrderDetailSaga);
   yield takeEvery(
+    REQUEST(ORDER_ACTION.GET_GUEST_ORDER_DETAIL),
+    getGuestOrderDetailSaga
+  );
+  yield takeEvery(
     REQUEST(ORDER_ACTION.UPDATE_ORDER_STATUS),
     updateOrderStatusSaga
   );
   yield takeEvery(REQUEST(ORDER_ACTION.ORDER_PRODUCT), orderProductSaga);
+  yield takeEvery(
+    REQUEST(ORDER_ACTION.GUEST_ORDER_PRODUCT),
+    guestOrderProductSaga
+  );
   yield takeEvery(REQUEST(ORDER_ACTION.CLEAR_ORDER_LIST), clearOrderListSaga);
 }

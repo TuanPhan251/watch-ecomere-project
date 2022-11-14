@@ -92,6 +92,7 @@ const ProductPage = () => {
   const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
   const { productListUser } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
+  const { userInfo } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(
@@ -147,29 +148,36 @@ const ProductPage = () => {
   };
 
   const handleAddItemToCart = (product) => {
-    dispatch(
-      addItemToCartAction({
-        product: {
-          data: product,
-        },
-        productAmount: 1,
-      })
-    );
-
-    notification.open({
-      message: "Đã thêm sản phẩm vào giỏ hàng",
-      placement: "top",
-      top: 100,
-      duration: 2,
-      icon: (
-        <i
-          className="fa-solid fa-check"
-          style={{
-            color: "#73d13d",
-          }}
-        ></i>
-      ),
-    });
+    if (userInfo.data.id) {
+      dispatch(
+        addItemToCartAction({
+          product: {
+            data: product,
+          },
+          productAmount: 1,
+        })
+      );
+      notification.open({
+        message: "Đã thêm sản phẩm vào giỏ hàng",
+        placement: "top",
+        top: 100,
+        duration: 2,
+        icon: (
+          <i
+            className="fa-solid fa-check"
+            style={{
+              color: "#73d13d",
+            }}
+          ></i>
+        ),
+      });
+    } else {
+      notification.error({
+        message: "Bạn cần đăng nhập để sử dụng chức năng này",
+        top: 80,
+        duration: 2,
+      });
+    }
   };
 
   const handleFilter = (key, values) => {
@@ -442,19 +450,6 @@ const ProductPage = () => {
                       <i className="fa-solid fa-cart-plus"></i>
                     </button>
                   </Tooltip>
-                  {/* <Tooltip
-                    title="Thêm vào danh sách yêu thích"
-                    placement="bottom"
-                  >
-                    <button
-                      className="product_item-actions-btn"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    >
-                      <i className="fa-regular fa-heart"></i>
-                    </button>
-                  </Tooltip> */}
                 </div>
               </div>
 
