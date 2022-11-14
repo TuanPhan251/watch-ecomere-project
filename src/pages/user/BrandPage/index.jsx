@@ -88,6 +88,7 @@ const ProductPage = () => {
   const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
   const { productListUser } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
+  const { userInfo } = useSelector((state) => state.user);
 
   useEffect(() => {
     dispatch(
@@ -125,29 +126,36 @@ const ProductPage = () => {
   };
 
   const handleAddItemToCart = (product) => {
-    dispatch(
-      addItemToCartAction({
-        product: {
-          data: product,
-        },
-        productAmount: 1,
-      })
-    );
-
-    notification.open({
-      message: "Đã thêm sản phẩm vào giỏ hàng",
-      placement: "top",
-      top: 100,
-      duration: 2,
-      icon: (
-        <i
-          className="fa-solid fa-check"
-          style={{
-            color: "#73d13d",
-          }}
-        ></i>
-      ),
-    });
+    if (userInfo.data.id) {
+      dispatch(
+        addItemToCartAction({
+          product: {
+            data: product,
+          },
+          productAmount: 1,
+        })
+      );
+      notification.open({
+        message: "Đã thêm sản phẩm vào giỏ hàng",
+        placement: "top",
+        top: 100,
+        duration: 2,
+        icon: (
+          <i
+            className="fa-solid fa-check"
+            style={{
+              color: "#73d13d",
+            }}
+          ></i>
+        ),
+      });
+    } else {
+      notification.error({
+        message: "Bạn cần đăng nhập để sử dụng chức năng này",
+        top: 80,
+        duration: 2,
+      });
+    }
   };
 
   const handleFilter = (key, values) => {
@@ -347,81 +355,79 @@ const ProductPage = () => {
 
   const renderProducts = useMemo(() => {
     return productListUser.data.map((item) => {
-      const isDiscount = !!item.discountPercent;
+      const haveComment = item.comments.length !== 0;
+      const averageRating = haveComment
+        ? item.comments.reduce((total, comment) => {
+            return total + comment.rating;
+          }, 0) / item.comments.length
+        : undefined;
       const discountPercent = `-${item.discountPercent}%`;
       let price = item.price;
-      if (isDiscount) {
+      if (item.isDiscount) {
         price = item.finalPrice;
       }
 
       return (
-        <Col
-          key={item.id}
-          xxl={6}
-          xl={6}
-          md={8}
-          sm={8}
-          xs={12}
-          onClick={() =>
-            navigate(
-              generatePath(ROUTES.USER.PRODUCT_DETAIL, {
-                id: `${item.slug}.${item.id}`,
-              })
-            )
-          }
-        >
-          <S.ProductItem>
-            <div className="product_info-image">
-              <img src={item.image} alt="item" />
-              <div className="product_item-actions">
-                <Tooltip title="Thêm vào giỏ hàng">
-                  <button
-                    className="product_item-actions-btn"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleAddItemToCart(item);
-                    }}
-                  >
-                    <i className="fa-solid fa-cart-plus"></i>
-                  </button>
-                </Tooltip>
+        <Col key={item.id} xxl={6} xl={6} md={8} sm={8} xs={12}>
+          <Link
+            to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
+              id: `${item.slug}.${item.id}`,
+            })}
+          >
+            <S.ProductItem>
+              <div className="product_info-image">
+                <img src={item.image} alt="item" />
+                <div className="product_item-actions">
+                  <Tooltip title="Thêm vào giỏ hàng">
+                    <button
+                      className="product_item-actions-btn"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleAddItemToCart(item);
+                      }}
+                    >
+                      <i className="fa-solid fa-cart-plus"></i>
+                    </button>
+                  </Tooltip>
+                </div>
               </div>
-            </div>
 
-            <h2 className="product_info-name">{item.name}</h2>
+              <h2 className="product_info-name">{item.name}</h2>
 
-            <div className="product_info-rating">
-              <Rate
-                allowHalf
-                disabled
-                defaultValue={4.5}
-                style={{ fontSize: 14 }}
-              />
-              <span>(12 đánh giá)</span>
-            </div>
+              <div className="product_info-rating">
+                <Rate
+                  allowHalf
+                  disabled
+                  value={averageRating}
+                  style={{ fontSize: 14 }}
+                />
+                {haveComment && <span>({item.comments?.length} đánh giá)</span>}
+              </div>
 
-            <p className="product_info-price-final">
-              {price.toLocaleString()}
-              <sup>₫</sup>
-            </p>
-            {isDiscount && (
-              <p className="product_info-price-original">
-                {item.price.toLocaleString()}
+              <p className="product_info-price-final">
+                {price.toLocaleString()}
                 <sup>₫</sup>
               </p>
-            )}
+              {item.isDiscount && (
+                <p className="product_info-price-original">
+                  {item.price.toLocaleString()}
+                  <sup>₫</sup>
+                </p>
+              )}
 
-            {isDiscount && (
-              <div className="product_info-discount-label">
-                <span>{discountPercent}</span>
-              </div>
-            )}
-            {item.isNew && (
-              <div className="product_info-isNew-label">
-                <span>Mới</span>
-              </div>
-            )}
-          </S.ProductItem>
+              {item.isDiscount && (
+                <div className="product_info-discount-label">
+                  <span>{discountPercent}</span>
+                </div>
+              )}
+              {item.isNew && (
+                <div className="product_info-isNew-label">
+                  <span>Mới</span>
+                </div>
+              )}
+            </S.ProductItem>
+          </Link>
         </Col>
       );
     });

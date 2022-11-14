@@ -30,24 +30,6 @@ const CartSummaryPage = () => {
     }
   }, [step]);
 
-  if (cartList.length === 0) {
-    return (
-      <S.Wrapper>
-        <S.CheckoutCartContainer>
-          <div className="cart-empty">
-            <h2 className="cart_summary-heading">giỏ hàng</h2>
-
-            <h3>Giỏ hàng của bạn chưa có sản phẩm nào.</h3>
-
-            <div>
-              <img src={emptyCartImg} alt="" />
-            </div>
-          </div>
-        </S.CheckoutCartContainer>
-      </S.Wrapper>
-    );
-  }
-
   return (
     <S.Wrapper>
       <S.StepContainer>

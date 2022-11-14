@@ -131,7 +131,7 @@ export const ItemAction = styled.div`
   .product_btn-remove {
     color: #000;
     padding: 4px;
-    font-size: 24px;
+    font-size: 14px;
 
     :hover {
       color: var(--button-color);

@@ -103,37 +103,53 @@ const ProductDetailPage = () => {
   }, [productId]);
 
   const handleAddProductToCart = () => {
-    dispatch(
-      addItemToCartAction({
-        product: productDetail,
-        productAmount: productQuantity,
-      })
-    );
+    if (userInfo.data.id) {
+      dispatch(
+        addItemToCartAction({
+          product: productDetail,
+          productAmount: productQuantity,
+        })
+      );
 
-    notification.open({
-      message: "Đã thêm sản phẩm vào giỏ hàng",
-      placement: "top",
-      top: 100,
-      duration: 2,
-      icon: (
-        <i
-          className="fa-solid fa-check"
-          style={{
-            color: "#335C67",
-          }}
-        ></i>
-      ),
-    });
+      notification.open({
+        message: "Đã thêm sản phẩm vào giỏ hàng",
+        placement: "top",
+        top: 100,
+        duration: 2,
+        icon: (
+          <i
+            className="fa-solid fa-check"
+            style={{
+              color: "#335C67",
+            }}
+          ></i>
+        ),
+      });
+    } else {
+      notification.error({
+        message: "Bạn cần đăng nhập để sử dụng chức năng này",
+        top: 80,
+        duration: 2,
+      });
+    }
   };
 
   const handleCreateComment = (value) => {
-    const data = {
-      ...value,
-      userId: userInfo?.data?.id,
-      productId: productDetail.data.id,
-    };
+    if (userInfo.data.id) {
+      const data = {
+        ...value,
+        userId: userInfo?.data?.id,
+        productId: productDetail.data.id,
+      };
 
-    dispatch(createCommentAction({ data, productId }));
+      dispatch(createCommentAction({ data, productId }));
+    } else {
+      notification.error({
+        message: "Bạn cần đăng nhập để sử dụng chức năng này",
+        top: 80,
+        duration: 2,
+      });
+    }
   };
 
   const handleToggleWishlist = () => {
@@ -193,8 +209,10 @@ const ProductDetailPage = () => {
         });
       }
     } else {
-      notification.warn({
-        message: "Bạn cần đăng nhập để thực hiện chức năng này.",
+      notification.error({
+        message: "Bạn cần đăng nhập để sử dụng chức năng này",
+        top: 80,
+        duration: 2,
       });
     }
   };
@@ -508,6 +526,7 @@ const ProductDetailPage = () => {
 
                       <InputNumber
                         min={1}
+                        max={productDetail.data.stock}
                         value={productQuantity}
                         onChange={(value) => setProductQuantity(value)}
                       />
@@ -532,7 +551,8 @@ const ProductDetailPage = () => {
                         size="large"
                         onClick={() => {
                           handleAddProductToCart();
-                          navigate(ROUTES.USER.CART_SUMMARY);
+                          if (userInfo.data.id)
+                            navigate(ROUTES.USER.CART_SUMMARY);
                         }}
                         style={{ width: "100%" }}
                       >

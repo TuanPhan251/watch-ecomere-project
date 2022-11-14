@@ -10,6 +10,8 @@ export const ROUTES = {
     CONTACT: "/lien-he",
     PRODUCT_DETAIL: "/san-pham/:id",
     CART_SUMMARY: "/gio-hang",
+    BLOG: "/bai-viet",
+    ORDER_SEARCH: "/tra-cuu/don-hang",
     USER_INFO: "/thong-tin",
     USER_INFO_ORDER: "/thong-tin/don-hang",
     USER_INFO_WISHLIST: "/thong-tin/yeu-thich",

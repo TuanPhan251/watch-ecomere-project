@@ -20,7 +20,10 @@ import { v4 as uuidv4 } from "uuid";
 import { ROUTES } from "../../../../constants/routes";
 import { STEP } from "./constants/step";
 import { BANKS } from "./constants/banks.constant";
-import { orderProductAction } from "../../../../redux/actions/";
+import {
+  orderProductAction,
+  guestOrderProductAction,
+} from "../../../../redux/actions/";
 import * as S from "../style";
 
 const Payment = ({ setStep }) => {
@@ -46,6 +49,33 @@ const Payment = ({ setStep }) => {
           coupon: checkoutCoupon.name,
           couponValue: checkoutCoupon.discount,
           userId: userInfo.data.id,
+          orderCode: uuidv4(),
+          totalPrice: checkoutCoupon.discountPrice
+            ? checkoutCoupon.discountPrice
+            : totalPrice,
+          status: "pending",
+          products: cartList.map((item) => ({
+            productId: item.id,
+            productName: item.name,
+            price: item.finalPrice,
+            quantity: item.totalAmount,
+            slug: item.slug,
+            image: item.image,
+          })),
+          callback: {
+            goToSuccess: () => {
+              setStep(STEP.SUCCESS);
+            },
+          },
+        })
+      );
+    } else {
+      dispatch(
+        guestOrderProductAction({
+          ...checkoutInfo,
+          ...values,
+          coupon: checkoutCoupon.name,
+          couponValue: checkoutCoupon.discount,
           orderCode: uuidv4(),
           totalPrice: checkoutCoupon.discountPrice
             ? checkoutCoupon.discountPrice

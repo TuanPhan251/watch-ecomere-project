@@ -1,12 +1,13 @@
 import { useDispatch } from "react-redux";
-import { generatePath, useNavigate } from "react-router-dom";
+import { generatePath, useNavigate, Link } from "react-router-dom";
+
+import { Tooltip } from "antd";
 
 import { removeCartItemAction } from "../../../../redux/actions/cart.actions";
 
-import * as S from "./style";
 import emptyCartLogo from "../../../../assets/cart/empty_cart_retina.png";
-import { Link } from "react-router-dom";
 import { ROUTES } from "../../../../constants/routes";
+import * as S from "./style";
 
 const CartDrawer = ({ cartList }) => {
   const navigate = useNavigate();
@@ -16,8 +17,8 @@ const CartDrawer = ({ cartList }) => {
     return item.totalPrice + prev;
   }, 0);
 
-  const handleRemoveProduct = (product) => {
-    dispatch(removeCartItemAction({ product }));
+  const handleRemoveProduct = (productId) => {
+    dispatch(removeCartItemAction({ productId }));
   };
 
   const renderCartItems = () => {
@@ -53,10 +54,12 @@ const CartDrawer = ({ cartList }) => {
           <S.ItemAction
             onClick={(e) => {
               e.stopPropagation();
-              handleRemoveProduct(item, "remove");
+              handleRemoveProduct(item.id);
             }}
           >
-            <i className="fa-solid fa-xmark product_btn-remove"></i>
+            <Tooltip title="Xóa sản phẩm khỏi giỏ">
+              <i className="fa-solid fa-trash product_btn-remove"></i>
+            </Tooltip>
           </S.ItemAction>
         </S.ItemContent>
       );

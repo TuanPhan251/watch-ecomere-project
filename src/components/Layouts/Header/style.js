@@ -68,7 +68,6 @@ export const HeaderNav = styled.ul`
     }
     & a {
       display: block;
-      min-width: 100px;
       padding: 8px;
       text-align: center;
       font-weight: 500;

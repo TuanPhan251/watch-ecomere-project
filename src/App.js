@@ -31,6 +31,7 @@ import ProductDetailPage from "./pages/user/ProductDetail";
 import CartSummaryPage from "./pages/user/CartSummary";
 import ContactPage from "./pages/user/ContactPage";
 import BrandPage from "./pages/user/BrandPage";
+import OrderSearchPage from "./pages/user/OrderSearch";
 import UserInfoPage from "./pages/user/UserInfo";
 import UserInfoOrderPage from "./pages/user/UserInfo/UserInfoOrder";
 import UserInfoPasswordPage from "./pages/user/UserInfo/UserInfoPassword";
@@ -68,6 +69,10 @@ function App() {
             <Route
               path={ROUTES.USER.CART_SUMMARY}
               element={<CartSummaryPage />}
+            />
+            <Route
+              path={ROUTES.USER.ORDER_SEARCH}
+              element={<OrderSearchPage />}
             />
             <Route path={ROUTES.USER.CONTACT} element={<ContactPage />} />
             <Route path={ROUTES.USER.BRAND} element={<BrandPage />} />
