@@ -2,7 +2,7 @@ import { generatePath, Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import { getProductListAction } from "../../../../redux/actions";
+import { getProductListUserAction } from "../../../../redux/actions";
 
 import { Col, Row } from "antd";
 
@@ -12,9 +12,9 @@ import { ROUTES } from "../../../../constants/routes";
 const HomeProductList = ({ gender }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { productList } = useSelector((state) => state.product);
+  const { productListUser } = useSelector((state) => state.product);
 
-  const displayProducts = productList.data.filter(
+  const displayProducts = productListUser.data.filter(
     (product) => product.gender === gender
   );
 
@@ -23,7 +23,7 @@ const HomeProductList = ({ gender }) => {
 
   useEffect(() => {
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           page: 1,
           limit: 999,

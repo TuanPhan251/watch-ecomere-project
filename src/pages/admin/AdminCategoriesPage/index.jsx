@@ -6,7 +6,7 @@ import { Button, Col, Row, Space, Table, Modal, Form, Input } from "antd";
 
 import {
   getCategoriesListAction,
-  getProductListAction,
+  getProductListAdminAction,
   createCategoryAction,
 } from "../../../redux/actions";
 
@@ -20,13 +20,13 @@ const AdminCategoryPage = () => {
   const { categoryList, createCategory } = useSelector(
     (state) => state.category
   );
-  const { productList } = useSelector((state) => state.product);
+  const { productListAdmin } = useSelector((state) => state.product);
 
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     dispatch(
-      getProductListAction({
+      getProductListAdminAction({
         params: {
           page: 1,
           limit: 999,
@@ -64,7 +64,7 @@ const AdminCategoryPage = () => {
       dataIndex: "quantity",
       key: "quantity",
       render: (_, record) => {
-        const itemQuantity = productList.data.filter(
+        const itemQuantity = productListAdmin.data.filter(
           (item) => item.category.id === record.id
         ).length;
         return <p>{itemQuantity}</p>;
@@ -105,7 +105,7 @@ const AdminCategoryPage = () => {
 
         <Col span={20}>
           <Table
-            loading={productList.loading || categoryList.loading}
+            loading={productListAdmin.loading || categoryList.loading}
             columns={tableColumn}
             dataSource={tableData}
             pagination={false}

@@ -10,7 +10,7 @@ import * as S from "./styles";
 const ProductFamily = ({ similarProductList }) => {
   const navigate = useNavigate();
 
-  const { productList } = useSelector((state) => state.product);
+  const { productListUser } = useSelector((state) => state.product);
 
   const shuffled = similarProductList.sort(() => 0.5 - Math.random());
   const selectedProducts = shuffled.slice(0, 8);
@@ -88,12 +88,12 @@ const ProductFamily = ({ similarProductList }) => {
         </Col>
       );
     });
-  }, [productList.data]);
+  }, [productListUser.data]);
 
   return (
     <S.ProductFamilyWrapper>
       <h3 className="product_family-heading">Sản phẩm tương tự</h3>
-      <Spin spinning={productList.loading}>
+      <Spin spinning={productListUser.loading}>
         <S.ProductsWrapper>
           <Row gutter={[8, 8]}>{renderSimilarProduct}</Row>
         </S.ProductsWrapper>

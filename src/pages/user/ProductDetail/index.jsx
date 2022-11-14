@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, generatePath } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -33,6 +33,7 @@ import {
   addWishlistAction,
   removeWishlistAction,
   clearCommentListAction,
+  getProductListUserAction,
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
@@ -52,10 +53,12 @@ const ProductDetailPage = () => {
   const productId = parseInt(id.split(".")[1]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { productDetail, productList } = useSelector((state) => state.product);
+  const { productDetail, productListUser } = useSelector(
+    (state) => state.product
+  );
   const { userInfo } = useSelector((state) => state.user);
-  const similarProductList = productList.data?.filter(
-    (item) => item.id !== productId
+  const similarProductList = productListUser.data?.filter(
+    (item) => item.id !== productId && item.gender === productDetail.data.gender
   );
 
   const isWishlist = userInfo.data.id
@@ -78,11 +81,17 @@ const ProductDetailPage = () => {
   const isDiscount = !!productDetail.data.discountPercent;
 
   useEffect(() => {
-    return () => {};
-  }, []);
-
-  useEffect(() => {
     dispatch(getProductDetailAction({ id: productId }));
+    dispatch(
+      getProductListUserAction({
+        params: {
+          page: 1,
+          limit: 999,
+          isHidden: false,
+          stock: 0,
+        },
+      })
+    );
 
     dispatch(getCategoriesListAction());
     dispatch(getCommentListAction({ productId }));
@@ -346,6 +355,20 @@ const ProductDetailPage = () => {
           <Breadcrumb.Item>
             <Link to={ROUTES.USER.BRAND}>Sản phẩm</Link>
           </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <Link
+              onClick={(e) => {
+                e.preventDefault();
+                navigate(ROUTES.USER.BRAND, {
+                  state: {
+                    category: productDetail.data.category,
+                  },
+                });
+              }}
+            >
+              {productDetail.data.category?.name}
+            </Link>
+          </Breadcrumb.Item>
           <Breadcrumb.Item>{productDetail.data.name}</Breadcrumb.Item>
         </Breadcrumb>
       </S.BreadcrumbWrapper>
@@ -468,6 +491,10 @@ const ProductDetailPage = () => {
                       <sup>₫</sup>
                     </span>
                   )}
+                </p>
+
+                <p className="product_summary-stock">
+                  Còn lại: {productDetail.data.stock} sản phẩm
                 </p>
               </S.ProductSummary>
 

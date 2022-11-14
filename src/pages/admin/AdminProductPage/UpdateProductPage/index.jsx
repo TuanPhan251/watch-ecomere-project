@@ -175,6 +175,14 @@ const UpdateProductPage = () => {
           }}
         >
           <Form.Item
+            label="Tạm ẩn sản phẩm"
+            name="isHidden"
+            valuePropName="checked"
+          >
+            <Checkbox />
+          </Form.Item>
+
+          <Form.Item
             label="Tên sản phẩm"
             name="name"
             rules={[{ required: true, message: "Hãy nhập tên sản phẩm" }]}
@@ -196,6 +204,19 @@ const UpdateProductPage = () => {
               formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
             />
+          </Form.Item>
+
+          <Form.Item
+            label="Tồn kho"
+            name="stock"
+            rules={[
+              {
+                required: true,
+                message: "Hãy nhập số lượng sản phẩm trong kho",
+              },
+            ]}
+          >
+            <InputNumber />
           </Form.Item>
 
           <Form.Item
