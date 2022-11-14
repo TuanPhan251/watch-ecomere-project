@@ -19,7 +19,7 @@ import {
 
 import {
   getCategoriesListAction,
-  getProductListAction,
+  getProductListAdminAction,
   deleteProductAction,
   removeProductDetailAction,
 } from "../../../redux/actions";
@@ -32,7 +32,7 @@ const AdminProductPage = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { productList, deleteProductData } = useSelector(
+  const { productListAdmin, deleteProductData } = useSelector(
     (state) => state.product
   );
   const { categoryList } = useSelector((state) => state.category);
@@ -55,7 +55,7 @@ const AdminProductPage = () => {
       [type]: value,
     });
     dispatch(
-      getProductListAction({
+      getProductListAdminAction({
         params: {
           ...filterParams,
           [type]: value,
@@ -68,7 +68,7 @@ const AdminProductPage = () => {
 
   useEffect(() => {
     dispatch(
-      getProductListAction({
+      getProductListAdminAction({
         params: {
           ...filterParams,
           page: 1,
@@ -88,7 +88,7 @@ const AdminProductPage = () => {
       deleteProductAction({
         id,
         params: {
-          page: productList.meta.page,
+          page: productListAdmin.meta.page,
           limit: 10,
         },
       })
@@ -98,7 +98,7 @@ const AdminProductPage = () => {
 
   const handleChangePage = (page) => {
     dispatch(
-      getProductListAction({
+      getProductListAdminAction({
         params: {
           page: page,
           limit: 10,
@@ -131,6 +131,14 @@ const AdminProductPage = () => {
           </Space>
         );
       },
+    },
+    {
+      title: "Trạng thái",
+      dataIndex: "isHidden",
+      key: "isHidden",
+      align: "center",
+      render: (_, record) =>
+        record.isHidden === false ? "Bình thường" : "Tạm ẩn",
     },
     {
       title: "Hãng",
@@ -166,6 +174,7 @@ const AdminProductPage = () => {
       key: "discountPercent",
       align: "center",
       render: (discountPercent) => `${discountPercent} %`,
+      width: 80,
     },
     {
       title: "Tùy chọn",
@@ -216,12 +225,15 @@ const AdminProductPage = () => {
     },
   ];
 
-  const tableData = productList.data.map((item) => ({ ...item, key: item.id }));
+  const tableData = productListAdmin.data.map((item) => ({
+    ...item,
+    key: item.id,
+  }));
 
   return (
     <S.ProductListContainer>
       <S.ProductListHeading>
-        <h2>Danh sách sản phẩm ({productList.meta.total}) :</h2>
+        <h2>Danh sách sản phẩm ({productListAdmin.meta.total}) :</h2>
         <Button
           onClick={() => navigate(`${ROUTES.ADMIN.CREATE_PRODUCT_PAGE}`)}
           type="primary"
@@ -310,7 +322,7 @@ const AdminProductPage = () => {
         </Col>
         <Col span={20}>
           <Table
-            loading={productList.loading}
+            loading={productListAdmin.loading}
             columns={tableColumn}
             dataSource={tableData}
             pagination={false}
@@ -320,9 +332,9 @@ const AdminProductPage = () => {
       </Row>
       <Pagination
         style={{ margin: "20px auto 0" }}
-        current={productList.meta.page}
+        current={productListAdmin.meta.page}
         pageSize={10}
-        total={productList.meta.total}
+        total={productListAdmin.meta.total}
         onChange={(page) => handleChangePage(page)}
       />
     </S.ProductListContainer>

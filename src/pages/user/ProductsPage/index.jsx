@@ -23,7 +23,7 @@ import {
 import MainButton from "../../../components/MainButton";
 
 import {
-  getProductListAction,
+  getProductListUserAction,
   getCategoriesListAction,
   addItemToCartAction,
   removeProductDetailAction,
@@ -90,16 +90,18 @@ const ProductPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
-  const { productList } = useSelector((state) => state.product);
+  const { productListUser } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
 
   useEffect(() => {
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
           gender: searchObj.gender,
+          isHidden: false,
+          stock: 0,
         },
       })
     );
@@ -132,10 +134,10 @@ const ProductPage = () => {
 
   const handleShowMore = () => {
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           ...filterParams,
-          page: productList.meta.page + 1,
+          page: productListUser.meta.page + 1,
           limit: PRODUCT_LIST_LIMIT,
           gender: searchObj.gender,
         },
@@ -177,7 +179,7 @@ const ProductPage = () => {
       [key]: values,
     });
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           ...filterParams,
           [key]: values,
@@ -192,7 +194,7 @@ const ProductPage = () => {
   const handleResetFilterParams = () => {
     setFilterParams({ ...initialFilterParams });
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
@@ -215,7 +217,7 @@ const ProductPage = () => {
     });
 
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           ...filterParams,
           [key]: newValue,
@@ -234,7 +236,7 @@ const ProductPage = () => {
     });
 
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           ...filterParams,
           isDiscount: false,
@@ -252,7 +254,7 @@ const ProductPage = () => {
     });
 
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           ...filterParams,
           isNew: false,
@@ -270,7 +272,7 @@ const ProductPage = () => {
       categoryId: newCategoryId,
     });
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           ...filterParams,
           categoryId: newCategoryId,
@@ -291,7 +293,7 @@ const ProductPage = () => {
       glassMaterial: newGlass,
     });
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           ...filterParams,
           glassMaterial: newGlass,
@@ -310,7 +312,7 @@ const ProductPage = () => {
       type: newType,
     });
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           ...filterParams,
           type: newType,
@@ -327,7 +329,7 @@ const ProductPage = () => {
       [key]: "",
     });
     dispatch(
-      getProductListAction({
+      getProductListUserAction({
         params: {
           ...filterParams,
           [key]: "",
@@ -404,7 +406,7 @@ const ProductPage = () => {
   }, [filterParams.glassMaterial]);
 
   const renderProducts = useMemo(() => {
-    return productList.data.map((item) => {
+    return productListUser.data.map((item) => {
       const haveComment = item.comments.length !== 0;
       const averageRating = haveComment
         ? item.comments.reduce((total, comment) => {
@@ -494,7 +496,7 @@ const ProductPage = () => {
         </Col>
       );
     });
-  }, [productList.data]);
+  }, [productListUser.data]);
 
   const renderPageBanner = useMemo(() => {
     return (
@@ -614,7 +616,7 @@ const ProductPage = () => {
       </S.MobileFilterDrawer>
 
       <S.ProductPageWrapper>
-        <Row>
+        <Row gutter={8}>
           <Col xxl={6} xl={6} md={6} sm={0} xs={0}>
             <div className="product_filter-wrapper">
               <p className="product_filter-title">
@@ -819,7 +821,7 @@ const ProductPage = () => {
                 )}
               </Space>
 
-              <Spin spinning={productList.loading}>
+              <Spin spinning={productListUser.loading}>
                 <div
                   className="product_items-wrapper"
                   style={{ minHeight: "50vh" }}
@@ -828,7 +830,7 @@ const ProductPage = () => {
                 </div>
               </Spin>
 
-              {productList.data.length !== productList.meta.total && (
+              {productListUser.data.length !== productListUser.meta.total && (
                 <Row style={{ justifyContent: "center" }}>
                   <MainButton
                     buttonType="primary"

@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { PRODUCT_ACTION, REQUEST, SUCCESS, FAIL } from "../CONSTANTS";
 
-function* getProductListSaga(action) {
+function* getProductListUserSaga(action) {
   try {
     const { params, more } = action.payload;
     const result = yield axios.get("http://localhost:4000/products", {
@@ -12,6 +12,8 @@ function* getProductListSaga(action) {
         _embed: ["images", "comments"],
         _page: params.page,
         _limit: params.limit,
+        isHidden: false,
+        stock_gte: 0,
         ...(params.categoryId && {
           categoryId: params.categoryId,
         }),
@@ -54,7 +56,7 @@ function* getProductListSaga(action) {
       },
     });
     yield put({
-      type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST),
+      type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST_USER),
       payload: {
         data: result.data,
         meta: {
@@ -71,7 +73,89 @@ function* getProductListSaga(action) {
       e
     );
     yield put({
-      type: FAIL(PRODUCT_ACTION.GET_PRODUCT_LIST),
+      type: FAIL(PRODUCT_ACTION.GET_PRODUCT_LIST_USER),
+      payload: {
+        error: "đã có lỗi xảy ra",
+      },
+    });
+  }
+}
+
+function* getProductListAdminSaga(action) {
+  try {
+    const { params, more } = action.payload;
+    const result = yield axios.get("http://localhost:4000/products", {
+      params: {
+        _expand: "category",
+        _embed: ["images", "comments"],
+        _page: params.page,
+        _limit: params.limit,
+        ...(params.isHidden && {
+          isHidden: params.isHidden,
+        }),
+        ...(params.stock && {
+          stock_gte: params.stock,
+        }),
+        ...(params.categoryId && {
+          categoryId: params.categoryId,
+        }),
+        ...(params.keyword && {
+          q: params.keyword,
+        }),
+        ...(params.priceOder && {
+          finalPrice: params.priceOder,
+        }),
+        ...(params.gender && {
+          gender: params.gender,
+        }),
+        ...(params.priceRange && {
+          price_gte: params.priceRange[0],
+          price_lte: params.priceRange[1],
+        }),
+        ...(params.priceSort && {
+          _sort: "price",
+          _order: params.priceSort,
+        }),
+        ...(params.type && {
+          movement: params.type,
+        }),
+        ...(params.caseSize && {
+          caseSize_gte: params.caseSize[0],
+          caseSize_lte: params.caseSize[1],
+        }),
+        ...(params.glassMaterial && {
+          glassMaterial: params.glassMaterial,
+        }),
+        ...(params.isNew && {
+          isNew: params.isNew,
+        }),
+        ...(params.isDiscount && {
+          isDiscount: params.isDiscount,
+        }),
+        ...(params.productId && {
+          id: params.productId,
+        }),
+      },
+    });
+    yield put({
+      type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST_ADMIN),
+      payload: {
+        data: result.data,
+        meta: {
+          total: parseInt(result.headers["x-total-count"]),
+          page: params.page,
+          limit: params.limit,
+        },
+        more: more,
+      },
+    });
+  } catch (e) {
+    console.log(
+      "🚀 ~ file: products.saga.js ~ line 73 ~ function*getProductListSaga ~ e",
+      e
+    );
+    yield put({
+      type: FAIL(PRODUCT_ACTION.GET_PRODUCT_LIST_ADMIN),
       payload: {
         error: "đã có lỗi xảy ra",
       },
@@ -260,11 +344,15 @@ function* deleteProductSaga(action) {
 export default function* productSaga() {
   yield debounce(
     500,
-    REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST),
-    getProductListSaga
+    REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST_USER),
+    getProductListUserSaga
   );
   yield debounce(
     500,
+    REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST_ADMIN),
+    getProductListAdminSaga
+  );
+  yield takeEvery(
     REQUEST(PRODUCT_ACTION.GET_NEW_PRODUCTS_LIST),
     getNewProductsSaga
   );

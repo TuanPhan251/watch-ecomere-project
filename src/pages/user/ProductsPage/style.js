@@ -69,12 +69,12 @@ export const ProductPageWrapper = styled.div`
   max-width: 1200px;
   margin: 24px auto 0;
   border-radius: 4px;
-  background-color: #fff;
 
   .product_filter-wrapper {
     height: 100%;
     padding: 12px;
     border: var(--boder-basic);
+    background-color: #fff;
 
     .product_filter-title {
       font-size: 16px;
@@ -179,6 +179,7 @@ export const ProductFilterWrapper = styled.div`
 
 export const ProductsWrapper = styled.div`
   padding: 12px;
+  background-color: #fff;
 `;
 
 export const ProductItem = styled.div`

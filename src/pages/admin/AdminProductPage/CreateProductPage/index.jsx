@@ -135,6 +135,19 @@ const CreateProductPage = () => {
           />
         </Form.Item>
 
+        <Form.Item
+          label="Tồn kho"
+          name="stock"
+          rules={[
+            {
+              required: true,
+              message: "Hãy nhập số lượng sản phẩm trong kho",
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
+
         <Form.Item label="Sản phẩm mới" name="isNew" valuePropName="checked">
           <Checkbox />
         </Form.Item>

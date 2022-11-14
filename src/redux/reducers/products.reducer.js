@@ -9,7 +9,13 @@ import {
 } from "../CONSTANTS";
 
 const initialValue = {
-  productList: {
+  productListUser: {
+    data: [],
+    meta: {},
+    loading: false,
+    error: "",
+  },
+  productListAdmin: {
     data: [],
     meta: {},
     loading: false,
@@ -40,35 +46,70 @@ const initialValue = {
 };
 
 const productReducer = createReducer(initialValue, {
-  [REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST)]: (state, action) => {
+  [REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST_USER)]: (state, action) => {
     return {
       ...state,
-      productList: {
-        ...state.productList,
+      productListUser: {
+        ...state.productListUser,
         loading: true,
         error: "",
       },
     };
   },
-  [SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST)]: (state, action) => {
+  [SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST_USER)]: (state, action) => {
     const { data, more, meta } = action.payload;
     return {
       ...state,
-      productList: {
-        ...state.productList,
-        data: more ? [...state.productList.data, ...data] : data,
+      productListUser: {
+        ...state.productListUser,
+        data: more ? [...state.productListUser.data, ...data] : data,
         meta: meta,
         loading: false,
         error: "",
       },
     };
   },
-  [FAIL(PRODUCT_ACTION.GET_PRODUCT_LIST)]: (state, action) => {
+  [FAIL(PRODUCT_ACTION.GET_PRODUCT_LIST_USER)]: (state, action) => {
     const { error } = action.payload;
     return {
       ...state,
-      productList: {
-        ...state.productList,
+      productListUser: {
+        ...state.productListUser,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
+  [REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST_ADMIN)]: (state, action) => {
+    return {
+      ...state,
+      productListAdmin: {
+        ...state.productListAdmin,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST_ADMIN)]: (state, action) => {
+    const { data, more, meta } = action.payload;
+    return {
+      ...state,
+      productListAdmin: {
+        ...state.productListAdmin,
+        data: more ? [...state.productListAdmin.data, ...data] : data,
+        meta: meta,
+        loading: false,
+        error: "",
+      },
+    };
+  },
+  [FAIL(PRODUCT_ACTION.GET_PRODUCT_LIST_ADMIN)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      productListAdmin: {
+        ...state.productListAdmin,
         loading: false,
         error: error,
       },
@@ -146,7 +187,13 @@ const productReducer = createReducer(initialValue, {
   [REQUEST(PRODUCT_ACTION.REMOVE_PRODUCT_DETAIL)]: (state, action) => {
     return {
       ...state,
-      productList: {
+      productListUser: {
+        data: [],
+        meta: {},
+        loading: false,
+        error: "",
+      },
+      productListAdmin: {
         data: [],
         meta: {},
         loading: false,

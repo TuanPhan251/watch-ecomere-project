@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { generatePath, Link, useNavigate } from "react-router-dom";
 
 import { Space, Badge, Drawer, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
@@ -249,7 +249,6 @@ const Header = () => {
           <li>
             <S.DropDownMenuWrapperTH>
               <Link
-                // to={generatePath(ROUTES.USER.MEN_DETAIL, { type: "male" })}
                 onClick={(e) => {
                   e.preventDefault();
                   navigate({
