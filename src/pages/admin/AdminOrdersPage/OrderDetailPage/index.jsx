@@ -4,8 +4,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 
 import {
+  getUserDetailAction,
   getOrderDetailAction,
   updateOrderStatusAction,
+  updateUserInfoAction,
 } from "../../../../redux/actions";
 import { ROUTES } from "../../../../constants/routes";
 
@@ -32,6 +34,7 @@ const AdminOrderDetailPage = () => {
   const [infoForm] = Form.useForm();
   const { id } = useParams();
   const { orderDetail, updateOrderData } = useSelector((state) => state.order);
+  const { userDetail } = useSelector((state) => state.user);
   const orderAddress = `${orderDetail.data?.address}, ${orderDetail.data?.wardName}, ${orderDetail.data?.districtName}, ${orderDetail.data?.cityName}`;
 
   useEffect(() => {
@@ -40,6 +43,8 @@ const AdminOrderDetailPage = () => {
         id,
       })
     );
+    if (orderDetail.data.id)
+      dispatch(getUserDetailAction({ id: orderDetail.data.userId }));
   }, [id]);
 
   useEffect(() => {
@@ -55,20 +60,76 @@ const AdminOrderDetailPage = () => {
   const handleUpdateOrderStatus = (value) => {
     const { status } = value;
     const { orderProducts, ...originalOrderData } = orderDetail.data;
-    dispatch(
-      updateOrderStatusAction({
-        id: orderDetail.data.id,
-        data: {
-          ...originalOrderData,
-          status: status,
-        },
-        callback: {
-          goToList: () => {
-            navigate(ROUTES.ADMIN.ORDER_LIST_PAGE);
+    if (orderDetail.data.status !== "done" && status === "done") {
+      return dispatch(
+        updateOrderStatusAction({
+          id: orderDetail.data.id,
+          data: {
+            ...originalOrderData,
+            status: status,
           },
-        },
-      })
-    );
+          callback: {
+            updateUserInfo: () => {
+              dispatch(
+                updateUserInfoAction({
+                  id: orderDetail.data.userId,
+                  values: {
+                    orderQuantity: userDetail.data.orderQuantity + 1,
+                    totalSpend:
+                      userDetail.data.totalSpend + orderDetail.data.totalPrice,
+                  },
+                })
+              );
+            },
+            goToList: () => {
+              navigate(ROUTES.ADMIN.ORDER_LIST_PAGE);
+            },
+          },
+        })
+      );
+    } else if (orderDetail.data.status === "done") {
+      return dispatch(
+        updateOrderStatusAction({
+          id: orderDetail.data.id,
+          data: {
+            ...originalOrderData,
+            status: status,
+          },
+          callback: {
+            updateUserInfo: () => {
+              dispatch(
+                updateUserInfoAction({
+                  id: orderDetail.data.userId,
+                  values: {
+                    orderQuantity: userDetail.data.orderQuantity - 1,
+                    totalSpend:
+                      userDetail.data.totalSpend - orderDetail.data.totalPrice,
+                  },
+                })
+              );
+            },
+            goToList: () => {
+              navigate(ROUTES.ADMIN.ORDER_LIST_PAGE);
+            },
+          },
+        })
+      );
+    } else {
+      dispatch(
+        updateOrderStatusAction({
+          id: orderDetail.data.id,
+          data: {
+            ...originalOrderData,
+            status: status,
+          },
+          callback: {
+            goToList: () => {
+              navigate(ROUTES.ADMIN.ORDER_LIST_PAGE);
+            },
+          },
+        })
+      );
+    }
   };
 
   const tableColumn = [

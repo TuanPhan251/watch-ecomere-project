@@ -1,15 +1,18 @@
-import { Navigate } from "react-router-dom";
-import { Link, useLocation } from "react-router-dom";
+import { Navigate, Link, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Avatar, Col, Row } from "antd";
 
 import { userPageSidebar } from "../constant";
 import { ROUTES } from "../../../../constants/routes";
+
+import userImg from "../../../../assets/user/user.png";
 
 import * as S from "./styles";
 
 const UserSideBar = () => {
   const location = useLocation();
   const { pathname } = location;
+  const { userInfo } = useSelector((state) => state.user);
 
   const accessToken = localStorage.getItem("accessToken");
 
@@ -33,7 +36,11 @@ const UserSideBar = () => {
 
   return (
     <S.UserSideBar>
-      <Avatar size={64} src="https://joeschmoe.io/api/v1/random" />
+      <div className="user__avatar">
+        <Avatar src={userImg} size={64} />
+
+        <h3>{userInfo.data.userName}</h3>
+      </div>
       <ul className="user_sidebar">{renderUserSidebar()}</ul>
     </S.UserSideBar>
   );

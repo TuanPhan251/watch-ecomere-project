@@ -1,7 +1,227 @@
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { generatePath, useNavigate } from "react-router-dom";
+import moment from "moment";
+
+import { getUserListAction } from "../../../redux/actions";
+import { ACCOUNT_LIST_LIMIT } from "../../../constants/paginations";
+
+import {
+  Col,
+  Row,
+  Table,
+  Space,
+  Avatar,
+  Button,
+  Tag,
+  Input,
+  Checkbox,
+  Select,
+  Pagination,
+} from "antd";
+import { UserOutlined } from "@ant-design/icons/lib/icons";
+
 import * as S from "./style";
+import { ROUTES } from "../../../constants/routes";
 
 const AdminUsersPage = () => {
-  return <div>user page</div>;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { userList } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(
+      getUserListAction({
+        params: {
+          page: 1,
+          limit: ACCOUNT_LIST_LIMIT,
+        },
+      })
+    );
+  }, []);
+
+  const initialFilterParams = {
+    keyword: "",
+    role: [],
+    orderSort: "",
+    spendSort: "",
+  };
+  const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
+
+  const handleChangePage = (page) => {
+    dispatch(
+      getUserListAction({
+        params: {
+          page: page,
+          limit: 10,
+        },
+      })
+    );
+  };
+
+  const handleFilter = (value, type) => {
+    setFilterParams({
+      ...filterParams,
+      [type]: value,
+    });
+    dispatch(
+      getUserListAction({
+        params: {
+          ...filterParams,
+          [type]: value,
+          page: 1,
+          limit: ACCOUNT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
+  const tableColumn = [
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      align: "center",
+    },
+    {
+      title: "Loại tài khoản",
+      dataIndex: "role",
+      key: "role",
+      align: "center",
+      render: (_, record) => {
+        return (
+          <>
+            {record.role === "admin" ? (
+              <Tag color="#2db7f5">Admin</Tag>
+            ) : (
+              <Tag color="#87d068">User</Tag>
+            )}
+          </>
+        );
+      },
+    },
+    {
+      title: "Đơn hàng",
+      dataIndex: "orders",
+      key: "orders",
+      align: "center",
+      render: (_, record) => {
+        return <p>{record.orderQuantity}</p>;
+      },
+    },
+    {
+      title: "Tổng chi tiêu",
+      dataIndex: "totalSpend",
+      key: "totalSpend",
+      align: "center",
+      render: (_, record) => {
+        return (
+          <p>
+            {record.totalSpend?.toLocaleString()}
+            <sup>đ</sup>
+          </p>
+        );
+      },
+    },
+    {
+      title: "Tùy chọn",
+      dataIndex: "action",
+      key: "action",
+      align: "center",
+      render: (_, record) => {
+        return (
+          <>
+            <Button
+              onClick={() =>
+                navigate(
+                  generatePath(ROUTES.ADMIN.ACCOUNT_DETAIL_PAGE, {
+                    id: record.id,
+                  })
+                )
+              }
+            >
+              Chi tiết
+            </Button>
+          </>
+        );
+      },
+    },
+  ];
+
+  const tableData = userList.data.map((item) => ({ ...item, key: item.id }));
+
+  return (
+    <S.Wrapper>
+      <S.TopWrapper>
+        <h2>Danh sách người dùng ({userList.meta.total})</h2>
+      </S.TopWrapper>
+
+      <Row gutter={4} style={{ flex: 1 }}>
+        <Col span={4}>
+          <Space direction="vertical">
+            <h3>
+              <i className="fa-solid fa-filter"></i>Bộ lọc
+            </h3>
+
+            <Col span={24}>
+              <Input
+                placeholder="Nhập để tìm kiếm"
+                onChange={(e) => handleFilter(e.target.value, "keyword")}
+              />
+            </Col>
+
+            <Col span={24}>
+              <p>Đơn hàng</p>
+
+              <Select
+                style={{ width: "100%" }}
+                onChange={(value) => handleFilter(value, "orderSort")}
+                value={filterParams.orderSort}
+                allowClear
+                placeholder="Sắp xếp theo"
+              >
+                <Select.Option value="desc">Đơn hàng: Nhiều - Ít</Select.Option>
+                <Select.Option value="asc">Đơn hàng: Ít - Nhiều</Select.Option>
+              </Select>
+            </Col>
+
+            <Col span={24}>
+              <p>Tổng chi tiêu</p>
+
+              <Select
+                style={{ width: "100%" }}
+                onChange={(value) => handleFilter(value, "spendSort")}
+                value={filterParams.spendSort}
+                allowClear
+                placeholder="Sắp xếp theo"
+              >
+                <Select.Option value="desc">Chi tiêu: Cao - Thấp</Select.Option>
+                <Select.Option value="asc">Chi tiêu: Thấp - Cao</Select.Option>
+              </Select>
+            </Col>
+          </Space>
+        </Col>
+
+        <Col span={20}>
+          <Table
+            loading={userList.loading}
+            columns={tableColumn}
+            dataSource={tableData}
+            pagination={false}
+            style={{ marginBottom: "auto" }}
+          />
+        </Col>
+      </Row>
+      <Pagination
+        style={{ margin: "20px auto 0" }}
+        current={userList.meta.page}
+        pageSize={10}
+        total={userList.meta.total}
+        onChange={(page) => handleChangePage(page)}
+      />
+    </S.Wrapper>
+  );
 };
 
 export default AdminUsersPage;

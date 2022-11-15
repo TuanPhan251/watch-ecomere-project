@@ -94,6 +94,10 @@ const Cart = ({ setStep }) => {
   const renderCartItems = useMemo(() => {
     if (cartList.length !== 0) {
       return cartList.map((item) => {
+        const currentCartItem = cartList.find(
+          (cartItem) => cartItem.id === item.id
+        );
+
         return (
           <S.CartItem key={item.id}>
             <Col span={4}>
@@ -111,6 +115,8 @@ const Cart = ({ setStep }) => {
                 >
                   {item.name}
                 </Link>
+
+                <p>Còn lại {item.stock} sản phẩm.</p>
 
                 <Popconfirm
                   title="Xóa sản phẩm khỏi giỏ?"
@@ -166,9 +172,17 @@ const Cart = ({ setStep }) => {
                     }}
                   />
                   <button
-                    onClick={() =>
-                      handleUpdateCartItem(item, item.totalAmount, "plus")
-                    }
+                    onClick={() => {
+                      if (item.stock <= currentCartItem?.totalAmount) {
+                        return notification.warn({
+                          message: "Sản phẩm đã tới giới hạn tồn kho.",
+                          top: 100,
+                          placement: "top",
+                          duration: 2,
+                        });
+                      }
+                      handleUpdateCartItem(item, item.totalAmount, "plus");
+                    }}
                   >
                     <i className="fa-solid fa-plus"></i>
                   </button>

@@ -2,7 +2,17 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { generatePath, useNavigate } from "react-router-dom";
 
-import { Button, Col, Row, Space, Table, Modal, Form, Input } from "antd";
+import {
+  Button,
+  Col,
+  Row,
+  Space,
+  Table,
+  Modal,
+  Form,
+  Input,
+  Pagination,
+} from "antd";
 
 import {
   getCategoriesListAction,
@@ -22,6 +32,9 @@ const AdminCategoryPage = () => {
   );
   const { productListAdmin } = useSelector((state) => state.product);
 
+  const initialFilterParams = { keyword: "" };
+  const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
+
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -29,13 +42,48 @@ const AdminCategoryPage = () => {
       getProductListAdminAction({
         params: {
           page: 1,
-          limit: 999,
+          limit: 10,
         },
       })
     );
 
-    dispatch(getCategoriesListAction());
+    dispatch(
+      getCategoriesListAction({
+        params: {
+          page: 1,
+          limit: 10,
+        },
+      })
+    );
   }, []);
+
+  const handleChangePage = (page) => {
+    dispatch(
+      getCategoriesListAction({
+        params: {
+          page: page,
+          limit: 10,
+        },
+      })
+    );
+  };
+
+  const handleFilter = (value, type) => {
+    setFilterParams({
+      ...filterParams,
+      [type]: value,
+    });
+    dispatch(
+      getCategoriesListAction({
+        params: {
+          ...filterParams,
+          [type]: value,
+          page: 1,
+          limit: 10,
+        },
+      })
+    );
+  };
 
   const handleCreateCategory = (values) => {
     dispatch(
@@ -93,14 +141,30 @@ const AdminCategoryPage = () => {
     <S.Wrapper>
       <S.TopWrapper>
         <h2>Danh sách nhãn hàng</h2>
-        <Button type="primary" size="large" onClick={() => setShowModal(true)}>
+        <Button type="primary" onClick={() => setShowModal(true)}>
           Thêm nhãn hàng
         </Button>
       </S.TopWrapper>
 
-      <Row gutter={4}>
+      <Row
+        gutter={4}
+        style={{
+          flex: 1,
+        }}
+      >
         <Col span={4}>
-          <p>bộ lọc</p>
+          <Space direction="vertical">
+            <h3>
+              <i className="fa-solid fa-filter"></i>Bộ lọc
+            </h3>
+
+            <Col span={24}>
+              <Input
+                placeholder="Nhập để tìm kiếm"
+                onChange={(e) => handleFilter(e.target.value, "keyword")}
+              />
+            </Col>
+          </Space>
         </Col>
 
         <Col span={20}>
@@ -113,6 +177,14 @@ const AdminCategoryPage = () => {
           />
         </Col>
       </Row>
+
+      <Pagination
+        style={{ margin: "20px auto 0" }}
+        current={categoryList.meta.page}
+        pageSize={10}
+        total={categoryList.meta.total}
+        onChange={(page) => handleChangePage(page)}
+      />
 
       <Modal
         open={showModal}

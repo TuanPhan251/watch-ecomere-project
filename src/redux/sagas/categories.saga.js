@@ -1,15 +1,29 @@
-import { takeEvery, put } from "redux-saga/effects";
+import { takeEvery, put, debounce } from "redux-saga/effects";
 import axios from "axios";
 
 import { REQUEST, SUCCESS, FAIL, CATEGORY_ACTION } from "../CONSTANTS/";
 
-function* getCategoriesListSaga() {
+function* getCategoriesListSaga(action) {
   try {
-    const result = yield axios.get("http://localhost:4000/categories");
+    const { params } = action.payload;
+    const result = yield axios.get("http://localhost:4000/categories", {
+      params: {
+        _page: params.page,
+        _limit: params.limit,
+        ...(params.keyword && {
+          q: params.keyword,
+        }),
+      },
+    });
     yield put({
       type: `${SUCCESS(CATEGORY_ACTION.GET_CATEGORY_LIST)}`,
       payload: {
         data: result.data,
+        meta: {
+          total: parseInt(result.headers["x-total-count"]),
+          page: params.page,
+          limit: params.limit,
+        },
       },
     });
   } catch (e) {
@@ -48,7 +62,8 @@ function* createCategorySaga(action) {
 }
 
 export default function* categoriesSaga() {
-  yield takeEvery(
+  yield debounce(
+    500,
     REQUEST(CATEGORY_ACTION.GET_CATEGORY_LIST),
     getCategoriesListSaga
   );

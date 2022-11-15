@@ -29,6 +29,7 @@ import {
 } from "../../../redux/actions";
 import { PRODUCT_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routes";
+import { SLIDER_MARKS } from "./constants";
 
 import menBanner from "../../../assets/banner/men-banner.jpg";
 
@@ -89,6 +90,7 @@ const ProductPage = () => {
   const { productListUser } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
   const { userInfo } = useSelector((state) => state.user);
+  const { cartList } = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(
@@ -101,7 +103,14 @@ const ProductPage = () => {
       })
     );
 
-    dispatch(getCategoriesListAction());
+    dispatch(
+      getCategoriesListAction({
+        params: {
+          page: 1,
+          limit: 999,
+        },
+      })
+    );
 
     setFilterParams({
       ...filterParams,
@@ -367,6 +376,10 @@ const ProductPage = () => {
         price = item.finalPrice;
       }
 
+      const currentCartItem = cartList.find(
+        (cartItem) => cartItem.id === item.id
+      );
+
       return (
         <Col key={item.id} xxl={6} xl={6} md={8} sm={8} xs={12}>
           <Link
@@ -384,6 +397,13 @@ const ProductPage = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
+                        if (item.stock <= currentCartItem?.totalAmount) {
+                          return notification.warn({
+                            message: "Sản phẩm đã tới giới hạn tồn kho",
+                            placement: "top",
+                            top: 100,
+                          });
+                        }
                         handleAddItemToCart(item);
                       }}
                     >
@@ -431,14 +451,14 @@ const ProductPage = () => {
         </Col>
       );
     });
-  }, [productListUser.data]);
+  }, [productListUser.data, cartList]);
 
   const renderPageBanner = useMemo(() => {
     return (
       <>
         <img alt="" src={menBanner} />
 
-        <h2>Thương hiệu nổi tiếng </h2>
+        <h2>Sản phẩm</h2>
 
         <div className="overlay"></div>
       </>
@@ -455,10 +475,7 @@ const ProductPage = () => {
             <Link to={ROUTES.USER.HOME}>Trang chủ</Link>
           </Breadcrumb.Item>
           <Breadcrumb.Item>
-            <Link to={ROUTES.USER.BRAND}>Sản phẩm</Link>
-          </Breadcrumb.Item>
-          <Breadcrumb.Item>
-            <Link>Thương hiệu</Link>
+            <p>Sản phẩm</p>
           </Breadcrumb.Item>
         </Breadcrumb>
       </S.BreadcrumbWrapper>
@@ -554,18 +571,9 @@ const ProductPage = () => {
                 }}
               >
                 <Panel header="Khoảng giá" key="7">
-                  <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <span>
-                      0<sup>đ</sup>
-                    </span>
-                    <span>
-                      15.000.000<sup>đ</sup>
-                    </span>
-                  </div>
                   <Slider
                     range
+                    marks={SLIDER_MARKS}
                     step={100000}
                     max={MAXPRICE}
                     defaultValue={filterParams.priceRange}

@@ -199,7 +199,7 @@ export const ProductSummary = styled.div`
   }
 
   .product_summary-price {
-    margin: 8px 0 24px;
+    margin: 8px 0 12px;
     color: var(--dark-text-color);
     text-align: left;
     font-size: 24px;
@@ -237,6 +237,10 @@ export const ProductSummary = styled.div`
         font-size: 24px;
       }
     }
+  }
+
+  .product_summary-stock {
+    margin-bottom: 12px;
   }
 `;
 
@@ -366,6 +370,8 @@ export const ProductReview = styled.div`
 `;
 
 export const ReviewsWrapper = styled.div`
+  padding-top: 12px;
+  margin-top: 12px;
   border-top: 1px solid #ddd;
 `;
 
