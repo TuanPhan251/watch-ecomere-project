@@ -6,7 +6,7 @@ export const ProductListContainer = styled.div`
   flex-direction: column;
   justify-content: ${(props) => (props.loading ? "none" : "space-between")};
   padding: 12px;
-  min-height: 100vh;
+  min-height: calc(100vh -60px);
   transition: all 0.3s ease;
 `;
 

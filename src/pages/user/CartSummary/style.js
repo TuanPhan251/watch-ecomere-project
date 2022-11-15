@@ -186,13 +186,13 @@ export const CartItem = styled(Row)`
   .item-action {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     height: 100%;
     margin-left: 4px;
 
     .item_name {
       color: var(--dark-text-color);
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 500;
       display: -webkit-box;
       -webkit-box-orient: vertical;

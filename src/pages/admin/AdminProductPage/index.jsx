@@ -15,6 +15,7 @@ import {
   Col,
   Checkbox,
   Select,
+  Tag,
 } from "antd";
 
 import {
@@ -126,7 +127,7 @@ const AdminProductPage = () => {
         return (
           <Space>
             <Avatar shape="square" size={64} src={record.image} />
-            {record.isNew && <span style={{ color: "red" }}>(Mới)</span>}
+            {record.isNew && <Tag color="#f50">Mới</Tag>}
             <h4>{record.name}</h4>
           </Space>
         );
@@ -137,8 +138,17 @@ const AdminProductPage = () => {
       dataIndex: "isHidden",
       key: "isHidden",
       align: "center",
-      render: (_, record) =>
-        record.isHidden === false ? "Bình thường" : "Tạm ẩn",
+      render: (_, record) => {
+        return (
+          <>
+            {record.isHidden ? (
+              <Tag color="red">Ẩn</Tag>
+            ) : (
+              <Tag color="green">Hiện</Tag>
+            )}
+          </>
+        );
+      },
     },
     {
       title: "Hãng",
@@ -152,7 +162,15 @@ const AdminProductPage = () => {
       dataIndex: "gender",
       key: "gender",
       align: "center",
-      render: (_, record) => <p>{record.gender === "male" ? "Nam" : "Nữ"}</p>,
+      render: (_, record) => (
+        <>
+          {record.gender === "male" ? (
+            <Tag color="blue">Nam</Tag>
+          ) : (
+            <Tag color="purple">Nữ</Tag>
+          )}
+        </>
+      ),
       // render: (_, record) => <p>{moment(record.createdAt).fromNow()}</p>,
     },
     {
@@ -167,6 +185,13 @@ const AdminProductPage = () => {
           <sup>đ</sup>
         </p>
       ),
+    },
+    {
+      title: "Kho",
+      dataIndex: "stock",
+      key: "stock",
+      align: "center",
+      width: 40,
     },
     {
       title: "Khuyến mãi",
@@ -184,8 +209,17 @@ const AdminProductPage = () => {
       render: (_, record) => {
         return (
           <>
-            <Space>
-              <Button type="danger" onClick={() => setShowModal(true)}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <Button
+                type="danger"
+                onClick={() => setShowModal(true)}
+                style={{ marginBottom: 8 }}
+              >
                 <i className="fa-solid fa-trash"></i>
                 <span style={{ marginLeft: 4 }}>Xóa</span>
               </Button>
@@ -202,7 +236,7 @@ const AdminProductPage = () => {
                 <i className="fa-solid fa-pen-to-square"></i>
                 <span style={{ marginLeft: 4 }}>Sửa</span>
               </Button>
-            </Space>
+            </div>
 
             <S.ConfirmModal
               title="Xóa sản phẩm"
@@ -237,7 +271,6 @@ const AdminProductPage = () => {
         <Button
           onClick={() => navigate(`${ROUTES.ADMIN.CREATE_PRODUCT_PAGE}`)}
           type="primary"
-          size="large"
         >
           <i className="fa-solid fa-file-pen"></i>
           <span style={{ marginLeft: 4 }}>Thêm sản phẩm</span>
@@ -246,79 +279,87 @@ const AdminProductPage = () => {
 
       <Row gutter={4} style={{ flex: "1" }}>
         <Col span={4}>
-          <h3>
-            <i className="fa-solid fa-filter"></i>Bộ lọc
-          </h3>
+          <Space direction="vertical">
+            <h3>
+              <i className="fa-solid fa-filter"></i>Bộ lọc
+            </h3>
 
-          <Input
-            placeholder="Nhập để tìm sản phẩm"
-            style={{ width: "100%" }}
-            onChange={(e) => handleFilter(e.target.value, "keyword")}
-          />
+            <Col span={24}>
+              <Input
+                placeholder="Nhập để tìm sản phẩm"
+                style={{ width: "100%" }}
+                onChange={(e) => handleFilter(e.target.value, "keyword")}
+              />
+            </Col>
 
-          <p>Hãng</p>
-          <Checkbox.Group
-            value={filterParams.categoryId}
-            onChange={(value) => handleFilter(value, "categoryId")}
-          >
-            {renderCategoryOptions()}
-          </Checkbox.Group>
-
-          <p>Giới tính</p>
-          <Checkbox.Group
-            value={filterParams.gender}
-            onChange={(value) => handleFilter(value, "gender")}
-          >
-            <Checkbox value="male">Nam</Checkbox>
-            <Checkbox value="female">Nữ</Checkbox>
-          </Checkbox.Group>
-
-          <p>Giá</p>
-          <Col span={24}>
-            <Select
-              style={{ width: "100%" }}
-              onChange={(value) => handleFilter(value, "priceSort")}
-              value={filterParams.priceSort}
-            >
-              <Select.Option value="desc">Giá: Cao-Thấp</Select.Option>
-              <Select.Option value="asc">Giá: Thấp-Cao</Select.Option>
-            </Select>
-          </Col>
-
-          <p>Loại sản phẩm</p>
-          <Col span={24}>
-            <Row>
-              <Checkbox
-                checked={filterParams.isNew}
-                onChange={(e) => handleFilter(e.target.checked, "isNew")}
+            <Col span={24}>
+              <p>Hãng</p>
+              <Checkbox.Group
+                value={filterParams.categoryId}
+                onChange={(value) => handleFilter(value, "categoryId")}
               >
-                Sản phẩm mới
-              </Checkbox>
-            </Row>
-          </Col>
-          <Col span={24}>
-            <Row>
-              <Checkbox
-                checked={filterParams.isDiscount}
-                onChange={(e) => handleFilter(e.target.checked, "isDiscount")}
-              >
-                Đang giảm giá
-              </Checkbox>
-            </Row>
-          </Col>
+                {renderCategoryOptions()}
+              </Checkbox.Group>
+            </Col>
 
-          <Col span={12} offset={6}>
-            <Button
-              danger
-              ghost
-              style={{
-                marginTop: 24,
-              }}
-              onClick={() => setFilterParams({ ...initialFilterParams })}
-            >
-              Xóa bộ lọc
-            </Button>
-          </Col>
+            <Col span={24}>
+              <p>Giới tính</p>
+              <Checkbox.Group
+                value={filterParams.gender}
+                onChange={(value) => handleFilter(value, "gender")}
+              >
+                <Checkbox value="male">Nam</Checkbox>
+                <Checkbox value="female">Nữ</Checkbox>
+              </Checkbox.Group>
+            </Col>
+
+            <Col span={24}>
+              <p>Giá</p>
+              <Select
+                style={{ width: "100%" }}
+                onChange={(value) => handleFilter(value, "priceSort")}
+                value={filterParams.priceSort}
+              >
+                <Select.Option value="desc">Giá: Cao-Thấp</Select.Option>
+                <Select.Option value="asc">Giá: Thấp-Cao</Select.Option>
+              </Select>
+            </Col>
+
+            <p>Loại sản phẩm</p>
+            <Col span={24}>
+              <Row>
+                <Checkbox
+                  checked={filterParams.isNew}
+                  onChange={(e) => handleFilter(e.target.checked, "isNew")}
+                >
+                  Sản phẩm mới
+                </Checkbox>
+              </Row>
+            </Col>
+            <Col span={24}>
+              <Row>
+                <Checkbox
+                  checked={filterParams.isDiscount}
+                  onChange={(e) => handleFilter(e.target.checked, "isDiscount")}
+                >
+                  Đang giảm giá
+                </Checkbox>
+              </Row>
+            </Col>
+
+            <Col span={12} offset={6}>
+              <Button
+                danger
+                ghost
+                style={{
+                  marginTop: 24,
+                }}
+                onClick={() => setFilterParams({ ...initialFilterParams })}
+              >
+                Xóa bộ lọc
+              </Button>
+            </Col>
+          </Space>
         </Col>
         <Col span={20}>
           <Table

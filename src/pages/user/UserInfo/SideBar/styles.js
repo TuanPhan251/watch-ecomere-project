@@ -22,8 +22,14 @@ export const UserSideBar = styled.div`
   border-right: 1px solid #ddd;
   background-color: #fff;
 
+  .user__avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+  }
+
   .user_sidebar {
-    margin-top: 24px;
     list-style: none;
   }
 

@@ -5,6 +5,7 @@ import { REQUEST, FAIL, SUCCESS, CATEGORY_ACTION } from "../CONSTANTS";
 const initialValue = {
   categoryList: {
     data: [],
+    meta: {},
     loading: false,
     error: "",
   },
@@ -26,12 +27,13 @@ const categoryReducer = createReducer(initialValue, {
     };
   },
   [SUCCESS(CATEGORY_ACTION.GET_CATEGORY_LIST)]: (state, action) => {
-    const { data } = action.payload;
+    const { data, meta } = action.payload;
     return {
       ...state,
       categoryList: {
         ...state.categoryList,
         data: data,
+        meta: meta,
         loading: false,
         error: "",
       },

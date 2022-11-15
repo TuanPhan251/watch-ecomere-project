@@ -93,6 +93,7 @@ const ProductPage = () => {
   const { productListUser } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
   const { userInfo } = useSelector((state) => state.user);
+  const { cartList } = useSelector((state) => state.cart);
 
   useEffect(() => {
     dispatch(
@@ -107,7 +108,14 @@ const ProductPage = () => {
       })
     );
 
-    dispatch(getCategoriesListAction());
+    dispatch(
+      getCategoriesListAction({
+        params: {
+          page: 1,
+          limit: 999,
+        },
+      })
+    );
 
     setFilterParams({
       ...filterParams,
@@ -427,6 +435,10 @@ const ProductPage = () => {
         price = item.finalPrice;
       }
 
+      const currentCartItem = cartList.find(
+        (cartItem) => cartItem.id === item.id
+      );
+
       return (
         <Col key={item.id} xxl={6} xl={6} md={8} sm={8} xs={12}>
           <Link
@@ -444,6 +456,13 @@ const ProductPage = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
+                        if (item.stock <= currentCartItem?.totalAmount) {
+                          return notification.warn({
+                            message: "Sản phẩm đã tới giới hạn tồn kho",
+                            placement: "top",
+                            top: 100,
+                          });
+                        }
                         handleAddItemToCart(item);
                       }}
                     >
@@ -491,7 +510,7 @@ const ProductPage = () => {
         </Col>
       );
     });
-  }, [productListUser.data]);
+  }, [productListUser.data, cartList]);
 
   const renderPageBanner = useMemo(() => {
     return (
@@ -519,9 +538,9 @@ const ProductPage = () => {
           </Breadcrumb.Item>
           <Breadcrumb.Item>
             {searchObj.gender === "male" ? (
-              <Link>Đồng hồ nam</Link>
+              <p>Đồng hồ nam</p>
             ) : (
-              <Link>Đồng hồ nữ</Link>
+              <p>Đồng hồ nữ</p>
             )}
           </Breadcrumb.Item>
         </Breadcrumb>

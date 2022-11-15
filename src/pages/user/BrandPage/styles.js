@@ -123,7 +123,7 @@ export const PageBannerWrapper = styled.div`
   position: relative;
   margin-top: var(--header-height);
   width: 100%;
-  padding-top: 30%;
+  padding-top: 20%;
 
   img {
     position: absolute;

@@ -1,10 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import moment from "moment/moment";
 
 import { getAllOrdersAction } from "../../../redux/actions";
 
-import { Button, Col, Row, Table, Pagination } from "antd";
+import {
+  Button,
+  Col,
+  Row,
+  Table,
+  Pagination,
+  Space,
+  Input,
+  Select,
+} from "antd";
 import * as S from "./styles";
 import { generatePath, Link } from "react-router-dom";
 import { ROUTES } from "../../../constants/routes";
@@ -12,6 +21,9 @@ import { ROUTES } from "../../../constants/routes";
 const AdminOrderListPage = () => {
   const dispatch = useDispatch();
   const { allOrders } = useSelector((state) => state.order);
+
+  const initialFilterParams = { keyword: "", priceSort: "" };
+  const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
 
   useEffect(() => {
     dispatch(
@@ -29,6 +41,23 @@ const AdminOrderListPage = () => {
       getAllOrdersAction({
         params: {
           page: page,
+          limit: 10,
+        },
+      })
+    );
+  };
+
+  const handleFilter = (value, type) => {
+    setFilterParams({
+      ...filterParams,
+      [type]: value,
+    });
+    dispatch(
+      getAllOrdersAction({
+        params: {
+          ...filterParams,
+          [type]: value,
+          page: 1,
           limit: 10,
         },
       })
@@ -140,7 +169,33 @@ const AdminOrderListPage = () => {
 
       <Row style={{ flex: 1 }}>
         <Col span={4}>
-          <h3>Bộ lọc</h3>
+          <Space direction="vertical">
+            <h3>
+              <i className="fa-solid fa-filter"></i>Bộ lọc
+            </h3>
+
+            <Col span={24}>
+              <Input
+                placeholder="Nhập để tìm kiếm"
+                onChange={(e) => handleFilter(e.target.value, "keyword")}
+              />
+            </Col>
+
+            <Col span={24}>
+              <p>Giá trị đơn</p>
+
+              <Select
+                style={{ width: "100%" }}
+                onChange={(value) => handleFilter(value, "priceSort")}
+                value={filterParams.priceSort}
+                allowClear
+                placeholder="Sắp xếp theo"
+              >
+                <Select.Option value="desc">Từ: Cao - Thấp</Select.Option>
+                <Select.Option value="asc">Từ: Thấp - Cao</Select.Option>
+              </Select>
+            </Col>
+          </Space>
         </Col>
 
         <Col span={20}>

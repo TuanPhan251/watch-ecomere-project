@@ -17,7 +17,7 @@
       "caseWidth": 9.6,
       "warranty": 1,
       "content": "<p>•&nbsp;<a href=\"https://www.thegioididong.com/dong-ho-deo-tay/casio-mtp-vd02l-7eudf-nam\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(102, 102, 102);\">Đồng hồ CASIO 41 mm Nam MTP-VD02L-7EUDF</a>&nbsp;sở hữu thiết kế cổ điển phù hợp với những chàng trai lịch lãm, sản phẩm này giống như thiết kết của chiếc đồng hồ&nbsp;Casio MTP-VD02L-1EUDF. Tuy nhiên, ở phiên bản này lại có thiết kế dây da nâu cùng mặt đồng hồ màu trắng với các mặt số được thiết kế cách điệu các số giờ thành các cọc số khá thú vị và bắt mắt người dùng.</p><p>• Thoải mái rửa tay vì chiếc&nbsp;<a href=\"https://www.thegioididong.com/dong-ho-deo-tay\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(102, 102, 102);\">đồng hồ</a>&nbsp;này&nbsp;với hệ số chống nước<strong>&nbsp;1 ATM.</strong></p><p>• Lựa chọn khung viền được làm từ thép không gỉ mạ Ion sáng bóng và bền bỉ. Dây đeo làm từ da tổng hợp tạo cảm giác thoải mái khi đeo cả ngày dài. Tổng thể&nbsp;có kết cấu chắc chắn, dễ dàng lau chùi khi bám bụi bẩn</p><p>• Hãng&nbsp;<a href=\"https://www.thegioididong.com/dong-ho-deo-tay-casio\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(102, 102, 102);\">đồng hồ Casio</a>&nbsp;thường xuyên lựa chọn mặt kính làm từ kính khoáng vì chất liệu này có khả năng chống va đập cực tốt, chiếc&nbsp;<a href=\"https://www.thegioididong.com/dong-ho-deo-tay-nam\" rel=\"noopener noreferrer\" target=\"_blank\" style=\"color: rgb(102, 102, 102);\">đồng hồ nam</a>&nbsp;này có thiết kế đường kính mặt&nbsp;<strong>41&nbsp;mm&nbsp;</strong>và độ rộng dây&nbsp;<strong>21.9 mm</strong>&nbsp;phù hợp cho các bạn nam có cổ tay to.</p><p>•&nbsp;Thay vì ô lịch ngày được đặt tại vị trí 3 giờ như các sản phẩm trước đây, ở sản phẩm này ô lịch ngày được đặt tại vị trí 6 giờ giúp người dùng theo dõi thời gian nhanh chóng. Kim dạ quang của đồng hồ giúp người dùng quan sát thời gian trong bóng tối, dạ quang sẽ được sạc đầy dưới ánh sáng mặt trời chỉ trong vòng 10 đến 30 phút.</p>",
-      "updatedAt": 1668393627919,
+      "updatedAt": 1668479803250,
       "slug": "dong-ho-casio-41-mm-nam-mtp-vd02l-7eudf",
       "discountPercent": 0,
       "finalPrice": 1099000,
@@ -394,8 +394,11 @@
       "slug": "dong-ho-mathey-tissot-26-mm-nu-d710pi",
       "finalPrice": 4221000,
       "createdAt": 1667029920589,
-      "updatedAt": 1667029920589,
-      "id": 15
+      "updatedAt": 1668479672671,
+      "id": 15,
+      "isHidden": false,
+      "stock": 10,
+      "isDiscount": true
     },
     {
       "name": "Đồng hồ MATHEY TISSOT City Metal 28 mm Nữ D31186MBI",
@@ -444,33 +447,44 @@
       "slug": "dong-ho-mathey-tissot-urban-42-mm-nam-h411bpi1",
       "finalPrice": 4867500,
       "createdAt": 1667377564154,
-      "updatedAt": 1667382333128,
+      "updatedAt": 1668480103942,
       "id": 17,
       "isDiscount": true,
       "stock": 10,
-      "isHidden": false
+      "isHidden": false,
+      "isNew": true
     }
   ],
   "categories": [
     {
       "id": 1,
-      "name": "Casio"
+      "name": "Casio",
+      "createdAt": 1668136076045,
+      "updatedAt": 1668136076045
     },
     {
       "id": 2,
-      "name": "Orient"
+      "name": "Orient",
+      "createdAt": 1668136076045,
+      "updatedAt": 1668136076045
     },
     {
       "id": 3,
-      "name": "Citizen"
+      "name": "Citizen",
+      "createdAt": 1668136076045,
+      "updatedAt": 1668136076045
     },
     {
       "id": 4,
-      "name": "Timex"
+      "name": "Timex",
+      "createdAt": 1668136076045,
+      "updatedAt": 1668136076045
     },
     {
       "id": 5,
-      "name": "Tissot"
+      "name": "Tissot",
+      "createdAt": 1668136076045,
+      "updatedAt": 1668136076045
     },
     {
       "name": "DW",
@@ -487,7 +501,9 @@
       "role": "admin",
       "createdAt": "2022-10-13T02:17:19.609Z",
       "updatedAt": 1666266328544,
-      "id": 1
+      "id": 1,
+      "orderQuantity": 0,
+      "totalSpend": 0
     },
     {
       "email": "phuong1@gmail.com",
@@ -496,7 +512,9 @@
       "role": "admin",
       "createdAt": 1665629640467,
       "updatedAt": 1665629640467,
-      "id": 2
+      "id": 2,
+      "orderQuantity": 0,
+      "totalSpend": 0
     },
     {
       "email": "phuong123456@gmail.com",
@@ -505,7 +523,9 @@
       "role": "user",
       "createdAt": "2022-10-23T11:58:35.581Z",
       "updatedAt": 1667033108131,
-      "id": 3
+      "id": 3,
+      "orderQuantity": 0,
+      "totalSpend": 0
     },
     {
       "email": "tuan@gmail.com",
@@ -513,8 +533,10 @@
       "userName": "Hoài Tuấn",
       "role": "admin",
       "createdAt": "2022-10-31T02:07:04.841Z",
-      "updatedAt": 1668068233930,
-      "id": 4
+      "updatedAt": 1668501050649,
+      "id": 4,
+      "orderQuantity": 2,
+      "totalSpend": 1775700
     }
   ],
   "comments": [
@@ -675,13 +697,6 @@
     },
     {
       "userId": 4,
-      "productId": 17,
-      "createdAt": 1668068307616,
-      "updatedAt": 1668068307616,
-      "id": 18
-    },
-    {
-      "userId": 4,
       "productId": 6,
       "createdAt": 1668157335009,
       "updatedAt": 1668157335009,
@@ -700,6 +715,13 @@
       "createdAt": 1668221649058,
       "updatedAt": 1668221649059,
       "id": 21
+    },
+    {
+      "userId": 4,
+      "productId": 17,
+      "createdAt": 1668506262411,
+      "updatedAt": 1668506262411,
+      "id": 22
     }
   ],
   "orders": [
@@ -718,9 +740,9 @@
       "userId": 4,
       "orderCode": "87c26fa9-2f06-4369-b62e-8253716341cf",
       "totalPrice": 1139050,
-      "status": "delivering",
+      "status": "done",
       "createdAt": 1668412311972,
-      "updatedAt": 1668413005803,
+      "updatedAt": 1668501047401,
       "id": 1
     },
     {
@@ -738,9 +760,9 @@
       "userId": 4,
       "orderCode": "3fc350b2-5edf-4c08-9493-77f78fcd41b1",
       "totalPrice": 636650,
-      "status": "pending",
+      "status": "done",
       "createdAt": 1668423376567,
-      "updatedAt": 1668423376567,
+      "updatedAt": 1668501050499,
       "id": 2
     }
   ],

@@ -37,6 +37,7 @@ import {
 } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
+import userImg from "../../../assets/user/user.png";
 import * as S from "./style";
 
 const settings = {
@@ -57,6 +58,9 @@ const ProductDetailPage = () => {
     (state) => state.product
   );
   const { userInfo } = useSelector((state) => state.user);
+  const { cartList } = useSelector((state) => state.cart);
+
+  const currentCartItem = cartList.find((item) => item.id === productId);
   const similarProductList = productListUser.data?.filter(
     (item) => item.id !== productId && item.gender === productDetail.data.gender
   );
@@ -110,6 +114,7 @@ const ProductDetailPage = () => {
           productAmount: productQuantity,
         })
       );
+      setProductQuantity(1);
 
       notification.open({
         message: "Đã thêm sản phẩm vào giỏ hàng",
@@ -227,9 +232,7 @@ const ProductDetailPage = () => {
         <Comment
           key={item.id}
           author={<a>{item.user.userName}</a>}
-          avatar={
-            <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
-          }
+          avatar={<Avatar src={userImg} alt="Han Solo" />}
           content={
             <>
               <Rate
@@ -512,7 +515,7 @@ const ProductDetailPage = () => {
                 </p>
 
                 <p className="product_summary-stock">
-                  Còn lại: {productDetail.data.stock} sản phẩm
+                  Kho: {productDetail.data.stock}
                 </p>
               </S.ProductSummary>
 
@@ -526,7 +529,12 @@ const ProductDetailPage = () => {
 
                       <InputNumber
                         min={1}
-                        max={productDetail.data.stock}
+                        max={
+                          currentCartItem?.totalAmount
+                            ? productDetail.data.stock -
+                              currentCartItem?.totalAmount
+                            : productDetail.data.stock
+                        }
                         value={productQuantity}
                         onChange={(value) => setProductQuantity(value)}
                       />
@@ -537,6 +545,10 @@ const ProductDetailPage = () => {
                         size="large"
                         onClick={handleAddProductToCart}
                         block
+                        disabled={
+                          productDetail.data.stock ===
+                          currentCartItem?.totalAmount
+                        }
                       >
                         <i
                           className="fa-solid fa-cart-plus"
@@ -549,6 +561,10 @@ const ProductDetailPage = () => {
                     <Col span={24}>
                       <Button
                         size="large"
+                        disabled={
+                          productDetail.data.stock ===
+                          currentCartItem?.totalAmount
+                        }
                         onClick={() => {
                           handleAddProductToCart();
                           if (userInfo.data.id)

@@ -1,4 +1,4 @@
-import { takeEvery, put } from "redux-saga/effects";
+import { takeEvery, put, debounce } from "redux-saga/effects";
 import axios from "axios";
 
 import {
@@ -42,6 +42,13 @@ function* getAllOrdersSaga(action) {
         _page: params.page,
         _limit: params.limit,
         _embed: "orderProducts",
+        ...(params.keyword && {
+          q: params.keyword,
+        }),
+        ...(params.priceSort && {
+          _sort: "totalPrice",
+          _order: params.priceSort,
+        }),
       },
     });
     yield put({
@@ -133,6 +140,9 @@ function* updateOrderStatusSaga(action) {
         data: result.data,
       },
     });
+    if (data.status === "done" && callback.updateUserInfo)
+      yield callback.updateUserInfo();
+    if (callback.updateUserInfo) yield callback.updateUserInfo();
     if (callback.goToList) yield callback.goToList();
     if (callback.getOrderList) yield callback.getOrderList();
   } catch (e) {
@@ -244,7 +254,7 @@ function* clearOrderListSaga(action) {
 
 export default function* orderSaga() {
   yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_LIST), getOrderListSaga);
-  yield takeEvery(REQUEST(ORDER_ACTION.GET_ALL_ORDERS), getAllOrdersSaga);
+  yield debounce(500, REQUEST(ORDER_ACTION.GET_ALL_ORDERS), getAllOrdersSaga);
   yield takeEvery(REQUEST(ORDER_ACTION.GET_ORDER_DETAIL), getOrderDetailSaga);
   yield takeEvery(
     REQUEST(ORDER_ACTION.GET_GUEST_ORDER_DETAIL),

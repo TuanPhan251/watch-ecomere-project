@@ -1,4 +1,4 @@
-import { takeEvery, put } from "redux-saga/effects";
+import { takeEvery, put, debounce } from "redux-saga/effects";
 import axios from "axios";
 
 import { USER_ACTION, REQUEST, SUCCESS, FAIL } from "./../CONSTANTS";
@@ -31,7 +31,11 @@ function* loginSaga(action) {
 function* registerSaga(action) {
   try {
     const { data, callback } = action.payload;
-    const result = yield axios.post("http://localhost:4000/register", data);
+    const result = yield axios.post("http://localhost:4000/register", {
+      ...data,
+      orderQuantity: 0,
+      totalSpend: 0,
+    });
     yield put({
       type: SUCCESS(USER_ACTION.REGISTER),
       payload: {
@@ -81,6 +85,21 @@ function* getUserList(action) {
       params: {
         _page: params.page,
         _limit: params.limit,
+        _embed: "orders",
+        ...(params.keyword && {
+          q: params.keyword,
+        }),
+        ...(params.role && {
+          role: params.role,
+        }),
+        ...(params.orderSort && {
+          _sort: "orderQuantity",
+          _order: params.orderSort,
+        }),
+        ...(params.spendSort && {
+          _sort: "totalSpend",
+          _order: params.spendSort,
+        }),
       },
     });
     yield put({
@@ -147,7 +166,7 @@ export default function* userSaga() {
   yield takeEvery(REQUEST(USER_ACTION.LOGIN), loginSaga);
   yield takeEvery(REQUEST(USER_ACTION.REGISTER), registerSaga);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_INFO), getUserInfoSaga);
-  yield takeEvery(REQUEST(USER_ACTION.GET_USER_LIST), getUserList);
+  yield debounce(500, REQUEST(USER_ACTION.GET_USER_LIST), getUserList);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_DETAIL), getUserDetailSaga);
   yield takeEvery(REQUEST(USER_ACTION.UPDATE_USER_INFO), updateUserInfoSaga);
 }
