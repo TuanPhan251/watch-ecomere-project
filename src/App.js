@@ -24,6 +24,9 @@ import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import AdminUsersPage from "./pages/admin/AdminUserPage";
 import CreateProductPage from "./pages/admin/AdminProductPage/CreateProductPage";
 import UpdateProductPage from "./pages/admin/AdminProductPage/UpdateProductPage";
+import AdminBlogsPage from "./pages/admin/AdminBlogPage";
+import UpdateBlogPage from "./pages/admin/AdminBlogPage/AdminBlogDetail";
+import CreateBlogPage from "./pages/admin/AdminBlogPage/CreateBlogPage";
 
 import HomePage from "./pages/user/Home";
 import ProductPage from "./pages/user/ProductsPage";
@@ -131,6 +134,18 @@ function App() {
             <Route
               path={ROUTES.ADMIN.USER_LIST_PAGE}
               element={<AdminUsersPage />}
+            />
+            <Route
+              path={ROUTES.ADMIN.BLOG_LIST_PAGE}
+              element={<AdminBlogsPage />}
+            />
+            <Route
+              path={ROUTES.ADMIN.UPDATE_BLOG_PAGE}
+              element={<UpdateBlogPage />}
+            />
+            <Route
+              path={ROUTES.ADMIN.CREATE_BLOG_PAGE}
+              element={<CreateBlogPage />}
             />
           </Route>
           <Route element={<LoginLayout />}>

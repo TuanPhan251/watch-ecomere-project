@@ -31,4 +31,9 @@ export const SidebarContent = [
     path: ROUTES.ADMIN.CATEGORY_LIST_PAGE,
     icon: <i className="fa-solid fa-list"></i>,
   },
+  {
+    title: "Bài viết",
+    path: ROUTES.ADMIN.BLOG_LIST_PAGE,
+    icon: <i className="fa-regular fa-rectangle-list"></i>,
+  },
 ];

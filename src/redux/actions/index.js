@@ -7,3 +7,4 @@ export * from "./location.action";
 export * from "./wishlist.action";
 export * from "./discount.action";
 export * from "./order.action";
+export * from "./blogs.action";

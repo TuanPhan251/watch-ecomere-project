@@ -1,11 +1,43 @@
-import { useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { Button, Col, Form, Input, Modal, message } from "antd";
+
+import {
+  updateUserInfoAction,
+  getUserInfoAction,
+} from "../../../redux/actions";
 
 import Layout from "./Layout";
 
 import * as S from "./styles";
 
 const UserInfoPage = () => {
-  const { userInfo } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { userInfo, updateInfoData } = useSelector((state) => state.user);
+  const [userForm] = Form.useForm();
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleChangeUserInfo = (values) => {
+    dispatch(
+      updateUserInfoAction({
+        id: userInfo.data.id,
+        values: values,
+        callback: {
+          openMessage: () => {
+            message.success("Thay đổi thông tin thành công");
+          },
+          closeModal: () => {
+            setShowModal(false);
+          },
+          getUserInfo: () => {
+            dispatch(getUserInfoAction({ id: userInfo.data.id }));
+          },
+        },
+      })
+    );
+  };
 
   return (
     <Layout>
@@ -20,6 +52,54 @@ const UserInfoPage = () => {
           <p className="user_info-email">
             Email: <span>{userInfo.data?.email}</span>
           </p>
+        </div>
+
+        <div className="user_info-action">
+          <Col offset={10}>
+            <Button type="primary" onClick={() => setShowModal(true)}>
+              Sửa thông tin
+            </Button>
+
+            <Modal
+              open={showModal}
+              title="Thêm nhãn hàng mới"
+              okText="Cập nhật"
+              cancelText="Hủy"
+              onCancel={() => setShowModal(false)}
+              confirmLoading={updateInfoData.loading}
+              onOk={() => {
+                userForm
+                  .validateFields()
+                  .then((values) => {
+                    handleChangeUserInfo(values);
+                  })
+                  .catch((info) => {
+                    console.log("Validate Failed:", info);
+                  });
+              }}
+            >
+              <Form
+                form={userForm}
+                layout="vertical"
+                initialValues={{
+                  modifier: "public",
+                }}
+              >
+                <Form.Item
+                  name="userName"
+                  label="Tên người dùng"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Bạn phải nhập tên người dùng",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Form>
+            </Modal>
+          </Col>
         </div>
       </S.Wrapper>
     </Layout>

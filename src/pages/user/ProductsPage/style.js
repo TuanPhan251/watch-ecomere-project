@@ -2,13 +2,13 @@ import styled, { keyframes } from "styled-components";
 
 const hydrate = keyframes`
   from {
-    bottom: -100px;
+    bottom: -50px;
     opacity: 0;
     visibility: hidden;
   }
   to {
-    bottom: 0;
-    opacity: 1;
+    bottom: 10;
+    opacity: 0.5;
     visibility: visible;
   }
 `;
@@ -139,19 +139,19 @@ export const PageBannerWrapper = styled.div`
   h2 {
     position: absolute;
     right: 50%;
-    bottom: 0;
+    bottom: 10px;
     width: 100%;
-    margin-bottom: 20px;
     transform: translateX(50%);
     text-transform: uppercase;
     text-align: center;
-    font-size: 60px;
+    font-size: 36px;
     font-weight: 400;
     letter-spacing: 10px;
     color: #fff;
-    opacity: 0.5;
     text-shadow: 0px 0px 10px #262626;
     animation: ${hydrate} 1s ease;
+    animation-fill-mode: forwards;
+    transition: all 0.3s ease;
     z-index: 2;
   }
 
@@ -168,6 +168,18 @@ export const PageBannerWrapper = styled.div`
     );
     animation: ${fadeIn} 1s ease;
     z-index: 1;
+  }
+
+  @media (max-width: 768px) and (min-width: 577px) {
+    h2 {
+      font-size: 28px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    h2 {
+      font-size: 24px;
+    }
   }
 `;
 

@@ -77,7 +77,14 @@ const AdminProductPage = () => {
         },
       })
     );
-    dispatch(getCategoriesListAction());
+    dispatch(
+      getCategoriesListAction({
+        params: {
+          page: 1,
+          limit: 999,
+        },
+      })
+    );
 
     return () => {
       dispatch(removeProductDetailAction());

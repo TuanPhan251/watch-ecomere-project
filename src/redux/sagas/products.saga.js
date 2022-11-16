@@ -207,7 +207,7 @@ function* getProductDetailSaga(action) {
     });
 
     yield put({
-      type: REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST),
+      type: REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST_USER),
       payload: {
         params: {
           page: 1,

@@ -51,7 +51,14 @@ const UpdateProductPage = () => {
   useEffect(() => {
     dispatch(getProductDetailAction({ id }));
 
-    dispatch(getCategoriesListAction());
+    dispatch(
+      getCategoriesListAction({
+        params: {
+          page: 1,
+          limit: 999,
+        },
+      })
+    );
 
     return () => {
       dispatch(removeProductDetailAction());

@@ -118,13 +118,17 @@ const UserInfoOrderPage = () => {
       key: "actions",
       render: (_, record) => {
         return (
-          <Button
-            type="danger"
-            size="small"
-            onClick={() => handleCancelOrder(record.status, record.id)}
-          >
-            Hủy đơn
-          </Button>
+          <>
+            {record.status === "pending" && (
+              <Button
+                type="danger"
+                size="small"
+                onClick={() => handleCancelOrder(record.status, record.id)}
+              >
+                Hủy đơn
+              </Button>
+            )}
+          </>
         );
       },
       width: 80,
