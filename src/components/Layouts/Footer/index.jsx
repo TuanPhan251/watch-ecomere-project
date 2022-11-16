@@ -9,20 +9,20 @@ import {
 } from "@ant-design/icons";
 import * as S from "./styles";
 import { ROUTES } from "../../../constants/routes";
-import { Col, Row, Form } from "antd";
+import { Col, Form } from "antd";
 
 const Footer = () => {
   return (
     <S.FooterWrapper>
       <div className="footer-container">
-        <Row>
-          <Col span={6}>
+        <S.RowFooter>
+          <Col xl={6} lg={6} sm={24} xs={24} className="brand-footer">
             <S.TextLabel>Tuan & Phuong</S.TextLabel>
             <p style={{ marginBottom: 20, fontSize: 25, fontWeight: 400 }}>
               Subscribes Now
             </p>
 
-            <Form name="emailForm" style={{ width: "60%" }}>
+            <Form name="emailForm" className="email-form">
               <Form.Item name="email">
                 <S.InputFooter
                   prefix={<MailOutlined />}
@@ -40,7 +40,7 @@ const Footer = () => {
               </Form.Item>
             </Form>
           </Col>
-          <Col span={4}>
+          <S.ColFooter xl={4} lg={4} md={6} sm={12} xs={24}>
             <S.FooterContent>
               <p>HƯỚNG DẪN</p>
               <S.LinkFooter to="/gioi-thieu">Giới thiệu</S.LinkFooter>
@@ -57,8 +57,8 @@ const Footer = () => {
                 Chính Sách Bảo Hành
               </S.LinkFooter>
             </S.FooterContent>
-          </Col>
-          <Col span={4}>
+          </S.ColFooter>
+          <S.ColFooter xl={4} lg={4} md={6} sm={12} xs={24}>
             <S.FooterContent>
               <p>THAM KHẢO</p>
               <S.LinkFooter to="/hoi-dap">Hỏi Đáp - Góp Ý</S.LinkFooter>
@@ -67,8 +67,8 @@ const Footer = () => {
               </S.LinkFooter>
               <S.LinkFooter to="/bao-mat">Bảo Mật Thông Tin</S.LinkFooter>
             </S.FooterContent>
-          </Col>
-          <Col span={4}>
+          </S.ColFooter>
+          <S.ColFooter xl={4} lg={4} md={6} sm={12} xs={24}>
             <S.FooterContent>
               <p>THAM KHẢO</p>
               <S.LinkFooter to="/hoi-dap">Hỏi Đáp - Góp Ý</S.LinkFooter>
@@ -77,9 +77,9 @@ const Footer = () => {
               </S.LinkFooter>
               <S.LinkFooter to="/bao-mat">Bảo Mật Thông Tin</S.LinkFooter>
             </S.FooterContent>
-          </Col>
-          <Col span={6}>
-            <S.FooterContent style={{ marginLeft: 100 }}>
+          </S.ColFooter>
+          <S.ColFooter xl={6} lg={6} md={6} sm={12} xs={24}>
+            <S.FooterContent>
               <p>THÔNG TIN LIÊN HỆ</p>
               <span>
                 <PhoneOutlined style={{ margin: "10px 10px 0 0" }} />
@@ -96,24 +96,28 @@ const Footer = () => {
                 <TwitterOutlined style={{ fontSize: 40, marginRight: 10 }} />
               </Col>
             </S.FooterContent>
-          </Col>
-        </Row>
-        <Row style={{ borderTop: "2px solid #fff" }}>
-          <Col
-            span={24}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              margin: "10px 0 30px",
-            }}
-          >
-            <p>
-              2022
-              <CopyrightOutlined style={{ margin: "0 5px 0px 5px" }} />
-              company.Ltd | All right reserved
-            </p>
-          </Col>
-        </Row>
+          </S.ColFooter>
+        </S.RowFooter>
+        <div style={{ borderTop: "2px solid #fff" }}>
+          <div>
+            <div
+              style={{
+                maxWidth: 300,
+                margin: "0 auto ",
+              }}
+            >
+              <p
+                style={{
+                  textAlign: "center",
+                }}
+              >
+                2022
+                <CopyrightOutlined style={{ margin: "0 5px 0px 5px" }} />
+                company.Ltd | All right reserved
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </S.FooterWrapper>
   );

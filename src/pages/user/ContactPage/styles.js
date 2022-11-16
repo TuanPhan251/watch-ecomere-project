@@ -1,39 +1,47 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const ContactPageContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: flex-start;
-  width: 80%;
-  margin: 120px auto 100px;
-`;
-
 export const ContactPageWrapper = styled.div`
-  /* height: 700px; */
-`;
-
-export const ContactPageContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-
-  .contact-title {
-    font-size: 30px;
-    font-weight: 700;
-  }
-
-  .contact-item {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+  .contact-container {
     width: 100%;
-  }
-  .contact-text-list-item {
-    font-family: "Times New Roman", Times, serif;
-    font-size: 17px;
-    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 100px auto 0;
+    max-width: 1200px;
+    margin-bottom: 50px;
+    @media (max-width: 1199px) {
+      max-width: 900px;
+    }
+    .contact-container-left {
+      @media (max-width: 992px) {
+        margin: 0 20px;
+      }
+    }
+    .contact-container-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 30px;
+      height: 100%;
+
+      .contact-title {
+        font-size: 30px;
+        font-weight: 700;
+      }
+      .contact-item {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        width: 100%;
+
+        .contact-text-list-item {
+          font-family: "Times New Roman", Times, serif;
+          font-size: 17px;
+          margin-left: 10px;
+        }
+      }
+    }
   }
 `;
 
@@ -54,6 +62,8 @@ export const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 
   .info-container-contact {
     display: flex;
@@ -61,49 +71,19 @@ export const InfoWrapper = styled.div`
     justify-content: center;
     align-items: center;
     margin: 0 auto 30px;
-    width: 80%;
-
-    .title-info-contact:before {
-      content: " ";
-      display: block;
-      height: 2px;
-      width: 450px;
-      position: absolute;
-      top: 50%;
-      left: 0;
-      background: #ccc;
-    }
-
     .title-info-contact {
-      position: relative;
-      width: 100%;
       margin: 0 auto;
       text-align: center;
-    }
-    .title-info-contact:after {
-      content: " ";
-      height: 2px;
-      width: 450px;
-      background: #ccc;
-      display: block;
-      position: absolute;
-      top: 50%;
-      right: 0;
     }
   }
 
   .item-wrapper-contact {
     display: flex;
     flex-direction: column;
-
     .item-container-contact {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
       align-items: flex-start;
-      width: 80%;
-      margin: 0 auto 30px;
-
+      margin-bottom: 30px;
+      justify-content: center;
       .item-content-contact {
         display: flex;
         flex-direction: column;

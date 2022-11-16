@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import { Image } from "antd";
+import { Col, Image, Row } from "antd";
 import {
   FacebookOutlined,
   InstagramOutlined,
@@ -13,13 +13,15 @@ import {
 const ContactPage = () => {
   return (
     <S.ContactPageWrapper>
-      <S.ContactPageContainer>
-        <Image
-          width={800}
-          height={500}
-          src="https://theoandharris.com/wp-content/uploads/contact-page.jpg"
-        />
-        <S.ContactPageContent>
+      <Row className="contact-container">
+        <Col xl={15} lg={14} className="contact-container-left">
+          <Image
+            width="100%"
+            height="100%"
+            src="https://theoandharris.com/wp-content/uploads/contact-page.jpg"
+          />
+        </Col>
+        <Col xl={8} lg={9} className="contact-container-right">
           <div className="contact-title">
             <span>
               <WhatsAppOutlined />
@@ -50,7 +52,7 @@ const ContactPage = () => {
             <p style={{ fontSize: 23, fontWeight: 700, marginBottom: 0 }}>
               <span>
                 <GlobalOutlined />
-              </span>
+              </span>{" "}
               Phương tiện truyền thông
             </p>
             <S.LinkFooter href="/Instagram">
@@ -76,7 +78,7 @@ const ContactPage = () => {
             <p style={{ fontSize: 23, fontWeight: 700, marginBottom: 0 }}>
               <span>
                 <EnvironmentOutlined />
-              </span>
+              </span>{" "}
               Địa chỉ liên hệ
             </p>
             <p className="contact-text-list-item ">
@@ -84,21 +86,29 @@ const ContactPage = () => {
             </p>
             <p className="contact-text-list-item ">Điện thoại: 02363 888 279</p>
           </div>
-        </S.ContactPageContent>
-      </S.ContactPageContainer>
+        </Col>
+      </Row>
+
       <S.InfoWrapper>
         <div className="info-container-contact">
           <h2 className="title-info-contact">
             TẠI SAO NÊN MUA HÀNG TẠI ĐỒNG HỒ TUẤN PHƯƠNG ?
           </h2>
-          <p>
+          <p style={{ textAlign: "center", margin: "0 auto" }}>
             Chúng tôi cam kết mang lại những giá trị cao nhất cho khách hàng khi
             đến với Đồng Hồ Tuấn Phương
           </p>
         </div>
         <div className="item-wrapper-contact">
-          <div className="item-container-contact">
-            <div className="item-content-contact">
+          <Row className="item-container-contact" gutter={[16, 16]}>
+            <Col
+              xl={7}
+              lg={7}
+              md={9}
+              sm={9}
+              xs={20}
+              className="item-content-contact"
+            >
               <div>
                 <img
                   src="https://cdn3.dhht.vn/wp-content/uploads/2018/09/1.png"
@@ -111,8 +121,15 @@ const ContactPage = () => {
                 Triều tự tin đem đến cho bạn những chiếc đồng hồ tốt nhất cùng
                 trải nghiệm tuyệt vời khi mua đồng hồ tại Tuấn Phương.
               </p>
-            </div>
-            <div className="item-content-contact">
+            </Col>
+            <Col
+              xl={7}
+              lg={7}
+              md={9}
+              sm={9}
+              xs={20}
+              className="item-content-contact"
+            >
               <div>
                 <img
                   src="https://cdn3.dhht.vn/wp-content/uploads/2018/09/3.png"
@@ -124,11 +141,39 @@ const ContactPage = () => {
                 Chế độ bảo hành lên đến 5 năm cho tất cả đồng hồ chính hãng mua
                 tại Đồng Hồ Tuấn Phương.
               </p>
-            </div>
-            <div className="item-content-contact">
+            </Col>
+            <Col
+              xl={7}
+              lg={7}
+              md={9}
+              sm={9}
+              xs={20}
+              className="item-content-contact"
+            >
               <div>
                 <img
                   src="https://cdn3.dhht.vn/wp-content/uploads/2018/09/5.png"
+                  alt=""
+                />
+                <h3>1 ĐỔI 1 </h3>
+              </div>
+              <p>
+                Chế độ 1 đổi 1 trong tuần đầu tiên nếu có bất kỳ lỗi gì do nhà
+                sản xuất.
+              </p>
+            </Col>
+
+            <Col
+              xl={7}
+              lg={7}
+              md={9}
+              sm={9}
+              xs={20}
+              className="item-content-contact"
+            >
+              <div>
+                <img
+                  src="https://cdn3.dhht.vn/wp-content/uploads/2018/09/2.png"
                   alt=""
                 />
                 <h3>ĐỔI HÀNG DỄ DÀNG</h3>
@@ -138,23 +183,15 @@ const ContactPage = () => {
                 tặng người thân nhưng người nhận không ưng ý? Đừng lo! Bạn có
                 thể đổi hàng trong vòng 7 ngày.
               </p>
-            </div>
-          </div>
-          <div className="item-container-contact">
-            <div className="item-content-contact">
-              <div>
-                <img
-                  src="https://cdn3.dhht.vn/wp-content/uploads/2018/09/2.png"
-                  alt=""
-                />
-                <h3>1 ĐỔI 1</h3>
-              </div>
-              <p>
-                Chế độ 1 đổi 1 trong tuần đầu tiên nếu có bất kỳ lỗi gì do nhà
-                sản xuất.
-              </p>
-            </div>
-            <div className="item-content-contact">
+            </Col>
+            <Col
+              xl={7}
+              lg={7}
+              md={9}
+              sm={9}
+              xs={20}
+              className="item-content-contact"
+            >
               <div>
                 <img
                   src="https://cdn3.dhht.vn/wp-content/uploads/2018/09/4.png"
@@ -167,8 +204,15 @@ const ContactPage = () => {
                 Chuyển khoản trực tiếp (Cho những bạn muốn gửi quà cho bạn bè,
                 người thân)
               </p>
-            </div>
-            <div className="item-content-contact">
+            </Col>
+            <Col
+              xl={7}
+              lg={7}
+              md={9}
+              sm={9}
+              xs={20}
+              className="item-content-contact"
+            >
               <div>
                 <img
                   src="https://cdn3.dhht.vn/wp-content/uploads/2018/09/6.png"
@@ -180,8 +224,8 @@ const ContactPage = () => {
                 Thay pin miễn phí suốt đời cho tất cả các đồng hồ được Đồng Hồ
                 Tuấn Phương phân phối!
               </p>
-            </div>
-          </div>
+            </Col>
+          </Row>
         </div>
       </S.InfoWrapper>
     </S.ContactPageWrapper>

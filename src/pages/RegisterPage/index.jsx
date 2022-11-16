@@ -1,7 +1,7 @@
 import { Button, Carousel, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 import { registerAction } from "../../redux/actions";
@@ -82,6 +82,9 @@ const RegisterPage = () => {
           </Carousel>
         </div>
         <div className="register-right">
+          <div className="title-register">
+            <S.TextLabel>Tuan & Phuong</S.TextLabel>
+          </div>
           <Form
             form={registerForm}
             name="registerForm"
@@ -171,6 +174,9 @@ const RegisterPage = () => {
               >
                 Đăng Ký
               </Button>
+              <div style={{ textAlign: "center" }}>
+                <Link to={ROUTES.LOGIN}> Quay lại trang đăng nhập</Link>
+              </div>
             </Form.Item>
           </Form>
         </div>
