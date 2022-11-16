@@ -1,6 +1,6 @@
 import { Button, Carousel, Checkbox, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
@@ -84,6 +84,9 @@ const LoginPage = () => {
           </Carousel>
         </div>
         <div className="login-right">
+          <div className="title-login">
+            <S.TextLabel>Tuan & Phuong</S.TextLabel>
+          </div>
           <Form
             form={loginForm}
             name="login"
@@ -118,7 +121,7 @@ const LoginPage = () => {
               <Input
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
-                placeholder="Password"
+                placeholder="Mật Khẩu"
               />
             </Form.Item>
             <Form.Item style={{ height: 30 }}>
@@ -127,15 +130,21 @@ const LoginPage = () => {
               </Form.Item>
             </Form.Item>
 
-            <Form.Item style={{ fontSize: 17 }}>
+            <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
                 className="login-form-button"
+                style={{ padding: 5, fontSize: 17 }}
               >
                 Đăng Nhập
               </Button>
-              Hoặc <Link to={ROUTES.REGISTER}> Đăng ký ngay!</Link>
+              <button
+                onClick={() => navigate(ROUTES.REGISTER)}
+                className="navi-register-button"
+              >
+                Tạo tài khoản
+              </button>
             </Form.Item>
           </Form>
         </div>

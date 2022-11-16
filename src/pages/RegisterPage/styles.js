@@ -14,7 +14,7 @@ export const RegisterWrapper = styled.div`
     display: flex;
     flex-direction: row;
     margin: 0 auto;
-    width: 50%;
+    width: 700px;
     min-height: 500px;
     background-color: #fff;
     border-radius: 20px;
@@ -22,9 +22,23 @@ export const RegisterWrapper = styled.div`
 
     .register-left {
       width: 50%;
+      @media (max-width: 768px) {
+        display: none;
+      }
     }
     .register-right {
       width: 50%;
+      @media (max-width: 768px) {
+        width: 90%;
+        margin: 0 auto;
+      }
+      .title-register {
+        width: 70%;
+        margin: 50px auto 0;
+      }
+    }
+    @media (max-width: 768px) {
+      width: 400px;
     }
   }
 
@@ -37,4 +51,9 @@ export const RegisterWrapper = styled.div`
       margin-bottom: 10px;
     }
   }
+`;
+export const TextLabel = styled.p`
+  font-size: 35px;
+  font-family: "Brush Script MT";
+  text-align: center;
 `;
