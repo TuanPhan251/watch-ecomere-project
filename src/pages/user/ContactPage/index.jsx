@@ -1,5 +1,5 @@
 import * as S from "./styles";
-import { Col, Image, Row } from "antd";
+import { Breadcrumb, Col, Image, Row } from "antd";
 import {
   FacebookOutlined,
   InstagramOutlined,
@@ -9,19 +9,31 @@ import {
   GlobalOutlined,
   EnvironmentOutlined,
 } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../../constants/routes";
 
 const ContactPage = () => {
   return (
     <S.ContactPageWrapper>
+      <S.BreadcrumbWrapper>
+        <Breadcrumb separator=">">
+          <Breadcrumb.Item>
+            <Link to={ROUTES.USER.HOME}>Trang chủ</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>
+            <p>Liên hệ</p>
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      </S.BreadcrumbWrapper>
       <Row className="contact-container">
-        <Col xl={15} lg={14} className="contact-container-left">
+        <Col xl={15} lg={12} className="contact-container-left">
           <Image
             width="100%"
             height="100%"
             src="https://theoandharris.com/wp-content/uploads/contact-page.jpg"
           />
         </Col>
-        <Col xl={8} lg={9} className="contact-container-right">
+        <Col xl={8} lg={11} className="contact-container-right">
           <div className="contact-title">
             <span>
               <WhatsAppOutlined />
@@ -91,10 +103,8 @@ const ContactPage = () => {
 
       <S.InfoWrapper>
         <div className="info-container-contact">
-          <h2 className="title-info-contact">
-            TẠI SAO NÊN MUA HÀNG TẠI ĐỒNG HỒ TUẤN PHƯƠNG ?
-          </h2>
-          <p style={{ textAlign: "center", margin: "0 auto" }}>
+          <h2>TẠI SAO NÊN MUA HÀNG TẠI ĐỒNG HỒ TUẤN PHƯƠNG ?</h2>
+          <p>
             Chúng tôi cam kết mang lại những giá trị cao nhất cho khách hàng khi
             đến với Đồng Hồ Tuấn Phương
           </p>
@@ -105,7 +115,7 @@ const ContactPage = () => {
               xl={7}
               lg={7}
               md={9}
-              sm={9}
+              sm={11}
               xs={20}
               className="item-content-contact"
             >
@@ -126,7 +136,7 @@ const ContactPage = () => {
               xl={7}
               lg={7}
               md={9}
-              sm={9}
+              sm={11}
               xs={20}
               className="item-content-contact"
             >
@@ -146,7 +156,7 @@ const ContactPage = () => {
               xl={7}
               lg={7}
               md={9}
-              sm={9}
+              sm={11}
               xs={20}
               className="item-content-contact"
             >
@@ -167,7 +177,7 @@ const ContactPage = () => {
               xl={7}
               lg={7}
               md={9}
-              sm={9}
+              sm={11}
               xs={20}
               className="item-content-contact"
             >
@@ -188,7 +198,7 @@ const ContactPage = () => {
               xl={7}
               lg={7}
               md={9}
-              sm={9}
+              sm={11}
               xs={20}
               className="item-content-contact"
             >
@@ -197,7 +207,7 @@ const ContactPage = () => {
                   src="https://cdn3.dhht.vn/wp-content/uploads/2018/09/4.png"
                   alt=""
                 />
-                <h3>THANH TOÁN DỄ DÀNG (COD)</h3>
+                <h3>THANH TOÁN DỄ DÀNG</h3>
               </div>
               <p>
                 Bạn chỉ phải trả tiền khi đã nhận được hàng! Ngay Tại Nhà Bạn!
@@ -209,7 +219,7 @@ const ContactPage = () => {
               xl={7}
               lg={7}
               md={9}
-              sm={9}
+              sm={11}
               xs={20}
               className="item-content-contact"
             >

@@ -87,6 +87,7 @@ const RegisterPage = () => {
           </div>
           <Form
             form={registerForm}
+            layout="vertical"
             name="registerForm"
             className="register-form"
             size="large"
@@ -94,6 +95,7 @@ const RegisterPage = () => {
           >
             <Form.Item
               name="email"
+              label="Email"
               rules={[
                 {
                   required: true,
@@ -108,6 +110,7 @@ const RegisterPage = () => {
             </Form.Item>
             <Form.Item
               name="password"
+              label="Mật khẩu"
               rules={[
                 {
                   required: true,
@@ -118,12 +121,13 @@ const RegisterPage = () => {
               <Input
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
-                placeholder="Password"
+                placeholder="Mật khẩu"
               />
             </Form.Item>
             <Form.Item
               name="confirm"
               dependencies={["password"]}
+              label="Xác nhận mật khẩu"
               hasFeedback
               rules={[
                 {
@@ -146,12 +150,13 @@ const RegisterPage = () => {
               <Input
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
-                placeholder=" Confirm Password"
+                placeholder="Xác nhận mật khẩu"
               />
             </Form.Item>
 
             <Form.Item
               name="userName"
+              label="Tên người dùng"
               rules={[
                 {
                   required: true,
@@ -162,7 +167,7 @@ const RegisterPage = () => {
               <Input
                 prefix={<UserOutlined className="site-form-item-icon" />}
                 type="name"
-                placeholder="UserName"
+                placeholder="Tên người dùng"
               />
             </Form.Item>
 

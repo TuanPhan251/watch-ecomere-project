@@ -44,7 +44,7 @@ export const RegisterWrapper = styled.div`
 
   .register-form {
     width: 70%;
-    margin: 100px auto 0;
+    margin: 10px auto 0;
 
     .register-form-button {
       width: 100%;
