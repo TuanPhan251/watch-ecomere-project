@@ -34,7 +34,14 @@ const CreateProductPage = () => {
   const { categoryList } = useSelector((state) => state.category);
 
   useEffect(() => {
-    dispatch(getCategoriesListAction());
+    dispatch(
+      getCategoriesListAction({
+        params: {
+          page: 1,
+          limit: 999,
+        },
+      })
+    );
   }, []);
 
   const renderCategoryOptions = () => {

@@ -42,7 +42,7 @@ const AdminCategoryPage = () => {
       getProductListAdminAction({
         params: {
           page: 1,
-          limit: 10,
+          limit: 999,
         },
       })
     );

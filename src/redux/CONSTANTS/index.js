@@ -8,3 +8,4 @@ export * from "./location.constant";
 export * from "./wishlist.constant";
 export * from "./discount.constant";
 export * from "./order.constant";
+export * from "./blogs.constant";

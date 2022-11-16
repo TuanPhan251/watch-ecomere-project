@@ -586,14 +586,14 @@ const Header = () => {
               </div>
             </S.DropDownMenuWrapperTH>
           </li>
-          {/* <li>
-            <Link to={ROUTES.USER.CONTACT} className="title-link">
-              LIÊN HỆ
-            </Link>
-          </li> */}
           <li>
             <Link to={ROUTES.USER.CONTACT} className="title-link">
               BÀI VIẾT
+            </Link>
+          </li>
+          <li>
+            <Link to={ROUTES.USER.CONTACT} className="title-link">
+              LIÊN HỆ
             </Link>
           </li>
           {/* <li>

@@ -143,7 +143,7 @@ function* getUserDetailSaga(action) {
 
 function* updateUserInfoSaga(action) {
   try {
-    const { id, values } = action.payload;
+    const { id, values, callback } = action.payload;
     const result = yield axios.patch(
       `http://localhost:4000/users/${id}`,
       values
@@ -154,6 +154,9 @@ function* updateUserInfoSaga(action) {
         data: result.data,
       },
     });
+    if (callback.openMessage) yield callback.openMessage();
+    if (callback.getUserInfo) yield callback.getUserInfo();
+    if (callback.closeModal) yield callback.closeModal();
   } catch (e) {
     yield put({
       type: FAIL(USER_ACTION.UPDATE_USER_INFO),

@@ -11,6 +11,7 @@ import wishlistReducer from "../reducers/wishlist.reducer";
 import locationReducer from "../reducers/location.reducer";
 import discountReducer from "../reducers/discount.reducer";
 import orderReducer from "../reducers/order.reducer";
+import blogsReducer from "../reducers/blogs.reducer";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -25,6 +26,7 @@ const store = configureStore({
     wishlist: wishlistReducer,
     discount: discountReducer,
     order: orderReducer,
+    blog: blogsReducer,
   },
   middleware: (getDefaultMiddleware) => [
     ...getDefaultMiddleware({

@@ -8,6 +8,7 @@ import locationSaga from "./location.saga";
 import wishlistSaga from "./wishlist.saga";
 import discountSaga from "./discount.saga";
 import orderSaga from "./order.saga";
+import blogSaga from "./blogs.saga";
 
 export default function* rootSaga() {
   yield fork(productSaga);
@@ -18,4 +19,5 @@ export default function* rootSaga() {
   yield fork(wishlistSaga);
   yield fork(discountSaga);
   yield fork(orderSaga);
+  yield fork(blogSaga);
 }
