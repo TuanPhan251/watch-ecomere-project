@@ -160,10 +160,18 @@ function* orderProductSaga(action) {
     const { products, callback, ...orderData } = action.payload;
     const result = yield axios.post("http://localhost:4000/orders", orderData);
     for (let i = 0; i < products.length; i++) {
+      const { stock, ...productData } = products[i];
       yield axios.post("http://localhost:4000/orderProducts", {
         orderId: result.data.id,
-        ...products[i],
+        ...productData,
       });
+
+      yield axios.patch(
+        `http://localhost:4000/products/${products[i].productId}`,
+        {
+          stock: stock,
+        }
+      );
     }
     yield put({
       type: `${SUCCESS(ORDER_ACTION.ORDER_PRODUCT)}`,

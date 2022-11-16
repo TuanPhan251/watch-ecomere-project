@@ -12,6 +12,7 @@ import {
   InputNumber,
   Upload,
   Checkbox,
+  Space,
 } from "antd";
 
 import { ROUTES } from "../../../../constants/routes";
@@ -33,8 +34,22 @@ const CreateBlogPage = () => {
 
   useEffect(() => {}, []);
 
-  const handleCreateProduct = (data) => {
-    console.log(data);
+  const handleCreateBlog = (data) => {
+    console.log({ ...data, slug: slug(data.title) });
+
+    dispatch(
+      createBlogAction({
+        data: {
+          ...data,
+          slug: slug(data.title),
+        },
+        callback: {
+          goToList: () => {
+            navigate(ROUTES.ADMIN.BLOG_LIST_PAGE);
+          },
+        },
+      })
+    );
   };
 
   return (
@@ -42,14 +57,23 @@ const CreateBlogPage = () => {
       <S.TopWrapper>
         <h3>Tạo bài viết mới</h3>
 
-        <Button
-          type="primary"
-          htmlType="submit"
-          loading={createBlog.loading}
-          onClick={() => createForm.submit()}
-        >
-          Tạo bài viết mới
-        </Button>
+        <Space>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={createBlog.loading}
+            onClick={() => createForm.submit()}
+          >
+            Tạo bài viết mới
+          </Button>
+
+          <Button
+            type="danger"
+            onClick={() => navigate(ROUTES.ADMIN.BLOG_LIST_PAGE)}
+          >
+            Hủy
+          </Button>
+        </Space>
       </S.TopWrapper>
 
       <Form
@@ -60,7 +84,7 @@ const CreateBlogPage = () => {
         style={{ padding: "12px 0" }}
         autoComplete="off"
         onFinish={(values) => {
-          handleCreateProduct(values);
+          handleCreateBlog(values);
         }}
       >
         <Form.Item
@@ -77,6 +101,27 @@ const CreateBlogPage = () => {
           rules={[{ required: true, message: "Hãy nhập tác giả bài viết" }]}
         >
           <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Ảnh"
+          name="thumb"
+          rules={[{ required: true, message: "Hãy nhập ảnh bài viết" }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Mô tả"
+          name="desc"
+          rules={[{ required: true, message: "Hãy nhập mô tả bài viết" }]}
+        >
+          <Input.TextArea
+            autoSize={{
+              minRows: 2,
+              maxRows: 6,
+            }}
+          />
         </Form.Item>
 
         <Form.Item

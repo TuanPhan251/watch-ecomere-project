@@ -20,6 +20,10 @@ const UserInfoOrderPage = () => {
   const { orderList } = useSelector((state) => state.order);
 
   useEffect(() => {
+    document.title = "Lịch sử mua hàng";
+  }, []);
+
+  useEffect(() => {
     dispatch(getOrderListAction({ userId: userInfo.data.id }));
   }, [userInfo.data]);
 

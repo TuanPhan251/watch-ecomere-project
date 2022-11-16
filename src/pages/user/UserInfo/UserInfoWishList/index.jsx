@@ -23,6 +23,10 @@ const UserInfoWishListPage = () => {
   const wishlistItems = wishlist.data.map((item) => item.product);
 
   useEffect(() => {
+    document.title = "Sản phẩm yêu thích";
+  }, []);
+
+  useEffect(() => {
     dispatch(getWishlistAction({ userId: userInfo.data.id }));
 
     return () => {

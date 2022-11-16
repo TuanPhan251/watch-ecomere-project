@@ -2,6 +2,8 @@ import { useRef, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, generatePath } from "react-router-dom";
 import Slider from "react-slick";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
 import { ROUTES } from "../../../constants/routes";
 import { getNewProductsList } from "../../../redux/actions";
@@ -22,7 +24,12 @@ function SampleNextArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", color: "red" }}
+      style={{
+        ...style,
+        display: "block",
+        background: "#ccc",
+        color: "red",
+      }}
       onClick={onClick}
     />
   );
@@ -33,7 +40,7 @@ function SamplePrevArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", color: "black" }}
+      style={{ ...style, display: "block", background: "green" }}
       onClick={onClick}
     />
   );
@@ -45,6 +52,8 @@ const settings = {
   speed: 500,
   slidesToShow: 4,
   autoplay: true,
+  nextArrow: <SampleNextArrow />,
+  prevArrow: <SamplePrevArrow />,
   responsive: [
     {
       breakpoint: 576,
@@ -77,6 +86,7 @@ const HomePage = () => {
   const shuffled = newProducts.sort(() => 0.5 - Math.random());
   const selectedNewProducts = shuffled.slice(0, 8);
   const videoRef = useRef();
+  const sliderRef = useRef(null);
 
   window.scrollTo({
     top: 0,
@@ -90,6 +100,8 @@ const HomePage = () => {
         },
       })
     );
+
+    document.title = "Gaida | Trang chủ";
   }, []);
 
   const scrollToProduct = () => {
@@ -102,24 +114,26 @@ const HomePage = () => {
   const renderNewProducts = useMemo(() => {
     return selectedNewProducts?.map((item) => {
       return (
-        <Col xxl={24} xl={24} md={24} sm={24} xs={24} key={item.id}>
-          <Link
-            to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
-              id: `${item.slug}.${item.id}`,
-            })}
-          >
-            <S.Product>
-              <div className="newProduct__image">
-                <img src={item.image} alt="product" />
-              </div>
-              <h2>{item.name}</h2>
+        <SwiperSlide key={item.id}>
+          <Col xxl={24} xl={24} md={24} sm={24} xs={24}>
+            <Link
+              to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
+                id: `${item.slug}.${item.id}`,
+              })}
+            >
+              <S.Product>
+                <div className="newProduct__image">
+                  <img src={item.image} alt="product" />
+                </div>
+                <h2>{item.name}</h2>
 
-              <div className="new_product-label">
-                <span>Mới</span>
-              </div>
-            </S.Product>
-          </Link>
-        </Col>
+                <div className="new_product-label">
+                  <span>Mới</span>
+                </div>
+              </S.Product>
+            </Link>
+          </Col>
+        </SwiperSlide>
       );
     });
   }, [newProductsList.data]);
@@ -155,13 +169,21 @@ const HomePage = () => {
 
       <section className="new_products-section">
         <h3 className="new_products_section-heading">Sản phẩm mới</h3>
-        <Slider
-          {...settings}
-          prevArrow={<SamplePrevArrow />}
-          nextArrow={<SampleNextArrow />}
+
+        {/* <Slider ref={sliderRef} {...settings}>
+          {renderNewProducts}
+        </Slider> */}
+
+        <Swiper
+          modules={[Navigation, Pagination, Scrollbar, A11y]}
+          spaceBetween={50}
+          slidesPerView={4}
+          navigation
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
         >
           {renderNewProducts}
-        </Slider>
+        </Swiper>
 
         <div className="new_products-list"></div>
       </section>

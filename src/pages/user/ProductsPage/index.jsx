@@ -122,6 +122,8 @@ const ProductPage = () => {
       gender: searchObj.gender,
     });
 
+    document.title = `Đồng hồ ${searchObj.gender === "male" ? "Nam" : " Nữ"}`;
+
     return () => {
       dispatch(removeProductDetailAction());
     };
@@ -456,7 +458,10 @@ const ProductPage = () => {
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        if (item.stock <= currentCartItem?.totalAmount) {
+                        if (
+                          item.stock <= currentCartItem?.totalAmount ||
+                          item.stock === 0
+                        ) {
                           return notification.warn({
                             message: "Sản phẩm đã tới giới hạn tồn kho",
                             placement: "top",

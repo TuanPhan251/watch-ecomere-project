@@ -36,6 +36,26 @@ function* getBlogListSaga(action) {
   }
 }
 
+function* getBlogDetailSaga(action) {
+  try {
+    const { id } = action.payload;
+    const result = yield axios.get(`http://localhost:4000/blogs/${id}`);
+    yield put({
+      type: `${SUCCESS(BLOG_ACTION.GET_BLOG_DETAIL)}`,
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: `${FAIL(BLOG_ACTION.GET_BLOG_DETAIL)}`,
+      payload: {
+        error: "đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
 function* createBlogSaga(action) {
   try {
     const { data, callback } = action.payload;
@@ -46,6 +66,7 @@ function* createBlogSaga(action) {
         data: result.data,
       },
     });
+    yield callback.goToList();
   } catch (e) {
     yield put({
       type: `${FAIL(BLOG_ACTION.CREATE_BLOG)}`,
@@ -66,6 +87,7 @@ function* updateBlogSaga(action) {
         data: result.data,
       },
     });
+    yield callback.goToList();
   } catch (e) {
     yield put({
       type: `${FAIL(BLOG_ACTION.UPDATE_BLOG)}`,
@@ -86,6 +108,8 @@ function* deleteBlogSaga(action) {
         data: result.data,
       },
     });
+    yield callback.hideModal();
+    yield callback.getBlogList();
   } catch (e) {
     yield put({
       type: `${FAIL(BLOG_ACTION.DELETE_BLOG)}`,
@@ -98,6 +122,7 @@ function* deleteBlogSaga(action) {
 
 export default function* blogSaga() {
   yield debounce(500, REQUEST(BLOG_ACTION.GET_BLOG_LIST), getBlogListSaga);
+  yield takeEvery(REQUEST(BLOG_ACTION.GET_BLOG_DETAIL), getBlogDetailSaga);
   yield takeEvery(REQUEST(BLOG_ACTION.CREATE_BLOG), createBlogSaga);
   yield takeEvery(REQUEST(BLOG_ACTION.UPDATE_BLOG), updateBlogSaga);
   yield takeEvery(REQUEST(BLOG_ACTION.DELETE_BLOG), deleteBlogSaga);
