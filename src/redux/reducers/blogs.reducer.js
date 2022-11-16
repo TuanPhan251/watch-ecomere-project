@@ -9,6 +9,12 @@ const initialValue = {
     loading: false,
     error: "",
   },
+  blogDetail: {
+    data: {},
+    meta: {},
+    loading: false,
+    error: "",
+  },
   createBlog: {
     loading: false,
     error: "",
@@ -53,6 +59,40 @@ const blogsReducer = createReducer(initialValue, {
       ...state,
       blogList: {
         ...state.blogList,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
+  [REQUEST(BLOG_ACTION.GET_BLOG_DETAIL)]: (state, action) => {
+    return {
+      ...state,
+      blogDetail: {
+        ...state.blogDetail,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(BLOG_ACTION.GET_BLOG_DETAIL)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      blogDetail: {
+        ...state.blogDetail,
+        data: data,
+        loading: false,
+        error: "",
+      },
+    };
+  },
+  [FAIL(BLOG_ACTION.GET_BLOG_DETAIL)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      blogDetail: {
+        ...state.blogDetail,
         loading: false,
         error: error,
       },

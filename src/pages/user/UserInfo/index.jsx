@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Button, Col, Form, Input, Modal, message } from "antd";
@@ -18,6 +18,10 @@ const UserInfoPage = () => {
   const [userForm] = Form.useForm();
 
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    document.title = "Thông tin tài khoản";
+  }, []);
 
   const handleChangeUserInfo = (values) => {
     dispatch(

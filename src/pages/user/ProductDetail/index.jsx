@@ -85,6 +85,10 @@ const ProductDetailPage = () => {
   const isDiscount = !!productDetail.data.discountPercent;
 
   useEffect(() => {
+    if (productDetail.data.name) document.title = productDetail.data.name;
+  }, [productDetail.data]);
+
+  useEffect(() => {
     dispatch(getProductDetailAction({ id: productId }));
     dispatch(
       getProductListUserAction({
@@ -547,7 +551,8 @@ const ProductDetailPage = () => {
                         block
                         disabled={
                           productDetail.data.stock ===
-                          currentCartItem?.totalAmount
+                            currentCartItem?.totalAmount ||
+                          productDetail.data.stock === 0
                         }
                       >
                         <i
@@ -563,7 +568,8 @@ const ProductDetailPage = () => {
                         size="large"
                         disabled={
                           productDetail.data.stock ===
-                          currentCartItem?.totalAmount
+                            currentCartItem?.totalAmount ||
+                          productDetail.data.stock === 0
                         }
                         onClick={() => {
                           handleAddProductToCart();

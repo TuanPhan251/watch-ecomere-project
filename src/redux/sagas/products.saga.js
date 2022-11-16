@@ -13,7 +13,6 @@ function* getProductListUserSaga(action) {
         _page: params.page,
         _limit: params.limit,
         isHidden: false,
-        stock_gte: 0,
         ...(params.categoryId && {
           categoryId: params.categoryId,
         }),
@@ -93,9 +92,6 @@ function* getProductListAdminSaga(action) {
         ...(params.isHidden && {
           isHidden: params.isHidden,
         }),
-        ...(params.stock && {
-          stock_gte: params.stock,
-        }),
         ...(params.categoryId && {
           categoryId: params.categoryId,
         }),
@@ -112,9 +108,13 @@ function* getProductListAdminSaga(action) {
           price_gte: params.priceRange[0],
           price_lte: params.priceRange[1],
         }),
-        ...(params.priceSort && {
-          _sort: "price",
-          _order: params.priceSort,
+        ...(params.stock && {
+          _sort: "stock",
+          _order: params.stock,
+        }),
+        ...(params.sort && {
+          _sort: params.sort.split(".")[1],
+          _order: params.sort.split(".")[0],
         }),
         ...(params.type && {
           movement: params.type,

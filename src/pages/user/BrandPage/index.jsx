@@ -116,6 +116,8 @@ const ProductPage = () => {
       ...filterParams,
     });
 
+    document.title = "Danh sách sản phẩm";
+
     return () => {
       dispatch(removeProductDetailAction());
     };

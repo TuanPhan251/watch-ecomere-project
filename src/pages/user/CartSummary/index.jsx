@@ -1,6 +1,5 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useState } from "react";
 
 import { Steps } from "antd";
 import emptyCartImg from "../../../assets/cart/empty_cart_retina.png";
@@ -14,6 +13,10 @@ import * as S from "./style";
 const CartSummaryPage = () => {
   const { cartList } = useSelector((state) => state.cart);
   const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    document.title = "Giỏ hàng";
+  }, []);
 
   const renderCheckOutItem = useMemo(() => {
     switch (step) {

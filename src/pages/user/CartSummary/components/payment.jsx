@@ -61,6 +61,7 @@ const Payment = ({ setStep }) => {
             quantity: item.totalAmount,
             slug: item.slug,
             image: item.image,
+            stock: item.stock - item.totalAmount,
           })),
           callback: {
             goToSuccess: () => {

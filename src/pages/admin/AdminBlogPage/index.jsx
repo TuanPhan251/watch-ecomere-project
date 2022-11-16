@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, generatePath } from "react-router-dom";
+import moment from "moment";
 
 import { getBlogListAction, deleteBlogAction } from "../../../redux/actions";
 
@@ -12,7 +13,10 @@ import { ROUTES } from "../../../constants/routes";
 const AdminBlogsPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { blogList } = useSelector((state) => state.blog);
+  const { blogList, deleteBlog } = useSelector((state) => state.blog);
+
+  const [showModal, setShowModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
 
   useEffect(() => {
     dispatch(
@@ -36,6 +40,29 @@ const AdminBlogsPage = () => {
     );
   };
 
+  const handleDeleteBlog = (id) => {
+    dispatch(
+      deleteBlogAction({
+        id: id,
+        callback: {
+          hideModal: () => {
+            setShowModal(false);
+          },
+          getBlogList: () => {
+            dispatch(
+              getBlogListAction({
+                params: {
+                  page: 1,
+                  limit: 10,
+                },
+              })
+            );
+          },
+        },
+      })
+    );
+  };
+
   const tableColumn = [
     {
       title: "Tiêu đề bài viết",
@@ -46,6 +73,9 @@ const AdminBlogsPage = () => {
       title: "Ngày tạo",
       dataIndex: "createdAt",
       key: "createdAt",
+      render: (_, record) => {
+        return <p>{moment(record.createdAt).format("DD/MM/YYYY")}</p>;
+      },
     },
     {
       title: "Tác giả",
@@ -56,13 +86,57 @@ const AdminBlogsPage = () => {
       title: "Tùy chọn",
       dataIndex: "action",
       key: "action",
-      render: () => (
-        <Space>
-          <Button>Chi tiết</Button>
-          <Button type="danger">Tạm ẩn</Button>
-        </Space>
+      render: (_, record) => (
+        <>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Button
+              type="danger"
+              onClick={() => {
+                setDeleteId(record.id);
+                setShowModal(true);
+              }}
+              style={{ marginBottom: 8 }}
+            >
+              <i className="fa-solid fa-trash"></i>
+              <span style={{ marginLeft: 4 }}>Xóa</span>
+            </Button>
+
+            <Button
+              onClick={() =>
+                navigate(
+                  generatePath(ROUTES.ADMIN.UPDATE_BLOG_PAGE, {
+                    id: record.id,
+                  })
+                )
+              }
+            >
+              <i className="fa-solid fa-pen-to-square"></i>
+              <span style={{ marginLeft: 4 }}>Sửa</span>
+            </Button>
+          </div>
+          <S.ConfirmModal
+            title="Xóa sản phẩm"
+            open={showModal}
+            centered
+            destroyOnClose={true}
+            maskStyle={{ backgroundColor: "rgba(0,0,0, 0.1)" }}
+            style={{ boxShadow: "none" }}
+            onOk={() => handleDeleteBlog(deleteId)}
+            onCancel={() => setShowModal(false)}
+            okText="Xác nhận"
+            cancelText="Hủy"
+            confirmLoading={deleteBlog.loading}
+          >
+            <p>Không thể hoàn tác sau khi xác nhận, đồng ý xóa ?</p>
+          </S.ConfirmModal>
+        </>
       ),
-      width: 300,
+      width: 100,
     },
   ];
 
@@ -103,6 +177,7 @@ const AdminBlogsPage = () => {
 
         <Col span={20}>
           <Table
+            loading={blogList.loading}
             columns={tableColumn}
             dataSource={tableData}
             pagination={false}

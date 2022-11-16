@@ -39,12 +39,13 @@ const AdminProductPage = () => {
   const { categoryList } = useSelector((state) => state.category);
 
   const [showModal, setShowModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(0);
   const initialFilterParams = {
     categoryId: [],
     keyword: "",
     gender: [],
     priceRange: [0, MAXPRICE],
-    priceSort: "",
+    sort: "",
     isNew: false,
     isDiscount: false,
   };
@@ -224,7 +225,10 @@ const AdminProductPage = () => {
             >
               <Button
                 type="danger"
-                onClick={() => setShowModal(true)}
+                onClick={() => {
+                  setDeleteId(record.id);
+                  setShowModal(true);
+                }}
                 style={{ marginBottom: 8 }}
               >
                 <i className="fa-solid fa-trash"></i>
@@ -252,7 +256,7 @@ const AdminProductPage = () => {
               destroyOnClose={true}
               maskStyle={{ backgroundColor: "rgba(0,0,0, 0.1)" }}
               style={{ boxShadow: "none" }}
-              onOk={() => handleDeleteProduct(record.id)}
+              onOk={() => handleDeleteProduct(deleteId)}
               onCancel={() => setShowModal(false)}
               okText="Xác nhận"
               cancelText="Hủy"
@@ -321,14 +325,20 @@ const AdminProductPage = () => {
             </Col>
 
             <Col span={24}>
-              <p>Giá</p>
+              <p>Sắp xếp theo</p>
               <Select
                 style={{ width: "100%" }}
-                onChange={(value) => handleFilter(value, "priceSort")}
-                value={filterParams.priceSort}
+                onChange={(value) => handleFilter(value, "sort")}
+                value={filterParams.sort}
               >
-                <Select.Option value="desc">Giá: Cao-Thấp</Select.Option>
-                <Select.Option value="asc">Giá: Thấp-Cao</Select.Option>
+                <Select.Option value="desc.price">Giá: Cao-Thấp</Select.Option>
+                <Select.Option value="asc.price">Giá: Thấp-Cao</Select.Option>
+                <Select.Option value="desc.stock">
+                  Tồn kho: Cao-Thấp
+                </Select.Option>
+                <Select.Option value="asc.stock">
+                  Tồn kho: Thấp-Cao
+                </Select.Option>
               </Select>
             </Col>
 
