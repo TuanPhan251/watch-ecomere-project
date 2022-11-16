@@ -44,7 +44,7 @@ export const LoginWrapper = styled.div`
 
   .login-form {
     width: 70%;
-    margin: 50px auto 0;
+    margin: 10px auto 0;
     .login-form-button {
       width: 100%;
       margin-bottom: 10px;

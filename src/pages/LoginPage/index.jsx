@@ -89,6 +89,7 @@ const LoginPage = () => {
           </div>
           <Form
             form={loginForm}
+            layout="vertical"
             name="login"
             className="login-form"
             size="large"
@@ -97,6 +98,7 @@ const LoginPage = () => {
           >
             <Form.Item
               name="email"
+              label="Email"
               rules={[
                 {
                   required: true,
@@ -111,6 +113,7 @@ const LoginPage = () => {
             </Form.Item>
             <Form.Item
               name="password"
+              label="Mật khẩu"
               rules={[
                 {
                   required: true,
@@ -121,7 +124,7 @@ const LoginPage = () => {
               <Input
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
-                placeholder="Mật Khẩu"
+                placeholder="Mật khẩu"
               />
             </Form.Item>
             <Form.Item style={{ height: 30 }}>

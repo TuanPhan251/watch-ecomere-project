@@ -19,7 +19,7 @@ const Footer = () => {
           <Col xl={6} lg={6} sm={24} xs={24} className="brand-footer">
             <S.TextLabel>Tuan & Phuong</S.TextLabel>
             <p style={{ marginBottom: 20, fontSize: 25, fontWeight: 400 }}>
-              Subscribes Now
+              Đặt mua ngay
             </p>
 
             <Form name="emailForm" className="email-form">
@@ -35,7 +35,7 @@ const Footer = () => {
                   prefix={<MailOutlined />}
                   size="large"
                 >
-                  Subscribes
+                  Đặt mua
                 </S.ButtonFooter>
               </Form.Item>
             </Form>
@@ -50,9 +50,7 @@ const Footer = () => {
               <S.LinkFooter to="/thanh-toan-va-tra-gop">
                 Thanh toán và trả góp
               </S.LinkFooter>
-              <S.LinkFooter to="/van-chuyen-va-giao-nhan">
-                Vận Chuyển & Giao Nhận
-              </S.LinkFooter>
+
               <S.LinkFooter to="/chinh-sach-bao-hanh">
                 Chính Sách Bảo Hành
               </S.LinkFooter>
@@ -70,12 +68,16 @@ const Footer = () => {
           </S.ColFooter>
           <S.ColFooter xl={4} lg={4} md={6} sm={12} xs={24}>
             <S.FooterContent>
-              <p>THAM KHẢO</p>
-              <S.LinkFooter to="/hoi-dap">Hỏi Đáp - Góp Ý</S.LinkFooter>
-              <S.LinkFooter to="/dieu-khoan-su-dung">
-                Điều Khoản Sử Dụng
+              <p>HỖ TRỢ</p>
+              <S.LinkFooter to="/chinh-sach-hoan-tra">
+                Chính Sách Hoàn Trả
               </S.LinkFooter>
-              <S.LinkFooter to="/bao-mat">Bảo Mật Thông Tin</S.LinkFooter>
+              <S.LinkFooter to="/van-chuyen-va-giao-nhan">
+                Vận Chuyển & Giao Nhận
+              </S.LinkFooter>
+              <S.LinkFooter to="/chi-phi-van-chuyen">
+                Chi Phí Vận Chuyển
+              </S.LinkFooter>
             </S.FooterContent>
           </S.ColFooter>
           <S.ColFooter xl={6} lg={6} md={6} sm={12} xs={24}>
@@ -90,10 +92,10 @@ const Footer = () => {
                 digital@phuong.com
               </span>
               <Col>
-                <FacebookOutlined style={{ fontSize: 40, marginRight: 10 }} />
-                <YoutubeOutlined style={{ fontSize: 40, marginRight: 10 }} />
-                <InstagramOutlined style={{ fontSize: 40, marginRight: 10 }} />
-                <TwitterOutlined style={{ fontSize: 40, marginRight: 10 }} />
+                <FacebookOutlined style={{ fontSize: 35, marginRight: 10 }} />
+                <YoutubeOutlined style={{ fontSize: 35, marginRight: 10 }} />
+                <InstagramOutlined style={{ fontSize: 35, marginRight: 10 }} />
+                <TwitterOutlined style={{ fontSize: 35, marginRight: 10 }} />
               </Col>
             </S.FooterContent>
           </S.ColFooter>

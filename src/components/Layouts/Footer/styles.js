@@ -45,7 +45,7 @@ export const FooterContent = styled.div`
   margin-bottom: 20px;
 
   & p {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     margin-bottom: 0;
   }
