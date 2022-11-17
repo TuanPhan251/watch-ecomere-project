@@ -102,7 +102,7 @@ const Cart = ({ setStep }) => {
           <S.CartItem key={item.id}>
             <Col span={4}>
               <div className="item-img">
-                <img src={item.image} alt="" />
+                <img src={item.images[0].url} alt="" />
               </div>
             </Col>
             <Col span={12}>

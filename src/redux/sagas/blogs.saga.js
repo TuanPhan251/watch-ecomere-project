@@ -5,13 +5,17 @@ import { REQUEST, SUCCESS, FAIL, BLOG_ACTION } from "../CONSTANTS/";
 
 function* getBlogListSaga(action) {
   try {
-    const { params } = action.payload;
+    const { params, more } = action.payload;
     const result = yield axios.get("http://localhost:4000/blogs", {
       params: {
         _page: params.page,
         _limit: params.limit,
         ...(params.keyword && {
           q: params.keyword,
+        }),
+        ...(params.sort && {
+          _sort: params.sort.split(".")[1],
+          _order: params.sort.split(".")[0],
         }),
       },
     });
@@ -24,6 +28,7 @@ function* getBlogListSaga(action) {
           page: params.page,
           limit: params.limit,
         },
+        more: more,
       },
     });
   } catch (e) {

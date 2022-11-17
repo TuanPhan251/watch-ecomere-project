@@ -46,6 +46,7 @@ const AdminUsersPage = () => {
     role: [],
     orderSort: "",
     spendSort: "",
+    sort: "",
   };
   const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
 
@@ -132,17 +133,7 @@ const AdminUsersPage = () => {
       render: (_, record) => {
         return (
           <>
-            <Button
-              onClick={() =>
-                navigate(
-                  generatePath(ROUTES.ADMIN.ACCOUNT_DETAIL_PAGE, {
-                    id: record.id,
-                  })
-                )
-              }
-            >
-              Chi tiết
-            </Button>
+            <Button>Nhắn tin</Button>
           </>
         );
       },
@@ -172,32 +163,27 @@ const AdminUsersPage = () => {
             </Col>
 
             <Col span={24}>
-              <p>Đơn hàng</p>
+              <p>Sắp xếp theo</p>
 
               <Select
                 style={{ width: "100%" }}
-                onChange={(value) => handleFilter(value, "orderSort")}
-                value={filterParams.orderSort}
+                onChange={(value) => handleFilter(value, "sort")}
+                value={filterParams.sort}
                 allowClear
                 placeholder="Sắp xếp theo"
               >
-                <Select.Option value="desc">Đơn hàng: Nhiều - Ít</Select.Option>
-                <Select.Option value="asc">Đơn hàng: Ít - Nhiều</Select.Option>
-              </Select>
-            </Col>
-
-            <Col span={24}>
-              <p>Tổng chi tiêu</p>
-
-              <Select
-                style={{ width: "100%" }}
-                onChange={(value) => handleFilter(value, "spendSort")}
-                value={filterParams.spendSort}
-                allowClear
-                placeholder="Sắp xếp theo"
-              >
-                <Select.Option value="desc">Chi tiêu: Cao - Thấp</Select.Option>
-                <Select.Option value="asc">Chi tiêu: Thấp - Cao</Select.Option>
+                <Select.Option value="desc.orderQuantity">
+                  Đơn hàng: Nhiều - Ít
+                </Select.Option>
+                <Select.Option value="asc.orderQuantity">
+                  Đơn hàng: Ít - Nhiều
+                </Select.Option>
+                <Select.Option value="desc.totalSpend">
+                  Chi tiêu: Cao - Thấp
+                </Select.Option>
+                <Select.Option value="asc.totalSpend">
+                  Chi tiêu: Thấp - Cao
+                </Select.Option>
               </Select>
             </Col>
           </Space>

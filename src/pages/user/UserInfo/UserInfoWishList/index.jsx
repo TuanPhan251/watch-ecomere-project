@@ -79,7 +79,7 @@ const UserInfoWishListPage = () => {
           >
             <S.ProductItem>
               <div className="product-image">
-                <img alt="product" src={item.image} />
+                <img alt="product" src={item.images[0].url} />
               </div>
 
               <div className="product-info">

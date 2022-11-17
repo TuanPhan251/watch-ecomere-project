@@ -42,7 +42,9 @@ const HomeProductList = ({ gender }) => {
             })}
           >
             <S.Product>
-              <img src={product.image} alt="product" />
+              <div className="product__img">
+                <img src={product.images[0].url} alt="product" />
+              </div>
               <h2>{product.name}</h2>
             </S.Product>
           </Link>

@@ -119,6 +119,8 @@ const UpdateProductPage = () => {
       updateProductAction({
         data: {
           ...productData,
+          isHidden: productData.isHidden || false,
+          isNew: productData.isNew || false,
           categoryId: parseInt(data.categoryId),
           slug: slug(data.name),
           finalPrice: finalPrice,
@@ -173,7 +175,7 @@ const UpdateProductPage = () => {
           form={updateForm}
           name="basic"
           labelCol={{ span: 8 }}
-          wrapperCol={{ span: 8 }}
+          wrapperCol={{ span: 12 }}
           style={{ padding: "12px 0" }}
           autoComplete="off"
           initialValues={initialValue}
@@ -249,16 +251,6 @@ const UpdateProductPage = () => {
             >
               {renderCategoryOptions}
             </Select>
-          </Form.Item>
-
-          <Form.Item
-            label="Hình ảnh"
-            name="image"
-            rules={[
-              { required: true, message: "Hãy nhập đường dẫn ảnh sản phẩm" },
-            ]}
-          >
-            <Input />
           </Form.Item>
 
           <Form.Item
@@ -369,6 +361,12 @@ const UpdateProductPage = () => {
           <Form.Item
             label="Ảnh sản phẩm"
             name="images"
+            rules={[
+              {
+                required: true,
+                message: "Hãy chọn ảnh sản phẩm",
+              },
+            ]}
             valuePropName="fileList"
             getValueFromEvent={(e) => {
               if (Array.isArray(e)) return e;
@@ -383,7 +381,16 @@ const UpdateProductPage = () => {
             </Upload>
           </Form.Item>
 
-          <Form.Item label="Nội dung mô tả" name="content">
+          <Form.Item
+            label="Nội dung mô tả"
+            name="content"
+            rules={[
+              {
+                required: true,
+                message: "Hãy nhập nội dung giới thiệu sản phẩm",
+              },
+            ]}
+          >
             <ReactQuill
               theme="snow"
               onChange={(value) =>

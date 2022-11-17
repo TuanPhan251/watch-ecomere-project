@@ -169,6 +169,7 @@ function* getNewProductsSaga(action) {
     const result = yield axios.get("http://localhost:4000/products", {
       params: {
         _expand: "category",
+        _embed: "images",
         ...(params.isNew && {
           isNew: params.isNew,
         }),
@@ -312,7 +313,7 @@ function* updateProductSaga(action) {
 
 function* deleteProductSaga(action) {
   try {
-    const { id, params } = action.payload;
+    const { id, params, callback } = action.payload;
     const result = yield axios.delete(`http://localhost:4000/products/${id}`);
     yield put({
       type: SUCCESS(PRODUCT_ACTION.DELETE_PRODUCT),
@@ -322,11 +323,13 @@ function* deleteProductSaga(action) {
     });
 
     yield put({
-      type: REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST),
+      type: REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST_ADMIN),
       payload: {
         params: params,
       },
     });
+
+    yield callback.closeModal();
   } catch (e) {
     console.log(
       "🚀 ~ file: products.saga.js ~ line 107 ~ function*deleteProductSaga ~ e",

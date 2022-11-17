@@ -16,6 +16,7 @@ import {
   Table,
 } from "antd";
 import { v4 as uuidv4 } from "uuid";
+import moment from "moment";
 
 import { ROUTES } from "../../../../constants/routes";
 import { STEP } from "./constants/step";
@@ -25,6 +26,10 @@ import {
   guestOrderProductAction,
 } from "../../../../redux/actions/";
 import * as S from "../style";
+
+const disabledDate = (current) => {
+  return current && current < moment().endOf("day");
+};
 
 const Payment = ({ setStep }) => {
   const [paymentForm] = Form.useForm();
@@ -38,7 +43,13 @@ const Payment = ({ setStep }) => {
     return prev + item.totalPrice;
   }, 0);
 
-  const handleSubmitPaymentForm = (values) => {
+  const handleSubmitPaymentForm = (data) => {
+    const values = {
+      ...data,
+      ...(data.date && {
+        endDate: moment(data.date).format("MM/YYYY"),
+      }),
+    };
     console.log(values);
 
     if (userInfo.data.id) {
@@ -60,7 +71,7 @@ const Payment = ({ setStep }) => {
             price: item.finalPrice,
             quantity: item.totalAmount,
             slug: item.slug,
-            image: item.image,
+            image: item.images[0].url,
             stock: item.stock - item.totalAmount,
           })),
           callback: {
@@ -247,7 +258,11 @@ const Payment = ({ setStep }) => {
                           },
                         ]}
                       >
-                        <DatePicker picker="month" placeholder="MM/YY" />
+                        <DatePicker
+                          picker="month"
+                          placeholder="MM/YY"
+                          disabledDate={disabledDate}
+                        />
                       </Form.Item>
                       <Form.Item
                         label="Mã bảo mật"
@@ -256,6 +271,12 @@ const Payment = ({ setStep }) => {
                           {
                             required: true,
                             message: "Bạn phải nhập mã bảo mật thẻ",
+                          },
+                          {
+                            type: "number",
+                            min: 100,
+                            max: 999,
+                            message: "Không đúng định dạng",
                           },
                         ]}
                       >

@@ -41,12 +41,12 @@ const blogsReducer = createReducer(initialValue, {
     };
   },
   [SUCCESS(BLOG_ACTION.GET_BLOG_LIST)]: (state, action) => {
-    const { data, meta } = action.payload;
+    const { data, meta, more } = action.payload;
     return {
       ...state,
       blogList: {
         ...state.blogList,
-        data: data,
+        data: more ? [...state.blogList.data, ...data] : data,
         meta: meta,
         loading: false,
         error: "",

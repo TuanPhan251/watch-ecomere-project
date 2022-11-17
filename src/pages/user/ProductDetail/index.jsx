@@ -17,6 +17,7 @@ import {
   InputNumber,
   Image,
 } from "antd";
+import Slider from "react-slick";
 
 import ProductSpec from "./ProductSpec";
 import ProductPolicy from "./ProductPolicy";
@@ -46,6 +47,7 @@ const settings = {
   slidesToShow: 1,
   slidesToScroll: 1,
   autoplay: false,
+  arrows: false,
 };
 
 const ProductDetailPage = () => {
@@ -402,10 +404,10 @@ const ProductDetailPage = () => {
         <Row gutter={[8, 8]}>
           <Col xxl={8} xl={8} md={8} sm={24} xs={24}>
             <S.ProductImageWrapper>
-              <img src={productDetail.data.image} alt="product" />
+              {/* <img src={productDetail.data.images[0].url} alt="product" /> */}
 
               {/* slider cho ảnh thật sau này, cấm xóa */}
-              {/* <Slider
+              <Slider
                 {...settings}
                 customPaging={(i) => {
                   return (
@@ -417,7 +419,7 @@ const ProductDetailPage = () => {
                 dotsClass="slick-dots custom-indicator"
               >
                 {renderProductImages}
-              </Slider> */}
+              </Slider>
 
               {productDetail.data.isDiscount && (
                 <div className="product_info-discount-label">

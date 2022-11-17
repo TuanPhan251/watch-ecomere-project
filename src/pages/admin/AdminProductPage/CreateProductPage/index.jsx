@@ -12,6 +12,7 @@ import {
   InputNumber,
   Upload,
   Checkbox,
+  Space,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
@@ -84,6 +85,8 @@ const CreateProductPage = () => {
       createProductAction({
         data: {
           ...productData,
+          isHidden: productData.isHidden || false,
+          isNew: productData.isNew || false,
           categoryId: parseInt(data.categoryId),
           slug: slug(data.name),
           finalPrice: finalPrice,
@@ -101,27 +104,44 @@ const CreateProductPage = () => {
       <S.TopWrapper>
         <h3>Tạo sản phẩm mới</h3>
 
-        <Button
-          type="primary"
-          htmlType="submit"
-          loading={createProductData.loading}
-          onClick={() => createForm.submit()}
-        >
-          Tạo sản phẩm mới
-        </Button>
+        <Space>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={createProductData.loading}
+            onClick={() => createForm.submit()}
+          >
+            Tạo sản phẩm mới
+          </Button>
+
+          <Button
+            type="danger"
+            onClick={() => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE)}
+          >
+            Hủy
+          </Button>
+        </Space>
       </S.TopWrapper>
 
       <Form
         form={createForm}
         name="basic"
         labelCol={{ span: 8 }}
-        wrapperCol={{ span: 8 }}
+        wrapperCol={{ span: 12 }}
         style={{ padding: "12px 0" }}
         autoComplete="off"
         onFinish={(values) => {
           handleCreateProduct(values);
         }}
       >
+        <Form.Item
+          label="Tạm ẩn sản phẩm"
+          name="isHidden"
+          valuePropName="checked"
+        >
+          <Checkbox defaultChecked={false} />
+        </Form.Item>
+
         <Form.Item
           label="Tên sản phẩm"
           name="name"
@@ -156,7 +176,7 @@ const CreateProductPage = () => {
         </Form.Item>
 
         <Form.Item label="Sản phẩm mới" name="isNew" valuePropName="checked">
-          <Checkbox />
+          <Checkbox defaultChecked={false} />
         </Form.Item>
 
         <Form.Item
@@ -183,16 +203,6 @@ const CreateProductPage = () => {
           >
             {renderCategoryOptions()}
           </Select>
-        </Form.Item>
-
-        <Form.Item
-          label="Hình ảnh"
-          name="image"
-          rules={[
-            { required: true, message: "Hãy nhập đường dẫn ảnh sản phẩm" },
-          ]}
-        >
-          <Input />
         </Form.Item>
 
         <Form.Item
@@ -301,6 +311,12 @@ const CreateProductPage = () => {
           label="Ảnh sản phẩm"
           name="images"
           valuePropName="fileList"
+          rules={[
+            {
+              required: true,
+              message: "Hãy chọn ảnh sản phẩm",
+            },
+          ]}
           getValueFromEvent={(e) => {
             if (Array.isArray(e)) return e;
             return e?.fileList;
@@ -314,7 +330,16 @@ const CreateProductPage = () => {
           </Upload>
         </Form.Item>
 
-        <Form.Item label="Nội dung mô tả" name="content">
+        <Form.Item
+          label="Nội dung mô tả"
+          name="content"
+          rules={[
+            {
+              required: true,
+              message: "Hãy nhập nội dung giới thiệu sản phẩm",
+            },
+          ]}
+        >
           <ReactQuill
             theme="snow"
             onChange={(value) => createForm.setFieldsValue({ content: value })}

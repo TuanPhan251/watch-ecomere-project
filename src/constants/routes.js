@@ -11,6 +11,7 @@ export const ROUTES = {
     PRODUCT_DETAIL: "/san-pham/:id",
     CART_SUMMARY: "/gio-hang",
     BLOG: "/bai-viet",
+    BLOG_DETAIL: "/bai-viet/:id",
     ORDER_SEARCH: "/tra-cuu/don-hang",
     USER_INFO: "/thong-tin",
     USER_INFO_ORDER: "/thong-tin/don-hang",

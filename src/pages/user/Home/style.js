@@ -357,11 +357,8 @@ export const Product = styled.div`
 
     & img {
       position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      width: 100%;
+      inset: 0px;
+      margin: auto;
       height: 100%;
       object-fit: cover;
       transition: all 0.5s ease;

@@ -53,7 +53,7 @@ const UpdateBlogPage = () => {
     dispatch(
       updateBlogAction({
         id,
-        data,
+        data: { ...data, slug: slug(data.title) },
         callback: {
           goToList: () => {
             navigate(ROUTES.ADMIN.BLOG_LIST_PAGE);

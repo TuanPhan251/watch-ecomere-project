@@ -173,7 +173,7 @@ const UserInfoOrderPage = () => {
                     return (
                       <S.OrderItem key={item.id}>
                         <Col span={2}>
-                          <img width="100%" src={item.image} alt="" />
+                          <img width="100%" src={item.images[0].url} alt="" />
                         </Col>
 
                         <Col span={12} className="order__item-name">
