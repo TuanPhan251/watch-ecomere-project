@@ -2,7 +2,7 @@ import { ROUTES } from "../../../constants/routes";
 
 export const SidebarContent = [
   {
-    title: "Bản điều khiển",
+    title: "Bảng điều khiển",
     path: ROUTES.ADMIN.DASH_BOARD,
     icon: <i className="fa-solid fa-table-columns"></i>,
   },
@@ -27,7 +27,7 @@ export const SidebarContent = [
     icon: <i className="fa-solid fa-boxes-stacked"></i>,
   },
   {
-    title: "Danh mục",
+    title: "Nhãn hàng",
     path: ROUTES.ADMIN.CATEGORY_LIST_PAGE,
     icon: <i className="fa-solid fa-list"></i>,
   },

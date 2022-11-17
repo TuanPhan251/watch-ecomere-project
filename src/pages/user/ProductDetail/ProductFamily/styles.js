@@ -40,12 +40,16 @@ export const ProductItem = styled.div`
 
   & .product_info-image {
     position: relative;
-    display: flex;
-    justify-content: center;
-    transition: all 0.2s ease;
+    width: 100%;
+    padding-top: 80%;
+    transition: all 0.3s ease;
 
     img {
-      width: 60%;
+      position: absolute;
+      inset: 0px;
+      height: 100%;
+      margin: auto;
+      object-fit: cover;
     }
   }
 

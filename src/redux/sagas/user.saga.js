@@ -100,6 +100,10 @@ function* getUserList(action) {
           _sort: "totalSpend",
           _order: params.spendSort,
         }),
+        ...(params.sort && {
+          _sort: params.sort.split(".")[1],
+          _order: params.sort.split(".")[0],
+        }),
       },
     });
     yield put({

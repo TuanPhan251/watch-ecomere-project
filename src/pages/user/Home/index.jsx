@@ -123,7 +123,7 @@ const HomePage = () => {
             >
               <S.Product>
                 <div className="newProduct__image">
-                  <img src={item.image} alt="product" />
+                  <img src={item.images[0].url} alt="product" />
                 </div>
                 <h2>{item.name}</h2>
 

@@ -79,13 +79,17 @@ export const ItemContent = styled.div`
 `;
 
 export const ItemImage = styled.div`
-  display: flex;
-  align-items: center;
+  position: relative;
+  padding-top: 60px;
   width: 60px;
   border: var(--boder-basic);
 
   & img {
-    width: 100%;
+    position: absolute;
+    inset: 0px;
+    height: 100%;
+    margin: auto;
+    object-fit: cover;
   }
 
   & span {

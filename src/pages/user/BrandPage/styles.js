@@ -215,11 +215,17 @@ export const ProductItem = styled.div`
   }
 
   & .product_info-image {
+    width: 100%;
+    padding-top: 100%;
     position: relative;
     transition: all 0.2s ease;
 
     img {
-      width: 100%;
+      position: absolute;
+      inset: 0px;
+      margin: auto;
+      height: 100%;
+      object-fit: cover;
     }
   }
 

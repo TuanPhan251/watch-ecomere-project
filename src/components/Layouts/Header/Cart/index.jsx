@@ -35,7 +35,7 @@ const CartDrawer = ({ cartList }) => {
           }
         >
           <S.ItemImage>
-            <img alt="" src={item.image} />
+            <img alt="" src={item.images[0].url} />
           </S.ItemImage>
 
           <S.ItemPrice>

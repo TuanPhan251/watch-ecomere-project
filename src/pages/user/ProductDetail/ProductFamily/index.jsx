@@ -38,8 +38,7 @@ const ProductFamily = ({ similarProductList }) => {
           >
             <S.ProductItem>
               <div className="product_info-image">
-                <img src={item.image} alt="item" />
-                <div className="product_item-actions"></div>
+                <img src={item.images[0].url} alt="item" />
               </div>
 
               <h2 className="product_info-name">{item.name}</h2>

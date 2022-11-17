@@ -587,7 +587,7 @@ const Header = () => {
             </S.DropDownMenuWrapperTH>
           </li>
           <li>
-            <Link to={ROUTES.USER.CONTACT} className="title-link">
+            <Link to={ROUTES.USER.BLOG} className="title-link">
               BÀI VIẾT
             </Link>
           </li>

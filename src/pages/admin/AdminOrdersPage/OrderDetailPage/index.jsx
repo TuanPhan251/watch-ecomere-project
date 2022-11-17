@@ -283,6 +283,28 @@ const AdminOrderDetailPage = () => {
           </Card>
         </Col>
         <Col span={24}>
+          <Card size="small" title="Thông tin thanh toán">
+            {orderDetail.data.method === "cod" && (
+              <p>Thanh toán khi nhận hàng(COD)</p>
+            )}
+            {orderDetail.data.method === "visa" && (
+              <>
+                <p>Thanh toán bằng thẻ visa</p>
+                <p>Số thẻ: {orderDetail.data.cardNumber}</p>
+                <p>Tên in trên thẻ: {orderDetail.data.cardName}</p>
+                <p>Ngày hết hạn: {orderDetail.data.endDate}</p>
+                <p>Mã bảo mật: {orderDetail.data.code}</p>
+              </>
+            )}
+            {orderDetail.data.method === "atm" && (
+              <>
+                <p>Thanh toán bằng thẻ ATM</p>
+                <p>Ngân hàng: {orderDetail.data.bank}</p>
+              </>
+            )}
+          </Card>
+        </Col>
+        <Col span={24}>
           <Card size="small" title="Thông tin đơn hàng">
             <h4>
               Ngày tạo đơn:{" "}

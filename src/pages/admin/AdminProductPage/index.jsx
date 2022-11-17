@@ -100,9 +100,24 @@ const AdminProductPage = () => {
           page: productListAdmin.meta.page,
           limit: 10,
         },
+        callback: {
+          getProductList: () => {
+            dispatch(
+              getProductListAdminAction({
+                params: {
+                  ...filterParams,
+                  page: 1,
+                  limit: 10,
+                },
+              })
+            );
+          },
+          closeModal: () => {
+            setShowModal(false);
+          },
+        },
       })
     );
-    setShowModal(false);
   };
 
   const handleChangePage = (page) => {
@@ -134,7 +149,7 @@ const AdminProductPage = () => {
       render: (_, record) => {
         return (
           <Space>
-            <Avatar shape="square" size={64} src={record.image} />
+            <Avatar shape="square" size={64} src={record.images[0].url} />
             {record.isNew && <Tag color="#f50">Mới</Tag>}
             <h4>{record.name}</h4>
           </Space>

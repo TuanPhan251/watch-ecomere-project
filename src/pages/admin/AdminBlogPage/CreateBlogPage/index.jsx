@@ -4,26 +4,12 @@ import { useNavigate } from "react-router-dom";
 import ReactQuill from "react-quill";
 import slug from "slug";
 
-import {
-  Button,
-  Select,
-  Form,
-  Input,
-  InputNumber,
-  Upload,
-  Checkbox,
-  Space,
-} from "antd";
+import { Button, Form, Input, Space } from "antd";
 
 import { ROUTES } from "../../../../constants/routes";
-import {
-  createBlogAction,
-  getCategoriesListAction,
-} from "../../../../redux/actions";
+import { createBlogAction } from "../../../../redux/actions";
 
 import * as S from "./styles";
-
-const { Option } = Select;
 
 const CreateBlogPage = () => {
   const navigate = useNavigate();
@@ -80,7 +66,7 @@ const CreateBlogPage = () => {
         form={createForm}
         name="basic"
         labelCol={{ span: 8 }}
-        wrapperCol={{ span: 8 }}
+        wrapperCol={{ span: 12 }}
         style={{ padding: "12px 0" }}
         autoComplete="off"
         onFinish={(values) => {

@@ -19,6 +19,7 @@ import {
   notification,
   Breadcrumb,
   Input,
+  Button,
 } from "antd";
 import MainButton from "../../../components/MainButton";
 
@@ -450,7 +451,7 @@ const ProductPage = () => {
           >
             <S.ProductItem>
               <div className="product_info-image">
-                <img src={item.image} alt="item" />
+                <img src={item.images[0].url} alt="item" />
                 <div className="product_item-actions">
                   <Tooltip title="Thêm vào giỏ hàng">
                     <button
@@ -851,13 +852,14 @@ const ProductPage = () => {
 
               {productListUser.data.length !== productListUser.meta.total && (
                 <Row style={{ justifyContent: "center" }}>
-                  <MainButton
-                    buttonType="primary"
+                  <Button
+                    type="primary"
+                    loading={productListUser.loading}
                     style={{ marginTop: 16, fontSize: 16 }}
                     onClick={() => handleShowMore()}
                   >
                     Xem thêm
-                  </MainButton>
+                  </Button>
                 </Row>
               )}
             </S.ProductsWrapper>

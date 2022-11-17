@@ -168,15 +168,16 @@ export const CartItem = styled(Row)`
   }
 
   .item-img {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
     width: 100%;
-    height: 100%;
+    padding-top: 100%;
 
     img {
-      width: 100%;
-      height: auto;
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      margin: auto;
+      object-fit: cover;
       padding: 4px;
       border: 1px solid #eee;
       border-radius: 2px;

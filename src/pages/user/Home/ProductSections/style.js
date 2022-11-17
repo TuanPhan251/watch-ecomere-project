@@ -34,14 +34,22 @@ export const Product = styled.div`
     overflow: hidden;
   }
 
-  & img {
-    width: 75%;
-    transition: all 0.2s ease;
+  .product__img {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+    & img {
+      position: absolute;
+      inset: 0px;
+      height: 100%;
+      margin: auto;
+      transition: all 0.5s ease;
+    }
   }
 
   &:hover {
     & img {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
 
     h2 {

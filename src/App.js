@@ -39,6 +39,8 @@ import UserInfoPage from "./pages/user/UserInfo";
 import UserInfoOrderPage from "./pages/user/UserInfo/UserInfoOrder";
 import UserInfoPasswordPage from "./pages/user/UserInfo/UserInfoPassword";
 import UserInfoWishListPage from "./pages/user/UserInfo/UserInfoWishList";
+import BlogPage from "./pages/user/Blog";
+import BlogDetailPage from "./pages/user/Blog/BlogDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -91,6 +93,11 @@ function App() {
             <Route
               path={ROUTES.USER.USER_INFO_WISHLIST}
               element={<UserInfoWishListPage />}
+            />
+            <Route path={ROUTES.USER.BLOG} element={<BlogPage />} />
+            <Route
+              path={ROUTES.USER.BLOG_DETAIL}
+              element={<BlogDetailPage />}
             />
           </Route>
 
