@@ -32,6 +32,11 @@ export const SidebarContent = [
     icon: <i className="fa-solid fa-list"></i>,
   },
   {
+    title: "Mã giảm giá",
+    path: ROUTES.ADMIN.VOUCHER_LIST_PAGE,
+    icon: <i className="fa-regular fa-rectangle-list"></i>,
+  },
+  {
     title: "Bài viết",
     path: ROUTES.ADMIN.BLOG_LIST_PAGE,
     icon: <i className="fa-regular fa-rectangle-list"></i>,

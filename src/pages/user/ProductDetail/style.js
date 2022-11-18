@@ -337,7 +337,7 @@ export const ProductContent = styled.div`
   }
 
   .product_content-main {
-    max-height: 500px;
+    max-height: 600px;
     overflow: auto;
 
     p {
@@ -366,7 +366,7 @@ export const ProductContent = styled.div`
 `;
 
 export const ProductReview = styled.div`
-  height: 500px;
+  height: 600px;
 `;
 
 export const ReviewsWrapper = styled.div`
@@ -377,6 +377,7 @@ export const ReviewsWrapper = styled.div`
 
 export const InfoTabs = styled(Tabs)`
   margin-top: 24px;
+  margin-bottom: 12px;
   padding: 0 12px;
 
   .ant-tabs-nav {

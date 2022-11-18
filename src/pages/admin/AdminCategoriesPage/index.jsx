@@ -18,6 +18,8 @@ import {
   getCategoriesListAction,
   getProductListAdminAction,
   createCategoryAction,
+  updateCategoryAction,
+  getCategoriesDetailAction,
 } from "../../../redux/actions";
 
 import * as S from "./styles";
@@ -25,17 +27,20 @@ import { ROUTES } from "../../../constants/routes";
 
 const AdminCategoryPage = () => {
   const [categoryForm] = Form.useForm();
+  const [updateForm] = Form.useForm();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { categoryList, createCategory } = useSelector(
-    (state) => state.category
-  );
+  const { categoryList, createCategory, categoryDetail, updateCategory } =
+    useSelector((state) => state.category);
+
   const { productListAdmin } = useSelector((state) => state.product);
 
   const initialFilterParams = { keyword: "" };
   const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
 
   const [showModal, setShowModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editId, setEditId] = useState(undefined);
 
   useEffect(() => {
     dispatch(
@@ -85,6 +90,51 @@ const AdminCategoryPage = () => {
     );
   };
 
+  const handleOpenEditModal = (id) => {
+    setEditId(id);
+    dispatch(
+      getCategoriesDetailAction({
+        id,
+        callback: {
+          showModal: () => {
+            setShowEditModal(true);
+          },
+          setFieldValue: (value) => {
+            updateForm.setFieldsValue({ name: value });
+          },
+        },
+      })
+    );
+  };
+
+  const handleUpdateCategory = (data) => {
+    console.log(editId);
+    dispatch(
+      updateCategoryAction({
+        id: editId,
+        data,
+        callback: {
+          closeModal: () => {
+            setShowEditModal(false);
+          },
+          resetField: () => {
+            updateForm.resetFields();
+          },
+          getCategoryList: () => {
+            dispatch(
+              getCategoriesListAction({
+                params: {
+                  page: 1,
+                  limit: 10,
+                },
+              })
+            );
+          },
+        },
+      })
+    );
+  };
+
   const handleCreateCategory = (values) => {
     dispatch(
       createCategoryAction({
@@ -95,6 +145,16 @@ const AdminCategoryPage = () => {
           },
           closeModal: () => {
             setShowModal(false);
+          },
+          getCategoryList: () => {
+            dispatch(
+              getCategoriesListAction({
+                params: {
+                  page: 1,
+                  limit: 10,
+                },
+              })
+            );
           },
         },
       })
@@ -122,9 +182,15 @@ const AdminCategoryPage = () => {
       title: "Tùy chọn",
       dataIndex: "action",
       key: "action",
-      render: () => (
+      render: (_, record) => (
         <Space>
-          <Button>Chi tiết</Button>
+          <Button
+            loading={categoryDetail.loading}
+            onClick={() => handleOpenEditModal(record.id)}
+          >
+            <i className="fa-solid fa-pen-to-square"></i>
+            <span style={{ marginLeft: 4 }}>Sửa</span>
+          </Button>
           <Button type="danger">Tạm ẩn</Button>
         </Space>
       ),
@@ -210,6 +276,48 @@ const AdminCategoryPage = () => {
           name="form_in_modal"
           initialValues={{
             modifier: "public",
+          }}
+        >
+          <Form.Item
+            name="name"
+            label="Tên nhãn hàng"
+            rules={[
+              {
+                required: true,
+                message: "Bạn phải nhập tên nhãn hàng",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      <Modal
+        open={showEditModal}
+        title="Thêm nhãn hàng mới"
+        okText="Sửa"
+        cancelText="Hủy"
+        onCancel={() => setShowEditModal(false)}
+        confirmLoading={updateCategory.loading}
+        onOk={() => {
+          updateForm
+            .validateFields()
+            .then((values) => {
+              handleUpdateCategory(values);
+            })
+            .catch((info) => {
+              console.log("Validate Failed:", info);
+            });
+        }}
+      >
+        <Form
+          form={updateForm}
+          layout="vertical"
+          name="form_in_modal"
+          initialValues={{
+            modifier: "public",
+            name: categoryDetail.data.name,
           }}
         >
           <Form.Item
