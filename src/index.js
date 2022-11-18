@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import "moment/locale/vi";
 import store from "./redux/store";
 import "./index.css";
+import "antd/dist/antd.less";
 import App from "./App";
 import ScrollToTop from "./components/ScrollToTop";
 import reportWebVitals from "./reportWebVitals";

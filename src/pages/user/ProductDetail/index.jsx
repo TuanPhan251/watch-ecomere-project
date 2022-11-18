@@ -302,7 +302,11 @@ const ProductDetailPage = () => {
           <Input.TextArea rows={4} />
         </Form.Item>
         <Form.Item>
-          <Button htmlType="submit">Đánh giá</Button>
+          <Col offset={10}>
+            <Button type="primary" htmlType="submit">
+              Đánh giá
+            </Button>
+          </Col>
         </Form.Item>
       </Form>
     </>

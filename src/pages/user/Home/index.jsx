@@ -6,7 +6,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
 import { ROUTES } from "../../../constants/routes";
-import { getNewProductsList } from "../../../redux/actions";
+import {
+  getNewProductsList,
+  getProductListUserAction,
+} from "../../../redux/actions";
 
 import HomeProductList from "./ProductSections/HomeProductList";
 
@@ -19,74 +22,21 @@ import bgrImage from "../../../assets/banner/bgr-img.jpg";
 import * as S from "./style";
 import { Col, Spin } from "antd";
 
-function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{
-        ...style,
-        display: "block",
-        background: "#ccc",
-        color: "red",
-      }}
-      onClick={onClick}
-    />
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={className}
-      style={{ ...style, display: "block", background: "green" }}
-      onClick={onClick}
-    />
-  );
-}
-
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 4,
-  autoplay: true,
-  nextArrow: <SampleNextArrow />,
-  prevArrow: <SamplePrevArrow />,
-  responsive: [
-    {
-      breakpoint: 576,
-      settings: {
-        slidesToShow: 2,
-        infinite: true,
-        dots: true,
-      },
-    },
-    {
-      breakpoint: 768,
-      settings: {
-        slidesToShow: 3,
-        infinite: true,
-        dots: true,
-      },
-    },
-  ],
-};
-
 const HomePage = () => {
   window.title = "asdf";
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { newProductsList } = useSelector((state) => state.product);
+  const { productListUser } = useSelector((state) => state.product);
 
-  const newProducts = [...newProductsList.data];
+  // const newProducts = [...newProductsList.data];
+  const newProducts = productListUser.data?.filter(
+    (item) => item.isNew === true
+  );
 
   const shuffled = newProducts.sort(() => 0.5 - Math.random());
   const selectedNewProducts = shuffled.slice(0, 8);
   const videoRef = useRef();
-  const sliderRef = useRef(null);
 
   window.scrollTo({
     top: 0,
@@ -94,9 +44,10 @@ const HomePage = () => {
 
   useEffect(() => {
     dispatch(
-      getNewProductsList({
+      getProductListUserAction({
         params: {
-          isNew: true,
+          page: 1,
+          limit: 999,
         },
       })
     );
@@ -136,9 +87,9 @@ const HomePage = () => {
         </SwiperSlide>
       );
     });
-  }, [newProductsList.data]);
+  }, [productListUser.data]);
 
-  if (newProductsList.loading)
+  if (productListUser.loading)
     return (
       <Spin spinning={true}>
         <div

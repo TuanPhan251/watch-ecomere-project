@@ -1,5 +1,5 @@
 import { generatePath, Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { getProductListUserAction } from "../../../../redux/actions";
@@ -12,28 +12,18 @@ import { ROUTES } from "../../../../constants/routes";
 const HomeProductList = ({ gender }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { productListUser } = useSelector((state) => state.product);
 
-  const displayProducts = productListUser.data.filter(
-    (product) => product.gender === gender
+  const genderProduct = productListUser.data?.filter(
+    (item) => item.gender === gender
   );
 
-  const shuffled = displayProducts?.sort(() => 0.5 - Math.random());
-  const selected = shuffled.slice(0, 4);
-
-  useEffect(() => {
-    dispatch(
-      getProductListUserAction({
-        params: {
-          page: 1,
-          limit: 999,
-        },
-      })
-    );
-  }, []);
+  const shuffled = genderProduct?.sort(() => 0.5 - Math.random());
+  const selected = shuffled?.slice(0, 4);
 
   const renderMenProducts = () => {
-    return selected.map((product) => {
+    return selected?.map((product) => {
       return (
         <Col span={12} key={product.id}>
           <Link

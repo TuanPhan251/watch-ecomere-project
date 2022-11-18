@@ -9,7 +9,16 @@ const initialValue = {
     loading: false,
     error: "",
   },
+  categoryDetail: {
+    data: {},
+    loading: false,
+    error: "",
+  },
   createCategory: {
+    loading: false,
+    error: "",
+  },
+  updateCategory: {
     loading: false,
     error: "",
   },
@@ -51,6 +60,40 @@ const categoryReducer = createReducer(initialValue, {
     };
   },
 
+  [REQUEST(CATEGORY_ACTION.GET_CATEGORY_DETAIL)]: (state, action) => {
+    return {
+      ...state,
+      categoryDetail: {
+        ...state.categoryDetail,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(CATEGORY_ACTION.GET_CATEGORY_DETAIL)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      categoryDetail: {
+        ...state.categoryDetail,
+        data: data,
+        loading: false,
+        error: "",
+      },
+    };
+  },
+  [FAIL(CATEGORY_ACTION.GET_CATEGORY_DETAIL)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      categoryDetail: {
+        ...state.categoryDetail,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
   [REQUEST(CATEGORY_ACTION.CREATE_NEW_CATEGORY)]: (state, action) => {
     return {
       ...state,
@@ -77,6 +120,38 @@ const categoryReducer = createReducer(initialValue, {
       ...state,
       createCategory: {
         ...state.createCategory,
+        loading: false,
+        error: error,
+      },
+    };
+  },
+
+  [REQUEST(CATEGORY_ACTION.UPDATE_CATEGORY)]: (state, action) => {
+    return {
+      ...state,
+      updateCategory: {
+        ...state.updateCategory,
+        loading: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(CATEGORY_ACTION.UPDATE_CATEGORY)]: (state, action) => {
+    return {
+      ...state,
+      updateCategory: {
+        ...state.updateCategory,
+        loading: false,
+        error: "",
+      },
+    };
+  },
+  [FAIL(CATEGORY_ACTION.UPDATE_CATEGORY)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      updateCategory: {
+        ...state.updateCategory,
         loading: false,
         error: error,
       },

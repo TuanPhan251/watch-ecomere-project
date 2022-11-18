@@ -27,6 +27,7 @@ import UpdateProductPage from "./pages/admin/AdminProductPage/UpdateProductPage"
 import AdminBlogsPage from "./pages/admin/AdminBlogPage";
 import UpdateBlogPage from "./pages/admin/AdminBlogPage/AdminBlogDetail";
 import CreateBlogPage from "./pages/admin/AdminBlogPage/CreateBlogPage";
+import AdminVouchersPage from "./pages/admin/AdminVouchersPage";
 
 import HomePage from "./pages/user/Home";
 import ProductPage from "./pages/user/ProductsPage";
@@ -153,6 +154,10 @@ function App() {
             <Route
               path={ROUTES.ADMIN.CREATE_BLOG_PAGE}
               element={<CreateBlogPage />}
+            />
+            <Route
+              path={ROUTES.ADMIN.VOUCHER_LIST_PAGE}
+              element={<AdminVouchersPage />}
             />
           </Route>
           <Route element={<LoginLayout />}>

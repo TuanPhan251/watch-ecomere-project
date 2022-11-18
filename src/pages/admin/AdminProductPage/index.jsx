@@ -48,6 +48,7 @@ const AdminProductPage = () => {
     sort: "",
     isNew: false,
     isDiscount: false,
+    isHidden: false,
   };
   const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
 
@@ -375,6 +376,16 @@ const AdminProductPage = () => {
                   onChange={(e) => handleFilter(e.target.checked, "isDiscount")}
                 >
                   Đang giảm giá
+                </Checkbox>
+              </Row>
+            </Col>
+            <Col span={24}>
+              <Row>
+                <Checkbox
+                  checked={filterParams.isHidden}
+                  onChange={(e) => handleFilter(e.target.checked, "isHidden")}
+                >
+                  Đang ẩn
                 </Checkbox>
               </Row>
             </Col>

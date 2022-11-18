@@ -36,6 +36,28 @@ function* getCategoriesListSaga(action) {
   }
 }
 
+function* getCategoryDetailSaga(action) {
+  try {
+    const { id, callback } = action.payload;
+    const result = yield axios.get(`http://localhost:4000/categories/${id}`);
+    yield put({
+      type: `${SUCCESS(CATEGORY_ACTION.GET_CATEGORY_DETAIL)}`,
+      payload: {
+        data: result.data,
+      },
+    });
+    yield callback.showModal(true);
+    yield callback.setFieldValue(result.data.name);
+  } catch (e) {
+    yield put({
+      type: `${FAIL(CATEGORY_ACTION.GET_CATEGORY_DETAIL)}`,
+      payload: {
+        error: "đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
 function* createCategorySaga(action) {
   try {
     const { data, callback } = action.payload;
@@ -47,13 +69,37 @@ function* createCategorySaga(action) {
       },
     });
     yield callback.resetField();
+    yield callback.getCategoryList();
     yield callback.closeModal();
-    yield put({
-      type: `${REQUEST(CATEGORY_ACTION.GET_CATEGORY_LIST)}`,
-    });
   } catch (e) {
     yield put({
       type: `${FAIL(CATEGORY_ACTION.CREATE_NEW_CATEGORY)}`,
+      payload: {
+        error: "đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
+function* updateCategorySaga(action) {
+  try {
+    const { id, data, callback } = action.payload;
+    const result = yield axios.patch(
+      `http://localhost:4000/categories/${id}`,
+      data
+    );
+    yield put({
+      type: `${SUCCESS(CATEGORY_ACTION.UPDATE_CATEGORY)}`,
+      payload: {
+        data: result.data,
+      },
+    });
+    yield callback.resetField();
+    yield callback.getCategoryList();
+    yield callback.closeModal();
+  } catch (e) {
+    yield put({
+      type: `${FAIL(CATEGORY_ACTION.UPDATE_CATEGORY)}`,
       payload: {
         error: "đã có lỗi xảy ra!",
       },
@@ -68,7 +114,12 @@ export default function* categoriesSaga() {
     getCategoriesListSaga
   );
   yield takeEvery(
+    REQUEST(CATEGORY_ACTION.GET_CATEGORY_DETAIL),
+    getCategoryDetailSaga
+  );
+  yield takeEvery(
     REQUEST(CATEGORY_ACTION.CREATE_NEW_CATEGORY),
     createCategorySaga
   );
+  yield takeEvery(REQUEST(CATEGORY_ACTION.UPDATE_CATEGORY), updateCategorySaga);
 }
