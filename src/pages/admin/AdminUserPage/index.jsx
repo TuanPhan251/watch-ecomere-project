@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { generatePath, useNavigate } from "react-router-dom";
-import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 import { getUserListAction } from "../../../redux/actions";
 import { ACCOUNT_LIST_LIMIT } from "../../../constants/paginations";
@@ -11,11 +10,9 @@ import {
   Row,
   Table,
   Space,
-  Avatar,
   Button,
   Tag,
   Input,
-  Checkbox,
   Select,
   Pagination,
 } from "antd";

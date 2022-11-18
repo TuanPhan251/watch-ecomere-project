@@ -72,6 +72,7 @@ function* removeWishlistSaga(action) {
     // });
 
     if (callback) yield callback.getWishlists();
+    if (callback) yield callback.getProductList();
   } catch (e) {
     yield put({
       type: `${FAIL(WISHLIST_ACTION.REMOVE_WISHLIST)}`,

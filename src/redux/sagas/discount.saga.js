@@ -1,4 +1,4 @@
-import { takeEvery, put } from "redux-saga/effects";
+import { takeEvery, put, debounce } from "redux-saga/effects";
 import axios from "axios";
 
 import { REQUEST, SUCCESS, FAIL, DISCOUNT_ACTION } from "../CONSTANTS/";
@@ -156,7 +156,8 @@ function* deleteVoucherSaga(action) {
 
 export default function* discountSaga() {
   yield takeEvery(REQUEST(DISCOUNT_ACTION.DISCOUNT), getDiscountSaga);
-  yield takeEvery(
+  yield debounce(
+    500,
     REQUEST(DISCOUNT_ACTION.GET_VOUCHER_LIST),
     getVoucherListSaga
   );

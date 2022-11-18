@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { generatePath, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import {
   Button,
@@ -23,7 +23,6 @@ import {
 } from "../../../redux/actions";
 
 import * as S from "./styles";
-import { ROUTES } from "../../../constants/routes";
 
 const AdminCategoryPage = () => {
   const [categoryForm] = Form.useForm();

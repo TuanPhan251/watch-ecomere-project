@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useParams, useNavigate, Link, generatePath } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -73,7 +73,7 @@ const ProductDetailPage = () => {
       )
     : false;
 
-  const { commentList } = useSelector((state) => state.comments);
+  const { commentList, createComment } = useSelector((state) => state.comments);
   const isCommented = commentList.data?.some(
     (item) => item.userId === userInfo?.data?.id
   );
@@ -103,7 +103,14 @@ const ProductDetailPage = () => {
       })
     );
 
-    dispatch(getCategoriesListAction());
+    dispatch(
+      getCategoriesListAction({
+        params: {
+          page: 1,
+          limit: 99,
+        },
+      })
+    );
     dispatch(getCommentListAction({ productId }));
 
     return () => {
@@ -303,7 +310,11 @@ const ProductDetailPage = () => {
         </Form.Item>
         <Form.Item>
           <Col offset={10}>
-            <Button type="primary" htmlType="submit">
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={createComment.loading}
+            >
               Đánh giá
             </Button>
           </Col>

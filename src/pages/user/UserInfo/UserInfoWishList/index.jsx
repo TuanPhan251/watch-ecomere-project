@@ -7,7 +7,7 @@ import { Avatar, Col, Row, Spin, notification, Tooltip } from "antd";
 import {
   getWishlistAction,
   removeWishlistAction,
-  getProductListAction,
+  getProductListUserAction,
   removeProductDetailAction,
 } from "../../../../redux/actions";
 import Layout from "../Layout";
@@ -19,15 +19,31 @@ const UserInfoWishListPage = () => {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
   const { wishlist } = useSelector((state) => state.wishlist);
+  const { productListUser } = useSelector((state) => state.product);
 
-  const wishlistItems = wishlist.data.map((item) => item.product);
+  const wishlistIds = wishlist.data.map((item) => item.productId);
 
   useEffect(() => {
     document.title = "Sản phẩm yêu thích";
   }, []);
 
   useEffect(() => {
-    dispatch(getWishlistAction({ userId: userInfo.data.id }));
+    if (wishlistIds.length !== 0)
+      dispatch(
+        getProductListUserAction({
+          params: {
+            page: 1,
+            limit: 99,
+            productId: wishlistIds,
+          },
+        })
+      );
+  }, [wishlist.data]);
+
+  useEffect(() => {
+    if (userInfo.data.id) {
+      dispatch(getWishlistAction({ userId: userInfo.data.id }));
+    }
 
     return () => {
       dispatch(removeProductDetailAction());
@@ -47,6 +63,17 @@ const UserInfoWishListPage = () => {
         callback: {
           getWishlists: () => {
             dispatch(getWishlistAction({ userId: userInfo.data.id }));
+          },
+          getProductList: () => {
+            dispatch(
+              getProductListUserAction({
+                params: {
+                  page: 1,
+                  limit: 99,
+                  productId: wishlistIds,
+                },
+              })
+            );
           },
         },
       })
@@ -69,9 +96,9 @@ const UserInfoWishListPage = () => {
   };
 
   const renderWishlist = useMemo(() => {
-    return wishlistItems.map((item) => {
+    return productListUser.data?.map((item) => {
       return (
-        <Col xxl={6} lg={6} md={6} sm={12} xs={12} key={item.productId}>
+        <Col xxl={6} lg={6} md={6} sm={12} xs={12} key={item.id}>
           <Link
             to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
               id: `${item.slug}.${item.id}`,
@@ -107,7 +134,7 @@ const UserInfoWishListPage = () => {
         </Col>
       );
     });
-  }, [wishlistItems]);
+  }, [productListUser.data]);
 
   return (
     <Layout>
@@ -115,7 +142,7 @@ const UserInfoWishListPage = () => {
         <h3 className="user_info-title">Sản phẩm yêu thích</h3>
 
         <S.ProductsWrapper>
-          <Spin spinning={wishlist.loading}>
+          <Spin spinning={productListUser.loading}>
             <Row gutter={[8, 8]}>{renderWishlist}</Row>
           </Spin>
         </S.ProductsWrapper>

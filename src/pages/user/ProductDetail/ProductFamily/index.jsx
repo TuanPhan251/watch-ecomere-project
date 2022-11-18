@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useNavigate, generatePath, Link } from "react-router-dom";
+import { generatePath, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { Col, Rate, Row, Spin } from "antd";
@@ -8,8 +8,6 @@ import { ROUTES } from "../../../../constants/routes";
 import * as S from "./styles";
 
 const ProductFamily = ({ similarProductList }) => {
-  const navigate = useNavigate();
-
   const { productListUser } = useSelector((state) => state.product);
 
   const shuffled = similarProductList.sort(() => 0.5 - Math.random());

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { generatePath, useNavigate } from "react-router-dom";
 
 import {
   Button,
@@ -24,12 +23,10 @@ import {
 } from "../../../redux/actions";
 
 import * as S from "./styles";
-import { ROUTES } from "../../../constants/routes";
 
 const AdminVouchersPage = () => {
   const [categoryForm] = Form.useForm();
   const [updateForm] = Form.useForm();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     voucherList,

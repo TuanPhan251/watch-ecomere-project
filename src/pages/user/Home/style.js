@@ -151,6 +151,13 @@ export const HomePageWrapper = styled.main`
       flex-wrap: wrap;
       padding: 12px;
     }
+
+    .swiper {
+      .swiper-button-next,
+      .swiper-button-prev {
+        color: var(--button-color);
+      }
+    }
   }
 
   .men_products-section {
@@ -277,6 +284,76 @@ export const HomePageWrapper = styled.main`
       top: unset;
       bottom: 10%;
       font-size: 16px;
+    }
+  }
+
+  .instagram__follow-section {
+    max-width: 1200px;
+    width: 100%;
+    margin: 24px auto 0;
+    padding: 12px;
+    background-color: #fff;
+
+    .follow__section-title {
+      h3 {
+        text-align: center;
+        font-size: 24px;
+      }
+    }
+
+    .follow__section-name {
+      margin-top: 12px;
+
+      p {
+        text-align: center;
+        color: #999;
+      }
+    }
+
+    .follow__section-image-list {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 24px;
+
+      .follow__section-image {
+        position: relative;
+        width: 100%;
+        padding-top: 100%;
+        overflow: hidden;
+        cursor: pointer;
+
+        img {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          object-fit: cover;
+          transition: all 1s ease;
+        }
+
+        :hover {
+          img {
+            transform: scale(1.2);
+          }
+
+          ::before {
+            background: rgba(255, 255, 255, 0.5) none repeat scroll 0 0;
+            bottom: 50%;
+            top: 50%;
+          }
+        }
+        ::after,
+        ::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          transition: all 0.5s ease-out 0s;
+          -webkit-transition: all 0.5s ease-in-out 0s;
+          -ms-transition: all 0.5s ease-in-out 0s;
+        }
+      }
     }
   }
 `;

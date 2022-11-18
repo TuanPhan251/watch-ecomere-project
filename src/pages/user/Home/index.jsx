@@ -1,15 +1,11 @@
 import { useRef, useMemo, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate, generatePath } from "react-router-dom";
-import Slider from "react-slick";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
 import { ROUTES } from "../../../constants/routes";
-import {
-  getNewProductsList,
-  getProductListUserAction,
-} from "../../../redux/actions";
+import { getProductListUserAction } from "../../../redux/actions";
 
 import HomeProductList from "./ProductSections/HomeProductList";
 
@@ -129,9 +125,20 @@ const HomePage = () => {
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={50}
           slidesPerView={4}
-          navigation
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
+          navigation
+          breakpoints={{
+            1: {
+              slidesPerView: 2,
+            },
+            576: {
+              slidesPerView: 3,
+            },
+            768: {
+              slidesPerView: 4,
+            },
+          }}
         >
           {renderNewProducts}
         </Swiper>
@@ -206,6 +213,71 @@ const HomePage = () => {
         <div className="women_products-list">
           {" "}
           <HomeProductList gender="female" />
+        </div>
+      </section>
+
+      <section className="instagram__follow-section">
+        <div className="follow__section-title">
+          <h3>Theo dõi chúng tôi trên Instagram</h3>
+        </div>
+
+        <div className="follow__section-name">
+          <p>@aida.instagram</p>
+        </div>
+
+        <div className="follow__section-image-list">
+          <Col xxl={4} lg={4} md={8} sm={12} xs={12}>
+            <div className="follow__section-image">
+              <img
+                alt=""
+                src="https://theme.hstatic.net/1000270050/1000900842/14/gallery_item_1_img.jpg?v=32"
+              />
+            </div>
+          </Col>
+          <Col xxl={4} lg={4} md={8} sm={12} xs={12}>
+            <div className="follow__section-image">
+              <img
+                alt=""
+                src="https://theme.hstatic.net/1000270050/1000900842/14/gallery_item_2_img.jpg?v=32"
+              />
+            </div>
+          </Col>
+
+          <Col xxl={4} lg={4} md={8} sm={12} xs={12}>
+            <div className="follow__section-image">
+              <img
+                alt=""
+                src="https://theme.hstatic.net/1000270050/1000900842/14/gallery_item_3_img.jpg?v=32"
+              />
+            </div>
+          </Col>
+
+          <Col xxl={4} lg={4} md={8} sm={12} xs={12}>
+            <div className="follow__section-image">
+              <img
+                alt=""
+                src="https://theme.hstatic.net/1000270050/1000900842/14/gallery_item_4_img.jpg?v=32"
+              />
+            </div>
+          </Col>
+
+          <Col xxl={4} lg={4} md={8} sm={12} xs={12}>
+            <div className="follow__section-image">
+              <img
+                alt=""
+                src="https://theme.hstatic.net/1000270050/1000900842/14/gallery_item_5_img.jpg?v=32"
+              />
+            </div>
+          </Col>
+
+          <Col xxl={4} lg={4} md={8} sm={12} xs={12}>
+            <div className="follow__section-image">
+              <img
+                alt=""
+                src="https://theme.hstatic.net/1000270050/1000900842/14/gallery_item_6_img.jpg?v=32"
+              />
+            </div>
+          </Col>
         </div>
       </section>
     </S.HomePageWrapper>

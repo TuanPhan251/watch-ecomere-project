@@ -8,6 +8,10 @@ const initialValue = {
     loading: false,
     error: "",
   },
+  createComment: {
+    loading: false,
+    error: "",
+  },
 };
 
 const commentsReducer = createReducer(initialValue, {
@@ -48,19 +52,18 @@ const commentsReducer = createReducer(initialValue, {
   [REQUEST(COMMENTS_ACTION.CREATE_COMMENT)]: (state, action) => {
     return {
       ...state,
-      commentList: {
-        ...state.commentList,
+      createComment: {
+        ...state.createComment,
         loading: true,
         error: "",
       },
     };
   },
   [SUCCESS(COMMENTS_ACTION.CREATE_COMMENT)]: (state, action) => {
-    const { data } = action.payload;
     return {
       ...state,
-      commentList: {
-        ...state.commentList,
+      createComment: {
+        ...state.createComment,
         loading: false,
         error: "",
       },
@@ -70,8 +73,8 @@ const commentsReducer = createReducer(initialValue, {
     const { error } = action.payload;
     return {
       ...state,
-      commentList: {
-        ...state.commentList,
+      createComment: {
+        ...state.createComment,
         loading: false,
         error: error,
       },
