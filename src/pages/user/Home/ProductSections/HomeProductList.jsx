@@ -1,8 +1,5 @@
-import { generatePath, Link, useNavigate } from "react-router-dom";
-import { useEffect, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
-import { getProductListUserAction } from "../../../../redux/actions";
+import { generatePath, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { Col, Row } from "antd";
 
@@ -10,9 +7,6 @@ import * as S from "./style";
 import { ROUTES } from "../../../../constants/routes";
 
 const HomeProductList = ({ gender }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const { productListUser } = useSelector((state) => state.product);
 
   const genderProduct = productListUser.data?.filter(

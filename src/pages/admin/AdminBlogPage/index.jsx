@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate, generatePath } from "react-router-dom";
+import { useNavigate, generatePath } from "react-router-dom";
 import moment from "moment";
 
 import { getBlogListAction, deleteBlogAction } from "../../../redux/actions";

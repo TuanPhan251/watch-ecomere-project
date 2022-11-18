@@ -4,17 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import slug from "slug";
 
-import {
-  Button,
-  Select,
-  Form,
-  Input,
-  InputNumber,
-  Upload,
-  Checkbox,
-  Spin,
-  Space,
-} from "antd";
+import { Button, Select, Form, Input, Spin, Space } from "antd";
 
 import { ROUTES } from "../../../../constants/routes";
 import {
@@ -23,8 +13,6 @@ import {
 } from "../../../../redux/actions";
 
 import * as S from "./styles";
-
-const { Option } = Select;
 
 const UpdateBlogPage = () => {
   const { id } = useParams();

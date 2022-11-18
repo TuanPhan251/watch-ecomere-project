@@ -1,8 +1,6 @@
 import { useMemo, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 import { Steps } from "antd";
-import emptyCartImg from "../../../assets/cart/empty_cart_retina.png";
 
 import Cart from "./components/cart";
 import Info from "./components/info";
@@ -11,7 +9,6 @@ import Payment from "./components/payment";
 import * as S from "./style";
 
 const CartSummaryPage = () => {
-  const { cartList } = useSelector((state) => state.cart);
   const [step, setStep] = useState(0);
 
   useEffect(() => {

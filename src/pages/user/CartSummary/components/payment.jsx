@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { generatePath, Link } from "react-router-dom";
 import {
   Avatar,
   Button,
@@ -9,16 +8,13 @@ import {
   Form,
   Input,
   InputNumber,
-  Popconfirm,
   Radio,
   Row,
   Space,
-  Table,
 } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
 
-import { ROUTES } from "../../../../constants/routes";
 import { STEP } from "./constants/step";
 import { BANKS } from "./constants/banks.constant";
 import {

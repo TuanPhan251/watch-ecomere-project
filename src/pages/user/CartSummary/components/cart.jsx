@@ -1,4 +1,4 @@
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 import { generatePath, Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -18,7 +18,6 @@ import {
 } from "../../../../redux/actions/";
 
 import * as S from "../style";
-import { useState } from "react";
 
 const Cart = ({ setStep }) => {
   const dispatch = useDispatch();

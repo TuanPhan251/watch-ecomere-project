@@ -1,6 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { Button, Result } from "antd";
 
@@ -9,9 +8,6 @@ import { ROUTES } from "../../../../constants/routes";
 import * as S from "../style";
 
 const Info = ({ setStep }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   const { orderCode } = useSelector((state) => state.order);
 
   return (
