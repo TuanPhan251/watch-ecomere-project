@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { getUserInfoAction } from "../src/redux/actions";
+import "swiper/swiper-bundle.css";
+import SwiperCore, { Autoplay } from "swiper";
 
 import GlobalStyle from "./utils/GlobalStyle";
 import { ROUTES } from "./constants/routes";
@@ -45,6 +47,8 @@ import BlogDetailPage from "./pages/user/Blog/BlogDetail";
 
 function App() {
   const dispatch = useDispatch();
+
+  SwiperCore.use([Autoplay]);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
