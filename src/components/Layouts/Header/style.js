@@ -125,7 +125,7 @@ export const HeaderNavMobileList = styled.ul`
       transition: all 0.3s ease;
 
       :hover {
-        background-color: #ddd;
+        background-color: var(--primary-color);
       }
     }
   }

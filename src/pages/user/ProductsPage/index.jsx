@@ -43,7 +43,7 @@ const { Option } = Select;
 const { Panel } = Collapse;
 const caseSizes = [
   {
-    RANGE: undefined,
+    RANGE: "",
     NAME: "Tất cả các kích thước",
   },
   {
@@ -191,7 +191,6 @@ const ProductPage = () => {
   };
 
   const handleFilter = (key, values) => {
-    console.log(key, values);
     setFilterParams({
       ...filterParams,
       [key]: values,
@@ -222,29 +221,6 @@ const ProductPage = () => {
     );
 
     dispatch(getCategoriesListAction());
-  };
-
-  const handleFilterCaseSize = (key, values, nameCaseSize) => {
-    if (values) {
-      var newValue = values.split(",").map(Number);
-    }
-    setFilterParams({
-      ...filterParams,
-      [key]: newValue,
-      nameCaseSize: nameCaseSize,
-    });
-
-    dispatch(
-      getProductListUserAction({
-        params: {
-          ...filterParams,
-          [key]: newValue,
-          page: 1,
-          gender: searchObj.gender,
-          limit: PRODUCT_LIST_LIMIT,
-        },
-      })
-    );
   };
 
   const handleRemoveFilterDiscount = () => {
@@ -341,6 +317,24 @@ const ProductPage = () => {
     );
   };
 
+  const handleRemoveFilterCaseSize = () => {
+    setFilterParams({
+      ...filterParams,
+      caseSize: "",
+    });
+
+    dispatch(
+      getProductListUserAction({
+        params: {
+          ...filterParams,
+          caseSize: "",
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+        },
+      })
+    );
+  };
+
   const handleRemoveFilterKeyWord = (key) => {
     setFilterParams({
       ...filterParams,
@@ -422,6 +416,20 @@ const ProductPage = () => {
       );
     });
   }, [filterParams.glassMaterial]);
+
+  const renderFilterCasize = useMemo(() => {
+    for (let i = 0; i < caseSizes.length; i++) {
+      if (
+        filterParams.caseSize === caseSizes[i].RANGE &&
+        filterParams.caseSize !== ""
+      )
+        return (
+          <Tag closable onClose={() => handleRemoveFilterCaseSize()}>
+            {caseSizes[i].NAME}
+          </Tag>
+        );
+    }
+  }, [filterParams.caseSize]);
 
   const renderProducts = useMemo(() => {
     return productListUser.data.map((item) => {
@@ -706,9 +714,10 @@ const ProductPage = () => {
                 <Panel header="Đường kính mặt" key="4">
                   <Radio.Group
                     onChange={(e) =>
-                      handleFilterCaseSize("caseSize", e.target.value)
+                      // handleFilterCaseSize("caseSize", e.target.value)
+                      handleFilter("caseSize", e.target.value)
                     }
-                    // value={filterParams.caseSize}
+                    value={filterParams.caseSize}
                   >
                     {renderCaseSize}
                   </Radio.Group>
@@ -817,14 +826,17 @@ const ProductPage = () => {
                 )}
                 {renderFilterType}
 
-                {filterParams.caseSize && (
+                {/* {filterParams.caseSize && (
                   <Tag
                     closable
                     // onClose={() => handleRemoveFilterKeyWord("caseSize")}
                   >
                     CaseSize: {filterParams.nameCaseSize}
                   </Tag>
-                )}
+                )} */}
+
+                {renderFilterCasize}
+
                 {renderFilterGlass}
 
                 {filterParams.isDiscount && (

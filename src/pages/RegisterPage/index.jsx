@@ -20,6 +20,10 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = "Gaida | Đăng nhập";
+  }, []);
+
+  useEffect(() => {
     if (registerData.error) {
       registerForm.setFields([
         {

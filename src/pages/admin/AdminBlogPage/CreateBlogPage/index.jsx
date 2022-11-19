@@ -18,7 +18,9 @@ const CreateBlogPage = () => {
 
   const [createForm] = Form.useForm();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    document.title = "Tạo bài viết";
+  }, []);
 
   const handleCreateBlog = (data) => {
     console.log({ ...data, slug: slug(data.title) });
@@ -53,10 +55,7 @@ const CreateBlogPage = () => {
             Tạo bài viết mới
           </Button>
 
-          <Button
-            type="danger"
-            onClick={() => navigate(ROUTES.ADMIN.BLOG_LIST_PAGE)}
-          >
+          <Button onClick={() => navigate(ROUTES.ADMIN.BLOG_LIST_PAGE)}>
             Hủy
           </Button>
         </Space>

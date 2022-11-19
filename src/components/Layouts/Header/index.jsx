@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { generatePath, Link, useNavigate } from "react-router-dom";
 
 import { Space, Badge, Drawer, Avatar, message } from "antd";
@@ -7,11 +7,13 @@ import { UserOutlined } from "@ant-design/icons";
 
 import CartDrawer from "./Cart";
 
-import * as S from "./style";
+import { logoutAction } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
+import * as S from "./style";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
   const { cartList } = useSelector((state) => state.cart);
   const [showDrawer, setShowDrawer] = useState(false);
@@ -20,7 +22,9 @@ const Header = () => {
   const accessToken = localStorage.getItem("accessToken");
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
+    // localStorage.removeItem("accessToken");
+    dispatch(logoutAction());
+    navigate(ROUTES.USER.HOME);
   };
 
   const handleNavigateToCart = () => {
@@ -76,7 +80,16 @@ const Header = () => {
               </Link>
             </li>
             <li onClick={() => setShowDrawer(false)}>
-              <Link to={ROUTES.CONTACT}>LIÊN HỆ</Link>
+              <Link to={ROUTES.USER.CONTACT}>LIÊN HỆ</Link>
+            </li>
+            <li onClick={() => setShowDrawer(false)}>
+              <Link to={ROUTES.USER.BLOG}>BÀI VIẾT</Link>
+            </li>
+            <li onClick={() => setShowDrawer(false)}>
+              <Link to={ROUTES.LOGIN}>ĐĂNG NHẬP</Link>
+            </li>
+            <li onClick={() => setShowDrawer(false)}>
+              <Link to={ROUTES.REGISTER}>ĐĂNG KÝ</Link>
             </li>
           </S.HeaderNavMobileList>
         </Drawer>
@@ -610,81 +623,83 @@ const Header = () => {
                 <p className="userName">{userInfo.data.userName}</p>
               )}
 
-              <div className="user_icon">
-                <i className="fa-solid fa-circle-user"></i>
+              {accessToken && (
+                <div className="user_icon">
+                  <i className="fa-solid fa-circle-user"></i>
 
-                <div className="user_info-wrapper">
-                  <div className="user_info-img">
-                    <Avatar size={100}>
-                      <UserOutlined />
-                    </Avatar>
+                  <div className="user_info-wrapper">
+                    <div className="user_info-img">
+                      <Avatar size={100}>
+                        <UserOutlined />
+                      </Avatar>
 
-                    {accessToken && <p>{userInfo.data.email}</p>}
-                  </div>
+                      {accessToken && <p>{userInfo.data.email}</p>}
+                    </div>
 
-                  <div className="user_actions">
-                    {accessToken &&
-                      (userInfo.data.role === "admin" ? (
-                        <>
-                          <Link
-                            to={ROUTES.USER.USER_INFO}
-                            className="user_actions-btn"
-                          >
-                            Thông tin tài khoản
-                          </Link>{" "}
-                          <Link
-                            to={ROUTES.ADMIN.DASH_BOARD}
-                            className="user_actions-btn"
-                          >
-                            Tới trang quản trị
-                          </Link>
-                        </>
-                      ) : (
-                        <>
-                          <Link
-                            to={ROUTES.USER.USER_INFO}
-                            className="user_actions-btn"
-                          >
-                            Thông tin tài khoản
-                          </Link>
-                          <Link
-                            to={ROUTES.USER.USER_INFO_ORDER}
-                            className="user_actions-btn"
-                          >
-                            Đơn hàng của bạn
-                          </Link>
-                          <Link
-                            to={ROUTES.USER.USER_INFO_WISHLIST}
-                            className="user_actions-btn"
-                          >
-                            Sản phẩm đã thích
-                          </Link>
-                        </>
-                      ))}
-                    {!accessToken && (
-                      <Link to={ROUTES.LOGIN} className="user_actions-btn">
-                        <span>ĐĂNG NHẬP</span>
-                      </Link>
-                    )}
-                    {accessToken && (
-                      <Link
-                        to="/"
-                        className="user_actions-btn"
-                        onClick={() => handleLogout()}
-                      >
-                        Đăng xuất
-                      </Link>
-                    )}
+                    <div className="user_actions">
+                      {accessToken &&
+                        (userInfo.data.role === "admin" ? (
+                          <>
+                            <Link
+                              to={ROUTES.USER.USER_INFO}
+                              className="user_actions-btn"
+                            >
+                              Thông tin tài khoản
+                            </Link>{" "}
+                            <Link
+                              to={ROUTES.ADMIN.DASH_BOARD}
+                              className="user_actions-btn"
+                            >
+                              Tới trang quản trị
+                            </Link>
+                          </>
+                        ) : (
+                          <>
+                            <Link
+                              to={ROUTES.USER.USER_INFO}
+                              className="user_actions-btn"
+                            >
+                              Thông tin tài khoản
+                            </Link>
+                            <Link
+                              to={ROUTES.USER.USER_INFO_ORDER}
+                              className="user_actions-btn"
+                            >
+                              Đơn hàng của bạn
+                            </Link>
+                            <Link
+                              to={ROUTES.USER.USER_INFO_WISHLIST}
+                              className="user_actions-btn"
+                            >
+                              Sản phẩm đã thích
+                            </Link>
+                          </>
+                        ))}
+                      {!accessToken && (
+                        <Link to={ROUTES.LOGIN} className="user_actions-btn">
+                          <span>ĐĂNG NHẬP</span>
+                        </Link>
+                      )}
+                      {accessToken && (
+                        <Link
+                          to="/"
+                          className="user_actions-btn"
+                          onClick={() => handleLogout()}
+                        >
+                          Đăng xuất
+                        </Link>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
             </S.UserWrapper>
 
-            {/* {!accessToken && (
-            <Link to={ROUTES.LOGIN}>
-              <span>ĐĂNG NHẬP</span>
-            </Link>
-          )} */}
+            {!accessToken && (
+              <Link to={ROUTES.LOGIN}>
+                <span>ĐĂNG NHẬP</span>
+              </Link>
+            )}
 
             <S.HeaderCart>
               <Badge count={itemsAmount}>

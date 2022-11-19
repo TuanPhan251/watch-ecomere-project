@@ -12,3 +12,16 @@ export const TopWrapper = styled.div`
   h2 {
   }
 `;
+
+export const OrderStatus = styled.div`
+  i {
+    font-size: 16px;
+    margin-right: 4px;
+  }
+
+  .ant-tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;

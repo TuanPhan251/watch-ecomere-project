@@ -27,6 +27,8 @@ const AdminBlogsPage = () => {
         },
       })
     );
+
+    document.title = "Danh sách bài viết";
   }, []);
 
   const handleChangePage = (page) => {

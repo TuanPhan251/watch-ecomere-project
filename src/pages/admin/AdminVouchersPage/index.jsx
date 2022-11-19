@@ -54,6 +54,8 @@ const AdminVouchersPage = () => {
         },
       })
     );
+
+    document.title = "Danh sách voucher";
   }, []);
 
   const handleChangePage = (page) => {

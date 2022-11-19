@@ -32,7 +32,7 @@ import { PRODUCT_LIST_LIMIT } from "../../../constants/paginations";
 import { ROUTES } from "../../../constants/routes";
 import { SLIDER_MARKS } from "./constants";
 
-import menBanner from "../../../assets/banner/men-banner.jpg";
+import brandBanner from "../../../assets/banner/brand-banner.jpg";
 
 import * as S from "./styles";
 
@@ -42,7 +42,7 @@ const { Option } = Select;
 const { Panel } = Collapse;
 const caseSizes = [
   {
-    RANGE: undefined,
+    RANGE: "",
     NAME: "Tất cả các kích thước",
   },
   {
@@ -202,23 +202,18 @@ const ProductPage = () => {
     dispatch(getCategoriesListAction());
   };
 
-  const handleFilterCaseSize = (key, values, nameCaseSize) => {
-    if (values) {
-      var newValue = values.split(",").map(Number);
-    }
+  const handleRemoveFilterCaseSize = () => {
     setFilterParams({
       ...filterParams,
-      [key]: newValue,
-      nameCaseSize: nameCaseSize,
+      caseSize: "",
     });
 
     dispatch(
       getProductListUserAction({
         params: {
           ...filterParams,
-          [key]: newValue,
+          caseSize: "",
           page: 1,
-
           limit: PRODUCT_LIST_LIMIT,
         },
       })
@@ -365,6 +360,20 @@ const ProductPage = () => {
     });
   }, [filterParams.glassMaterial]);
 
+  const renderFilterCasize = useMemo(() => {
+    for (let i = 0; i < caseSizes.length; i++) {
+      if (
+        filterParams.caseSize === caseSizes[i].RANGE &&
+        filterParams.caseSize !== ""
+      )
+        return (
+          <Tag closable onClose={() => handleRemoveFilterCaseSize()}>
+            {caseSizes[i].NAME}
+          </Tag>
+        );
+    }
+  }, [filterParams.caseSize]);
+
   const renderProducts = useMemo(() => {
     return productListUser.data.map((item) => {
       const haveComment = item.comments.length !== 0;
@@ -459,14 +468,14 @@ const ProductPage = () => {
   const renderPageBanner = useMemo(() => {
     return (
       <>
-        <img alt="" src={menBanner} />
+        <img alt="" src={brandBanner} />
 
         <h2>Sản phẩm</h2>
 
         <div className="overlay"></div>
       </>
     );
-  }, [menBanner]);
+  }, [brandBanner]);
 
   return (
     <S.Wrapper>
@@ -616,10 +625,8 @@ const ProductPage = () => {
 
                 <Panel header="Đường kính mặt" key="4">
                   <Radio.Group
-                    onChange={(e) =>
-                      handleFilterCaseSize("caseSize", e.target.value)
-                    }
-                    // value={filterParams.caseSize}
+                    onChange={(e) => handleFilter("caseSize", e.target.value)}
+                    value={filterParams.caseSize}
                   >
                     {renderCaseSize}
                   </Radio.Group>
@@ -732,14 +739,8 @@ const ProductPage = () => {
                 )}
                 {renderFilterType}
 
-                {filterParams.caseSize && (
-                  <Tag
-                    closable
-                    // onClose={() => handleRemoveFilterKeyWord("caseSize")}
-                  >
-                    CaseSize: {filterParams.nameCaseSize}
-                  </Tag>
-                )}
+                {renderFilterCasize}
+
                 {renderFilterGlass}
               </Space>
 

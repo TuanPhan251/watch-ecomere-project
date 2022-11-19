@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 import {
   SearchOutlined,
   BellOutlined,
@@ -81,6 +83,10 @@ const data = [
   },
 ];
 const AdminDashboardPage = () => {
+  useEffect(() => {
+    document.title = "Trang quản trị";
+  }, []);
+
   return (
     <S.DashBoardWrapper>
       <div style={{ padding: 20 }}>

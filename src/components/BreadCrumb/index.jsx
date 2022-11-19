@@ -15,7 +15,11 @@ const BreadCrumb = ({ breadCrumbItems }) => {
     });
   }, [breadCrumbItems]);
 
-  return <Breadcrumb separator=">">{renderBreadCrumbItem}</Breadcrumb>;
+  return (
+    <S.Wrapper>
+      <Breadcrumb separator=">">{renderBreadCrumbItem}</Breadcrumb>
+    </S.Wrapper>
+  );
 };
 
 export default BreadCrumb;

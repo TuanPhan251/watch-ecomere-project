@@ -27,6 +27,8 @@ const UpdateBlogPage = () => {
 
   useEffect(() => {
     dispatch(getBlogDetailAction({ id }));
+
+    document.title = "Chỉnh sửa bài viết";
   }, [id]);
 
   useEffect(() => {
@@ -79,10 +81,7 @@ const UpdateBlogPage = () => {
             Cập nhật bài viêt
           </Button>
 
-          <Button
-            type="danger"
-            onClick={() => navigate(ROUTES.ADMIN.BLOG_LIST_PAGE)}
-          >
+          <Button onClick={() => navigate(ROUTES.ADMIN.BLOG_LIST_PAGE)}>
             Hủy
           </Button>
         </Space>
