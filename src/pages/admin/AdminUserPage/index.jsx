@@ -36,6 +36,8 @@ const AdminUsersPage = () => {
         },
       })
     );
+
+    document.title = "Danh sách người dùng";
   }, []);
 
   const initialFilterParams = {

@@ -13,6 +13,7 @@ import {
   Space,
   Input,
   Select,
+  Tag,
 } from "antd";
 import * as S from "./styles";
 import { generatePath, Link } from "react-router-dom";
@@ -34,6 +35,8 @@ const AdminOrderListPage = () => {
         },
       })
     );
+
+    document.title = "Danh sách đơn hàng";
   }, []);
 
   const handleChangePage = (page) => {
@@ -121,19 +124,49 @@ const AdminOrderListPage = () => {
       render: (_, record) => {
         switch (record.status) {
           case "delivering": {
-            return <span>Đang giao</span>;
+            return (
+              <S.OrderStatus>
+                <Tag color="blue">
+                  <i class="fa-solid fa-truck-fast"></i>Đang giao
+                </Tag>
+              </S.OrderStatus>
+            );
           }
           case "cancel": {
-            return <span>Đã hủy</span>;
+            return (
+              <S.OrderStatus>
+                <Tag color="red">
+                  <i class="fa-solid fa-circle-xmark"></i>Admin hủy
+                </Tag>
+              </S.OrderStatus>
+            );
           }
           case "userCancel": {
-            return <span>Đã hủy</span>;
+            return (
+              <S.OrderStatus>
+                <Tag color="red">
+                  <i class="fa-solid fa-circle-xmark"></i>Đã hủy
+                </Tag>
+              </S.OrderStatus>
+            );
           }
           case "done": {
-            return <span>Hoàn thành</span>;
+            return (
+              <S.OrderStatus>
+                <Tag color="green">
+                  <i class="fa-solid fa-circle-check"></i>Hoàn thành
+                </Tag>
+              </S.OrderStatus>
+            );
           }
           default: {
-            return <span>Chờ xử lý</span>;
+            return (
+              <S.OrderStatus>
+                <Tag>
+                  <i class="fa-solid fa-clock-rotate-left"></i>Chờ xử lý
+                </Tag>
+              </S.OrderStatus>
+            );
           }
         }
       },

@@ -36,9 +36,13 @@ function* getProductListUserSaga(action) {
         ...(params.type && {
           movement: params.type,
         }),
+        // ...(params.caseSize && {
+        //   caseSize_gte: params.caseSize[0],
+        //   caseSize_lte: params.caseSize[1],
+        // }),
         ...(params.caseSize && {
-          caseSize_gte: params.caseSize[0],
-          caseSize_lte: params.caseSize[1],
+          caseSize_gte: params.caseSize.split(",")[0],
+          caseSize_lte: params.caseSize.split(",")[1],
         }),
         ...(params.glassMaterial && {
           glassMaterial: params.glassMaterial,

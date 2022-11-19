@@ -68,6 +68,10 @@ const AdminProductPage = () => {
   };
 
   useEffect(() => {
+    document.title = "Danh sách sản phẩm";
+  }, []);
+
+  useEffect(() => {
     dispatch(
       getProductListAdminAction({
         params: {

@@ -19,6 +19,10 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = "Gaida | Đăng ký";
+  }, []);
+
+  useEffect(() => {
     if (loginData.error) {
       loginForm.setFields([
         {

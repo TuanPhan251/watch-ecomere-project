@@ -60,6 +60,8 @@ const UpdateProductPage = () => {
       })
     );
 
+    document.title = "Chỉnh sửa sản phẩm";
+
     return () => {
       dispatch(removeProductDetailAction());
     };
@@ -162,7 +164,8 @@ const UpdateProductPage = () => {
           </Button>
 
           <Button
-            type="danger"
+            // type="danger"
+            color="#000"
             onClick={() => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE)}
           >
             Hủy

@@ -59,6 +59,8 @@ const AdminCategoryPage = () => {
         },
       })
     );
+
+    document.title = "Danh sách nhãn hàng";
   }, []);
 
   const handleChangePage = (page) => {

@@ -5,21 +5,25 @@ import { REQUEST, FAIL, SUCCESS, USER_ACTION } from "../CONSTANTS";
 const initialValue = {
   userInfo: {
     data: {},
-    loading: true,
+    loading: false,
     error: "",
   },
   userList: {
     data: [],
     meta: {},
-    loading: true,
+    loading: false,
     error: "",
   },
   userDetail: {
     data: {},
-    loading: true,
+    loading: false,
     error: "",
   },
   loginData: {
+    loading: false,
+    error: "",
+  },
+  logoutData: {
     loading: false,
     error: "",
   },
@@ -68,6 +72,20 @@ const userReducer = createReducer(initialValue, {
       },
     };
   },
+
+  [REQUEST(USER_ACTION.LOGOUT)]: (state, action) => {
+    localStorage.removeItem("accessToken");
+
+    return {
+      ...state,
+      userInfo: {
+        data: {},
+        loading: false,
+        error: "",
+      },
+    };
+  },
+
   [REQUEST(USER_ACTION.REGISTER)]: (state, action) => {
     return {
       ...state,

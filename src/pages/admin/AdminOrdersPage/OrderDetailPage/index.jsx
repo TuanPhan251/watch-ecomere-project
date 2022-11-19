@@ -45,6 +45,8 @@ const AdminOrderDetailPage = () => {
     );
     if (orderDetail.data.id)
       dispatch(getUserDetailAction({ id: orderDetail.data.userId }));
+
+    document.title = "Chi tiết đơn hàng";
   }, [id]);
 
   useEffect(() => {

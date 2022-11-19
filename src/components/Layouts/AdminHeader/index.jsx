@@ -1,19 +1,21 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import { Button, Col, Row, Space } from "antd";
 
+import { logoutAction } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
 import * as S from "./styles";
 
 const AdminHeader = ({ setShowSidebar, showSidebar }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.user);
 
   const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    navigate(ROUTES.LOGIN);
+    dispatch(logoutAction());
+    navigate(ROUTES.USER.HOME);
   };
 
   return (

@@ -38,6 +38,8 @@ const AdminAccountsPage = () => {
         },
       })
     );
+
+    document.title = "Danh sách tài khoản";
   }, []);
 
   const initialFilterParams = { keyword: "", role: [] };

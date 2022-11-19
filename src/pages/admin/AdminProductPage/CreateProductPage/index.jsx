@@ -43,6 +43,8 @@ const CreateProductPage = () => {
         },
       })
     );
+
+    document.title = "Thêm sản phẩm";
   }, []);
 
   const renderCategoryOptions = () => {
@@ -115,7 +117,8 @@ const CreateProductPage = () => {
           </Button>
 
           <Button
-            type="danger"
+            color="#000"
+            // type="danger"
             onClick={() => navigate(ROUTES.ADMIN.PRODUCT_LIST_PAGE)}
           >
             Hủy
