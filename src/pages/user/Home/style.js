@@ -131,16 +131,41 @@ export const HomePageWrapper = styled.main`
     }
   }
 
+  .policy__section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 40px auto 0;
+
+    .policy__section-img {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 12px;
+    }
+
+    .policy__section-content {
+      margin-top: 12px;
+      text-align: center;
+      h4 {
+        font-size: 18px;
+      }
+
+      p {
+        color: #999;
+      }
+    }
+  }
+
   .new_products-section {
     max-width: 1200px;
     width: 100%;
     margin: 40px auto;
-    padding: 60px 30px;
+    padding: 40px 12px;
     background-color: #fff;
 
     .new_products_section-heading {
       padding: 4px 8px;
-      margin-bottom: 60px;
+      margin-bottom: 24px;
       font-size: 26px;
       text-align: center;
       border-radius: 2px;
@@ -156,6 +181,10 @@ export const HomePageWrapper = styled.main`
       .swiper-button-next,
       .swiper-button-prev {
         color: var(--button-color);
+      }
+
+      .swiper-pagination-bullet {
+        background-color: var(--button-color) !important;
       }
     }
   }
@@ -248,7 +277,7 @@ export const HomePageWrapper = styled.main`
     right: 50%;
     transform: translateX(50%);
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 600;
     color: #fff;
     text-shadow: 0 0 4px #262626;
 
@@ -362,7 +391,7 @@ export const EmailRegister = styled.section`
   padding: 40px 0;
 
   .email_register-inner {
-    padding: 100px 0;
+    padding: 150px 0;
     background-image: url(${(props) => props.bgrImage});
     background-attachment: fixed;
     background-position: center center;
@@ -370,24 +399,24 @@ export const EmailRegister = styled.section`
     position: relative;
 
     .email_register-content {
-      max-width: 500px;
-      padding: 24px;
+      max-width: 800px;
+      width: 90%;
+      padding: 40px;
       margin: 0 auto;
-      border-radius: 8px;
-      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+      background-color: rgba(255, 255, 255, 0.9);
 
       h3 {
-        margin-bottom: 24px;
-        color: #fff;
-        text-transform: uppercase;
+        margin-bottom: 4px;
+        color: var(--dark-text-color);
         text-align: center;
-        font-size: 32px;
+        font-size: 28px;
         line-height: 50px;
       }
 
       p {
         margin-bottom: 24px;
-        color: #fff;
+        color: var(--dark-text-color);
         text-align: center;
         font-size: 16px;
       }

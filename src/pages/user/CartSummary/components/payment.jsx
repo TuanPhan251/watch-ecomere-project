@@ -116,7 +116,7 @@ const Payment = ({ setStep }) => {
         return (
           <div className="product__name">
             <Space>
-              <Avatar shape="square" size={64} src={record.image} />
+              <Avatar shape="square" size={64} src={record.images[0].url} />
               <h4 className="product__name-heading">{record.name}</h4>
             </Space>
           </div>

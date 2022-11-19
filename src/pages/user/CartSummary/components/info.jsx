@@ -119,7 +119,7 @@ const Info = ({ setStep }) => {
       render: (_, record) => {
         return (
           <Space>
-            <Avatar shape="square" size={64} src={record.image} />
+            <Avatar shape="square" size={64} src={record.images[0].url} />
             <h4>{record.name}</h4>
           </Space>
         );

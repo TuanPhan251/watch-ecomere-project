@@ -16,7 +16,7 @@ import womenImg from "../../../assets/banner/women-1.webp";
 import bgrImage from "../../../assets/banner/bgr-img.jpg";
 
 import * as S from "./style";
-import { Col, Spin } from "antd";
+import { Col, Input, Row, Spin } from "antd";
 
 const HomePage = () => {
   window.title = "asdf";
@@ -114,6 +114,48 @@ const HomePage = () => {
         <div className="overlay"></div>
       </div>
 
+      <section className="policy__section">
+        <Row>
+          <Col span={8}>
+            <div className="policy__section-img">
+              <img
+                alt=""
+                src="https://theme.hstatic.net/1000270050/1000900842/14/services_item_1_img.png?v=32"
+              />
+            </div>
+
+            <div className="policy__section-content">
+              <h4>Sản phẩm chính hãng</h4>
+              <p>Chất lượng thật giá trị thật</p>
+            </div>
+          </Col>
+          <Col span={8}>
+            <div className="policy__section-img">
+              <img
+                alt=""
+                src="https://theme.hstatic.net/1000270050/1000900842/14/services_item_2_img.png?v=32"
+              />
+            </div>
+            <div className="policy__section-content">
+              <h4>Bảo hành 12 tháng</h4>
+              <p>1 đổi 1 khi sản phẩm lỗi do nhà sản xuất</p>
+            </div>
+          </Col>
+          <Col span={8}>
+            <div className="policy__section-img">
+              <img
+                alt=""
+                src="https://theme.hstatic.net/1000270050/1000900842/14/services_item_3_img.png?v=32"
+              />
+            </div>
+            <div className="policy__section-content">
+              <h4>Giao hàng nhanh chóng</h4>
+              <p>Sản phẩm được đóng gói cẩn thận</p>
+            </div>
+          </Col>
+        </Row>
+      </section>
+
       <section className="new_products-section">
         <h3 className="new_products_section-heading">Sản phẩm mới</h3>
 
@@ -126,8 +168,9 @@ const HomePage = () => {
           spaceBetween={50}
           slidesPerView={4}
           pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
           navigation
+          autoplay={true}
+          loop={true}
           breakpoints={{
             1: {
               slidesPerView: 2,
@@ -172,13 +215,13 @@ const HomePage = () => {
       <S.EmailRegister bgrImage={bgrImage}>
         <div className="email_register-inner">
           <div className="email_register-content">
-            <h3>Đăng ký</h3>
+            <h3>Đăng ký nhận bản tin</h3>
             <p>
-              Đăng ký nhận bản tin để cập nhật những sản phẩm mới, nhận thông
-              tin ưu đãi đặc biệt và thông tin giảm giá khác.
+              Để cập nhật những sản phẩm mới, nhận thông tin ưu đãi đặc biệt và
+              thông tin giảm giá khác.
             </p>
             <form className="email_register-form">
-              <input placeholder="Nhập email muốn đăng ký..." />
+              <Input placeholder="Nhập email muốn đăng ký..." />
               <button
                 type="submit"
                 onClick={(e) => {
