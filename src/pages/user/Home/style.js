@@ -12,9 +12,14 @@ const fadeIn = keyframes`
   }
 `;
 
-export const HomePageWrapper = styled.main`
+export const HomePageWrapper = styled.div`
   padding-bottom: 40px;
   background-color: var(--bgr-color);
+
+  .top__spacer {
+    width: 100%;
+    padding-top: var(--header-height);
+  }
 
   .header_img-wrapper {
     position: relative;
@@ -22,8 +27,10 @@ export const HomePageWrapper = styled.main`
     height: calc(100vh - var(--header-height));
 
     video {
+      position: absolute;
+      inset: 0;
       width: 100%;
-      height: calc(100vh - var(--header-height));
+      height: 100%;
 
       object-fit: cover;
     }
@@ -103,12 +110,25 @@ export const HomePageWrapper = styled.main`
       }
 
       .header_img-slogan {
-        bottom: 35%;
+        bottom: 40%;
         font-size: 28px;
       }
 
       .header-img-action {
-        bottom: 25%;
+        bottom: 30%;
+      }
+    }
+
+    @media (max-width: 768px) and (min-width: 577px) {
+      .header_img-header {
+        font-size: 28px;
+      }
+
+      .header_img-slogan {
+        font-size: 28px;
+      }
+
+      .header-img-action {
       }
     }
   }
@@ -125,7 +145,6 @@ export const HomePageWrapper = styled.main`
 
       video {
         width: 100%;
-        height: 100vh;
         object-fit: cover;
       }
     }

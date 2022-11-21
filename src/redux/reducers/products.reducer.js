@@ -280,7 +280,7 @@ const productReducer = createReducer(initialValue, {
     return {
       ...state,
       deleteProductData: {
-        ...state.updateProductData,
+        ...state.deleteProductData,
         loading: true,
         error: "",
       },
@@ -289,8 +289,8 @@ const productReducer = createReducer(initialValue, {
   [SUCCESS(PRODUCT_ACTION.DELETE_PRODUCT)]: (state, action) => {
     return {
       ...state,
-      updateProductData: {
-        ...state.updateProductData,
+      deleteProductData: {
+        ...state.deleteProductData,
         loading: false,
         error: "",
       },
@@ -300,8 +300,8 @@ const productReducer = createReducer(initialValue, {
     const { error } = action.payload;
     return {
       ...state,
-      updateProductData: {
-        ...state.updateProductData,
+      deleteProductData: {
+        ...state.deleteProductData,
         loading: false,
         error: error,
       },

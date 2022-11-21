@@ -98,6 +98,7 @@ const HomePage = () => {
 
   return (
     <S.HomePageWrapper>
+      <div className="top__spacer"></div>
       <div className="header_img-wrapper" ref={videoRef}>
         <video src={headerVideo} muted loop autoPlay />
 

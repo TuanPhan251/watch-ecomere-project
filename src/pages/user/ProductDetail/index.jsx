@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -384,6 +384,8 @@ const ProductDetailPage = () => {
         </Spin>
       </S.Wrapper>
     );
+
+  if (productDetail.data.isHidden) return <Navigate to="/404" />;
 
   return (
     <S.Wrapper>
