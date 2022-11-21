@@ -242,11 +242,16 @@ const Info = ({ setStep }) => {
                     required: true,
                     message: "Thông tin này không được bỏ trống!",
                   },
+                  {
+                    pattern:
+                      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+                    message: "Số điện thoại không đúng định dạng",
+                  },
                 ]}
                 label="Số điện thoại"
                 name="phoneNumber"
               >
-                <InputNumber style={{ width: "100%" }} />
+                <Input style={{ width: "100%" }} />
               </Form.Item>
             </Col>
             <Col xxl={8} lg={8} md={12} sm={24} xs={24}>

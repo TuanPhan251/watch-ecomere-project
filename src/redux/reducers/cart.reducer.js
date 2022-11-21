@@ -16,7 +16,16 @@ const cartReducer = createReducer(initialValue, {
 
     if (index === -1) {
       const newItem = {
-        ...product.data,
+        // ...product.data,
+        name: product.data.name,
+        category: product.data.category,
+        discountPercent: product.data.discountPercent,
+        gender: product.data.gender,
+        id: product.data.id,
+        images: product.data.images[0].url,
+        stock: product.data.stock,
+        price: product.data.price,
+        finalPrice: product.data.finalPrice,
         totalAmount: productAmount,
         totalPrice: product.data.finalPrice * productAmount,
       };
@@ -31,7 +40,7 @@ const cartReducer = createReducer(initialValue, {
     } else {
       const totalAmount = state.cartList[index].totalAmount + productAmount;
       const existProduct = {
-        ...product.data,
+        ...state.cartList[index],
         totalAmount: parseInt(totalAmount),
         totalPrice: parseFloat(totalAmount * product.data.finalPrice),
       };
@@ -56,7 +65,7 @@ const cartReducer = createReducer(initialValue, {
       newCartList.splice(index, 1);
     } else {
       const newItem = {
-        ...product,
+        ...state.cartList[index],
         totalAmount: amount,
         totalPrice: product.finalPrice * amount,
       };
