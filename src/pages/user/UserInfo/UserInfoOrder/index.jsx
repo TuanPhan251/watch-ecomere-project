@@ -6,6 +6,7 @@ import moment from "moment/moment";
 import {
   getOrderListAction,
   updateOrderStatusAction,
+  getProductListUserAction,
 } from "../../../../redux/actions";
 import BreadCrumb from "../../../../components/BreadCrumb";
 import UserSideBar from "../SideBar";
@@ -173,7 +174,7 @@ const UserInfoOrderPage = () => {
                     return (
                       <S.OrderItem key={item.id}>
                         <Col span={2}>
-                          <img width="100%" src={item.images[0].url} alt="" />
+                          <img width="100%" src={item.image} alt="" />
                         </Col>
 
                         <Col span={12} className="order__item-name">

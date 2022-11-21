@@ -10,6 +10,10 @@ export const BreadcrumbWrapper = styled.div`
   width: 100%;
   margin: auto;
   padding: 24px 0;
+
+  @media screen and (max-width: 1199px) {
+    padding: 24px 12px;
+  }
 `;
 
 export const Wrapper = styled.div`

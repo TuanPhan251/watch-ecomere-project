@@ -90,7 +90,7 @@ export const ProductItem = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 4px;
+      padding: 6px;
       border: none;
       border-radius: 50%;
       background-color: #fff;
@@ -100,10 +100,15 @@ export const ProductItem = styled.div`
       i {
         color: #000;
         font-size: 18px;
+        transition: all 0.3s ease;
       }
 
       :hover {
-        background-color: #ddd;
+        background-color: var(--primary-color);
+
+        i {
+          color: #fff;
+        }
       }
     }
   }

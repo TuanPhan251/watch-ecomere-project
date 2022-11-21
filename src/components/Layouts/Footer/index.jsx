@@ -22,7 +22,7 @@ const Footer = () => {
               <Col span={24}>
                 <h3 className="footer__title">Về chúng tôi</h3>
               </Col>
-              <Col xxl={12} lg={12} md={24} xs={24}>
+              <Col xxl={12} lg={12} md={12} sm={24} xs={24}>
                 <p>
                   Gaida là nhà phân phối đồng hồ chính hãng tại thị trường Việt
                   Nam, cam kết sản phẩm chính hãng 100% và đầy đủ các chính sách
@@ -36,7 +36,7 @@ const Footer = () => {
                   />
                 </div>
               </Col>
-              <Col xxl={12} lg={12} md={24} xs={24}>
+              <Col xxl={12} lg={12} md={12} sm={24} xs={24}>
                 <p>
                   CÔNG TY TNHH PHÂN PHỐI GAIDA
                   <br /> Địa chỉ: - 92 Quang Trung, Thạch Thang, Hải Châu, Đà

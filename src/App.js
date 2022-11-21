@@ -45,6 +45,8 @@ import UserInfoWishListPage from "./pages/user/UserInfo/UserInfoWishList";
 import BlogPage from "./pages/user/Blog";
 import BlogDetailPage from "./pages/user/Blog/BlogDetail";
 
+import NotFount404 from "./components/Layouts/NotFound404";
+
 function App() {
   const dispatch = useDispatch();
 
@@ -168,6 +170,8 @@ function App() {
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
           </Route>
+
+          <Route path="*" element={<NotFount404 />} />
         </Routes>
       </div>
     </>
