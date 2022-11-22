@@ -34,7 +34,7 @@ export const SidebarContent = [
   {
     title: "Mã giảm giá",
     path: ROUTES.ADMIN.VOUCHER_LIST_PAGE,
-    icon: <i className="fa-regular fa-rectangle-list"></i>,
+    icon: <i className="fa-solid fa-ticket-simple"></i>,
   },
   {
     title: "Bài viết",

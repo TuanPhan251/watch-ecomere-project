@@ -191,7 +191,11 @@ const UpdateProductPage = () => {
             name="isHidden"
             valuePropName="checked"
           >
-            <Checkbox />
+            <Checkbox defaultChecked={false} />
+          </Form.Item>
+
+          <Form.Item label="Sản phẩm mới" name="isNew" valuePropName="checked">
+            <Checkbox defaultChecked={false} />
           </Form.Item>
 
           <Form.Item
@@ -200,43 +204,6 @@ const UpdateProductPage = () => {
             rules={[{ required: true, message: "Hãy nhập tên sản phẩm" }]}
           >
             <Input />
-          </Form.Item>
-
-          <Form.Item label="Sản phẩm mới" name="isNew" valuePropName="checked">
-            <Checkbox />
-          </Form.Item>
-
-          <Form.Item
-            label="Giá"
-            name="price"
-            rules={[{ required: true, message: "Hãy nhập giá sản phẩm" }]}
-          >
-            <InputNumber
-              style={{ width: "100%" }}
-              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-              parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-            />
-          </Form.Item>
-
-          <Form.Item
-            label="Tồn kho"
-            name="stock"
-            rules={[
-              {
-                required: true,
-                message: "Hãy nhập số lượng sản phẩm trong kho",
-              },
-            ]}
-          >
-            <InputNumber />
-          </Form.Item>
-
-          <Form.Item
-            label="Khuyến mãi(%)"
-            name="discountPercent"
-            rules={[{ required: true, message: "Hãy nhập khuyến mãi" }]}
-          >
-            <InputNumber min={0} max={99} />
           </Form.Item>
 
           <Form.Item
@@ -270,10 +237,54 @@ const UpdateProductPage = () => {
           </Form.Item>
 
           <Form.Item
+            label="Giá"
+            name="price"
+            rules={[{ required: true, message: "Hãy nhập giá sản phẩm" }]}
+          >
+            <InputNumber
+              style={{ width: "100%" }}
+              formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Tồn kho"
+            name="stock"
+            rules={[
+              {
+                required: true,
+                message: "Hãy nhập số lượng sản phẩm trong kho",
+              },
+            ]}
+          >
+            <InputNumber />
+          </Form.Item>
+
+          <Form.Item
+            label="Khuyến mãi(%)"
+            name="discountPercent"
+            initialValue={0}
+            rules={[{ required: true, message: "Hãy nhập khuyến mãi" }]}
+          >
+            <InputNumber min={0} max={99} />
+          </Form.Item>
+
+          <Form.Item
             label="Kích thước mặt (mm)"
             name="caseSize"
             rules={[
               { required: true, message: "Hãy nhập kích thước mặt sản phẩm" },
+            ]}
+          >
+            <InputNumber />
+          </Form.Item>
+
+          <Form.Item
+            label="Kích thước dây (mm)"
+            name="strapSize"
+            rules={[
+              { required: true, message: "Hãy nhập kích thước dây sản phẩm" },
             ]}
           >
             <InputNumber />
@@ -318,16 +329,6 @@ const UpdateProductPage = () => {
           </Form.Item>
 
           <Form.Item
-            label="Kích thước dây (mm)"
-            name="strapSize"
-            rules={[
-              { required: true, message: "Hãy nhập kích thước dây sản phẩm" },
-            ]}
-          >
-            <InputNumber />
-          </Form.Item>
-
-          <Form.Item
             label="Kiểu máy"
             name="movement"
             rules={[{ required: true, message: "Hãy nhập kiểu máy sản phẩm" }]}
@@ -364,13 +365,13 @@ const UpdateProductPage = () => {
           <Form.Item
             label="Ảnh sản phẩm"
             name="images"
+            valuePropName="fileList"
             rules={[
               {
                 required: true,
                 message: "Hãy chọn ảnh sản phẩm",
               },
             ]}
-            valuePropName="fileList"
             getValueFromEvent={(e) => {
               if (Array.isArray(e)) return e;
               return e?.fileList;

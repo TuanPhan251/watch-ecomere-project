@@ -495,11 +495,9 @@ const ProductDetailPage = () => {
                       <Link
                         onClick={(e) => {
                           e.preventDefault();
-                          navigate(ROUTES.USER.MEN_DETAIL, {
-                            state: {
-                              title: "Nam",
-                              gender: "male",
-                            },
+                          navigate({
+                            pathname: ROUTES.USER.MEN_DETAIL,
+                            search: "?gender=male",
                           });
                         }}
                       >
@@ -509,11 +507,9 @@ const ProductDetailPage = () => {
                       <Link
                         onClick={(e) => {
                           e.preventDefault();
-                          navigate(ROUTES.USER.WOMEN_DETAIL, {
-                            state: {
-                              title: "Nữ",
-                              gender: "female",
-                            },
+                          navigate({
+                            pathname: ROUTES.USER.MEN_DETAIL,
+                            search: "?gender=female",
                           });
                         }}
                       >

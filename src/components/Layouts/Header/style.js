@@ -299,7 +299,7 @@ export const DropDownMenuWrapperTH = styled.div`
     position: absolute;
     top: 59px;
     left: -53px;
-    min-width: 600%;
+    min-width: 700px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     background-color: #fff;
 
@@ -312,6 +312,11 @@ export const DropDownMenuWrapperTH = styled.div`
       & div {
         display: flex;
         flex-direction: column;
+        p {
+          margin-bottom: 10px;
+          font-size: 16px;
+          font-weight: 600;
+        }
 
         .dropdown-list {
           display: flex;
@@ -321,9 +326,6 @@ export const DropDownMenuWrapperTH = styled.div`
             display: flex !important;
             justify-content: flex-start !important;
             margin-bottom: 8px !important;
-          }
-          .dropdown-item:hover {
-            background-color: #fff !important;
           }
         }
       }
@@ -336,4 +338,10 @@ export const ItemLink = styled(Link)`
   text-align: start !important;
   font-size: 14px !important;
   color: #000 !important;
+  &:hover {
+    color: red !important;
+  }
+  i {
+    margin-right: 3px;
+  }
 `;

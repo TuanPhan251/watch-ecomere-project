@@ -283,10 +283,6 @@ function* updateProductSaga(action) {
       const keepImage = images.find(
         (item) => item.id && item.id === initialImageIds[j]
       );
-      console.log(
-        "🚀 ~ file: products.saga.js ~ line 177 ~ function*updateProductSaga ~ keepImage",
-        keepImage
-      );
       if (!keepImage) {
         yield axios.delete(
           `http://localhost:4000/images/${initialImageIds[j]}`

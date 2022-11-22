@@ -119,6 +119,7 @@ const ProductPage = () => {
 
     document.title = "Danh sách sản phẩm";
 
+    navigate(location.pathname, {});
     return () => {
       dispatch(removeProductDetailAction());
     };

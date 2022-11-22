@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
@@ -48,6 +48,7 @@ import BlogDetailPage from "./pages/user/Blog/BlogDetail";
 import NotFount404 from "./components/Layouts/NotFound404";
 
 function App() {
+  const location = useLocation();
   const dispatch = useDispatch();
 
   SwiperCore.use([Autoplay]);
@@ -59,6 +60,10 @@ function App() {
       dispatch(getUserInfoAction({ id: decodeInfo.sub }));
     }
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
   return (
     <>
       <GlobalStyle />

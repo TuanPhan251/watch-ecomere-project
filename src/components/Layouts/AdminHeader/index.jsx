@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { Button, Col, Row, Space } from "antd";
 
-import { logoutAction } from "../../../redux/actions";
+import { logoutAction, getCategoriesListAction } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 
 import * as S from "./styles";

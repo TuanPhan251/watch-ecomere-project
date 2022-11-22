@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
     --text-disabled: #bfbfbf;
     --primary-color: #9E2A2B;
     --button-color: #9E2A2B;
-    --price-color : #335C67;
+    --price-color : #344e41;
     --bgr-color: #f0f0f0;
 
     --header-height: 60px;

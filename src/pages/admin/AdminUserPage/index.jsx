@@ -85,23 +85,6 @@ const AdminUsersPage = () => {
       align: "center",
     },
     {
-      title: "Loại tài khoản",
-      dataIndex: "role",
-      key: "role",
-      align: "center",
-      render: (_, record) => {
-        return (
-          <>
-            {record.role === "admin" ? (
-              <Tag color="#2db7f5">Admin</Tag>
-            ) : (
-              <Tag color="#87d068">User</Tag>
-            )}
-          </>
-        );
-      },
-    },
-    {
       title: "Đơn hàng",
       dataIndex: "orders",
       key: "orders",

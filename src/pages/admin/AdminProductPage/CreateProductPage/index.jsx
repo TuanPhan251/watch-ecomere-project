@@ -145,50 +145,16 @@ const CreateProductPage = () => {
           <Checkbox defaultChecked={false} />
         </Form.Item>
 
+        <Form.Item label="Sản phẩm mới" name="isNew" valuePropName="checked">
+          <Checkbox defaultChecked={false} />
+        </Form.Item>
+
         <Form.Item
           label="Tên sản phẩm"
           name="name"
           rules={[{ required: true, message: "Hãy nhập tên sản phẩm" }]}
         >
           <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Giá"
-          name="price"
-          rules={[{ required: true, message: "Hãy nhập giá sản phẩm" }]}
-        >
-          <InputNumber
-            style={{ width: "100%" }}
-            formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Tồn kho"
-          name="stock"
-          rules={[
-            {
-              required: true,
-              message: "Hãy nhập số lượng sản phẩm trong kho",
-            },
-          ]}
-        >
-          <InputNumber />
-        </Form.Item>
-
-        <Form.Item label="Sản phẩm mới" name="isNew" valuePropName="checked">
-          <Checkbox defaultChecked={false} />
-        </Form.Item>
-
-        <Form.Item
-          label="Khuyến mãi(%)"
-          name="discountPercent"
-          initialValue={0}
-          rules={[{ required: true, message: "Hãy nhập khuyến mãi" }]}
-        >
-          <InputNumber min={0} max={99} />
         </Form.Item>
 
         <Form.Item
@@ -222,10 +188,54 @@ const CreateProductPage = () => {
         </Form.Item>
 
         <Form.Item
+          label="Giá"
+          name="price"
+          rules={[{ required: true, message: "Hãy nhập giá sản phẩm" }]}
+        >
+          <InputNumber
+            style={{ width: "100%" }}
+            formatter={(value) => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Tồn kho"
+          name="stock"
+          rules={[
+            {
+              required: true,
+              message: "Hãy nhập số lượng sản phẩm trong kho",
+            },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
+
+        <Form.Item
+          label="Khuyến mãi(%)"
+          name="discountPercent"
+          initialValue={0}
+          rules={[{ required: true, message: "Hãy nhập khuyến mãi" }]}
+        >
+          <InputNumber min={0} max={99} />
+        </Form.Item>
+
+        <Form.Item
           label="Kích thước mặt (mm)"
           name="caseSize"
           rules={[
             { required: true, message: "Hãy nhập kích thước mặt sản phẩm" },
+          ]}
+        >
+          <InputNumber />
+        </Form.Item>
+
+        <Form.Item
+          label="Kích thước dây (mm)"
+          name="strapSize"
+          rules={[
+            { required: true, message: "Hãy nhập kích thước dây sản phẩm" },
           ]}
         >
           <InputNumber />
@@ -267,16 +277,6 @@ const CreateProductPage = () => {
           ]}
         >
           <Input />
-        </Form.Item>
-
-        <Form.Item
-          label="Kích thước dây (mm)"
-          name="strapSize"
-          rules={[
-            { required: true, message: "Hãy nhập kích thước dây sản phẩm" },
-          ]}
-        >
-          <InputNumber />
         </Form.Item>
 
         <Form.Item
