@@ -87,6 +87,7 @@ const UserInfoPage = () => {
                 layout="vertical"
                 initialValues={{
                   modifier: "public",
+                  userName: userInfo.data.userName,
                 }}
               >
                 <Form.Item

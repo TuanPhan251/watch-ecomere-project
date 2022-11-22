@@ -216,14 +216,14 @@ const Cart = ({ setStep }) => {
     <S.CheckoutCartContainer>
       <h2 className="cart_summary-heading">giỏ hàng</h2>
 
-      <div className="cart-item-container">
+      <Row gutter={8}>
         <Col xxl={16} xl={16} lg={16} md={24} xs={24}>
           <div className="cart-item-wrapper">
             <div className="cart-item-tbody">{renderCartItems}</div>
           </div>
         </Col>
 
-        <Col xxl={8} xl={8} lg={8} md={24} xs={24}>
+        <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
           <div className="cart_summary">
             <h3>Đơn hàng của bạn:</h3>
             <div className="cart_summary-discount">
@@ -243,10 +243,11 @@ const Cart = ({ setStep }) => {
                 >
                   <Input />
                 </Form.Item>
+
                 <Button
                   htmlType="submit"
+                  block
                   // onClick={handleApplyCoupon}
-                  style={{ width: "100%" }}
                 >
                   Sử dụng
                 </Button>
@@ -287,7 +288,7 @@ const Cart = ({ setStep }) => {
             </div>
           </div>
         </Col>
-      </div>
+      </Row>
       <Row style={{ justifyContent: "space-between", marginTop: 30 }}>
         <Button
           size="large"

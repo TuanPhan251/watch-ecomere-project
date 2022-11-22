@@ -17,3 +17,8 @@ export const MainContent = styled.div`
       margin-left: 200px;
     `}
 `;
+
+export const LoadingWrapper = styled.div`
+  min-height: 100vh;
+  width: 100%;
+`;

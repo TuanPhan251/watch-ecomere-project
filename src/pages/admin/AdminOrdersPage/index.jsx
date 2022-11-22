@@ -127,7 +127,7 @@ const AdminOrderListPage = () => {
             return (
               <S.OrderStatus>
                 <Tag color="blue">
-                  <i class="fa-solid fa-truck-fast"></i>Đang giao
+                  <i className="fa-solid fa-truck-fast"></i>Đang giao
                 </Tag>
               </S.OrderStatus>
             );
@@ -136,7 +136,7 @@ const AdminOrderListPage = () => {
             return (
               <S.OrderStatus>
                 <Tag color="red">
-                  <i class="fa-solid fa-circle-xmark"></i>Admin hủy
+                  <i className="fa-solid fa-circle-xmark"></i>Admin hủy
                 </Tag>
               </S.OrderStatus>
             );
@@ -145,7 +145,7 @@ const AdminOrderListPage = () => {
             return (
               <S.OrderStatus>
                 <Tag color="red">
-                  <i class="fa-solid fa-circle-xmark"></i>Đã hủy
+                  <i className="fa-solid fa-circle-xmark"></i>Đã hủy
                 </Tag>
               </S.OrderStatus>
             );
@@ -154,7 +154,7 @@ const AdminOrderListPage = () => {
             return (
               <S.OrderStatus>
                 <Tag color="green">
-                  <i class="fa-solid fa-circle-check"></i>Hoàn thành
+                  <i className="fa-solid fa-circle-check"></i>Hoàn thành
                 </Tag>
               </S.OrderStatus>
             );
@@ -163,7 +163,7 @@ const AdminOrderListPage = () => {
             return (
               <S.OrderStatus>
                 <Tag>
-                  <i class="fa-solid fa-clock-rotate-left"></i>Chờ xử lý
+                  <i className="fa-solid fa-clock-rotate-left"></i>Chờ xử lý
                 </Tag>
               </S.OrderStatus>
             );

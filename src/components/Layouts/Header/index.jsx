@@ -111,149 +111,260 @@ const Header = () => {
               <div className="dropdown-container">
                 <div className="dropdown-content">
                   <div>
-                    <p
-                      style={{
-                        marginBottom: 10,
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      CÁC HÃNG BÁN CHẠY
-                    </p>
+                    <p>CÁC HÃNG BÁN CHẠY</p>
                     <ul className="dropdown-list">
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Daniel Wellington
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  category: {
+                                    id: 1,
+                                    name: "Casio",
+                                  },
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
                           Casio
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Seiko
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  categoryId: [2],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Orient
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Saga
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  categoryId: [4],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Timex
+                        </S.ItemLink>
+                      </li>
+                      <li className="dropdown-item">
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  categoryId: [5],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Tissot
                         </S.ItemLink>
                       </li>
                     </ul>
                   </div>
                   <div>
-                    <p
-                      style={{
-                        marginBottom: 10,
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      KHUYÊN DÙNG
-                    </p>
+                    <p>KHUYÊN DÙNG</p>
                     <ul className="dropdown-list">
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Daniel Wellington
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  categoryId: [1],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
                           Casio
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Seiko
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  categoryId: [3],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Citizen
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Saga
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  categoryId: [2],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Orient
+                        </S.ItemLink>
+                      </li>
+                      <li className="dropdown-item">
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  categoryId: [5],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Tissot
                         </S.ItemLink>
                       </li>
                     </ul>
                   </div>
 
                   <div>
-                    <p
-                      style={{
-                        marginBottom: 10,
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      CÁC DÒNG ĐẶC BIỆT
-                    </p>
+                    <p>CÁC DÒNG ĐẶC BIỆT</p>
                     <ul className="dropdown-list">
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Daniel Wellington
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  categoryId: [5],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Tissot
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Casio
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  categoryId: [2],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Orient
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Seiko
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  categoryId: [3],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Citizen
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Saga
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.BRAND,
+                              },
+                              {
+                                state: {
+                                  categoryId: [4],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Timex
                         </S.ItemLink>
                       </li>
                     </ul>
@@ -267,10 +378,17 @@ const Header = () => {
               <Link
                 onClick={(e) => {
                   e.preventDefault();
-                  navigate({
-                    pathname: ROUTES.USER.MEN_DETAIL,
-                    search: "?gender=male",
-                  });
+                  navigate(
+                    {
+                      pathname: ROUTES.USER.MEN_DETAIL,
+                      search: "?gender=male",
+                    },
+                    {
+                      state: {
+                        categoryId: [],
+                      },
+                    }
+                  );
                 }}
                 className="title-link"
               >
@@ -279,149 +397,269 @@ const Header = () => {
               <div className="dropdown-container">
                 <div className="dropdown-content">
                   <div>
-                    <p
-                      style={{
-                        marginBottom: 10,
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      CÁC HÃNG BÁN CHẠY
-                    </p>
+                    <p>CÁC HÃNG BÁN CHẠY</p>
                     <ul className="dropdown-list">
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Daniel Wellington
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [1],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
                           Casio
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Seiko
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [2],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Orient
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Saga
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [4],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Timex
+                        </S.ItemLink>
+                      </li>
+                      <li className="dropdown-item">
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [5],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Tissot
                         </S.ItemLink>
                       </li>
                     </ul>
                   </div>
                   <div>
-                    <p
-                      style={{
-                        marginBottom: 10,
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      KHUYÊN DÙNG
-                    </p>
+                    <p>KHUYÊN DÙNG</p>
                     <ul className="dropdown-list">
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Daniel Wellington
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [1],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
                           Casio
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Seiko
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [3],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Citizen
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Saga
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [2],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Orient
+                        </S.ItemLink>
+                      </li>
+                      <li className="dropdown-item">
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [5],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Tissot
                         </S.ItemLink>
                       </li>
                     </ul>
                   </div>
 
                   <div>
-                    <p
-                      style={{
-                        marginBottom: 10,
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      CÁC DÒNG ĐẶC BIỆT
-                    </p>
+                    <p>CÁC DÒNG ĐẶC BIỆT</p>
                     <ul className="dropdown-list">
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Daniel Wellington
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [5],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Tissot
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Casio
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [2],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Orient
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Seiko
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [3],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Citizen
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Saga
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.MEN_DETAIL,
+                                search: "?gender=male",
+                              },
+                              {
+                                state: {
+                                  categoryId: [4],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Timex
                         </S.ItemLink>
                       </li>
                     </ul>
@@ -433,13 +671,19 @@ const Header = () => {
           <li>
             <S.DropDownMenuWrapperTH>
               <Link
-                // to={generatePath(ROUTES.USER.WOMEN_DETAIL, { type: "female" })}
                 onClick={(e) => {
                   e.preventDefault();
-                  navigate({
-                    pathname: ROUTES.USER.MEN_DETAIL,
-                    search: "?gender=female",
-                  });
+                  navigate(
+                    {
+                      pathname: ROUTES.USER.WOMEN_DETAIL,
+                      search: "?gender=female",
+                    },
+                    {
+                      state: {
+                        categoryId: [],
+                      },
+                    }
+                  );
                 }}
                 className="title-link"
               >
@@ -448,149 +692,269 @@ const Header = () => {
               <div className="dropdown-container">
                 <div className="dropdown-content">
                   <div>
-                    <p
-                      style={{
-                        marginBottom: 10,
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      CÁC HÃNG BÁN CHẠY
-                    </p>
+                    <p>CÁC HÃNG BÁN CHẠY</p>
                     <ul className="dropdown-list">
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Daniel Wellington
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [1],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
                           Casio
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Seiko
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [2],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Orient
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Saga
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [4],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Timex
+                        </S.ItemLink>
+                      </li>
+                      <li className="dropdown-item">
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [5],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Tissot
                         </S.ItemLink>
                       </li>
                     </ul>
                   </div>
                   <div>
-                    <p
-                      style={{
-                        marginBottom: 10,
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      KHUYÊN DÙNG
-                    </p>
+                    <p>KHUYÊN DÙNG</p>
                     <ul className="dropdown-list">
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Daniel Wellington
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [1],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
                           Casio
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Seiko
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [3],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Citizen
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Saga
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [2],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Orient
+                        </S.ItemLink>
+                      </li>
+                      <li className="dropdown-item">
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [5],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Tissot
                         </S.ItemLink>
                       </li>
                     </ul>
                   </div>
 
                   <div>
-                    <p
-                      style={{
-                        marginBottom: 10,
-                        fontSize: 16,
-                        fontWeight: 600,
-                      }}
-                    >
-                      CÁC DÒNG ĐẶC BIỆT
-                    </p>
+                    <p>CÁC DÒNG ĐẶC BIỆT</p>
                     <ul className="dropdown-list">
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Daniel Wellington
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [5],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Tissot
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Casio
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [2],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Orient
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Seiko
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [3],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Citizen
                         </S.ItemLink>
                       </li>
                       <li className="dropdown-item">
-                        <S.ItemLink style={{ padding: 0 }} to="/">
-                          <i
-                            className="fa-solid fa-chevron-right"
-                            style={{ marginRight: 3 }}
-                          />
-                          Saga
+                        <S.ItemLink
+                          onClick={(e) => {
+                            e.preventDefault();
+                            navigate(
+                              {
+                                pathname: ROUTES.USER.WOMEN_DETAIL,
+                                search: "?gender=female",
+                              },
+                              {
+                                state: {
+                                  categoryId: [4],
+                                },
+                              }
+                            );
+                          }}
+                        >
+                          <i className="fa-solid fa-chevron-right" />
+                          Timex
                         </S.ItemLink>
                       </li>
                     </ul>

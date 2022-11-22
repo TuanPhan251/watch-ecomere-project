@@ -32,7 +32,14 @@ const AccountDetailsPage = () => {
   }, [userDetail.data]);
 
   const handleUpdateUserInfo = (values) => {
-    dispatch(updateUserInfoAction({ id, values }));
+    dispatch(
+      updateUserInfoAction({
+        id,
+        values: {
+          role: values.role,
+        },
+      })
+    );
     navigate(ROUTES.ADMIN.ACCOUNT_LIST_PAGE);
   };
 

@@ -127,6 +127,7 @@ const AdminProductPage = () => {
     dispatch(
       getProductListAdminAction({
         params: {
+          ...filterParams,
           page: page,
           limit: 10,
         },

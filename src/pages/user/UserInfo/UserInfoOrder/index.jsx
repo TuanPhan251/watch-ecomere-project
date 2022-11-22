@@ -1,17 +1,13 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Avatar, Button, Col, Row, Table, notification } from "antd";
+import { Popconfirm, Button, Col, Row, Table, notification } from "antd";
 import moment from "moment/moment";
 
 import {
   getOrderListAction,
   updateOrderStatusAction,
-  getProductListUserAction,
 } from "../../../../redux/actions";
-import BreadCrumb from "../../../../components/BreadCrumb";
-import UserSideBar from "../SideBar";
 import Layout from "../Layout";
-import { ROUTES } from "../../../../constants/routes";
 
 import * as S from "./styles";
 

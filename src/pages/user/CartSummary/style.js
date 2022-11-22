@@ -41,11 +41,7 @@ export const CheckoutCartContainer = styled.div`
     text-align: center;
     margin-bottom: 20px;
   }
-  .cart-item-container {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-
+  .cart-item-wrapper {
     .cart-item-tbody {
       padding: 4px 12px 0;
       box-shadow: 0 0 4px #ddd;
@@ -64,7 +60,6 @@ export const CheckoutCartContainer = styled.div`
     position: sticky;
     top: 20%;
     right: 0;
-    width: 90%;
     min-height: 200px;
     margin: auto;
     padding: 12px 10px 12px 12px;
@@ -324,8 +319,9 @@ export const CartItem = styled(Row)`
         }
 
         button {
-          width: 20px;
-          height: fit-content;
+          width: 30px;
+          height: 100%;
+          /* height: fit-content; */
 
           i {
             font-size: 12px;
