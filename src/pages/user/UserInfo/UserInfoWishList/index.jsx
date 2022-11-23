@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { generatePath, Link, useLocation } from "react-router-dom";
-import { Avatar, Col, Row, Spin, notification, Tooltip } from "antd";
+import { generatePath, Link } from "react-router-dom";
+import { Col, Row, Spin, notification, Tooltip } from "antd";
 
 import {
   getWishlistAction,

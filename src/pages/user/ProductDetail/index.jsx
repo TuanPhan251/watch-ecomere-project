@@ -15,7 +15,6 @@ import {
   Button,
   Breadcrumb,
   InputNumber,
-  Image,
 } from "antd";
 import Slider from "react-slick";
 

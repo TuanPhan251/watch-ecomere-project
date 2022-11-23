@@ -1,6 +1,5 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { Avatar, Col, Row } from "antd";
+import { useLocation } from "react-router-dom";
+import { Col, Row } from "antd";
 
 import BreadCrumb from "../../../../components/BreadCrumb";
 import UserSideBar from "../SideBar";
@@ -10,7 +9,6 @@ import { ROUTES } from "../../../../constants/routes";
 import * as S from "./styles";
 
 const UserInfoPage = (props) => {
-  const { userInfo } = useSelector((state) => state.user);
   const { pathname } = useLocation();
 
   const handleChangeBreadCrumb = () => {

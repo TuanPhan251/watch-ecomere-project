@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Card, Col, Input, Row, Spin, Table } from "antd";
+import { Card, Col, Input, Row, Spin } from "antd";
 
 import BreadCrumb from "../../../components/BreadCrumb";
 import { ROUTES } from "../../../constants/routes";
@@ -15,10 +15,6 @@ const OrderSearchPage = () => {
   const dispatch = useDispatch();
   const { guestOrderDetail } = useSelector((state) => state.order);
   const [showOrder, setShowOrder] = useState(false);
-  console.log(
-    "🚀 ~ file: index.jsx ~ line 16 ~ OrderSearchPage ~ guestOrderDetail",
-    guestOrderDetail
-  );
   const orderAddress = `${guestOrderDetail.data.address} - ${guestOrderDetail.data.wardName} - ${guestOrderDetail.data.districtName} - ${guestOrderDetail.data.cityName}`;
 
   const handleSearchOrder = (value) => {

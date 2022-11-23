@@ -84,7 +84,6 @@ const ProductPage = () => {
     isNew: false,
     isDiscount: false,
   };
-  // console.log(category);
 
   const [showFilterDrawer, setShowFilterDrawer] = useState(false);
 
@@ -133,7 +132,6 @@ const ProductPage = () => {
 
   useEffect(() => {
     if (location.state?.category?.id) {
-      console.log(1);
       dispatch(
         getProductListUserAction({
           params: {
@@ -153,7 +151,6 @@ const ProductPage = () => {
         gender: searchObj.gender,
       });
     } else {
-      console.log(2);
       dispatch(
         getProductListUserAction({
           params: {

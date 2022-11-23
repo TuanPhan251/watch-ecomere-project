@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import slug from "slug";
 
-import { Button, Select, Form, Input, Spin, Space } from "antd";
+import { Button, Form, Input, Spin, Space } from "antd";
 
 import { ROUTES } from "../../../../constants/routes";
 import {
