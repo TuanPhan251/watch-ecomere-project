@@ -179,15 +179,15 @@ const ProductPage = () => {
     );
 
     document.title = `Đồng hồ ${searchObj.gender === "male" ? "Nam" : " Nữ"}`;
-    navigate(
-      {
-        pathname: location.pathname,
-        search: `?gender=${searchObj.gender}`,
-      },
-      {
-        state: {},
-      }
-    );
+    // navigate(
+    //   {
+    //     pathname: location.pathname,
+    //     search: `?gender=${searchObj.gender}`,
+    //   },
+    //   {
+    //     state: {},
+    //   }
+    // );
 
     return () => {
       dispatch(removeProductDetailAction());
