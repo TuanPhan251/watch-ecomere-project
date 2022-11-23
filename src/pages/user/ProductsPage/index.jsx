@@ -179,6 +179,15 @@ const ProductPage = () => {
     );
 
     document.title = `Đồng hồ ${searchObj.gender === "male" ? "Nam" : " Nữ"}`;
+    navigate(
+      {
+        pathname: location.pathname,
+        search: `?gender=${searchObj.gender}`,
+      },
+      {
+        state: {},
+      }
+    );
 
     return () => {
       dispatch(removeProductDetailAction());
@@ -921,7 +930,7 @@ const ProductPage = () => {
                   <Button
                     type="primary"
                     loading={productListUser.loading}
-                    style={{ marginTop: 16, fontSize: 16 }}
+                    style={{ marginTop: 16 }}
                     onClick={() => handleShowMore()}
                   >
                     Xem thêm
