@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { generatePath, Link, useNavigate } from "react-router-dom";
 
@@ -7,13 +7,14 @@ import { UserOutlined } from "@ant-design/icons";
 
 import CartDrawer from "./Cart";
 
-import { logoutAction } from "../../../redux/actions";
+import { getCategoriesListAction, logoutAction } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
 import * as S from "./style";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { categoryList } = useSelector((state) => state.category);
   const { userInfo } = useSelector((state) => state.user);
   const { cartList } = useSelector((state) => state.cart);
   const [showDrawer, setShowDrawer] = useState(false);
@@ -29,6 +30,107 @@ const Header = () => {
 
   const handleNavigateToCart = () => {
     navigate(ROUTES.USER.CART_SUMMARY);
+  };
+
+  useEffect(() => {
+    dispatch(
+      getCategoriesListAction({
+        params: {
+          page: 1,
+          limit: 999,
+        },
+      })
+    );
+  }, []);
+  const renderCategoryDropDownBrandPage = () => {
+    return categoryList.data?.map((item) => {
+      return (
+        <li className="dropdown-item" key={item.id}>
+          <S.ItemLink
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(
+                {
+                  pathname: ROUTES.USER.BRAND,
+                },
+                {
+                  state: {
+                    category: {
+                      id: item.id,
+                      name: item.name,
+                    },
+                  },
+                }
+              );
+            }}
+          >
+            <i className="fa-solid fa-chevron-right" />
+            {item.name}
+          </S.ItemLink>
+        </li>
+      );
+    });
+  };
+
+  const renderCategoryDropDownProductMenPage = () => {
+    return categoryList.data?.map((item) => {
+      return (
+        <li className="dropdown-item" key={item.id}>
+          <S.ItemLink
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(
+                {
+                  pathname: ROUTES.USER.MEN_DETAIL,
+                  search: "?gender=male",
+                },
+                {
+                  state: {
+                    category: {
+                      id: item.id,
+                      name: item.name,
+                    },
+                  },
+                }
+              );
+            }}
+          >
+            <i className="fa-solid fa-chevron-right" />
+            {item.name}
+          </S.ItemLink>
+        </li>
+      );
+    });
+  };
+  const renderCategoryDropDownProductWomenPage = () => {
+    return categoryList.data?.map((item) => {
+      return (
+        <li className="dropdown-item" key={item.id}>
+          <S.ItemLink
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(
+                {
+                  pathname: ROUTES.USER.WOMEN_DETAIL,
+                  search: "?gender=female",
+                },
+                {
+                  state: {
+                    category: {
+                      id: item.id,
+                      name: item.name,
+                    },
+                  },
+                }
+              );
+            }}
+          >
+            <i className="fa-solid fa-chevron-right" />
+            {item.name}
+          </S.ItemLink>
+        </li>
+      );
+    });
   };
 
   return (
@@ -113,260 +215,20 @@ const Header = () => {
                   <div>
                     <p>CÁC HÃNG BÁN CHẠY</p>
                     <ul className="dropdown-list">
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  category: {
-                                    id: 1,
-                                    name: "Casio",
-                                  },
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Casio
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  categoryId: [2],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Orient
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  categoryId: [4],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Timex
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  categoryId: [5],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Tissot
-                        </S.ItemLink>
-                      </li>
+                      {renderCategoryDropDownBrandPage()}
                     </ul>
                   </div>
                   <div>
                     <p>KHUYÊN DÙNG</p>
                     <ul className="dropdown-list">
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  categoryId: [1],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Casio
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  categoryId: [3],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Citizen
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  categoryId: [2],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Orient
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  categoryId: [5],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Tissot
-                        </S.ItemLink>
-                      </li>
+                      {renderCategoryDropDownBrandPage()}
                     </ul>
                   </div>
 
                   <div>
                     <p>CÁC DÒNG ĐẶC BIỆT</p>
                     <ul className="dropdown-list">
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  categoryId: [5],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Tissot
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  categoryId: [2],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Orient
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  categoryId: [3],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Citizen
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.BRAND,
-                              },
-                              {
-                                state: {
-                                  categoryId: [4],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Timex
-                        </S.ItemLink>
-                      </li>
+                      {renderCategoryDropDownBrandPage()}
                     </ul>
                   </div>
                 </div>
@@ -385,7 +247,7 @@ const Header = () => {
                     },
                     {
                       state: {
-                        categoryId: [],
+                        category: [],
                       },
                     }
                   );
@@ -399,269 +261,20 @@ const Header = () => {
                   <div>
                     <p>CÁC HÃNG BÁN CHẠY</p>
                     <ul className="dropdown-list">
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [1],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Casio
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [2],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Orient
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [4],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Timex
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [5],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Tissot
-                        </S.ItemLink>
-                      </li>
+                      {renderCategoryDropDownProductMenPage()}
                     </ul>
                   </div>
                   <div>
                     <p>KHUYÊN DÙNG</p>
                     <ul className="dropdown-list">
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [1],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Casio
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [3],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Citizen
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [2],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Orient
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [5],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Tissot
-                        </S.ItemLink>
-                      </li>
+                      {renderCategoryDropDownProductMenPage()}
                     </ul>
                   </div>
 
                   <div>
                     <p>CÁC DÒNG ĐẶC BIỆT</p>
                     <ul className="dropdown-list">
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [5],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Tissot
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [2],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Orient
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [3],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Citizen
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.MEN_DETAIL,
-                                search: "?gender=male",
-                              },
-                              {
-                                state: {
-                                  categoryId: [4],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Timex
-                        </S.ItemLink>
-                      </li>
+                      {renderCategoryDropDownProductMenPage()}
                     </ul>
                   </div>
                 </div>
@@ -680,7 +293,7 @@ const Header = () => {
                     },
                     {
                       state: {
-                        categoryId: [],
+                        category: [],
                       },
                     }
                   );
@@ -694,269 +307,20 @@ const Header = () => {
                   <div>
                     <p>CÁC HÃNG BÁN CHẠY</p>
                     <ul className="dropdown-list">
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [1],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Casio
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [2],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Orient
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [4],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Timex
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [5],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Tissot
-                        </S.ItemLink>
-                      </li>
+                      {renderCategoryDropDownProductWomenPage()}
                     </ul>
                   </div>
                   <div>
                     <p>KHUYÊN DÙNG</p>
                     <ul className="dropdown-list">
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [1],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Casio
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [3],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Citizen
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [2],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Orient
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [5],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Tissot
-                        </S.ItemLink>
-                      </li>
+                      {renderCategoryDropDownProductWomenPage()}
                     </ul>
                   </div>
 
                   <div>
                     <p>CÁC DÒNG ĐẶC BIỆT</p>
                     <ul className="dropdown-list">
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [5],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Tissot
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [2],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Orient
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [3],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Citizen
-                        </S.ItemLink>
-                      </li>
-                      <li className="dropdown-item">
-                        <S.ItemLink
-                          onClick={(e) => {
-                            e.preventDefault();
-                            navigate(
-                              {
-                                pathname: ROUTES.USER.WOMEN_DETAIL,
-                                search: "?gender=female",
-                              },
-                              {
-                                state: {
-                                  categoryId: [4],
-                                },
-                              }
-                            );
-                          }}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                          Timex
-                        </S.ItemLink>
-                      </li>
+                      {renderCategoryDropDownProductWomenPage()}
                     </ul>
                   </div>
                 </div>
