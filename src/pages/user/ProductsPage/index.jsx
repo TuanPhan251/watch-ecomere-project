@@ -84,7 +84,6 @@ const ProductPage = () => {
     isNew: false,
     isDiscount: false,
   };
-  // console.log(category);
 
   const [showFilterDrawer, setShowFilterDrawer] = useState(false);
 
@@ -93,81 +92,21 @@ const ProductPage = () => {
   const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
   const { productListUser } = useSelector((state) => state.product);
   const { categoryList } = useSelector((state) => state.category);
-
   const { userInfo } = useSelector((state) => state.user);
   const { cartList } = useSelector((state) => state.cart);
 
-  // useEffect(() => {
-  //   dispatch(
-  //     getProductListUserAction({
-  //       params: {
-  //         page: 1,
-  //         limit: PRODUCT_LIST_LIMIT,
-  //         gender: searchObj.gender,
-  //         isHidden: false,
-  //         stock: 0,
-  //       },
-  //     })
-  //   );
-
-  //   dispatch(
-  //     getCategoriesListAction({
-  //       params: {
-  //         page: 1,
-  //         limit: 999,
-  //       },
-  //     })
-  //   );
-
-  //   setFilterParams({
-  //     ...filterParams,
-  //     gender: searchObj.gender,
-  //   });
-
-  //   document.title = `Đồng hồ ${searchObj.gender === "male" ? "Nam" : " Nữ"}`;
-
-  //   return () => {
-  //     dispatch(removeProductDetailAction());
-  //   };
-  // }, [searchObj.gender]);
-
   useEffect(() => {
-    if (location.state?.category?.id) {
-      dispatch(
-        getProductListUserAction({
-          params: {
-            ...filterParams,
-            categoryId: [location.state.category.id],
-            page: 1,
-            limit: PRODUCT_LIST_LIMIT,
-            gender: searchObj.gender,
-            isHidden: false,
-            stock: 0,
-          },
-        })
-      );
-      setFilterParams({
-        ...filterParams,
-        categoryId: [location.state?.category?.id],
-        gender: searchObj.gender,
-      });
-    } else {
-      dispatch(
-        getProductListUserAction({
-          params: {
-            page: 1,
-            limit: PRODUCT_LIST_LIMIT,
-            gender: searchObj.gender,
-            isHidden: false,
-            stock: 0,
-          },
-        })
-      );
-      setFilterParams({
-        ...filterParams,
-        gender: searchObj.gender,
-      });
-    }
+    dispatch(
+      getProductListUserAction({
+        params: {
+          page: 1,
+          limit: PRODUCT_LIST_LIMIT,
+          gender: searchObj.gender,
+          isHidden: false,
+          stock: 0,
+        },
+      })
+    );
 
     dispatch(
       getCategoriesListAction({
@@ -177,6 +116,11 @@ const ProductPage = () => {
         },
       })
     );
+
+    setFilterParams({
+      ...filterParams,
+      gender: searchObj.gender,
+    });
 
     document.title = `Đồng hồ ${searchObj.gender === "male" ? "Nam" : " Nữ"}`;
     navigate(
@@ -192,7 +136,7 @@ const ProductPage = () => {
     return () => {
       dispatch(removeProductDetailAction());
     };
-  }, [searchObj.gender, location.state]);
+  }, [searchObj.gender]);
 
   const handleNavigate = (value) => {
     if (value === "female") {
@@ -448,11 +392,12 @@ const ProductPage = () => {
           closable
           onClose={() => handleRemoveFilterCategory(filterCategoryId)}
         >
-          {filterCategoryName?.name || location.state?.category?.name}
+          {filterCategoryName.name}
         </Tag>
       );
     });
   }, [filterParams.categoryId]);
+
   const renderFilterType = useMemo(() => {
     return filterParams.type.map((filterType) => {
       return (
