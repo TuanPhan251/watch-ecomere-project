@@ -1,6 +1,6 @@
 import { Navigate, Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Avatar, Col, Row } from "antd";
+import { Avatar } from "antd";
 
 import { userPageSidebar } from "../constant";
 import { ROUTES } from "../../../../constants/routes";

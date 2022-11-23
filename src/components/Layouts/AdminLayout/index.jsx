@@ -6,7 +6,6 @@ import AdminHeader from "../AdminHeader";
 import AdminSidebar from "../AdminSideBar";
 import { ROUTES } from "../../../constants/routes";
 import * as S from "./styles";
-import LoadingPage from "../Loading";
 import { Spin } from "antd";
 
 const AdminLayout = () => {

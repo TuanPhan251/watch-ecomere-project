@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { generatePath, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Card, Col, Form, Input, Row, Select, Spin } from "antd";
+import { Button, Col, Input, Row, Select, Spin } from "antd";
 import moment from "moment";
 
 import { getBlogListAction } from "../../../redux/actions";

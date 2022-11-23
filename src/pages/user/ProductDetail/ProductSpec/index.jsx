@@ -1,5 +1,3 @@
-import { useMemo } from "react";
-
 import * as S from "./style";
 
 const ProductSpec = ({ product }) => {

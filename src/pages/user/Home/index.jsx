@@ -25,7 +25,6 @@ const HomePage = () => {
 
   const { productListUser } = useSelector((state) => state.product);
 
-  // const newProducts = [...newProductsList.data];
   const newProducts = productListUser.data?.filter(
     (item) => item.isNew === true
   );

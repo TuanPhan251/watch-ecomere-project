@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 import * as S from "./styles";
 
@@ -7,7 +7,6 @@ import { SidebarContent } from "./constants";
 
 const AdminSidebar = ({ showSidebar }) => {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   const renderSidebarContent = useMemo(() => {
     return SidebarContent.map((item, index) => {

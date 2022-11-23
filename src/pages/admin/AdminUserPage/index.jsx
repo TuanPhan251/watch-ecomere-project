@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { getUserListAction } from "../../../redux/actions";
 import { ACCOUNT_LIST_LIMIT } from "../../../constants/paginations";
@@ -11,18 +10,14 @@ import {
   Table,
   Space,
   Button,
-  Tag,
   Input,
   Select,
   Pagination,
 } from "antd";
-import { UserOutlined } from "@ant-design/icons/lib/icons";
 
 import * as S from "./style";
-import { ROUTES } from "../../../constants/routes";
 
 const AdminUsersPage = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { userList } = useSelector((state) => state.user);

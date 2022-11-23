@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { generatePath, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { Space, Badge, Drawer, Avatar, message } from "antd";
+import { Space, Badge, Drawer, Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 
 import CartDrawer from "./Cart";
