@@ -20,7 +20,6 @@ import {
   Breadcrumb,
   Button,
 } from "antd";
-import MainButton from "../../../components/MainButton";
 
 import {
   getProductListUserAction,
@@ -63,7 +62,7 @@ const caseSizes = [
   },
 ];
 
-const ProductPage = () => {
+const BrandPage = () => {
   const MAXPRICE = 15000000;
   const location = useLocation();
   const { category } = location.state ? location.state : {};
@@ -97,9 +96,9 @@ const ProductPage = () => {
     dispatch(
       getProductListUserAction({
         params: {
+          ...filterParams,
           page: 1,
           limit: PRODUCT_LIST_LIMIT,
-          ...filterParams,
         },
       })
     );
@@ -774,4 +773,4 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
+export default BrandPage;
