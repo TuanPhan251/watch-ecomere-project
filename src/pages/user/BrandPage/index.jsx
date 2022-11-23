@@ -758,7 +758,7 @@ const BrandPage = () => {
                   <Button
                     type="primary"
                     loading={productListUser.loading}
-                    style={{ marginTop: 16, fontSize: 16 }}
+                    style={{ marginTop: 16 }}
                     onClick={() => handleShowMore()}
                   >
                     Xem thêm

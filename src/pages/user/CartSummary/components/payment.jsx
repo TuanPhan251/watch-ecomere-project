@@ -67,7 +67,7 @@ const Payment = ({ setStep }) => {
             price: item.finalPrice,
             quantity: item.totalAmount,
             slug: item.slug,
-            image: item.images[0].url,
+            image: item.images,
             stock: item.stock - item.totalAmount,
           })),
           callback: {

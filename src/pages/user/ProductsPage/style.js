@@ -71,7 +71,6 @@ export const ProductPageWrapper = styled.div`
   border-radius: 4px;
 
   .product_filter-wrapper {
-    height: 100%;
     padding: 12px;
     border: var(--boder-basic);
     background-color: #fff;
@@ -123,7 +122,7 @@ export const PageBannerWrapper = styled.div`
   position: relative;
   margin-top: var(--header-height);
   width: 100%;
-  padding-top: 20%;
+  padding-top: 10%;
 
   img {
     position: absolute;
@@ -134,12 +133,14 @@ export const PageBannerWrapper = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 50% 50%;
+    /* background-position: 10px 10px; */
   }
 
   h2 {
     position: absolute;
     right: 50%;
-    bottom: 10px;
+    bottom: 0;
     width: 100%;
     transform: translateX(50%);
     text-transform: uppercase;
