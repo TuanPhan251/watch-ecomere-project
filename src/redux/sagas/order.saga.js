@@ -88,6 +88,7 @@ function* getOrderDetailSaga(action) {
         data: result.data,
       },
     });
+    if (callback.getOrderUser) yield callback.getOrderUser(result.data.userId);
   } catch (e) {
     yield put({
       type: `${FAIL(ORDER_ACTION.GET_ORDER_DETAIL)}`,
@@ -142,8 +143,8 @@ function* updateOrderStatusSaga(action) {
         data: result.data,
       },
     });
-    if (data.status === "done" && callback.updateUserInfo)
-      yield callback.updateUserInfo();
+    // if (data.status === "done" && callback.updateUserInfo)
+    //   yield callback.updateUserInfo();
     if (callback.updateUserInfo) yield callback.updateUserInfo();
     if (callback.goToList) yield callback.goToList();
     if (callback.getOrderList) yield callback.getOrderList();

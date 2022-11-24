@@ -397,7 +397,7 @@ export const HeadingFilterWrapper = styled.div`
       font-size: 20px;
     }
 
-    @media (max-width: 868px) {
+    @media (max-width: 768px) {
       display: inline-block;
       margin-left: auto;
     }

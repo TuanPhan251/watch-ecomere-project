@@ -41,10 +41,13 @@ const AdminOrderDetailPage = () => {
     dispatch(
       getOrderDetailAction({
         id,
+        callback: {
+          getOrderUser: (id) => {
+            dispatch(getUserDetailAction({ id }));
+          },
+        },
       })
     );
-    if (orderDetail.data.id)
-      dispatch(getUserDetailAction({ id: orderDetail.data.userId }));
 
     document.title = "Chi tiết đơn hàng";
   }, [id]);
@@ -62,7 +65,9 @@ const AdminOrderDetailPage = () => {
   const handleUpdateOrderStatus = (value) => {
     const { status } = value;
     const { orderProducts, ...originalOrderData } = orderDetail.data;
-    if (orderDetail.data.status !== "done" && status === "done") {
+    if (orderDetail.data.status === status) {
+      return navigate(ROUTES.ADMIN.ORDER_LIST_PAGE);
+    } else if (orderDetail.data.status !== "done" && status === "done") {
       return dispatch(
         updateOrderStatusAction({
           id: orderDetail.data.id,

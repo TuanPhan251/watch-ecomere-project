@@ -5,7 +5,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 
 import { ROUTES } from "../../../constants/routes";
-import { getProductListUserAction } from "../../../redux/actions";
+import {
+  getProductListUserAction,
+  removeProductDetailAction,
+} from "../../../redux/actions";
 
 import HomeProductList from "./ProductSections/HomeProductList";
 
@@ -48,6 +51,10 @@ const HomePage = () => {
     );
 
     document.title = "Gaida | Trang chủ";
+
+    return () => {
+      dispatch(removeProductDetailAction());
+    };
   }, []);
 
   const scrollToProduct = () => {

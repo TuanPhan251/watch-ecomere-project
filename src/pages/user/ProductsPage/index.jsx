@@ -684,7 +684,15 @@ const ProductPage = () => {
             </li>
             <li className="mobile_filter-item">
               <h3>Đường kính</h3>
-              {renderCaseSize}
+              <Radio.Group
+                onChange={(e) =>
+                  // handleFilterCaseSize("caseSize", e.target.value)
+                  handleFilter("caseSize", e.target.value)
+                }
+                value={filterParams.caseSize}
+              >
+                {renderCaseSize}
+              </Radio.Group>
             </li>
             <li className="mobile_filter-item">
               <h3>Chất liệu kính</h3>{" "}

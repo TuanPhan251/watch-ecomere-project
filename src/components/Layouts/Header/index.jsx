@@ -153,7 +153,7 @@ const Header = () => {
               <Link to={ROUTES.USER.HOME}>TRANG CHỦ</Link>
             </li>
             <li onClick={() => setShowDrawer(false)}>
-              <Link to={ROUTES.BRAND}>THƯƠNG HIỆU</Link>
+              <Link to={ROUTES.USER.BRAND}>THƯƠNG HIỆU</Link>
             </li>
             <li onClick={() => setShowDrawer(false)}>
               <Link
@@ -187,12 +187,16 @@ const Header = () => {
             <li onClick={() => setShowDrawer(false)}>
               <Link to={ROUTES.USER.BLOG}>BÀI VIẾT</Link>
             </li>
-            <li onClick={() => setShowDrawer(false)}>
-              <Link to={ROUTES.LOGIN}>ĐĂNG NHẬP</Link>
-            </li>
-            <li onClick={() => setShowDrawer(false)}>
-              <Link to={ROUTES.REGISTER}>ĐĂNG KÝ</Link>
-            </li>
+            {!accessToken && (
+              <li onClick={() => setShowDrawer(false)}>
+                <Link to={ROUTES.LOGIN}>ĐĂNG NHẬP</Link>
+              </li>
+            )}
+            {!accessToken && (
+              <li onClick={() => setShowDrawer(false)}>
+                <Link to={ROUTES.REGISTER}>ĐĂNG KÝ</Link>
+              </li>
+            )}
           </S.HeaderNavMobileList>
         </Drawer>
       </S.HeaderNavMobile>
