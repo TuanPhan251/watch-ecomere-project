@@ -20,6 +20,7 @@ import {
 import * as S from "../style";
 
 const Cart = ({ setStep }) => {
+  const accessToken = localStorage.getItem("accessToken");
   const dispatch = useDispatch();
   const [inputForm] = Form.useForm();
 
@@ -78,6 +79,12 @@ const Cart = ({ setStep }) => {
   };
 
   const handleSubmitCartForm = () => {
+    if (!accessToken)
+      return notification.warn({
+        message: "Bạn cần đăng nhập để tiếp tục",
+        duration: 2,
+        top: 50,
+      });
     if (haveCoupon)
       dispatch(
         setCouponInfoAction({
