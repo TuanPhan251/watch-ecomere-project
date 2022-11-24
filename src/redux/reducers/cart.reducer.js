@@ -27,6 +27,7 @@ const cartReducer = createReducer(initialValue, {
         price: product.data.price,
         finalPrice: product.data.finalPrice,
         totalAmount: productAmount,
+        isDiscount: product.data.isDiscount,
         totalPrice: product.data.finalPrice * productAmount,
       };
       const newCartList = [newItem, ...state.cartList];

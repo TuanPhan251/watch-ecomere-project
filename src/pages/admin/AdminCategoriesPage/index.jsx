@@ -192,10 +192,10 @@ const AdminCategoryPage = () => {
             <i className="fa-solid fa-pen-to-square"></i>
             <span style={{ marginLeft: 4 }}>Sửa</span>
           </Button>
-          <Button type="danger">Tạm ẩn</Button>
         </Space>
       ),
       width: 300,
+      align: "center",
     },
   ];
 
