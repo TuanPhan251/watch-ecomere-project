@@ -24,6 +24,8 @@ import {
 import { useMemo } from "react";
 
 const Info = ({ setStep }) => {
+  const accessToken = localStorage.getItem("accessToken");
+
   const dispatch = useDispatch();
   const { cityList, districtList, wardList } = useSelector(
     (state) => state.location
@@ -229,9 +231,13 @@ const Info = ({ setStep }) => {
                     required: true,
                     message: "Thông tin này không được bỏ trống!",
                   },
+                  {
+                    type: "email",
+                    message: "Email không đúng định dạng",
+                  },
                 ]}
               >
-                <Input />
+                <Input disabled={!!accessToken} />
               </Form.Item>
             </Col>
             <Col xxl={8} lg={8} md={12} sm={24} xs={24}>

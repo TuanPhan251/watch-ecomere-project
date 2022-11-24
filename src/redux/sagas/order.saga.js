@@ -42,6 +42,8 @@ function* getAllOrdersSaga(action) {
         _page: params.page,
         _limit: params.limit,
         _embed: "orderProducts",
+        _sort: "createdAt",
+        _order: "desc",
         ...(params.keyword && {
           q: params.keyword,
         }),
