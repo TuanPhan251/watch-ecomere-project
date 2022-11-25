@@ -20,7 +20,7 @@ const RegisterPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Gaida | Đăng nhập";
+    document.title = "Gaida | Đăng ký";
   }, []);
 
   useEffect(() => {

@@ -19,7 +19,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Gaida | Đăng ký";
+    document.title = "Gaida | Đăng nhập";
   }, []);
 
   useEffect(() => {

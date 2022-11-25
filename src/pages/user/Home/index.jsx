@@ -185,7 +185,7 @@ const HomePage = () => {
             576: {
               slidesPerView: 3,
             },
-            768: {
+            998: {
               slidesPerView: 4,
             },
           }}

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Button, Col, Row, Table, notification } from "antd";
+import { Button, Col, Row, Table, notification, Tag } from "antd";
 import moment from "moment/moment";
 
 import {
@@ -63,6 +63,7 @@ const UserInfoOrderPage = () => {
     {
       title: "Ngày đặt",
       dataIndex: "orderDate",
+      align: "center",
       key: "orderDate",
       render: (_, record) => {
         return <span>{moment(record.createdAt).format("DD/MM/YYYY")}</span>;
@@ -72,11 +73,13 @@ const UserInfoOrderPage = () => {
     {
       title: "Mã đơn hàng",
       dataIndex: "orderCode",
+      align: "center",
       key: "orderCode",
     },
     {
       title: "Thành tiền",
       dataIndex: "totalPrice",
+      align: "center",
       key: "totalPrice",
       render: (_, record) => {
         return (
@@ -92,22 +95,53 @@ const UserInfoOrderPage = () => {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
+      align: "center",
       render: (_, record) => {
         switch (record.status) {
           case "delivering": {
-            return <span>Đang giao</span>;
+            return (
+              <S.OrderStatus>
+                <Tag color="blue">
+                  <i className="fa-solid fa-truck-fast"></i>Đang giao
+                </Tag>
+              </S.OrderStatus>
+            );
           }
           case "cancel": {
-            return <span>Đã hủy</span>;
+            return (
+              <S.OrderStatus>
+                <Tag color="red">
+                  <i className="fa-solid fa-circle-xmark"></i>Admin hủy
+                </Tag>
+              </S.OrderStatus>
+            );
           }
           case "userCancel": {
-            return <span>Đã hủy</span>;
+            return (
+              <S.OrderStatus>
+                <Tag color="red">
+                  <i className="fa-solid fa-circle-xmark"></i>Đã hủy
+                </Tag>
+              </S.OrderStatus>
+            );
           }
           case "done": {
-            return <span>Hoàn thành</span>;
+            return (
+              <S.OrderStatus>
+                <Tag color="green">
+                  <i className="fa-solid fa-circle-check"></i>Hoàn thành
+                </Tag>
+              </S.OrderStatus>
+            );
           }
           default: {
-            return <span>Chờ xử lý</span>;
+            return (
+              <S.OrderStatus>
+                <Tag>
+                  <i className="fa-solid fa-clock-rotate-left"></i>Chờ xử lý
+                </Tag>
+              </S.OrderStatus>
+            );
           }
         }
       },
@@ -116,6 +150,7 @@ const UserInfoOrderPage = () => {
     {
       title: "Tùy chọn",
       dataIndex: "actions",
+      align: "center",
       key: "actions",
       render: (_, record) => {
         return (
