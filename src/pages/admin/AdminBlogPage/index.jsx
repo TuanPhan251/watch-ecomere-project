@@ -15,6 +15,9 @@ const AdminBlogsPage = () => {
   const navigate = useNavigate();
   const { blogList, deleteBlog } = useSelector((state) => state.blog);
 
+  const initialFilterParams = { keyword: "", sort: "" };
+  const [filterParams, setFilterParams] = useState({ ...initialFilterParams });
+
   const [showModal, setShowModal] = useState(false);
   const [deleteId, setDeleteId] = useState(0);
 
@@ -60,6 +63,23 @@ const AdminBlogsPage = () => {
               })
             );
           },
+        },
+      })
+    );
+  };
+
+  const handleFilter = (value, type) => {
+    setFilterParams({
+      ...filterParams,
+      [type]: value,
+    });
+    dispatch(
+      getBlogListAction({
+        params: {
+          ...filterParams,
+          [type]: value,
+          page: 1,
+          limit: 10,
         },
       })
     );
@@ -150,7 +170,7 @@ const AdminBlogsPage = () => {
   return (
     <S.Wrapper>
       <S.TopWrapper>
-        <h2>Danh sách nhãn hàng</h2>
+        <h2>Danh sách bài viết</h2>
         <Button
           type="primary"
           onClick={() => navigate(ROUTES.ADMIN.CREATE_BLOG_PAGE)}
@@ -172,7 +192,11 @@ const AdminBlogsPage = () => {
             </h3>
 
             <Col span={24}>
-              <Input placeholder="Nhập để tìm kiếm" />
+              <Input
+                placeholder="Nhập để tìm kiếm"
+                onChange={(e) => handleFilter(e.target.value, "keyword")}
+                allowClear
+              />
             </Col>
           </Space>
         </Col>

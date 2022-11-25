@@ -39,3 +39,16 @@ export const ExpandTableRow = styled.div`
     background-color: #fafafa;
   }
 `;
+
+export const OrderStatus = styled.div`
+  i {
+    font-size: 16px;
+    margin-right: 4px;
+  }
+
+  .ant-tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;

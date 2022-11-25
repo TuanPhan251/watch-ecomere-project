@@ -197,11 +197,15 @@ export const HomePageWrapper = styled.div`
     }
 
     .swiper {
+      padding: 10px 0;
       .swiper-button-next,
       .swiper-button-prev {
         color: var(--button-color);
       }
 
+      .swiper-pagination {
+        bottom: -4px;
+      }
       .swiper-pagination-bullet {
         background-color: var(--button-color) !important;
       }

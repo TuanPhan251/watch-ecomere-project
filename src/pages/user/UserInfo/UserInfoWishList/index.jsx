@@ -98,7 +98,7 @@ const UserInfoWishListPage = () => {
   const renderWishlist = useMemo(() => {
     return productListUser.data?.map((item) => {
       return (
-        <Col xxl={6} lg={6} md={6} sm={12} xs={12} key={item.id}>
+        <Col xxl={6} lg={6} md={6} sm={8} xs={12} key={item.id}>
           <Link
             to={generatePath(ROUTES.USER.PRODUCT_DETAIL, {
               id: `${item.slug}.${item.id}`,
@@ -135,6 +135,17 @@ const UserInfoWishListPage = () => {
       );
     });
   }, [productListUser.data]);
+
+  if (wishlist.data.length === 0)
+    return (
+      <Layout>
+        <S.Wrapper>
+          <h3 className="user_info-title">Sản phẩm yêu thích</h3>
+
+          <S.ProductsWrapper></S.ProductsWrapper>
+        </S.Wrapper>
+      </Layout>
+    );
 
   return (
     <Layout>

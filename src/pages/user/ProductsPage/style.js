@@ -193,6 +193,7 @@ export const ProductFilterWrapper = styled.div`
 export const ProductsWrapper = styled.div`
   padding: 12px;
   background-color: #fff;
+  height: 100%;
 `;
 
 export const ProductItem = styled.div`
