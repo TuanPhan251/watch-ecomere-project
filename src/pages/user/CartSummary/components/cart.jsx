@@ -38,6 +38,13 @@ const Cart = ({ setStep }) => {
 
   const handleRemoveProduct = (productId) => {
     dispatch(removeCartItemAction({ productId }));
+
+    notification.warn({
+      message: "Đã xóa sản phẩm vào giỏ hàng",
+      placement: "top",
+      top: 100,
+      duration: 2,
+    });
   };
 
   const handleUpdateCartItem = (product, quantity, type) => {

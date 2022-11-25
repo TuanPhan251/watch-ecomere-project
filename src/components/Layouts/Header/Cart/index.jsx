@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { generatePath, useNavigate, Link } from "react-router-dom";
 
-import { Tooltip } from "antd";
+import { Tooltip, notification } from "antd";
 
 import { removeCartItemAction } from "../../../../redux/actions/cart.actions";
 
@@ -19,6 +19,13 @@ const CartDrawer = ({ cartList }) => {
 
   const handleRemoveProduct = (productId) => {
     dispatch(removeCartItemAction({ productId }));
+
+    notification.warn({
+      message: "Đã xóa sản phẩm vào giỏ hàng",
+      placement: "top",
+      top: 100,
+      duration: 2,
+    });
   };
 
   const renderCartItems = () => {
