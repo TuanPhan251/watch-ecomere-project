@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
 
 export const Wrapper = styled.div`
-  min-height: 100vh;
-  background-color: var(--bgr-color);
   padding-bottom: 12px;
 `;
 
