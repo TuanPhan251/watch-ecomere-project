@@ -171,12 +171,16 @@ function* updateUserInfoSaga(action) {
 
 function* updateUserPasswordSaga(action) {
   try {
-    const { id, data, callback } = action.payload;
+    const { callback, data, newPassword } = action.payload;
     const result = yield axios.post("http://localhost:4000/login", data);
-
     yield put({
       type: SUCCESS(USER_ACTION.UPDATE_USER_PASSWORD),
     });
+    yield axios.patch(`http://localhost:4000/users/${result.data.user.id}`, {
+      password: newPassword,
+    });
+    if (callback.resetFields) yield callback.resetFields();
+    if (callback.showMessage) yield callback.showMessage();
   } catch (e) {
     yield put({
       type: FAIL(USER_ACTION.UPDATE_USER_PASSWORD),
