@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Input, Col, Form, Button } from "antd";
+import { Input, Col, Form, Button, message, notification } from "antd";
 
 import { updateUserPasswordAction } from "../../../../redux/actions";
 
@@ -16,6 +16,10 @@ const UserInfoPasswordPage = () => {
 
   useEffect(() => {
     document.title = "Đổi mật khẩu";
+
+    return () => {
+      passwordForm.resetFields();
+    };
   }, []);
 
   useEffect(() => {
@@ -23,11 +27,7 @@ const UserInfoPasswordPage = () => {
       passwordForm.setFields([
         {
           name: "password",
-          errors: updatePasswordData.error,
-        },
-        {
-          name: "email",
-          errors: [" "],
+          errors: [updatePasswordData.error],
         },
       ]);
     }
@@ -41,6 +41,18 @@ const UserInfoPasswordPage = () => {
         data: {
           email: userInfo.data.email,
           password,
+        },
+        newPassword,
+        callback: {
+          resetFields: () => {
+            passwordForm.resetFields();
+          },
+          showMessage: () => {
+            notification.success({
+              message: "Thành công",
+              description: "Mật khẩu của bạn đã được thay đổi",
+            });
+          },
         },
       })
     );
@@ -129,7 +141,11 @@ const UserInfoPasswordPage = () => {
                 span: 16,
               }}
             >
-              <Button type="primary" htmlType="submit">
+              <Button
+                loading={updatePasswordData.loading}
+                type="primary"
+                htmlType="submit"
+              >
                 Xác nhận
               </Button>
             </Form.Item>
