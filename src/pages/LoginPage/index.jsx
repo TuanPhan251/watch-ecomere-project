@@ -108,6 +108,10 @@ const LoginPage = () => {
                   required: true,
                   message: "Nhập địa chỉ Email!",
                 },
+                {
+                  type: "email",
+                  message: "Email không đúng định dạng",
+                },
               ]}
             >
               <Input

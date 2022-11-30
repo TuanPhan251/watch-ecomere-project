@@ -169,6 +169,22 @@ function* updateUserInfoSaga(action) {
   }
 }
 
+function* updateUserPasswordSaga(action) {
+  try {
+    const { id, data, callback } = action.payload;
+    const result = yield axios.post("http://localhost:4000/login", data);
+
+    yield put({
+      type: SUCCESS(USER_ACTION.UPDATE_USER_PASSWORD),
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(USER_ACTION.UPDATE_USER_PASSWORD),
+      payload: "Mật khẩu cũ không chính xác",
+    });
+  }
+}
+
 export default function* userSaga() {
   yield takeEvery(REQUEST(USER_ACTION.LOGIN), loginSaga);
   yield takeEvery(REQUEST(USER_ACTION.REGISTER), registerSaga);
@@ -176,4 +192,8 @@ export default function* userSaga() {
   yield debounce(500, REQUEST(USER_ACTION.GET_USER_LIST), getUserList);
   yield takeEvery(REQUEST(USER_ACTION.GET_USER_DETAIL), getUserDetailSaga);
   yield takeEvery(REQUEST(USER_ACTION.UPDATE_USER_INFO), updateUserInfoSaga);
+  yield takeEvery(
+    REQUEST(USER_ACTION.UPDATE_USER_PASSWORD),
+    updateUserPasswordSaga
+  );
 }

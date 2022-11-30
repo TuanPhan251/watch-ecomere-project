@@ -236,6 +236,10 @@ const Payment = ({ setStep }) => {
                             required: true,
                             message: "Bạn phải nhập tên in trên thẻ",
                           },
+                          {
+                            pattern: /^[A-Z]/,
+                            message: "Không đúng định dạng",
+                          },
                         ]}
                       >
                         <Input placeholder="VD: NGUYEN VAN A" />
