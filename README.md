@@ -1,12 +1,22 @@
-# Getting Started with Create React App
+# How to start this project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project database built from JSON server, so if you want to check the project
+you must follow steps bellow: .\
+
+    1.  Run `npm run server` or `yarn run server`.\
+    2.  Run `npm start` or `yarn start`.\
+    3.  If you edit the `db.json` file you must back to step 1.\
+    4.  Have fun :).\
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run server` or `yarn run server`
+
+You must run server before start app!!!
+
+### `npm start` or `yarn start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
