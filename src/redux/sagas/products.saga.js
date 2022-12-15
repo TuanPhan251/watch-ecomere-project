@@ -7,7 +7,7 @@ function* getProductListUserSaga(action) {
   try {
     const { params, more } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api.onrender.com//products",
+      "https://watch-ecomere-project-api.onrender.com/products",
       {
         params: {
           _expand: "category",
@@ -91,7 +91,7 @@ function* getProductListAdminSaga(action) {
   try {
     const { params, more } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api.onrender.com//products",
+      "https://watch-ecomere-project-api.onrender.com/products",
       {
         params: {
           _expand: "category",
@@ -177,7 +177,7 @@ function* getNewProductsSaga(action) {
   try {
     const { params } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api.onrender.com//products",
+      "https://watch-ecomere-project-api.onrender.com/products",
       {
         params: {
           _expand: "category",
@@ -208,7 +208,7 @@ function* getProductDetailSaga(action) {
   try {
     const { id, gender } = action.payload;
     const result = yield axios.get(
-      `https://watch-ecomere-project-api.onrender.com//products/${id}`,
+      `https://watch-ecomere-project-api.onrender.com/products/${id}`,
       {
         params: {
           _expand: "category",
@@ -247,12 +247,12 @@ function* createProductSaga(action) {
   try {
     const { data, callback, images } = action.payload;
     const result = yield axios.post(
-      "https://watch-ecomere-project-api.onrender.com//products",
+      "https://watch-ecomere-project-api.onrender.com/products",
       data
     );
     for (let i = 0; i < images.length; i++) {
       yield axios.post(
-        "https://watch-ecomere-project-api.onrender.com//images",
+        "https://watch-ecomere-project-api.onrender.com/images",
         {
           ...images[i],
           productId: result.data.id,
@@ -285,14 +285,14 @@ function* updateProductSaga(action) {
   try {
     const { data, id, callback, images, initialImageIds } = action.payload;
     const result = yield axios.patch(
-      `https://watch-ecomere-project-api.onrender.com//products/${id}`,
+      `https://watch-ecomere-project-api.onrender.com/products/${id}`,
       data
     );
 
     for (let i = 0; i < images.length; i++) {
       if (!images[i].id) {
         yield axios.post(
-          "https://watch-ecomere-project-api.onrender.com//images",
+          "https://watch-ecomere-project-api.onrender.com/images",
           {
             ...images[i],
             productId: result.data.id,
@@ -306,7 +306,7 @@ function* updateProductSaga(action) {
       );
       if (!keepImage) {
         yield axios.delete(
-          `https://watch-ecomere-project-api.onrender.com//images/${initialImageIds[j]}`
+          `https://watch-ecomere-project-api.onrender.com/images/${initialImageIds[j]}`
         );
       }
     }
@@ -336,7 +336,7 @@ function* deleteProductSaga(action) {
   try {
     const { id, params, callback } = action.payload;
     const result = yield axios.delete(
-      `https://watch-ecomere-project-api.onrender.com//products/${id}`
+      `https://watch-ecomere-project-api.onrender.com/products/${id}`
     );
     yield put({
       type: SUCCESS(PRODUCT_ACTION.DELETE_PRODUCT),

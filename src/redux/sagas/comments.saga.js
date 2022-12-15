@@ -7,7 +7,7 @@ function* getCommentListSaga(action) {
   try {
     const { productId } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api.onrender.com//comments",
+      "https://watch-ecomere-project-api.onrender.com/comments",
       {
         params: {
           productId: productId,
@@ -35,7 +35,7 @@ function* createCommentSaga(action) {
   try {
     const { data, productId } = action.payload;
     const result = yield axios.post(
-      "https://watch-ecomere-project-api.onrender.com//comments",
+      "https://watch-ecomere-project-api.onrender.com/comments",
       data
     );
     yield put({

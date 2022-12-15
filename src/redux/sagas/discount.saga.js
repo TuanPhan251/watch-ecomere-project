@@ -7,7 +7,7 @@ function* getDiscountSaga(action) {
   try {
     const { data, callback } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api.onrender.com//discount",
+      "https://watch-ecomere-project-api.onrender.com/discount",
       {
         params: {
           name: data,
@@ -37,7 +37,7 @@ function* getVoucherListSaga(action) {
   try {
     const { params } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api.onrender.com//discount",
+      "https://watch-ecomere-project-api.onrender.com/discount",
       {
         params: {
           _page: params.page,
@@ -73,7 +73,7 @@ function* getVoucherDetailSaga(action) {
   try {
     const { id, callback } = action.payload;
     const result = yield axios.get(
-      `https://watch-ecomere-project-api.onrender.com//discount/${id}`
+      `https://watch-ecomere-project-api.onrender.com/discount/${id}`
     );
     yield put({
       type: `${SUCCESS(DISCOUNT_ACTION.GET_VOUCHER_DETAIL)}`,
@@ -97,7 +97,7 @@ function* createVoucherSaga(action) {
   try {
     const { data, callback } = action.payload;
     const result = yield axios.post(
-      "https://watch-ecomere-project-api.onrender.com//discount",
+      "https://watch-ecomere-project-api.onrender.com/discount",
       data
     );
     yield put({
@@ -123,7 +123,7 @@ function* updateVoucherSaga(action) {
   try {
     const { id, data, callback } = action.payload;
     const result = yield axios.patch(
-      `https://watch-ecomere-project-api.onrender.com//discount/${id}`,
+      `https://watch-ecomere-project-api.onrender.com/discount/${id}`,
       data
     );
     yield put({
@@ -149,7 +149,7 @@ function* deleteVoucherSaga(action) {
   try {
     const { id, callback } = action.payload;
     const result = yield axios.delete(
-      `https://watch-ecomere-project-api.onrender.com//discount/${id}`
+      `https://watch-ecomere-project-api.onrender.com/discount/${id}`
     );
     yield put({
       type: `${SUCCESS(DISCOUNT_ACTION.DELETE_VOUCHER)}`,
