@@ -13,7 +13,7 @@ function* getOrderListSaga(action) {
   try {
     const { userId } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api.onrender.com//orders",
+      "https://watch-ecomere-project-api.onrender.com/orders",
       {
         params: {
           _embed: "orderProducts",
@@ -41,7 +41,7 @@ function* getAllOrdersSaga(action) {
   try {
     const { params } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api.onrender.com//orders",
+      "https://watch-ecomere-project-api.onrender.com/orders",
       {
         params: {
           _page: params.page,
@@ -84,7 +84,7 @@ function* getOrderDetailSaga(action) {
   try {
     const { id, callback } = action.payload;
     const result = yield axios.get(
-      `https://watch-ecomere-project-api.onrender.com//orders/${id}`,
+      `https://watch-ecomere-project-api.onrender.com/orders/${id}`,
       {
         params: {
           _embed: "orderProducts",
@@ -112,7 +112,7 @@ function* getGuestOrderDetailSaga(action) {
   try {
     const { orderCode, callback } = action.payload;
     const result = yield axios.get(
-      `https://watch-ecomere-project-api.onrender.com//guestOrders/`,
+      `https://watch-ecomere-project-api.onrender.com/guestOrders/`,
       {
         params: {
           _embed: "guestOrderProducts",
@@ -146,7 +146,7 @@ function* updateOrderStatusSaga(action) {
   try {
     const { id, data, callback, userId } = action.payload;
     const result = yield axios.patch(
-      `https://watch-ecomere-project-api.onrender.com//orders/${id}`,
+      `https://watch-ecomere-project-api.onrender.com/orders/${id}`,
       data
     );
     yield put({
@@ -174,13 +174,13 @@ function* orderProductSaga(action) {
   try {
     const { products, callback, ...orderData } = action.payload;
     const result = yield axios.post(
-      "https://watch-ecomere-project-api.onrender.com//orders",
+      "https://watch-ecomere-project-api.onrender.com/orders",
       orderData
     );
     for (let i = 0; i < products.length; i++) {
       const { stock, ...productData } = products[i];
       yield axios.post(
-        "https://watch-ecomere-project-api.onrender.com//orderProducts",
+        "https://watch-ecomere-project-api.onrender.com/orderProducts",
         {
           orderId: result.data.id,
           ...productData,
@@ -188,7 +188,7 @@ function* orderProductSaga(action) {
       );
 
       yield axios.patch(
-        `https://watch-ecomere-project-api.onrender.com//products/${products[i].productId}`,
+        `https://watch-ecomere-project-api.onrender.com/products/${products[i].productId}`,
         {
           stock: stock,
         }
@@ -224,12 +224,12 @@ function* guestOrderProductSaga(action) {
   try {
     const { products, callback, ...orderData } = action.payload;
     const result = yield axios.post(
-      "https://watch-ecomere-project-api.onrender.com//guestOrders",
+      "https://watch-ecomere-project-api.onrender.com/guestOrders",
       orderData
     );
     for (let i = 0; i < products.length; i++) {
       yield axios.post(
-        "https://watch-ecomere-project-api.onrender.com//guestOrderProducts",
+        "https://watch-ecomere-project-api.onrender.com/guestOrderProducts",
         {
           guestOrderId: result.data.id,
           ...products[i],
@@ -266,7 +266,7 @@ function* clearOrderListSaga(action) {
   try {
     const { id, userId, callback } = action.payload;
     const result = yield axios.delete(
-      `https://watch-ecomere-project-api.onrender.com//wishlists/${id}`
+      `https://watch-ecomere-project-api.onrender.com/wishlists/${id}`
     );
     yield put({
       type: `${SUCCESS(ORDER_ACTION.CLEAR_ORDER_LIST)}`,

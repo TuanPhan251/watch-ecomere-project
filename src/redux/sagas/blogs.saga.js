@@ -7,7 +7,7 @@ function* getBlogListSaga(action) {
   try {
     const { params, more } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api.onrender.com//blogs",
+      "https://watch-ecomere-project-api.onrender.com/blogs",
       {
         params: {
           _page: params.page,
@@ -48,7 +48,7 @@ function* getBlogDetailSaga(action) {
   try {
     const { id } = action.payload;
     const result = yield axios.get(
-      `https://watch-ecomere-project-api.onrender.com//blogs/${id}`
+      `https://watch-ecomere-project-api.onrender.com/blogs/${id}`
     );
     yield put({
       type: `${SUCCESS(BLOG_ACTION.GET_BLOG_DETAIL)}`,
@@ -70,7 +70,7 @@ function* createBlogSaga(action) {
   try {
     const { data, callback } = action.payload;
     const result = yield axios.post(
-      "https://watch-ecomere-project-api.onrender.com//blogs",
+      "https://watch-ecomere-project-api.onrender.com/blogs",
       data
     );
     yield put({
@@ -94,7 +94,7 @@ function* updateBlogSaga(action) {
   try {
     const { id, data, callback } = action.payload;
     const result = yield axios.patch(
-      `https://watch-ecomere-project-api.onrender.com//blogs/${id}`,
+      `https://watch-ecomere-project-api.onrender.com/blogs/${id}`,
       data
     );
     yield put({
@@ -118,7 +118,7 @@ function* deleteBlogSaga(action) {
   try {
     const { id, callback } = action.payload;
     const result = yield axios.delete(
-      `https://watch-ecomere-project-api.onrender.com//blogs/${id}`
+      `https://watch-ecomere-project-api.onrender.com/blogs/${id}`
     );
     yield put({
       type: `${SUCCESS(BLOG_ACTION.DELETE_BLOG)}`,
