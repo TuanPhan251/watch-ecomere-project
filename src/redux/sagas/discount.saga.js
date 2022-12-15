@@ -6,11 +6,14 @@ import { REQUEST, SUCCESS, FAIL, DISCOUNT_ACTION } from "../CONSTANTS/";
 function* getDiscountSaga(action) {
   try {
     const { data, callback } = action.payload;
-    const result = yield axios.get("http://localhost:4000/discount", {
-      params: {
-        name: data,
-      },
-    });
+    const result = yield axios.get(
+      "https://watch-ecomere-project-api.onrender.com//discount",
+      {
+        params: {
+          name: data,
+        },
+      }
+    );
 
     yield put({
       type: `${SUCCESS(DISCOUNT_ACTION.DISCOUNT)}`,
@@ -33,15 +36,18 @@ function* getDiscountSaga(action) {
 function* getVoucherListSaga(action) {
   try {
     const { params } = action.payload;
-    const result = yield axios.get("http://localhost:4000/discount", {
-      params: {
-        _page: params.page,
-        _limit: params.limit,
-        ...(params.keyword && {
-          q: params.keyword,
-        }),
-      },
-    });
+    const result = yield axios.get(
+      "https://watch-ecomere-project-api.onrender.com//discount",
+      {
+        params: {
+          _page: params.page,
+          _limit: params.limit,
+          ...(params.keyword && {
+            q: params.keyword,
+          }),
+        },
+      }
+    );
     yield put({
       type: `${SUCCESS(DISCOUNT_ACTION.GET_VOUCHER_LIST)}`,
       payload: {
@@ -66,7 +72,9 @@ function* getVoucherListSaga(action) {
 function* getVoucherDetailSaga(action) {
   try {
     const { id, callback } = action.payload;
-    const result = yield axios.get(`http://localhost:4000/discount/${id}`);
+    const result = yield axios.get(
+      `https://watch-ecomere-project-api.onrender.com//discount/${id}`
+    );
     yield put({
       type: `${SUCCESS(DISCOUNT_ACTION.GET_VOUCHER_DETAIL)}`,
       payload: {
@@ -88,7 +96,10 @@ function* getVoucherDetailSaga(action) {
 function* createVoucherSaga(action) {
   try {
     const { data, callback } = action.payload;
-    const result = yield axios.post("http://localhost:4000/discount", data);
+    const result = yield axios.post(
+      "https://watch-ecomere-project-api.onrender.com//discount",
+      data
+    );
     yield put({
       type: `${SUCCESS(DISCOUNT_ACTION.CREATE_VOUCHER)}`,
       payload: {
@@ -112,7 +123,7 @@ function* updateVoucherSaga(action) {
   try {
     const { id, data, callback } = action.payload;
     const result = yield axios.patch(
-      `http://localhost:4000/discount/${id}`,
+      `https://watch-ecomere-project-api.onrender.com//discount/${id}`,
       data
     );
     yield put({
@@ -137,7 +148,9 @@ function* updateVoucherSaga(action) {
 function* deleteVoucherSaga(action) {
   try {
     const { id, callback } = action.payload;
-    const result = yield axios.delete(`http://localhost:4000/discount/${id}`);
+    const result = yield axios.delete(
+      `https://watch-ecomere-project-api.onrender.com//discount/${id}`
+    );
     yield put({
       type: `${SUCCESS(DISCOUNT_ACTION.DELETE_VOUCHER)}`,
     });
