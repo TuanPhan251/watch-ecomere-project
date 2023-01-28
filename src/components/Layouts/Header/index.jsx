@@ -260,29 +260,6 @@ const Header = () => {
               >
                 ĐỒNG HỒ NAM
               </Link>
-              <div className="dropdown-container">
-                <div className="dropdown-content">
-                  <div>
-                    <p>CÁC HÃNG BÁN CHẠY</p>
-                    <ul className="dropdown-list">
-                      {renderCategoryDropDownProductMenPage()}
-                    </ul>
-                  </div>
-                  <div>
-                    <p>KHUYÊN DÙNG</p>
-                    <ul className="dropdown-list">
-                      {renderCategoryDropDownProductMenPage()}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p>CÁC DÒNG ĐẶC BIỆT</p>
-                    <ul className="dropdown-list">
-                      {renderCategoryDropDownProductMenPage()}
-                    </ul>
-                  </div>
-                </div>
-              </div>
             </S.DropDownMenuWrapperTH>
           </li>
           <li>
@@ -306,29 +283,6 @@ const Header = () => {
               >
                 ĐỒNG HỒ NỮ
               </Link>
-              <div className="dropdown-container">
-                <div className="dropdown-content">
-                  <div>
-                    <p>CÁC HÃNG BÁN CHẠY</p>
-                    <ul className="dropdown-list">
-                      {renderCategoryDropDownProductWomenPage()}
-                    </ul>
-                  </div>
-                  <div>
-                    <p>KHUYÊN DÙNG</p>
-                    <ul className="dropdown-list">
-                      {renderCategoryDropDownProductWomenPage()}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p>CÁC DÒNG ĐẶC BIỆT</p>
-                    <ul className="dropdown-list">
-                      {renderCategoryDropDownProductWomenPage()}
-                    </ul>
-                  </div>
-                </div>
-              </div>
             </S.DropDownMenuWrapperTH>
           </li>
           <li>

@@ -1,16 +1,11 @@
-import { Button, Carousel, Checkbox, Form, Input } from "antd";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { useNavigate } from "react-router-dom";
+import { Button, Checkbox, Form, Input } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 import { loginAction } from "../../redux/actions";
 import { ROUTES } from "../../constants/routes";
 import * as S from "./styles";
-import img1 from "../../../src/assets/banner/carousel 1.jpg";
-import img2 from "../../../src/assets/banner/carousel 2.jpg";
-import img3 from "../../../src/assets/banner/men-1.webp";
-import img4 from "../../../src/assets/banner/women-1.webp";
 
 const LoginPage = () => {
   const [loginForm] = Form.useForm();
@@ -55,41 +50,11 @@ const LoginPage = () => {
   return (
     <S.LoginWrapper>
       <div className="login-container">
-        <div className="login-left">
-          <Carousel autoplay>
-            <div>
-              <img
-                alt="watch"
-                src={img1}
-                style={{ width: "100%", height: "700px" }}
-              />
-            </div>
-            <div>
-              <img
-                alt="watch"
-                src={img2}
-                style={{ width: "100%", height: "700px" }}
-              />
-            </div>
-            <div>
-              <img
-                alt="watch"
-                src={img3}
-                style={{ width: "100%", height: "700px" }}
-              />
-            </div>
-            <div>
-              <img
-                alt="watch"
-                src={img4}
-                style={{ width: "100%", height: "700px" }}
-              />
-            </div>
-          </Carousel>
-        </div>
+        {/* <div className="login-left">
+        </div> */}
         <div className="login-right">
           <div className="title-login">
-            <S.TextLabel>Tuan & Phuong</S.TextLabel>
+            <h3>Đăng nhập</h3>
           </div>
           <Form
             form={loginForm}
@@ -115,7 +80,7 @@ const LoginPage = () => {
               ]}
             >
               <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
+                prefix={<i className="fa-solid fa-circle-user"></i>}
                 placeholder="Email"
               />
             </Form.Item>
@@ -130,7 +95,7 @@ const LoginPage = () => {
               ]}
             >
               <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
+                prefix={<i className="fa-solid fa-lock"></i>}
                 type="password"
                 placeholder="Mật khẩu"
               />
@@ -141,21 +106,21 @@ const LoginPage = () => {
               </Form.Item>
             </Form.Item>
 
-            <Form.Item>
+            <Form.Item style={{}}>
               <Button
                 type="primary"
                 htmlType="submit"
                 className="login-form-button"
                 style={{ padding: 5, fontSize: 17 }}
+                loading={loginData.loading}
               >
                 Đăng Nhập
               </Button>
-              <button
-                onClick={() => navigate(ROUTES.REGISTER)}
-                className="navi-register-button"
-              >
-                Tạo tài khoản
-              </button>
+
+              <div style={{ textAlign: "center" }}>
+                Chưa có tài khoản?{" "}
+                <Link to={ROUTES.REGISTER}>Đăng ký ngay</Link>
+              </div>
             </Form.Item>
           </Form>
         </div>

@@ -1,4 +1,4 @@
-import { Button, Carousel, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -7,11 +7,6 @@ import { useEffect } from "react";
 import { registerAction } from "../../redux/actions";
 import * as S from "./styles";
 import { ROUTES } from "../../constants/routes";
-
-import img1 from "../../../src/assets/banner/carousel 1.jpg";
-import img2 from "../../../src/assets/banner/carousel 2.jpg";
-import img3 from "../../../src/assets/banner/men-1.webp";
-import img4 from "../../../src/assets/banner/women-1.webp";
 
 const RegisterPage = () => {
   const [registerForm] = Form.useForm();
@@ -53,41 +48,10 @@ const RegisterPage = () => {
   return (
     <S.RegisterWrapper>
       <div className="register-container">
-        <div className="register-left">
-          <Carousel autoplay>
-            <div>
-              <img
-                alt="watch"
-                src={img1}
-                style={{ width: "100%", height: "700px" }}
-              />
-            </div>
-            <div>
-              <img
-                alt="watch"
-                src={img2}
-                style={{ width: "100%", height: "700px" }}
-              />
-            </div>
-            <div>
-              <img
-                alt="watch"
-                src={img3}
-                style={{ width: "100%", height: "700px" }}
-              />
-            </div>
-            <div>
-              <img
-                alt="watch"
-                src={img4}
-                style={{ width: "100%", height: "700px" }}
-              />
-            </div>
-          </Carousel>
-        </div>
+        <div className="register-left"></div>
         <div className="register-right">
           <div className="title-register">
-            <S.TextLabel>Tuan & Phuong</S.TextLabel>
+            <h3>Đăng ký</h3>
           </div>
           <Form
             form={registerForm}
@@ -179,11 +143,12 @@ const RegisterPage = () => {
               />
             </Form.Item>
 
-            <Form.Item style={{ fontSize: 17 }}>
+            <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
                 className="register-form-button"
+                loading={registerData.loading}
               >
                 Đăng Ký
               </Button>

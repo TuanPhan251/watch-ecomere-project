@@ -1,23 +1,18 @@
 import styled from "styled-components";
 
 export const LoginWrapper = styled.div`
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100vh;
   background: linear-gradient(to left, #bbd2c5, #536976, #292e49);
 
   .login-container {
-    position: absolute;
-    top: 100px;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: row;
     margin: 0 auto;
-    width: 700px;
-    min-height: 500px;
+    min-width: 400px;
     background-color: #fff;
-    border-radius: 20px;
+    border-radius: 4px;
     overflow: hidden;
 
     .login-left {
@@ -27,24 +22,20 @@ export const LoginWrapper = styled.div`
       }
     }
     .login-right {
-      width: 50%;
-      @media (max-width: 768px) {
-        width: 90%;
-        margin: 0 auto;
-      }
+      padding: 20px;
+
       .title-login {
-        width: 70%;
-        margin: 50px auto 0;
+        margin-bottom: 12px;
+
+        h3 {
+          text-align: center;
+          font-size: 20px;
+        }
       }
-    }
-    @media (max-width: 768px) {
-      width: 400px;
     }
   }
 
   .login-form {
-    width: 70%;
-    margin: 10px auto 0;
     .login-form-button {
       width: 100%;
       margin-bottom: 10px;

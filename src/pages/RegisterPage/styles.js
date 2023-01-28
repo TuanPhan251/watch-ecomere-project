@@ -1,23 +1,17 @@
 import styled from "styled-components";
 
 export const RegisterWrapper = styled.div`
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100vh;
   background: linear-gradient(to left, #bbd2c5, #536976, #292e49);
 
   .register-container {
-    position: absolute;
-    top: 100px;
-    left: 0;
-    right: 0;
-    display: flex;
-    flex-direction: row;
-    margin: 0 auto;
-    width: 700px;
-    min-height: 500px;
+    min-width: 400px;
     background-color: #fff;
-    border-radius: 20px;
+    border-radius: 4px;
     overflow: hidden;
 
     .register-left {
@@ -27,25 +21,17 @@ export const RegisterWrapper = styled.div`
       }
     }
     .register-right {
-      width: 50%;
-      @media (max-width: 768px) {
-        width: 90%;
-        margin: 0 auto;
+      padding: 20px;
+
+      .title-register h3 {
+        text-align: center;
+        font-size: 20px;
+        margin-bottom: 12px;
       }
-      .title-register {
-        width: 70%;
-        margin: 50px auto 0;
-      }
-    }
-    @media (max-width: 768px) {
-      width: 400px;
     }
   }
 
   .register-form {
-    width: 70%;
-    margin: 10px auto 0;
-
     .register-form-button {
       width: 100%;
       margin-bottom: 10px;

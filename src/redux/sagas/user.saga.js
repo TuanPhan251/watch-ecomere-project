@@ -6,10 +6,7 @@ import { USER_ACTION, REQUEST, SUCCESS, FAIL } from "./../CONSTANTS";
 function* loginSaga(action) {
   try {
     const { data, callback } = action.payload;
-    const result = yield axios.post(
-      "https://watch-ecomere-project-api.onrender.com/login",
-      data
-    );
+    const result = yield axios.post("http://localhost:4000/login", data);
     yield localStorage.setItem("accessToken", result.data.accessToken);
     yield put({
       type: SUCCESS(USER_ACTION.LOGIN),
@@ -34,14 +31,11 @@ function* loginSaga(action) {
 function* registerSaga(action) {
   try {
     const { data, callback } = action.payload;
-    const result = yield axios.post(
-      "https://watch-ecomere-project-api.onrender.com/register",
-      {
-        ...data,
-        orderQuantity: 0,
-        totalSpend: 0,
-      }
-    );
+    const result = yield axios.post("http://localhost:4000/register", {
+      ...data,
+      orderQuantity: 0,
+      totalSpend: 0,
+    });
     yield put({
       type: SUCCESS(USER_ACTION.REGISTER),
       payload: {
@@ -64,9 +58,7 @@ function* registerSaga(action) {
 function* getUserInfoSaga(action) {
   try {
     const { id } = action.payload;
-    const result = yield axios.get(
-      `https://watch-ecomere-project-api.onrender.com/users/${id}`
-    );
+    const result = yield axios.get(`http://localhost:4000/users/${id}`);
     yield put({
       type: SUCCESS(USER_ACTION.GET_USER_INFO),
       payload: {
@@ -89,34 +81,31 @@ function* getUserInfoSaga(action) {
 function* getUserList(action) {
   try {
     const { params } = action.payload;
-    const result = yield axios.get(
-      `https://watch-ecomere-project-api.onrender.com/users`,
-      {
-        params: {
-          _page: params.page,
-          _limit: params.limit,
-          _embed: "orders",
-          ...(params.keyword && {
-            q: params.keyword,
-          }),
-          ...(params.role && {
-            role: params.role,
-          }),
-          ...(params.orderSort && {
-            _sort: "orderQuantity",
-            _order: params.orderSort,
-          }),
-          ...(params.spendSort && {
-            _sort: "totalSpend",
-            _order: params.spendSort,
-          }),
-          ...(params.sort && {
-            _sort: params.sort.split(".")[1],
-            _order: params.sort.split(".")[0],
-          }),
-        },
-      }
-    );
+    const result = yield axios.get(`http://localhost:4000/users`, {
+      params: {
+        _page: params.page,
+        _limit: params.limit,
+        _embed: "orders",
+        ...(params.keyword && {
+          q: params.keyword,
+        }),
+        ...(params.role && {
+          role: params.role,
+        }),
+        ...(params.orderSort && {
+          _sort: "orderQuantity",
+          _order: params.orderSort,
+        }),
+        ...(params.spendSort && {
+          _sort: "totalSpend",
+          _order: params.spendSort,
+        }),
+        ...(params.sort && {
+          _sort: params.sort.split(".")[1],
+          _order: params.sort.split(".")[0],
+        }),
+      },
+    });
     yield put({
       type: SUCCESS(USER_ACTION.GET_USER_LIST),
       payload: {
@@ -141,9 +130,7 @@ function* getUserList(action) {
 function* getUserDetailSaga(action) {
   try {
     const { id } = action.payload;
-    const result = yield axios.get(
-      `https://watch-ecomere-project-api.onrender.com/users/${id}`
-    );
+    const result = yield axios.get(`http://localhost:4000/users/${id}`);
     yield put({
       type: SUCCESS(USER_ACTION.GET_USER_DETAIL),
       payload: {
@@ -162,7 +149,7 @@ function* updateUserInfoSaga(action) {
   try {
     const { id, values, callback } = action.payload;
     const result = yield axios.patch(
-      `https://watch-ecomere-project-api.onrender.com/users/${id}`,
+      `http://localhost:4000/users/${id}`,
       values
     );
     yield put({
@@ -185,19 +172,13 @@ function* updateUserInfoSaga(action) {
 function* updateUserPasswordSaga(action) {
   try {
     const { callback, data, newPassword } = action.payload;
-    const result = yield axios.post(
-      "https://watch-ecomere-project-api.onrender.com/login",
-      data
-    );
+    const result = yield axios.post("http://localhost:4000/login", data);
     yield put({
       type: SUCCESS(USER_ACTION.UPDATE_USER_PASSWORD),
     });
-    yield axios.patch(
-      `https://watch-ecomere-project-api.onrender.com/users/${result.data.user.id}`,
-      {
-        password: newPassword,
-      }
-    );
+    yield axios.patch(`http://localhost:4000/users/${result.data.user.id}`, {
+      password: newPassword,
+    });
     if (callback.resetFields) yield callback.resetFields();
     if (callback.showMessage) yield callback.showMessage();
   } catch (e) {
