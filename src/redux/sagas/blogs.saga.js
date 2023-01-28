@@ -6,22 +6,19 @@ import { REQUEST, SUCCESS, FAIL, BLOG_ACTION } from "../CONSTANTS/";
 function* getBlogListSaga(action) {
   try {
     const { params, more } = action.payload;
-    const result = yield axios.get(
-      "https://watch-ecomere-project-api.onrender.com/blogs",
-      {
-        params: {
-          _page: params.page,
-          _limit: params.limit,
-          ...(params.keyword && {
-            q: params.keyword,
-          }),
-          ...(params.sort && {
-            _sort: params.sort.split(".")[1],
-            _order: params.sort.split(".")[0],
-          }),
-        },
-      }
-    );
+    const result = yield axios.get("http://localhost:4000/blogs", {
+      params: {
+        _page: params.page,
+        _limit: params.limit,
+        ...(params.keyword && {
+          q: params.keyword,
+        }),
+        ...(params.sort && {
+          _sort: params.sort.split(".")[1],
+          _order: params.sort.split(".")[0],
+        }),
+      },
+    });
     yield put({
       type: `${SUCCESS(BLOG_ACTION.GET_BLOG_LIST)}`,
       payload: {
@@ -47,9 +44,7 @@ function* getBlogListSaga(action) {
 function* getBlogDetailSaga(action) {
   try {
     const { id } = action.payload;
-    const result = yield axios.get(
-      `https://watch-ecomere-project-api.onrender.com/blogs/${id}`
-    );
+    const result = yield axios.get(`http://localhost:4000/blogs/${id}`);
     yield put({
       type: `${SUCCESS(BLOG_ACTION.GET_BLOG_DETAIL)}`,
       payload: {
@@ -69,10 +64,7 @@ function* getBlogDetailSaga(action) {
 function* createBlogSaga(action) {
   try {
     const { data, callback } = action.payload;
-    const result = yield axios.post(
-      "https://watch-ecomere-project-api.onrender.com/blogs",
-      data
-    );
+    const result = yield axios.post("http://localhost:4000/blogs", data);
     yield put({
       type: `${SUCCESS(BLOG_ACTION.CREATE_BLOG)}`,
       payload: {
@@ -93,10 +85,7 @@ function* createBlogSaga(action) {
 function* updateBlogSaga(action) {
   try {
     const { id, data, callback } = action.payload;
-    const result = yield axios.patch(
-      `https://watch-ecomere-project-api.onrender.com/blogs/${id}`,
-      data
-    );
+    const result = yield axios.patch(`http://localhost:4000/blogs/${id}`, data);
     yield put({
       type: `${SUCCESS(BLOG_ACTION.UPDATE_BLOG)}`,
       payload: {
@@ -117,9 +106,7 @@ function* updateBlogSaga(action) {
 function* deleteBlogSaga(action) {
   try {
     const { id, callback } = action.payload;
-    const result = yield axios.delete(
-      `https://watch-ecomere-project-api.onrender.com/blogs/${id}`
-    );
+    const result = yield axios.delete(`http://localhost:4000/blogs/${id}`);
     yield put({
       type: `${SUCCESS(BLOG_ACTION.DELETE_BLOG)}`,
       payload: {
