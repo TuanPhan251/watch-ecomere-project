@@ -6,58 +6,61 @@ import { PRODUCT_ACTION, REQUEST, SUCCESS, FAIL } from "../CONSTANTS";
 function* getProductListUserSaga(action) {
   try {
     const { params, more } = action.payload;
-    const result = yield axios.get("http://localhost:4000/products", {
-      params: {
-        _expand: "category",
-        _embed: ["images", "comments"],
-        _page: params.page,
-        _limit: params.limit,
-        isHidden: false,
-        ...(params.categoryId && {
-          categoryId: params.categoryId,
-        }),
-        ...(params.keyword && {
-          q: params.keyword,
-        }),
-        ...(params.priceOder && {
-          finalPrice: params.priceOder,
-        }),
-        ...(params.gender && {
-          gender: params.gender,
-        }),
-        ...(params.priceRange && {
-          price_gte: params.priceRange[0],
-          price_lte: params.priceRange[1],
-        }),
-        ...(params.priceSort && {
-          _sort: "price",
-          _order: params.priceSort,
-        }),
-        ...(params.type && {
-          movement: params.type,
-        }),
-        // ...(params.caseSize && {
-        //   caseSize_gte: params.caseSize[0],
-        //   caseSize_lte: params.caseSize[1],
-        // }),
-        ...(params.caseSize && {
-          caseSize_gte: params.caseSize.split(",")[0],
-          caseSize_lte: params.caseSize.split(",")[1],
-        }),
-        ...(params.glassMaterial && {
-          glassMaterial: params.glassMaterial,
-        }),
-        ...(params.isNew && {
-          isNew: params.isNew,
-        }),
-        ...(params.isDiscount && {
-          isDiscount: params.isDiscount,
-        }),
-        ...(params.productId && {
-          id: params.productId,
-        }),
-      },
-    });
+    const result = yield axios.get(
+      "https://watch-ecomere-project-api-production.up.railway.app/products",
+      {
+        params: {
+          _expand: "category",
+          _embed: ["images", "comments"],
+          _page: params.page,
+          _limit: params.limit,
+          isHidden: false,
+          ...(params.categoryId && {
+            categoryId: params.categoryId,
+          }),
+          ...(params.keyword && {
+            q: params.keyword,
+          }),
+          ...(params.priceOder && {
+            finalPrice: params.priceOder,
+          }),
+          ...(params.gender && {
+            gender: params.gender,
+          }),
+          ...(params.priceRange && {
+            price_gte: params.priceRange[0],
+            price_lte: params.priceRange[1],
+          }),
+          ...(params.priceSort && {
+            _sort: "price",
+            _order: params.priceSort,
+          }),
+          ...(params.type && {
+            movement: params.type,
+          }),
+          // ...(params.caseSize && {
+          //   caseSize_gte: params.caseSize[0],
+          //   caseSize_lte: params.caseSize[1],
+          // }),
+          ...(params.caseSize && {
+            caseSize_gte: params.caseSize.split(",")[0],
+            caseSize_lte: params.caseSize.split(",")[1],
+          }),
+          ...(params.glassMaterial && {
+            glassMaterial: params.glassMaterial,
+          }),
+          ...(params.isNew && {
+            isNew: params.isNew,
+          }),
+          ...(params.isDiscount && {
+            isDiscount: params.isDiscount,
+          }),
+          ...(params.productId && {
+            id: params.productId,
+          }),
+        },
+      }
+    );
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST_USER),
       payload: {
@@ -87,60 +90,63 @@ function* getProductListUserSaga(action) {
 function* getProductListAdminSaga(action) {
   try {
     const { params, more } = action.payload;
-    const result = yield axios.get("http://localhost:4000/products", {
-      params: {
-        _expand: "category",
-        _embed: ["images", "comments"],
-        _page: params.page,
-        _limit: params.limit,
-        ...(params.isHidden && {
-          isHidden: params.isHidden,
-        }),
-        ...(params.categoryId && {
-          categoryId: params.categoryId,
-        }),
-        ...(params.keyword && {
-          q: params.keyword,
-        }),
-        ...(params.priceOder && {
-          finalPrice: params.priceOder,
-        }),
-        ...(params.gender && {
-          gender: params.gender,
-        }),
-        ...(params.priceRange && {
-          price_gte: params.priceRange[0],
-          price_lte: params.priceRange[1],
-        }),
-        ...(params.stock && {
-          _sort: "stock",
-          _order: params.stock,
-        }),
-        ...(params.sort && {
-          _sort: params.sort.split(".")[1],
-          _order: params.sort.split(".")[0],
-        }),
-        ...(params.type && {
-          movement: params.type,
-        }),
-        ...(params.caseSize && {
-          caseSize_gte: params.caseSize[0],
-          caseSize_lte: params.caseSize[1],
-        }),
-        ...(params.glassMaterial && {
-          glassMaterial: params.glassMaterial,
-        }),
-        ...(params.isNew && {
-          isNew: params.isNew,
-        }),
-        ...(params.isDiscount && {
-          isDiscount: params.isDiscount,
-        }),
-        ...(params.productId && {
-          id: params.productId,
-        }),
-      },
-    });
+    const result = yield axios.get(
+      "https://watch-ecomere-project-api-production.up.railway.app/products",
+      {
+        params: {
+          _expand: "category",
+          _embed: ["images", "comments"],
+          _page: params.page,
+          _limit: params.limit,
+          ...(params.isHidden && {
+            isHidden: params.isHidden,
+          }),
+          ...(params.categoryId && {
+            categoryId: params.categoryId,
+          }),
+          ...(params.keyword && {
+            q: params.keyword,
+          }),
+          ...(params.priceOder && {
+            finalPrice: params.priceOder,
+          }),
+          ...(params.gender && {
+            gender: params.gender,
+          }),
+          ...(params.priceRange && {
+            price_gte: params.priceRange[0],
+            price_lte: params.priceRange[1],
+          }),
+          ...(params.stock && {
+            _sort: "stock",
+            _order: params.stock,
+          }),
+          ...(params.sort && {
+            _sort: params.sort.split(".")[1],
+            _order: params.sort.split(".")[0],
+          }),
+          ...(params.type && {
+            movement: params.type,
+          }),
+          ...(params.caseSize && {
+            caseSize_gte: params.caseSize[0],
+            caseSize_lte: params.caseSize[1],
+          }),
+          ...(params.glassMaterial && {
+            glassMaterial: params.glassMaterial,
+          }),
+          ...(params.isNew && {
+            isNew: params.isNew,
+          }),
+          ...(params.isDiscount && {
+            isDiscount: params.isDiscount,
+          }),
+          ...(params.productId && {
+            id: params.productId,
+          }),
+        },
+      }
+    );
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_LIST_ADMIN),
       payload: {
@@ -170,15 +176,18 @@ function* getProductListAdminSaga(action) {
 function* getNewProductsSaga(action) {
   try {
     const { params } = action.payload;
-    const result = yield axios.get("http://localhost:4000/products", {
-      params: {
-        _expand: "category",
-        _embed: "images",
-        ...(params.isNew && {
-          isNew: params.isNew,
-        }),
-      },
-    });
+    const result = yield axios.get(
+      "https://watch-ecomere-project-api-production.up.railway.app/products",
+      {
+        params: {
+          _expand: "category",
+          _embed: "images",
+          ...(params.isNew && {
+            isNew: params.isNew,
+          }),
+        },
+      }
+    );
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_NEW_PRODUCTS_LIST),
       payload: {
@@ -198,12 +207,15 @@ function* getNewProductsSaga(action) {
 function* getProductDetailSaga(action) {
   try {
     const { id, gender } = action.payload;
-    const result = yield axios.get(`http://localhost:4000/products/${id}`, {
-      params: {
-        _expand: "category",
-        _embed: ["images", "wishlists", "comments"],
-      },
-    });
+    const result = yield axios.get(
+      `https://watch-ecomere-project-api-production.up.railway.app/products/${id}`,
+      {
+        params: {
+          _expand: "category",
+          _embed: ["images", "wishlists", "comments"],
+        },
+      }
+    );
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
       payload: {
@@ -234,12 +246,18 @@ function* getProductDetailSaga(action) {
 function* createProductSaga(action) {
   try {
     const { data, callback, images } = action.payload;
-    const result = yield axios.post("http://localhost:4000/products", data);
+    const result = yield axios.post(
+      "https://watch-ecomere-project-api-production.up.railway.app/products",
+      data
+    );
     for (let i = 0; i < images.length; i++) {
-      yield axios.post("http://localhost:4000/images", {
-        ...images[i],
-        productId: result.data.id,
-      });
+      yield axios.post(
+        "https://watch-ecomere-project-api-production.up.railway.app/images",
+        {
+          ...images[i],
+          productId: result.data.id,
+        }
+      );
     }
 
     yield put({
@@ -267,16 +285,19 @@ function* updateProductSaga(action) {
   try {
     const { data, id, callback, images, initialImageIds } = action.payload;
     const result = yield axios.patch(
-      `http://localhost:4000/products/${id}`,
+      `https://watch-ecomere-project-api-production.up.railway.app/products/${id}`,
       data
     );
 
     for (let i = 0; i < images.length; i++) {
       if (!images[i].id) {
-        yield axios.post("http://localhost:4000/images", {
-          ...images[i],
-          productId: result.data.id,
-        });
+        yield axios.post(
+          "https://watch-ecomere-project-api-production.up.railway.app/images",
+          {
+            ...images[i],
+            productId: result.data.id,
+          }
+        );
       }
     }
     for (let j = 0; j < initialImageIds.length; j++) {
@@ -285,7 +306,7 @@ function* updateProductSaga(action) {
       );
       if (!keepImage) {
         yield axios.delete(
-          `http://localhost:4000/images/${initialImageIds[j]}`
+          `https://watch-ecomere-project-api-production.up.railway.app/images/${initialImageIds[j]}`
         );
       }
     }
@@ -314,7 +335,9 @@ function* updateProductSaga(action) {
 function* deleteProductSaga(action) {
   try {
     const { id, params, callback } = action.payload;
-    const result = yield axios.delete(`http://localhost:4000/products/${id}`);
+    const result = yield axios.delete(
+      `https://watch-ecomere-project-api-production.up.railway.app/products/${id}`
+    );
     yield put({
       type: SUCCESS(PRODUCT_ACTION.DELETE_PRODUCT),
       payload: {

@@ -6,15 +6,18 @@ import { REQUEST, SUCCESS, FAIL, CATEGORY_ACTION } from "../CONSTANTS/";
 function* getCategoriesListSaga(action) {
   try {
     const { params } = action.payload;
-    const result = yield axios.get("http://localhost:4000/categories", {
-      params: {
-        _page: params.page,
-        _limit: params.limit,
-        ...(params.keyword && {
-          q: params.keyword,
-        }),
-      },
-    });
+    const result = yield axios.get(
+      "https://watch-ecomere-project-api-production.up.railway.app/categories",
+      {
+        params: {
+          _page: params.page,
+          _limit: params.limit,
+          ...(params.keyword && {
+            q: params.keyword,
+          }),
+        },
+      }
+    );
     yield put({
       type: `${SUCCESS(CATEGORY_ACTION.GET_CATEGORY_LIST)}`,
       payload: {
@@ -39,7 +42,9 @@ function* getCategoriesListSaga(action) {
 function* getCategoryDetailSaga(action) {
   try {
     const { id, callback } = action.payload;
-    const result = yield axios.get(`http://localhost:4000/categories/${id}`);
+    const result = yield axios.get(
+      `https://watch-ecomere-project-api-production.up.railway.app/categories/${id}`
+    );
     yield put({
       type: `${SUCCESS(CATEGORY_ACTION.GET_CATEGORY_DETAIL)}`,
       payload: {
@@ -61,7 +66,10 @@ function* getCategoryDetailSaga(action) {
 function* createCategorySaga(action) {
   try {
     const { data, callback } = action.payload;
-    const result = yield axios.post("http://localhost:4000/categories", data);
+    const result = yield axios.post(
+      "https://watch-ecomere-project-api-production.up.railway.app/categories",
+      data
+    );
     yield put({
       type: `${SUCCESS(CATEGORY_ACTION.CREATE_NEW_CATEGORY)}`,
       payload: {
@@ -85,7 +93,7 @@ function* updateCategorySaga(action) {
   try {
     const { id, data, callback } = action.payload;
     const result = yield axios.patch(
-      `http://localhost:4000/categories/${id}`,
+      `https://watch-ecomere-project-api-production.up.railway.app/categories/${id}`,
       data
     );
     yield put({
