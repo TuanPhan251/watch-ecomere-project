@@ -6,12 +6,15 @@ import { REQUEST, SUCCESS, FAIL, WISHLIST_ACTION } from "../CONSTANTS/";
 function* getWishlistSaga(action) {
   try {
     const { userId } = action.payload;
-    const result = yield axios.get("http://localhost:4000/wishlists", {
-      params: {
-        _expand: "product",
-        userId: userId,
-      },
-    });
+    const result = yield axios.get(
+      "https://watch-ecomere-project-api-production.up.railway.app/wishlists",
+      {
+        params: {
+          _expand: "product",
+          userId: userId,
+        },
+      }
+    );
     yield put({
       type: `${SUCCESS(WISHLIST_ACTION.GET_WISHLIST)}`,
       payload: {
@@ -31,7 +34,10 @@ function* getWishlistSaga(action) {
 function* addWishlistSaga(action) {
   try {
     const { data, userId } = action.payload;
-    const result = yield axios.post("http://localhost:4000/wishlists", data);
+    const result = yield axios.post(
+      "https://watch-ecomere-project-api-production.up.railway.app/wishlists",
+      data
+    );
     yield put({
       type: `${SUCCESS(WISHLIST_ACTION.ADD_WISHLIST)}`,
       payload: {
@@ -57,7 +63,9 @@ function* addWishlistSaga(action) {
 function* removeWishlistSaga(action) {
   try {
     const { id, userId, callback } = action.payload;
-    const result = yield axios.delete(`http://localhost:4000/wishlists/${id}`);
+    const result = yield axios.delete(
+      `https://watch-ecomere-project-api-production.up.railway.app/wishlists/${id}`
+    );
     yield put({
       type: `${SUCCESS(WISHLIST_ACTION.REMOVE_WISHLIST)}`,
       payload: {
