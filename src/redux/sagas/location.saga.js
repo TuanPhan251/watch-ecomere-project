@@ -6,7 +6,7 @@ import { REQUEST, SUCCESS, FAIL, LOCATION_ACTION } from "../CONSTANTS/";
 function* getCityListSaga(action) {
   try {
     const result = yield axios.get(
-      "https://watch-ecomere-project-api-production.up.railway.app/cities"
+      "https://watch-ecomere-project-api.onrender.com/cities"
     );
     yield put({
       type: `${SUCCESS(LOCATION_ACTION.GET_CITY_LIST)}`,
@@ -28,7 +28,7 @@ function* getDistrictListSaga(action) {
   try {
     const { cityCode } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api-production.up.railway.app/districts",
+      "https://watch-ecomere-project-api.onrender.com/districts",
       {
         params: {
           parentcode: cityCode,
@@ -54,7 +54,7 @@ function* getWardListSaga(action) {
   try {
     const { districtCode } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api-production.up.railway.app/wards",
+      "https://watch-ecomere-project-api.onrender.com/wards",
       {
         params: {
           parentcode: districtCode,

@@ -7,7 +7,7 @@ function* getCategoriesListSaga(action) {
   try {
     const { params } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api-production.up.railway.app/categories",
+      "https://watch-ecomere-project-api.onrender.com/categories",
       {
         params: {
           _page: params.page,
@@ -43,7 +43,7 @@ function* getCategoryDetailSaga(action) {
   try {
     const { id, callback } = action.payload;
     const result = yield axios.get(
-      `https://watch-ecomere-project-api-production.up.railway.app/categories/${id}`
+      `https://watch-ecomere-project-api.onrender.com/categories/${id}`
     );
     yield put({
       type: `${SUCCESS(CATEGORY_ACTION.GET_CATEGORY_DETAIL)}`,
@@ -67,7 +67,7 @@ function* createCategorySaga(action) {
   try {
     const { data, callback } = action.payload;
     const result = yield axios.post(
-      "https://watch-ecomere-project-api-production.up.railway.app/categories",
+      "https://watch-ecomere-project-api.onrender.com/categories",
       data
     );
     yield put({
@@ -93,7 +93,7 @@ function* updateCategorySaga(action) {
   try {
     const { id, data, callback } = action.payload;
     const result = yield axios.patch(
-      `https://watch-ecomere-project-api-production.up.railway.app/categories/${id}`,
+      `https://watch-ecomere-project-api.onrender.com/categories/${id}`,
       data
     );
     yield put({

@@ -7,7 +7,7 @@ function* getWishlistSaga(action) {
   try {
     const { userId } = action.payload;
     const result = yield axios.get(
-      "https://watch-ecomere-project-api-production.up.railway.app/wishlists",
+      "https://watch-ecomere-project-api.onrender.com/wishlists",
       {
         params: {
           _expand: "product",
@@ -35,7 +35,7 @@ function* addWishlistSaga(action) {
   try {
     const { data, userId } = action.payload;
     const result = yield axios.post(
-      "https://watch-ecomere-project-api-production.up.railway.app/wishlists",
+      "https://watch-ecomere-project-api.onrender.com/wishlists",
       data
     );
     yield put({
@@ -64,7 +64,7 @@ function* removeWishlistSaga(action) {
   try {
     const { id, userId, callback } = action.payload;
     const result = yield axios.delete(
-      `https://watch-ecomere-project-api-production.up.railway.app/wishlists/${id}`
+      `https://watch-ecomere-project-api.onrender.com/wishlists/${id}`
     );
     yield put({
       type: `${SUCCESS(WISHLIST_ACTION.REMOVE_WISHLIST)}`,
