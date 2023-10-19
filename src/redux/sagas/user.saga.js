@@ -7,7 +7,7 @@ function* loginSaga(action) {
   try {
     const { data, callback } = action.payload;
     const result = yield axios.post(
-      "https://watch-ecomere-project-api-production.up.railway.app/login",
+      "https://watch-ecomere-project-api.onrender.com/login",
       data
     );
     yield localStorage.setItem("accessToken", result.data.accessToken);
@@ -35,7 +35,7 @@ function* registerSaga(action) {
   try {
     const { data, callback } = action.payload;
     const result = yield axios.post(
-      "https://watch-ecomere-project-api-production.up.railway.app/register",
+      "https://watch-ecomere-project-api.onrender.com/register",
       {
         ...data,
         orderQuantity: 0,
@@ -65,7 +65,7 @@ function* getUserInfoSaga(action) {
   try {
     const { id } = action.payload;
     const result = yield axios.get(
-      `https://watch-ecomere-project-api-production.up.railway.app/users/${id}`
+      `https://watch-ecomere-project-api.onrender.com/users/${id}`
     );
     yield put({
       type: SUCCESS(USER_ACTION.GET_USER_INFO),
@@ -90,7 +90,7 @@ function* getUserList(action) {
   try {
     const { params } = action.payload;
     const result = yield axios.get(
-      `https://watch-ecomere-project-api-production.up.railway.app/users`,
+      `https://watch-ecomere-project-api.onrender.com/users`,
       {
         params: {
           _page: params.page,
@@ -142,7 +142,7 @@ function* getUserDetailSaga(action) {
   try {
     const { id } = action.payload;
     const result = yield axios.get(
-      `https://watch-ecomere-project-api-production.up.railway.app/users/${id}`
+      `https://watch-ecomere-project-api.onrender.com/users/${id}`
     );
     yield put({
       type: SUCCESS(USER_ACTION.GET_USER_DETAIL),
@@ -162,7 +162,7 @@ function* updateUserInfoSaga(action) {
   try {
     const { id, values, callback } = action.payload;
     const result = yield axios.patch(
-      `https://watch-ecomere-project-api-production.up.railway.app/users/${id}`,
+      `https://watch-ecomere-project-api.onrender.com/users/${id}`,
       values
     );
     yield put({
@@ -186,14 +186,14 @@ function* updateUserPasswordSaga(action) {
   try {
     const { callback, data, newPassword } = action.payload;
     const result = yield axios.post(
-      "https://watch-ecomere-project-api-production.up.railway.app/login",
+      "https://watch-ecomere-project-api.onrender.com/login",
       data
     );
     yield put({
       type: SUCCESS(USER_ACTION.UPDATE_USER_PASSWORD),
     });
     yield axios.patch(
-      `https://watch-ecomere-project-api-production.up.railway.app/users/${result.data.user.id}`,
+      `https://watch-ecomere-project-api.onrender.com/users/${result.data.user.id}`,
       {
         password: newPassword,
       }
